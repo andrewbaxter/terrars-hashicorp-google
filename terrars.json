@@ -1,0 +1,9 @@
+{
+    "provider": "hashicorp/google",
+    "version": "5.10.0",
+    "dest": "src/gcp",
+	"exclude": [
+		"data_loss_prevention_deidentify_template"
+	],
+	"feature_gate": "Cargo.toml"
+}
