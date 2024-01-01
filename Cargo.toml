@@ -1,11 +1,11 @@
 [package]
-name = "terrars-hashicorp-gcp"
+name = "terrars-hashicorp-google"
 edition = "2021"
 version = "0.1.0"
 description = "Pre-generated Terrars GCP bindings"
 readme = "readme.md"
 license = "ISC"
-repository = "https://github.com/andrewbaxter/terrars-hashicorp-gcp"
+repository = "https://github.com/andrewbaxter/terrars-hashicorp-google"
 
 [dependencies]
 serde = "1.0.151"
