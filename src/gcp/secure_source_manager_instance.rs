@@ -1,57 +1,61 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct SecureSourceManagerInstanceData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    instance_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    location: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    private_config: Option<Vec<SecureSourceManagerInstancePrivateConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<SecureSourceManagerInstanceTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    instance_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    location: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_config: std::option::Option<std::vec::Vec<SecureSourceManagerInstancePrivateConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<SecureSourceManagerInstanceTimeoutsEl>,
     dynamic: SecureSourceManagerInstanceDynamic,
 }
 
 struct SecureSourceManagerInstance_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SecureSourceManagerInstanceData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SecureSourceManagerInstanceData>,
 }
 
 #[derive(Clone)]
-pub struct SecureSourceManagerInstance(Rc<SecureSourceManagerInstance_>);
+pub struct SecureSourceManagerInstance(std::rc::Rc<SecureSourceManagerInstance_>);
 
 impl SecureSourceManagerInstance {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -66,160 +70,209 @@ impl SecureSourceManagerInstance {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `kms_key`.\nCustomer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*."]
-    pub fn set_kms_key(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().kms_key = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `labels`.\nLabels as key value pairs.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn set_labels(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().labels = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `private_config`.\n"]
-    pub fn set_private_config(self, v: impl Into<BlockAssignable<SecureSourceManagerInstancePrivateConfigEl>>) -> Self {
+    #[doc =
+        "Set the field `kms_key`.\nCustomer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*."]
+    pub fn set_kms_key(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `labels`.\nLabels as key value pairs.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_config`.\n"]
+    pub fn set_private_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecureSourceManagerInstancePrivateConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().private_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().private_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.private_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.private_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<SecureSourceManagerInstanceTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<SecureSourceManagerInstanceTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nTime the Instance was created in UTC."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nTime the Instance was created in UTC."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `host_config` after provisioning.\nA list of hostnames for this instance."]
-    pub fn host_config(&self) -> ListRef<SecureSourceManagerInstanceHostConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.host_config", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `host_config` after provisioning.\nA list of hostnames for this instance."]
+    pub fn host_config(&self) -> terrars::ListRef<SecureSourceManagerInstanceHostConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.host_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\nThe name for the Instance."]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\nThe name for the Instance."]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key` after provisioning.\nCustomer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*."]
-    pub fn kms_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `kms_key` after provisioning.\nCustomer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*."]
+    pub fn kms_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nLabels as key value pairs.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nLabels as key value pairs.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location for the Instance."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location for the Instance."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name for the Instance."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe resource name for the Instance."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe current state of the Instance."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe current state of the Instance."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state_note` after provisioning.\nProvides information about the current instance state."]
-    pub fn state_note(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_note", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `state_note` after provisioning.\nProvides information about the current instance state."]
+    pub fn state_note(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_note", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nTime the Instance was updated in UTC."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nTime the Instance was updated in UTC."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_config` after provisioning.\n"]
-    pub fn private_config(&self) -> ListRef<SecureSourceManagerInstancePrivateConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.private_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `private_config` after provisioning.\n"]
+    pub fn private_config(&self) -> terrars::ListRef<SecureSourceManagerInstancePrivateConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> SecureSourceManagerInstanceTimeoutsElRef {
         SecureSourceManagerInstanceTimeoutsElRef::new(
             self.shared().clone(),
@@ -228,29 +281,29 @@ impl SecureSourceManagerInstance {
     }
 }
 
-impl Referable for SecureSourceManagerInstance {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SecureSourceManagerInstance {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SecureSourceManagerInstance { }
+impl terrars::Resource for SecureSourceManagerInstance { }
 
-impl ToListMappable for SecureSourceManagerInstance {
-    type O = ListRef<SecureSourceManagerInstanceRef>;
+impl terrars::ToListMappable for SecureSourceManagerInstance {
+    type O = terrars::ListRef<SecureSourceManagerInstanceRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SecureSourceManagerInstance_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SecureSourceManagerInstance_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_secure_source_manager_instance".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -260,23 +313,24 @@ impl Resource_ for SecureSourceManagerInstance_ {
 }
 
 pub struct BuildSecureSourceManagerInstance {
-    pub tf_id: String,
-    #[doc= "The name for the Instance."]
-    pub instance_id: PrimField<String>,
-    #[doc= "The location for the Instance."]
-    pub location: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The name for the Instance."]
+    pub instance_id: terrars::PrimField<std::string::String>,
+    #[doc = "The location for the Instance."]
+    pub location: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecureSourceManagerInstance {
-    pub fn build(self, stack: &mut Stack) -> SecureSourceManagerInstance {
-        let out = SecureSourceManagerInstance(Rc::new(SecureSourceManagerInstance_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SecureSourceManagerInstance {
+        let out = SecureSourceManagerInstance(std::rc::Rc::new(SecureSourceManagerInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SecureSourceManagerInstanceData {
+            data: std::cell::RefCell::new(SecureSourceManagerInstanceData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
                 kms_key: core::default::Default::default(),
@@ -285,7 +339,7 @@ impl BuildSecureSourceManagerInstance {
                 project: core::default::Default::default(),
                 private_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -294,12 +348,12 @@ impl BuildSecureSourceManagerInstance {
 }
 
 pub struct SecureSourceManagerInstanceRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecureSourceManagerInstanceRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SecureSourceManagerInstanceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -308,90 +362,98 @@ impl Ref for SecureSourceManagerInstanceRef {
 }
 
 impl SecureSourceManagerInstanceRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nTime the Instance was created in UTC."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nTime the Instance was created in UTC."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `host_config` after provisioning.\nA list of hostnames for this instance."]
-    pub fn host_config(&self) -> ListRef<SecureSourceManagerInstanceHostConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.host_config", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `host_config` after provisioning.\nA list of hostnames for this instance."]
+    pub fn host_config(&self) -> terrars::ListRef<SecureSourceManagerInstanceHostConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.host_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\nThe name for the Instance."]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\nThe name for the Instance."]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key` after provisioning.\nCustomer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*."]
-    pub fn kms_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `kms_key` after provisioning.\nCustomer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*."]
+    pub fn kms_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nLabels as key value pairs.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nLabels as key value pairs.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location for the Instance."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location for the Instance."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name for the Instance."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe resource name for the Instance."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe current state of the Instance."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe current state of the Instance."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state_note` after provisioning.\nProvides information about the current instance state."]
-    pub fn state_note(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_note", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `state_note` after provisioning.\nProvides information about the current instance state."]
+    pub fn state_note(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_note", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nTime the Instance was updated in UTC."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nTime the Instance was updated in UTC."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_config` after provisioning.\n"]
-    pub fn private_config(&self) -> ListRef<SecureSourceManagerInstancePrivateConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.private_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `private_config` after provisioning.\n"]
+    pub fn private_config(&self) -> terrars::ListRef<SecureSourceManagerInstancePrivateConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> SecureSourceManagerInstanceTimeoutsElRef {
         SecureSourceManagerInstanceTimeoutsElRef::new(
             self.shared().clone(),
@@ -402,47 +464,47 @@ impl SecureSourceManagerInstanceRef {
 
 #[derive(Serialize)]
 pub struct SecureSourceManagerInstanceHostConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    api: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    git_http: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    git_ssh: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    html: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    api: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_http: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_ssh: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    html: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecureSourceManagerInstanceHostConfigEl {
-    #[doc= "Set the field `api`.\n"]
-    pub fn set_api(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.api = Some(v.into());
+    #[doc = "Set the field `api`.\n"]
+    pub fn set_api(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.api = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `git_http`.\n"]
-    pub fn set_git_http(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.git_http = Some(v.into());
+    #[doc = "Set the field `git_http`.\n"]
+    pub fn set_git_http(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.git_http = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `git_ssh`.\n"]
-    pub fn set_git_ssh(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.git_ssh = Some(v.into());
+    #[doc = "Set the field `git_ssh`.\n"]
+    pub fn set_git_ssh(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.git_ssh = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `html`.\n"]
-    pub fn set_html(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.html = Some(v.into());
+    #[doc = "Set the field `html`.\n"]
+    pub fn set_html(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.html = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecureSourceManagerInstanceHostConfigEl {
-    type O = BlockAssignable<SecureSourceManagerInstanceHostConfigEl>;
+impl terrars::ToListMappable for SecureSourceManagerInstanceHostConfigEl {
+    type O = terrars::BlockAssignable<SecureSourceManagerInstanceHostConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -464,12 +526,12 @@ impl BuildSecureSourceManagerInstanceHostConfigEl {
 }
 
 pub struct SecureSourceManagerInstanceHostConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecureSourceManagerInstanceHostConfigElRef {
-    fn new(shared: StackShared, base: String) -> SecureSourceManagerInstanceHostConfigElRef {
+impl terrars::Ref for SecureSourceManagerInstanceHostConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecureSourceManagerInstanceHostConfigElRef {
         SecureSourceManagerInstanceHostConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -478,44 +540,44 @@ impl Ref for SecureSourceManagerInstanceHostConfigElRef {
 }
 
 impl SecureSourceManagerInstanceHostConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `api` after provisioning.\n"]
-    pub fn api(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.api", self.base))
+    #[doc = "Get a reference to the value of field `api` after provisioning.\n"]
+    pub fn api(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `git_http` after provisioning.\n"]
-    pub fn git_http(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.git_http", self.base))
+    #[doc = "Get a reference to the value of field `git_http` after provisioning.\n"]
+    pub fn git_http(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.git_http", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `git_ssh` after provisioning.\n"]
-    pub fn git_ssh(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.git_ssh", self.base))
+    #[doc = "Get a reference to the value of field `git_ssh` after provisioning.\n"]
+    pub fn git_ssh(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.git_ssh", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `html` after provisioning.\n"]
-    pub fn html(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.html", self.base))
+    #[doc = "Get a reference to the value of field `html` after provisioning.\n"]
+    pub fn html(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.html", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecureSourceManagerInstancePrivateConfigEl {
-    ca_pool: PrimField<String>,
-    is_private: PrimField<bool>,
+    ca_pool: terrars::PrimField<std::string::String>,
+    is_private: terrars::PrimField<bool>,
 }
 
 impl SecureSourceManagerInstancePrivateConfigEl { }
 
-impl ToListMappable for SecureSourceManagerInstancePrivateConfigEl {
-    type O = BlockAssignable<SecureSourceManagerInstancePrivateConfigEl>;
+impl terrars::ToListMappable for SecureSourceManagerInstancePrivateConfigEl {
+    type O = terrars::BlockAssignable<SecureSourceManagerInstancePrivateConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -524,10 +586,11 @@ impl ToListMappable for SecureSourceManagerInstancePrivateConfigEl {
 }
 
 pub struct BuildSecureSourceManagerInstancePrivateConfigEl {
-    #[doc= "CA pool resource, resource must in the format of 'projects/{project}/locations/{location}/caPools/{ca_pool}'."]
-    pub ca_pool: PrimField<String>,
-    #[doc= "'Indicate if it's private instance.'"]
-    pub is_private: PrimField<bool>,
+    #[doc =
+        "CA pool resource, resource must in the format of 'projects/{project}/locations/{location}/caPools/{ca_pool}'."]
+    pub ca_pool: terrars::PrimField<std::string::String>,
+    #[doc = "'Indicate if it's private instance.'"]
+    pub is_private: terrars::PrimField<bool>,
 }
 
 impl BuildSecureSourceManagerInstancePrivateConfigEl {
@@ -540,12 +603,12 @@ impl BuildSecureSourceManagerInstancePrivateConfigEl {
 }
 
 pub struct SecureSourceManagerInstancePrivateConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecureSourceManagerInstancePrivateConfigElRef {
-    fn new(shared: StackShared, base: String) -> SecureSourceManagerInstancePrivateConfigElRef {
+impl terrars::Ref for SecureSourceManagerInstancePrivateConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecureSourceManagerInstancePrivateConfigElRef {
         SecureSourceManagerInstancePrivateConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -554,58 +617,62 @@ impl Ref for SecureSourceManagerInstancePrivateConfigElRef {
 }
 
 impl SecureSourceManagerInstancePrivateConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ca_pool` after provisioning.\nCA pool resource, resource must in the format of 'projects/{project}/locations/{location}/caPools/{ca_pool}'."]
-    pub fn ca_pool(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ca_pool", self.base))
+    #[doc =
+        "Get a reference to the value of field `ca_pool` after provisioning.\nCA pool resource, resource must in the format of 'projects/{project}/locations/{location}/caPools/{ca_pool}'."]
+    pub fn ca_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_pool", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_service_attachment` after provisioning.\nService Attachment for HTTP, resource is in the format of 'projects/{project}/regions/{region}/serviceAttachments/{service_attachment}'."]
-    pub fn http_service_attachment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.http_service_attachment", self.base))
+    #[doc =
+        "Get a reference to the value of field `http_service_attachment` after provisioning.\nService Attachment for HTTP, resource is in the format of 'projects/{project}/regions/{region}/serviceAttachments/{service_attachment}'."]
+    pub fn http_service_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_service_attachment", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `is_private` after provisioning.\n'Indicate if it's private instance.'"]
-    pub fn is_private(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.is_private", self.base))
+    #[doc =
+        "Get a reference to the value of field `is_private` after provisioning.\n'Indicate if it's private instance.'"]
+    pub fn is_private(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_private", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ssh_service_attachment` after provisioning.\nService Attachment for SSH, resource is in the format of 'projects/{project}/regions/{region}/serviceAttachments/{service_attachment}'."]
-    pub fn ssh_service_attachment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ssh_service_attachment", self.base))
+    #[doc =
+        "Get a reference to the value of field `ssh_service_attachment` after provisioning.\nService Attachment for SSH, resource is in the format of 'projects/{project}/regions/{region}/serviceAttachments/{service_attachment}'."]
+    pub fn ssh_service_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssh_service_attachment", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecureSourceManagerInstanceTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecureSourceManagerInstanceTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecureSourceManagerInstanceTimeoutsEl {
-    type O = BlockAssignable<SecureSourceManagerInstanceTimeoutsEl>;
+impl terrars::ToListMappable for SecureSourceManagerInstanceTimeoutsEl {
+    type O = terrars::BlockAssignable<SecureSourceManagerInstanceTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -625,12 +692,12 @@ impl BuildSecureSourceManagerInstanceTimeoutsEl {
 }
 
 pub struct SecureSourceManagerInstanceTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecureSourceManagerInstanceTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> SecureSourceManagerInstanceTimeoutsElRef {
+impl terrars::Ref for SecureSourceManagerInstanceTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecureSourceManagerInstanceTimeoutsElRef {
         SecureSourceManagerInstanceTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -639,22 +706,22 @@ impl Ref for SecureSourceManagerInstanceTimeoutsElRef {
 }
 
 impl SecureSourceManagerInstanceTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecureSourceManagerInstanceDynamic {
-    private_config: Option<DynamicBlock<SecureSourceManagerInstancePrivateConfigEl>>,
+    private_config: std::option::Option<terrars::DynamicBlock<SecureSourceManagerInstancePrivateConfigEl>>,
 }

@@ -1,77 +1,107 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataClientOpenidUserinfoData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
 }
 
 struct DataClientOpenidUserinfo_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataClientOpenidUserinfoData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataClientOpenidUserinfoData>,
 }
 
 #[derive(Clone)]
-pub struct DataClientOpenidUserinfo(Rc<DataClientOpenidUserinfo_>);
+pub struct DataClientOpenidUserinfo(std::rc::Rc<DataClientOpenidUserinfo_>);
 
 impl DataClientOpenidUserinfo {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Get a reference to the value of field `email` after provisioning.\nThe email of the account used by the provider to authenticate with GCP."]
-    pub fn email(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.email", self.extract_ref()))
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\nThe ID of this data source in Terraform state. Its value is the same as the `email` attribute. Do not use this field, use the `email` attribute instead."]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `email` after provisioning.\nThe email of the account used by the provider to authenticate with GCP."]
+    pub fn email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.email", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `id` after provisioning.\nThe ID of this data source in Terraform state. Its value is the same as the `email` attribute. Do not use this field, use the `email` attribute instead."]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 }
 
-impl Referable for DataClientOpenidUserinfo {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataClientOpenidUserinfo {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataClientOpenidUserinfo { }
+impl terrars::Datasource for DataClientOpenidUserinfo { }
 
-impl ToListMappable for DataClientOpenidUserinfo {
-    type O = ListRef<DataClientOpenidUserinfoRef>;
+impl terrars::ToListMappable for DataClientOpenidUserinfo {
+    type O = terrars::ListRef<DataClientOpenidUserinfoRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataClientOpenidUserinfo_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataClientOpenidUserinfo_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_client_openid_userinfo".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -81,18 +111,19 @@ impl Datasource_ for DataClientOpenidUserinfo_ {
 }
 
 pub struct BuildDataClientOpenidUserinfo {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataClientOpenidUserinfo {
-    pub fn build(self, stack: &mut Stack) -> DataClientOpenidUserinfo {
-        let out = DataClientOpenidUserinfo(Rc::new(DataClientOpenidUserinfo_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataClientOpenidUserinfo {
+        let out = DataClientOpenidUserinfo(std::rc::Rc::new(DataClientOpenidUserinfo_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataClientOpenidUserinfoData {
+            data: std::cell::RefCell::new(DataClientOpenidUserinfoData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -101,12 +132,12 @@ impl BuildDataClientOpenidUserinfo {
 }
 
 pub struct DataClientOpenidUserinfoRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataClientOpenidUserinfoRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataClientOpenidUserinfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -115,21 +146,23 @@ impl Ref for DataClientOpenidUserinfoRef {
 }
 
 impl DataClientOpenidUserinfoRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `email` after provisioning.\nThe email of the account used by the provider to authenticate with GCP."]
-    pub fn email(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.email", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `email` after provisioning.\nThe email of the account used by the provider to authenticate with GCP."]
+    pub fn email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.email", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\nThe ID of this data source in Terraform state. Its value is the same as the `email` attribute. Do not use this field, use the `email` attribute instead."]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `id` after provisioning.\nThe ID of this data source in Terraform state. Its value is the same as the `email` attribute. Do not use this field, use the `email` attribute instead."]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 }

@@ -1,55 +1,59 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct ServiceAccountKeyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    keepers: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key_algorithm: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    private_key_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    public_key_data: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    public_key_type: Option<PrimField<String>>,
-    service_account_id: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    keepers: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_key_data: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    service_account_id: terrars::PrimField<std::string::String>,
 }
 
 struct ServiceAccountKey_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ServiceAccountKeyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ServiceAccountKeyData>,
 }
 
 #[derive(Clone)]
-pub struct ServiceAccountKey(Rc<ServiceAccountKey_>);
+pub struct ServiceAccountKey(std::rc::Rc<ServiceAccountKey_>);
 
 impl ServiceAccountKey {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -64,161 +68,207 @@ impl ServiceAccountKey {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `keepers`.\nArbitrary map of values that, when changed, will trigger recreation of resource."]
-    pub fn set_keepers(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().keepers = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `key_algorithm`.\nThe algorithm used to generate the key, used only on create. KEY_ALG_RSA_2048 is the default algorithm. Valid values are: \"KEY_ALG_RSA_1024\", \"KEY_ALG_RSA_2048\"."]
-    pub fn set_key_algorithm(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().key_algorithm = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `private_key_type`.\n"]
-    pub fn set_private_key_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().private_key_type = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `public_key_data`.\nA field that allows clients to upload their own public key. If set, use this public key data to create a service account key for given service account. Please note, the expected format for this field is a base64 encoded X509_PEM."]
-    pub fn set_public_key_data(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().public_key_data = Some(v.into());
+    #[doc =
+        "Set the field `keepers`.\nArbitrary map of values that, when changed, will trigger recreation of resource."]
+    pub fn set_keepers(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().keepers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `public_key_type`.\n"]
-    pub fn set_public_key_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().public_key_type = Some(v.into());
+    #[doc =
+        "Set the field `key_algorithm`.\nThe algorithm used to generate the key, used only on create. KEY_ALG_RSA_2048 is the default algorithm. Valid values are: \"KEY_ALG_RSA_1024\", \"KEY_ALG_RSA_2048\"."]
+    pub fn set_key_algorithm(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().key_algorithm = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `private_key_type`.\n"]
+    pub fn set_private_key_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().private_key_type = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `keepers` after provisioning.\nArbitrary map of values that, when changed, will trigger recreation of resource."]
-    pub fn keepers(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.keepers", self.extract_ref()))
+    #[doc =
+        "Set the field `public_key_data`.\nA field that allows clients to upload their own public key. If set, use this public key data to create a service account key for given service account. Please note, the expected format for this field is a base64 encoded X509_PEM."]
+    pub fn set_public_key_data(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().public_key_data = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `key_algorithm` after provisioning.\nThe algorithm used to generate the key, used only on create. KEY_ALG_RSA_2048 is the default algorithm. Valid values are: \"KEY_ALG_RSA_1024\", \"KEY_ALG_RSA_2048\"."]
-    pub fn key_algorithm(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_algorithm", self.extract_ref()))
+    #[doc = "Set the field `public_key_type`.\n"]
+    pub fn set_public_key_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().public_key_type = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name used for this key pair"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_key` after provisioning.\nThe private key in JSON format, base64 encoded. This is what you normally get as a file when creating service account keys through the CLI or web console. This is only populated when creating a new key."]
-    pub fn private_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `keepers` after provisioning.\nArbitrary map of values that, when changed, will trigger recreation of resource."]
+    pub fn keepers(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.keepers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_key_type` after provisioning.\n"]
-    pub fn private_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_key_type", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `key_algorithm` after provisioning.\nThe algorithm used to generate the key, used only on create. KEY_ALG_RSA_2048 is the default algorithm. Valid values are: \"KEY_ALG_RSA_1024\", \"KEY_ALG_RSA_2048\"."]
+    pub fn key_algorithm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_algorithm", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key` after provisioning.\nThe public key, base64 encoded"]
-    pub fn public_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe name used for this key pair"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key_data` after provisioning.\nA field that allows clients to upload their own public key. If set, use this public key data to create a service account key for given service account. Please note, the expected format for this field is a base64 encoded X509_PEM."]
-    pub fn public_key_data(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key_data", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `private_key` after provisioning.\nThe private key in JSON format, base64 encoded. This is what you normally get as a file when creating service account keys through the CLI or web console. This is only populated when creating a new key."]
+    pub fn private_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key_type` after provisioning.\n"]
-    pub fn public_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `private_key_type` after provisioning.\n"]
+    pub fn private_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_account_id` after provisioning.\nThe ID of the parent service account of the key. This can be a string in the format {ACCOUNT} or projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}, where {ACCOUNT} is the email address or unique id of the service account. If the {ACCOUNT} syntax is used, the project will be inferred from the provider's configuration."]
-    pub fn service_account_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key` after provisioning.\nThe public key, base64 encoded"]
+    pub fn public_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `valid_after` after provisioning.\nThe key can be used after this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn valid_after(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.valid_after", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `public_key_data` after provisioning.\nA field that allows clients to upload their own public key. If set, use this public key data to create a service account key for given service account. Please note, the expected format for this field is a base64 encoded X509_PEM."]
+    pub fn public_key_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key_data", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `valid_before` after provisioning.\nThe key can be used before this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn valid_before(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.valid_before", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key_type` after provisioning.\n"]
+    pub fn public_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `service_account_id` after provisioning.\nThe ID of the parent service account of the key. This can be a string in the format {ACCOUNT} or projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}, where {ACCOUNT} is the email address or unique id of the service account. If the {ACCOUNT} syntax is used, the project will be inferred from the provider's configuration."]
+    pub fn service_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `valid_after` after provisioning.\nThe key can be used after this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn valid_after(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_after", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `valid_before` after provisioning.\nThe key can be used before this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn valid_before(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_before", self.extract_ref()))
     }
 }
 
-impl Referable for ServiceAccountKey {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ServiceAccountKey {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ServiceAccountKey { }
+impl terrars::Resource for ServiceAccountKey { }
 
-impl ToListMappable for ServiceAccountKey {
-    type O = ListRef<ServiceAccountKeyRef>;
+impl terrars::ToListMappable for ServiceAccountKey {
+    type O = terrars::ListRef<ServiceAccountKeyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ServiceAccountKey_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ServiceAccountKey_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_service_account_key".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -228,21 +278,23 @@ impl Resource_ for ServiceAccountKey_ {
 }
 
 pub struct BuildServiceAccountKey {
-    pub tf_id: String,
-    #[doc= "The ID of the parent service account of the key. This can be a string in the format {ACCOUNT} or projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}, where {ACCOUNT} is the email address or unique id of the service account. If the {ACCOUNT} syntax is used, the project will be inferred from the provider's configuration."]
-    pub service_account_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "The ID of the parent service account of the key. This can be a string in the format {ACCOUNT} or projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}, where {ACCOUNT} is the email address or unique id of the service account. If the {ACCOUNT} syntax is used, the project will be inferred from the provider's configuration."]
+    pub service_account_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildServiceAccountKey {
-    pub fn build(self, stack: &mut Stack) -> ServiceAccountKey {
-        let out = ServiceAccountKey(Rc::new(ServiceAccountKey_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ServiceAccountKey {
+        let out = ServiceAccountKey(std::rc::Rc::new(ServiceAccountKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ServiceAccountKeyData {
+            data: std::cell::RefCell::new(ServiceAccountKeyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 keepers: core::default::Default::default(),
                 key_algorithm: core::default::Default::default(),
@@ -258,12 +310,12 @@ impl BuildServiceAccountKey {
 }
 
 pub struct ServiceAccountKeyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ServiceAccountKeyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ServiceAccountKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -272,71 +324,78 @@ impl Ref for ServiceAccountKeyRef {
 }
 
 impl ServiceAccountKeyRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `keepers` after provisioning.\nArbitrary map of values that, when changed, will trigger recreation of resource."]
-    pub fn keepers(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.keepers", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `keepers` after provisioning.\nArbitrary map of values that, when changed, will trigger recreation of resource."]
+    pub fn keepers(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.keepers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `key_algorithm` after provisioning.\nThe algorithm used to generate the key, used only on create. KEY_ALG_RSA_2048 is the default algorithm. Valid values are: \"KEY_ALG_RSA_1024\", \"KEY_ALG_RSA_2048\"."]
-    pub fn key_algorithm(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_algorithm", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `key_algorithm` after provisioning.\nThe algorithm used to generate the key, used only on create. KEY_ALG_RSA_2048 is the default algorithm. Valid values are: \"KEY_ALG_RSA_1024\", \"KEY_ALG_RSA_2048\"."]
+    pub fn key_algorithm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_algorithm", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name used for this key pair"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe name used for this key pair"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_key` after provisioning.\nThe private key in JSON format, base64 encoded. This is what you normally get as a file when creating service account keys through the CLI or web console. This is only populated when creating a new key."]
-    pub fn private_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `private_key` after provisioning.\nThe private key in JSON format, base64 encoded. This is what you normally get as a file when creating service account keys through the CLI or web console. This is only populated when creating a new key."]
+    pub fn private_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_key_type` after provisioning.\n"]
-    pub fn private_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_key_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `private_key_type` after provisioning.\n"]
+    pub fn private_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key` after provisioning.\nThe public key, base64 encoded"]
-    pub fn public_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key` after provisioning.\nThe public key, base64 encoded"]
+    pub fn public_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key_data` after provisioning.\nA field that allows clients to upload their own public key. If set, use this public key data to create a service account key for given service account. Please note, the expected format for this field is a base64 encoded X509_PEM."]
-    pub fn public_key_data(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key_data", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `public_key_data` after provisioning.\nA field that allows clients to upload their own public key. If set, use this public key data to create a service account key for given service account. Please note, the expected format for this field is a base64 encoded X509_PEM."]
+    pub fn public_key_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key_data", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key_type` after provisioning.\n"]
-    pub fn public_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key_type` after provisioning.\n"]
+    pub fn public_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_account_id` after provisioning.\nThe ID of the parent service account of the key. This can be a string in the format {ACCOUNT} or projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}, where {ACCOUNT} is the email address or unique id of the service account. If the {ACCOUNT} syntax is used, the project will be inferred from the provider's configuration."]
-    pub fn service_account_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `service_account_id` after provisioning.\nThe ID of the parent service account of the key. This can be a string in the format {ACCOUNT} or projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}, where {ACCOUNT} is the email address or unique id of the service account. If the {ACCOUNT} syntax is used, the project will be inferred from the provider's configuration."]
+    pub fn service_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `valid_after` after provisioning.\nThe key can be used after this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn valid_after(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.valid_after", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `valid_after` after provisioning.\nThe key can be used after this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn valid_after(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_after", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `valid_before` after provisioning.\nThe key can be used before this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn valid_before(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.valid_before", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `valid_before` after provisioning.\nThe key can be used before this timestamp. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn valid_before(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_before", self.extract_ref()))
     }
 }

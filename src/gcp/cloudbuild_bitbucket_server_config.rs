@@ -1,62 +1,66 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct CloudbuildBitbucketServerConfigData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    api_key: PrimField<String>,
-    config_id: PrimField<String>,
-    host_uri: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    location: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    peered_network: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ssl_ca: Option<PrimField<String>>,
-    username: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    connected_repositories: Option<Vec<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secrets: Option<Vec<CloudbuildBitbucketServerConfigSecretsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<CloudbuildBitbucketServerConfigTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    api_key: terrars::PrimField<std::string::String>,
+    config_id: terrars::PrimField<std::string::String>,
+    host_uri: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    location: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    peered_network: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ssl_ca: std::option::Option<terrars::PrimField<std::string::String>>,
+    username: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connected_repositories: std::option::Option<std::vec::Vec<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secrets: std::option::Option<std::vec::Vec<CloudbuildBitbucketServerConfigSecretsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<CloudbuildBitbucketServerConfigTimeoutsEl>,
     dynamic: CloudbuildBitbucketServerConfigDynamic,
 }
 
 struct CloudbuildBitbucketServerConfig_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CloudbuildBitbucketServerConfigData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CloudbuildBitbucketServerConfigData>,
 }
 
 #[derive(Clone)]
-pub struct CloudbuildBitbucketServerConfig(Rc<CloudbuildBitbucketServerConfig_>);
+pub struct CloudbuildBitbucketServerConfig(std::rc::Rc<CloudbuildBitbucketServerConfig_>);
 
 impl CloudbuildBitbucketServerConfig {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -71,161 +75,207 @@ impl CloudbuildBitbucketServerConfig {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `peered_network`.\nThe network to be used when reaching out to the Bitbucket Server instance. The VPC network must be enabled for private service connection.\nThis should be set if the Bitbucket Server instance is hosted on-premises and not reachable by public internet. If this field is left empty,\nno network peering will occur and calls to the Bitbucket Server instance will be made over the public internet. Must be in the format\nprojects/{project}/global/networks/{network}, where {project} is a project number or id and {network} is the name of a VPC network in the project."]
-    pub fn set_peered_network(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().peered_network = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `ssl_ca`.\nSSL certificate to use for requests to Bitbucket Server. The format should be PEM format but the extension can be one of .pem, .cer, or .crt."]
-    pub fn set_ssl_ca(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().ssl_ca = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `connected_repositories`.\n"]
+    #[doc =
+        "Set the field `peered_network`.\nThe network to be used when reaching out to the Bitbucket Server instance. The VPC network must be enabled for private service connection.\nThis should be set if the Bitbucket Server instance is hosted on-premises and not reachable by public internet. If this field is left empty,\nno network peering will occur and calls to the Bitbucket Server instance will be made over the public internet. Must be in the format\nprojects/{project}/global/networks/{network}, where {project} is a project number or id and {network} is the name of a VPC network in the project."]
+    pub fn set_peered_network(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().peered_network = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `ssl_ca`.\nSSL certificate to use for requests to Bitbucket Server. The format should be PEM format but the extension can be one of .pem, .cer, or .crt."]
+    pub fn set_ssl_ca(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ssl_ca = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `connected_repositories`.\n"]
     pub fn set_connected_repositories(
         self,
-        v: impl Into<BlockAssignable<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().connected_repositories = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().connected_repositories = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.connected_repositories = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.connected_repositories = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `secrets`.\n"]
-    pub fn set_secrets(self, v: impl Into<BlockAssignable<CloudbuildBitbucketServerConfigSecretsEl>>) -> Self {
+    #[doc = "Set the field `secrets`.\n"]
+    pub fn set_secrets(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildBitbucketServerConfigSecretsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().secrets = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().secrets = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.secrets = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.secrets = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<CloudbuildBitbucketServerConfigTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudbuildBitbucketServerConfigTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `api_key` after provisioning.\nImmutable. API Key that will be attached to webhook. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
-    pub fn api_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.api_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `api_key` after provisioning.\nImmutable. API Key that will be attached to webhook. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
+    pub fn api_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `config_id` after provisioning.\nThe ID to use for the BitbucketServerConfig, which will become the final component of the BitbucketServerConfig's resource name."]
-    pub fn config_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `config_id` after provisioning.\nThe ID to use for the BitbucketServerConfig, which will become the final component of the BitbucketServerConfig's resource name."]
+    pub fn config_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `host_uri` after provisioning.\nImmutable. The URI of the Bitbucket Server host. Once this field has been set, it cannot be changed.\nIf you need to change it, please create another BitbucketServerConfig."]
-    pub fn host_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.host_uri", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `host_uri` after provisioning.\nImmutable. The URI of the Bitbucket Server host. Once this field has been set, it cannot be changed.\nIf you need to change it, please create another BitbucketServerConfig."]
+    pub fn host_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_uri", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of this bitbucket server config."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location of this bitbucket server config."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name for the config."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe resource name for the config."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `peered_network` after provisioning.\nThe network to be used when reaching out to the Bitbucket Server instance. The VPC network must be enabled for private service connection.\nThis should be set if the Bitbucket Server instance is hosted on-premises and not reachable by public internet. If this field is left empty,\nno network peering will occur and calls to the Bitbucket Server instance will be made over the public internet. Must be in the format\nprojects/{project}/global/networks/{network}, where {project} is a project number or id and {network} is the name of a VPC network in the project."]
-    pub fn peered_network(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.peered_network", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `peered_network` after provisioning.\nThe network to be used when reaching out to the Bitbucket Server instance. The VPC network must be enabled for private service connection.\nThis should be set if the Bitbucket Server instance is hosted on-premises and not reachable by public internet. If this field is left empty,\nno network peering will occur and calls to the Bitbucket Server instance will be made over the public internet. Must be in the format\nprojects/{project}/global/networks/{network}, where {project} is a project number or id and {network} is the name of a VPC network in the project."]
+    pub fn peered_network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.peered_network", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ssl_ca` after provisioning.\nSSL certificate to use for requests to Bitbucket Server. The format should be PEM format but the extension can be one of .pem, .cer, or .crt."]
-    pub fn ssl_ca(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ssl_ca", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `ssl_ca` after provisioning.\nSSL certificate to use for requests to Bitbucket Server. The format should be PEM format but the extension can be one of .pem, .cer, or .crt."]
+    pub fn ssl_ca(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssl_ca", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `username` after provisioning.\nUsername of the account Cloud Build will use on Bitbucket Server."]
-    pub fn username(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `username` after provisioning.\nUsername of the account Cloud Build will use on Bitbucket Server."]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `webhook_key` after provisioning.\nOutput only. UUID included in webhook requests. The UUID is used to look up the corresponding config."]
-    pub fn webhook_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.webhook_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `webhook_key` after provisioning.\nOutput only. UUID included in webhook requests. The UUID is used to look up the corresponding config."]
+    pub fn webhook_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `secrets` after provisioning.\n"]
-    pub fn secrets(&self) -> ListRef<CloudbuildBitbucketServerConfigSecretsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.secrets", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `secrets` after provisioning.\n"]
+    pub fn secrets(&self) -> terrars::ListRef<CloudbuildBitbucketServerConfigSecretsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secrets", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> CloudbuildBitbucketServerConfigTimeoutsElRef {
         CloudbuildBitbucketServerConfigTimeoutsElRef::new(
             self.shared().clone(),
@@ -234,29 +284,29 @@ impl CloudbuildBitbucketServerConfig {
     }
 }
 
-impl Referable for CloudbuildBitbucketServerConfig {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for CloudbuildBitbucketServerConfig {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for CloudbuildBitbucketServerConfig { }
+impl terrars::Resource for CloudbuildBitbucketServerConfig { }
 
-impl ToListMappable for CloudbuildBitbucketServerConfig {
-    type O = ListRef<CloudbuildBitbucketServerConfigRef>;
+impl terrars::ToListMappable for CloudbuildBitbucketServerConfig {
+    type O = terrars::ListRef<CloudbuildBitbucketServerConfigRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for CloudbuildBitbucketServerConfig_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for CloudbuildBitbucketServerConfig_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_cloudbuild_bitbucket_server_config".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -266,29 +316,33 @@ impl Resource_ for CloudbuildBitbucketServerConfig_ {
 }
 
 pub struct BuildCloudbuildBitbucketServerConfig {
-    pub tf_id: String,
-    #[doc= "Immutable. API Key that will be attached to webhook. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
-    pub api_key: PrimField<String>,
-    #[doc= "The ID to use for the BitbucketServerConfig, which will become the final component of the BitbucketServerConfig's resource name."]
-    pub config_id: PrimField<String>,
-    #[doc= "Immutable. The URI of the Bitbucket Server host. Once this field has been set, it cannot be changed.\nIf you need to change it, please create another BitbucketServerConfig."]
-    pub host_uri: PrimField<String>,
-    #[doc= "The location of this bitbucket server config."]
-    pub location: PrimField<String>,
-    #[doc= "Username of the account Cloud Build will use on Bitbucket Server."]
-    pub username: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "Immutable. API Key that will be attached to webhook. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
+    pub api_key: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The ID to use for the BitbucketServerConfig, which will become the final component of the BitbucketServerConfig's resource name."]
+    pub config_id: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Immutable. The URI of the Bitbucket Server host. Once this field has been set, it cannot be changed.\nIf you need to change it, please create another BitbucketServerConfig."]
+    pub host_uri: terrars::PrimField<std::string::String>,
+    #[doc = "The location of this bitbucket server config."]
+    pub location: terrars::PrimField<std::string::String>,
+    #[doc = "Username of the account Cloud Build will use on Bitbucket Server."]
+    pub username: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudbuildBitbucketServerConfig {
-    pub fn build(self, stack: &mut Stack) -> CloudbuildBitbucketServerConfig {
-        let out = CloudbuildBitbucketServerConfig(Rc::new(CloudbuildBitbucketServerConfig_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> CloudbuildBitbucketServerConfig {
+        let out = CloudbuildBitbucketServerConfig(std::rc::Rc::new(CloudbuildBitbucketServerConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CloudbuildBitbucketServerConfigData {
+            data: std::cell::RefCell::new(CloudbuildBitbucketServerConfigData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 api_key: self.api_key,
                 config_id: self.config_id,
                 host_uri: self.host_uri,
@@ -301,7 +355,7 @@ impl BuildCloudbuildBitbucketServerConfig {
                 connected_repositories: core::default::Default::default(),
                 secrets: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -310,12 +364,12 @@ impl BuildCloudbuildBitbucketServerConfig {
 }
 
 pub struct CloudbuildBitbucketServerConfigRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudbuildBitbucketServerConfigRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CloudbuildBitbucketServerConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -324,75 +378,83 @@ impl Ref for CloudbuildBitbucketServerConfigRef {
 }
 
 impl CloudbuildBitbucketServerConfigRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `api_key` after provisioning.\nImmutable. API Key that will be attached to webhook. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
-    pub fn api_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.api_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `api_key` after provisioning.\nImmutable. API Key that will be attached to webhook. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
+    pub fn api_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `config_id` after provisioning.\nThe ID to use for the BitbucketServerConfig, which will become the final component of the BitbucketServerConfig's resource name."]
-    pub fn config_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `config_id` after provisioning.\nThe ID to use for the BitbucketServerConfig, which will become the final component of the BitbucketServerConfig's resource name."]
+    pub fn config_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `host_uri` after provisioning.\nImmutable. The URI of the Bitbucket Server host. Once this field has been set, it cannot be changed.\nIf you need to change it, please create another BitbucketServerConfig."]
-    pub fn host_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.host_uri", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `host_uri` after provisioning.\nImmutable. The URI of the Bitbucket Server host. Once this field has been set, it cannot be changed.\nIf you need to change it, please create another BitbucketServerConfig."]
+    pub fn host_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_uri", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of this bitbucket server config."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location of this bitbucket server config."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name for the config."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe resource name for the config."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `peered_network` after provisioning.\nThe network to be used when reaching out to the Bitbucket Server instance. The VPC network must be enabled for private service connection.\nThis should be set if the Bitbucket Server instance is hosted on-premises and not reachable by public internet. If this field is left empty,\nno network peering will occur and calls to the Bitbucket Server instance will be made over the public internet. Must be in the format\nprojects/{project}/global/networks/{network}, where {project} is a project number or id and {network} is the name of a VPC network in the project."]
-    pub fn peered_network(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.peered_network", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `peered_network` after provisioning.\nThe network to be used when reaching out to the Bitbucket Server instance. The VPC network must be enabled for private service connection.\nThis should be set if the Bitbucket Server instance is hosted on-premises and not reachable by public internet. If this field is left empty,\nno network peering will occur and calls to the Bitbucket Server instance will be made over the public internet. Must be in the format\nprojects/{project}/global/networks/{network}, where {project} is a project number or id and {network} is the name of a VPC network in the project."]
+    pub fn peered_network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.peered_network", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ssl_ca` after provisioning.\nSSL certificate to use for requests to Bitbucket Server. The format should be PEM format but the extension can be one of .pem, .cer, or .crt."]
-    pub fn ssl_ca(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ssl_ca", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `ssl_ca` after provisioning.\nSSL certificate to use for requests to Bitbucket Server. The format should be PEM format but the extension can be one of .pem, .cer, or .crt."]
+    pub fn ssl_ca(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssl_ca", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `username` after provisioning.\nUsername of the account Cloud Build will use on Bitbucket Server."]
-    pub fn username(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `username` after provisioning.\nUsername of the account Cloud Build will use on Bitbucket Server."]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `webhook_key` after provisioning.\nOutput only. UUID included in webhook requests. The UUID is used to look up the corresponding config."]
-    pub fn webhook_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.webhook_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `webhook_key` after provisioning.\nOutput only. UUID included in webhook requests. The UUID is used to look up the corresponding config."]
+    pub fn webhook_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `secrets` after provisioning.\n"]
-    pub fn secrets(&self) -> ListRef<CloudbuildBitbucketServerConfigSecretsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.secrets", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `secrets` after provisioning.\n"]
+    pub fn secrets(&self) -> terrars::ListRef<CloudbuildBitbucketServerConfigSecretsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secrets", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> CloudbuildBitbucketServerConfigTimeoutsElRef {
         CloudbuildBitbucketServerConfigTimeoutsElRef::new(
             self.shared().clone(),
@@ -403,17 +465,17 @@ impl CloudbuildBitbucketServerConfigRef {
 
 #[derive(Serialize)]
 pub struct CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
-    project_key: PrimField<String>,
-    repo_slug: PrimField<String>,
+    project_key: terrars::PrimField<std::string::String>,
+    repo_slug: terrars::PrimField<std::string::String>,
 }
 
 impl CloudbuildBitbucketServerConfigConnectedRepositoriesEl { }
 
-impl ToListMappable for CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
-    type O = BlockAssignable<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>;
+impl terrars::ToListMappable for CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
+    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -422,10 +484,10 @@ impl ToListMappable for CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
 }
 
 pub struct BuildCloudbuildBitbucketServerConfigConnectedRepositoriesEl {
-    #[doc= "Identifier for the project storing the repository."]
-    pub project_key: PrimField<String>,
-    #[doc= "Identifier for the repository."]
-    pub repo_slug: PrimField<String>,
+    #[doc = "Identifier for the project storing the repository."]
+    pub project_key: terrars::PrimField<std::string::String>,
+    #[doc = "Identifier for the repository."]
+    pub repo_slug: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudbuildBitbucketServerConfigConnectedRepositoriesEl {
@@ -438,12 +500,15 @@ impl BuildCloudbuildBitbucketServerConfigConnectedRepositoriesEl {
 }
 
 pub struct CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
-    fn new(shared: StackShared, base: String) -> CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
+impl terrars::Ref for CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
         CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
             shared: shared,
             base: base.to_string(),
@@ -452,35 +517,36 @@ impl Ref for CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
 }
 
 impl CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `project_key` after provisioning.\nIdentifier for the project storing the repository."]
-    pub fn project_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `project_key` after provisioning.\nIdentifier for the project storing the repository."]
+    pub fn project_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `repo_slug` after provisioning.\nIdentifier for the repository."]
-    pub fn repo_slug(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.repo_slug", self.base))
+    #[doc = "Get a reference to the value of field `repo_slug` after provisioning.\nIdentifier for the repository."]
+    pub fn repo_slug(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repo_slug", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudbuildBitbucketServerConfigSecretsEl {
-    admin_access_token_version_name: PrimField<String>,
-    read_access_token_version_name: PrimField<String>,
-    webhook_secret_version_name: PrimField<String>,
+    admin_access_token_version_name: terrars::PrimField<std::string::String>,
+    read_access_token_version_name: terrars::PrimField<std::string::String>,
+    webhook_secret_version_name: terrars::PrimField<std::string::String>,
 }
 
 impl CloudbuildBitbucketServerConfigSecretsEl { }
 
-impl ToListMappable for CloudbuildBitbucketServerConfigSecretsEl {
-    type O = BlockAssignable<CloudbuildBitbucketServerConfigSecretsEl>;
+impl terrars::ToListMappable for CloudbuildBitbucketServerConfigSecretsEl {
+    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfigSecretsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -489,12 +555,13 @@ impl ToListMappable for CloudbuildBitbucketServerConfigSecretsEl {
 }
 
 pub struct BuildCloudbuildBitbucketServerConfigSecretsEl {
-    #[doc= "The resource name for the admin access token's secret version."]
-    pub admin_access_token_version_name: PrimField<String>,
-    #[doc= "The resource name for the read access token's secret version."]
-    pub read_access_token_version_name: PrimField<String>,
-    #[doc= "Immutable. The resource name for the webhook secret's secret version. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
-    pub webhook_secret_version_name: PrimField<String>,
+    #[doc = "The resource name for the admin access token's secret version."]
+    pub admin_access_token_version_name: terrars::PrimField<std::string::String>,
+    #[doc = "The resource name for the read access token's secret version."]
+    pub read_access_token_version_name: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Immutable. The resource name for the webhook secret's secret version. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
+    pub webhook_secret_version_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudbuildBitbucketServerConfigSecretsEl {
@@ -508,12 +575,12 @@ impl BuildCloudbuildBitbucketServerConfigSecretsEl {
 }
 
 pub struct CloudbuildBitbucketServerConfigSecretsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudbuildBitbucketServerConfigSecretsElRef {
-    fn new(shared: StackShared, base: String) -> CloudbuildBitbucketServerConfigSecretsElRef {
+impl terrars::Ref for CloudbuildBitbucketServerConfigSecretsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildBitbucketServerConfigSecretsElRef {
         CloudbuildBitbucketServerConfigSecretsElRef {
             shared: shared,
             base: base.to_string(),
@@ -522,61 +589,64 @@ impl Ref for CloudbuildBitbucketServerConfigSecretsElRef {
 }
 
 impl CloudbuildBitbucketServerConfigSecretsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `admin_access_token_version_name` after provisioning.\nThe resource name for the admin access token's secret version."]
-    pub fn admin_access_token_version_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.admin_access_token_version_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `admin_access_token_version_name` after provisioning.\nThe resource name for the admin access token's secret version."]
+    pub fn admin_access_token_version_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_access_token_version_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `read_access_token_version_name` after provisioning.\nThe resource name for the read access token's secret version."]
-    pub fn read_access_token_version_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.read_access_token_version_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `read_access_token_version_name` after provisioning.\nThe resource name for the read access token's secret version."]
+    pub fn read_access_token_version_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_access_token_version_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `webhook_secret_version_name` after provisioning.\nImmutable. The resource name for the webhook secret's secret version. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
-    pub fn webhook_secret_version_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.webhook_secret_version_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `webhook_secret_version_name` after provisioning.\nImmutable. The resource name for the webhook secret's secret version. Once this field has been set, it cannot be changed.\nChanging this field will result in deleting/ recreating the resource."]
+    pub fn webhook_secret_version_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook_secret_version_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudbuildBitbucketServerConfigTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudbuildBitbucketServerConfigTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudbuildBitbucketServerConfigTimeoutsEl {
-    type O = BlockAssignable<CloudbuildBitbucketServerConfigTimeoutsEl>;
+impl terrars::ToListMappable for CloudbuildBitbucketServerConfigTimeoutsEl {
+    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfigTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -597,12 +667,12 @@ impl BuildCloudbuildBitbucketServerConfigTimeoutsEl {
 }
 
 pub struct CloudbuildBitbucketServerConfigTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudbuildBitbucketServerConfigTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> CloudbuildBitbucketServerConfigTimeoutsElRef {
+impl terrars::Ref for CloudbuildBitbucketServerConfigTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildBitbucketServerConfigTimeoutsElRef {
         CloudbuildBitbucketServerConfigTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -611,28 +681,30 @@ impl Ref for CloudbuildBitbucketServerConfigTimeoutsElRef {
 }
 
 impl CloudbuildBitbucketServerConfigTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudbuildBitbucketServerConfigDynamic {
-    connected_repositories: Option<DynamicBlock<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
-    secrets: Option<DynamicBlock<CloudbuildBitbucketServerConfigSecretsEl>>,
+    connected_repositories: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
+    secrets: std::option::Option<terrars::DynamicBlock<CloudbuildBitbucketServerConfigSecretsEl>>,
 }

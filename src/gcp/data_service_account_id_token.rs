@@ -1,130 +1,164 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataServiceAccountIdTokenData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delegates: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_email: Option<PrimField<bool>>,
-    target_audience: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_service_account: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delegates: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_email: std::option::Option<terrars::PrimField<bool>>,
+    target_audience: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataServiceAccountIdToken_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataServiceAccountIdTokenData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataServiceAccountIdTokenData>,
 }
 
 #[derive(Clone)]
-pub struct DataServiceAccountIdToken(Rc<DataServiceAccountIdToken_>);
+pub struct DataServiceAccountIdToken(std::rc::Rc<DataServiceAccountIdToken_>);
 
 impl DataServiceAccountIdToken {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `delegates`.\n"]
-    pub fn set_delegates(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().delegates = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `include_email`.\n"]
-    pub fn set_include_email(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().include_email = Some(v.into());
+    #[doc = "Set the field `delegates`.\n"]
+    pub fn set_delegates(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().delegates = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_service_account`.\n"]
-    pub fn set_target_service_account(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().target_service_account = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `delegates` after provisioning.\n"]
-    pub fn delegates(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.delegates", self.extract_ref()))
+    #[doc = "Set the field `include_email`.\n"]
+    pub fn set_include_email(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().include_email = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `target_service_account`.\n"]
+    pub fn set_target_service_account(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().target_service_account = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id_token` after provisioning.\n"]
-    pub fn id_token(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id_token", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `delegates` after provisioning.\n"]
+    pub fn delegates(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.delegates", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `include_email` after provisioning.\n"]
-    pub fn include_email(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_email", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `target_audience` after provisioning.\n"]
-    pub fn target_audience(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_audience", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id_token` after provisioning.\n"]
+    pub fn id_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id_token", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `target_service_account` after provisioning.\n"]
-    pub fn target_service_account(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_service_account", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `include_email` after provisioning.\n"]
+    pub fn include_email(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_email", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_audience` after provisioning.\n"]
+    pub fn target_audience(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_audience", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_service_account` after provisioning.\n"]
+    pub fn target_service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_service_account", self.extract_ref()))
     }
 }
 
-impl Referable for DataServiceAccountIdToken {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataServiceAccountIdToken {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataServiceAccountIdToken { }
+impl terrars::Datasource for DataServiceAccountIdToken { }
 
-impl ToListMappable for DataServiceAccountIdToken {
-    type O = ListRef<DataServiceAccountIdTokenRef>;
+impl terrars::ToListMappable for DataServiceAccountIdToken {
+    type O = terrars::ListRef<DataServiceAccountIdTokenRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataServiceAccountIdToken_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataServiceAccountIdToken_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_service_account_id_token".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -134,20 +168,21 @@ impl Datasource_ for DataServiceAccountIdToken_ {
 }
 
 pub struct BuildDataServiceAccountIdToken {
-    pub tf_id: String,
-    #[doc= ""]
-    pub target_audience: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub target_audience: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataServiceAccountIdToken {
-    pub fn build(self, stack: &mut Stack) -> DataServiceAccountIdToken {
-        let out = DataServiceAccountIdToken(Rc::new(DataServiceAccountIdToken_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataServiceAccountIdToken {
+        let out = DataServiceAccountIdToken(std::rc::Rc::new(DataServiceAccountIdToken_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataServiceAccountIdTokenData {
+            data: std::cell::RefCell::new(DataServiceAccountIdTokenData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 delegates: core::default::Default::default(),
                 id: core::default::Default::default(),
                 include_email: core::default::Default::default(),
@@ -161,12 +196,12 @@ impl BuildDataServiceAccountIdToken {
 }
 
 pub struct DataServiceAccountIdTokenRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataServiceAccountIdTokenRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataServiceAccountIdTokenRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -175,41 +210,41 @@ impl Ref for DataServiceAccountIdTokenRef {
 }
 
 impl DataServiceAccountIdTokenRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `delegates` after provisioning.\n"]
-    pub fn delegates(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.delegates", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `delegates` after provisioning.\n"]
+    pub fn delegates(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.delegates", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id_token` after provisioning.\n"]
-    pub fn id_token(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id_token", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id_token` after provisioning.\n"]
+    pub fn id_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id_token", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `include_email` after provisioning.\n"]
-    pub fn include_email(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_email", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `include_email` after provisioning.\n"]
+    pub fn include_email(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_email", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `target_audience` after provisioning.\n"]
-    pub fn target_audience(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_audience", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `target_audience` after provisioning.\n"]
+    pub fn target_audience(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_audience", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `target_service_account` after provisioning.\n"]
-    pub fn target_service_account(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_service_account", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `target_service_account` after provisioning.\n"]
+    pub fn target_service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_service_account", self.extract_ref()))
     }
 }

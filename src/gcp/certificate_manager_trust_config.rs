@@ -1,57 +1,61 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct CertificateManagerTrustConfigData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    location: PrimField<String>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<CertificateManagerTrustConfigTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    trust_stores: Option<Vec<CertificateManagerTrustConfigTrustStoresEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    location: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<CertificateManagerTrustConfigTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_stores: std::option::Option<std::vec::Vec<CertificateManagerTrustConfigTrustStoresEl>>,
     dynamic: CertificateManagerTrustConfigDynamic,
 }
 
 struct CertificateManagerTrustConfig_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CertificateManagerTrustConfigData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CertificateManagerTrustConfigData>,
 }
 
 #[derive(Clone)]
-pub struct CertificateManagerTrustConfig(Rc<CertificateManagerTrustConfig_>);
+pub struct CertificateManagerTrustConfig(std::rc::Rc<CertificateManagerTrustConfig_>);
 
 impl CertificateManagerTrustConfig {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -66,135 +70,182 @@ impl CertificateManagerTrustConfig {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\nOne or more paragraphs of text description of a trust config."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `labels`.\nSet of label tags associated with the trust config.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn set_labels(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().labels = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc = "Set the field `description`.\nOne or more paragraphs of text description of a trust config."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<CertificateManagerTrustConfigTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `trust_stores`.\n"]
-    pub fn set_trust_stores(self, v: impl Into<BlockAssignable<CertificateManagerTrustConfigTrustStoresEl>>) -> Self {
+    #[doc =
+        "Set the field `labels`.\nSet of label tags associated with the trust config.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerTrustConfigTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `trust_stores`.\n"]
+    pub fn set_trust_stores(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().trust_stores = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().trust_stores = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.trust_stores = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.trust_stores = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nOne or more paragraphs of text description of a trust config."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nOne or more paragraphs of text description of a trust config."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nSet of label tags associated with the trust config.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nSet of label tags associated with the trust config.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe trust config location."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe trust config location."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the trust config. Trust config names must be unique globally."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the trust config. Trust config names must be unique globally."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> CertificateManagerTrustConfigTimeoutsElRef {
         CertificateManagerTrustConfigTimeoutsElRef::new(
             self.shared().clone(),
@@ -202,35 +253,35 @@ impl CertificateManagerTrustConfig {
         )
     }
 
-    #[doc= "Get a reference to the value of field `trust_stores` after provisioning.\n"]
-    pub fn trust_stores(&self) -> ListRef<CertificateManagerTrustConfigTrustStoresElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.trust_stores", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `trust_stores` after provisioning.\n"]
+    pub fn trust_stores(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.trust_stores", self.extract_ref()))
     }
 }
 
-impl Referable for CertificateManagerTrustConfig {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for CertificateManagerTrustConfig {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for CertificateManagerTrustConfig { }
+impl terrars::Resource for CertificateManagerTrustConfig { }
 
-impl ToListMappable for CertificateManagerTrustConfig {
-    type O = ListRef<CertificateManagerTrustConfigRef>;
+impl terrars::ToListMappable for CertificateManagerTrustConfig {
+    type O = terrars::ListRef<CertificateManagerTrustConfigRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for CertificateManagerTrustConfig_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for CertificateManagerTrustConfig_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_certificate_manager_trust_config".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -240,23 +291,24 @@ impl Resource_ for CertificateManagerTrustConfig_ {
 }
 
 pub struct BuildCertificateManagerTrustConfig {
-    pub tf_id: String,
-    #[doc= "The trust config location."]
-    pub location: PrimField<String>,
-    #[doc= "A user-defined name of the trust config. Trust config names must be unique globally."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The trust config location."]
+    pub location: terrars::PrimField<std::string::String>,
+    #[doc = "A user-defined name of the trust config. Trust config names must be unique globally."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCertificateManagerTrustConfig {
-    pub fn build(self, stack: &mut Stack) -> CertificateManagerTrustConfig {
-        let out = CertificateManagerTrustConfig(Rc::new(CertificateManagerTrustConfig_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> CertificateManagerTrustConfig {
+        let out = CertificateManagerTrustConfig(std::rc::Rc::new(CertificateManagerTrustConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CertificateManagerTrustConfigData {
+            data: std::cell::RefCell::new(CertificateManagerTrustConfigData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -265,7 +317,7 @@ impl BuildCertificateManagerTrustConfig {
                 project: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 trust_stores: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -274,12 +326,12 @@ impl BuildCertificateManagerTrustConfig {
 }
 
 pub struct CertificateManagerTrustConfigRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CertificateManagerTrustConfigRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CertificateManagerTrustConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -288,65 +340,72 @@ impl Ref for CertificateManagerTrustConfigRef {
 }
 
 impl CertificateManagerTrustConfigRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nOne or more paragraphs of text description of a trust config."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nOne or more paragraphs of text description of a trust config."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nSet of label tags associated with the trust config.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nSet of label tags associated with the trust config.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe trust config location."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe trust config location."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the trust config. Trust config names must be unique globally."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the trust config. Trust config names must be unique globally."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> CertificateManagerTrustConfigTimeoutsElRef {
         CertificateManagerTrustConfigTimeoutsElRef::new(
             self.shared().clone(),
@@ -354,47 +413,47 @@ impl CertificateManagerTrustConfigRef {
         )
     }
 
-    #[doc= "Get a reference to the value of field `trust_stores` after provisioning.\n"]
-    pub fn trust_stores(&self) -> ListRef<CertificateManagerTrustConfigTrustStoresElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.trust_stores", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `trust_stores` after provisioning.\n"]
+    pub fn trust_stores(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.trust_stores", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct CertificateManagerTrustConfigTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CertificateManagerTrustConfigTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CertificateManagerTrustConfigTimeoutsEl {
-    type O = BlockAssignable<CertificateManagerTrustConfigTimeoutsEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfigTimeoutsEl {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -415,12 +474,12 @@ impl BuildCertificateManagerTrustConfigTimeoutsEl {
 }
 
 pub struct CertificateManagerTrustConfigTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CertificateManagerTrustConfigTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> CertificateManagerTrustConfigTimeoutsElRef {
+impl terrars::Ref for CertificateManagerTrustConfigTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerTrustConfigTimeoutsElRef {
         CertificateManagerTrustConfigTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -429,45 +488,46 @@ impl Ref for CertificateManagerTrustConfigTimeoutsElRef {
 }
 
 impl CertificateManagerTrustConfigTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pem_certificate: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pem_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
-    #[doc= "Set the field `pem_certificate`.\nPEM intermediate certificate used for building up paths for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
-    pub fn set_pem_certificate(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.pem_certificate = Some(v.into());
+    #[doc =
+        "Set the field `pem_certificate`.\nPEM intermediate certificate used for building up paths for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
+    pub fn set_pem_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pem_certificate = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
-    type O = BlockAssignable<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -486,12 +546,15 @@ impl BuildCertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
 }
 
 pub struct CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
-    fn new(shared: StackShared, base: String) -> CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
+impl terrars::Ref for CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
         CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
             shared: shared,
             base: base.to_string(),
@@ -500,35 +563,37 @@ impl Ref for CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
 }
 
 impl CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `pem_certificate` after provisioning.\nPEM intermediate certificate used for building up paths for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
-    pub fn pem_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pem_certificate", self.base))
+    #[doc =
+        "Get a reference to the value of field `pem_certificate` after provisioning.\nPEM intermediate certificate used for building up paths for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
+    pub fn pem_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem_certificate", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pem_certificate: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pem_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
-    #[doc= "Set the field `pem_certificate`.\nPEM root certificate of the PKI used for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
-    pub fn set_pem_certificate(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.pem_certificate = Some(v.into());
+    #[doc =
+        "Set the field `pem_certificate`.\nPEM root certificate of the PKI used for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
+    pub fn set_pem_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pem_certificate = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
-    type O = BlockAssignable<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -547,12 +612,15 @@ impl BuildCertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
 }
 
 pub struct CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
-    fn new(shared: StackShared, base: String) -> CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
+impl terrars::Ref for CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
         CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
             shared: shared,
             base: base.to_string(),
@@ -561,70 +629,85 @@ impl Ref for CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
 }
 
 impl CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `pem_certificate` after provisioning.\nPEM root certificate of the PKI used for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
-    pub fn pem_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pem_certificate", self.base))
+    #[doc =
+        "Get a reference to the value of field `pem_certificate` after provisioning.\nPEM root certificate of the PKI used for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
+    pub fn pem_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem_certificate", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CertificateManagerTrustConfigTrustStoresElDynamic {
-    intermediate_cas: Option<DynamicBlock<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
-    trust_anchors: Option<DynamicBlock<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
+    intermediate_cas: std
+    ::option
+    ::Option<terrars::DynamicBlock<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
+    trust_anchors: std
+    ::option
+    ::Option<terrars::DynamicBlock<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CertificateManagerTrustConfigTrustStoresEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    intermediate_cas: Option<Vec<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    trust_anchors: Option<Vec<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    intermediate_cas: std::option::Option<std::vec::Vec<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_anchors: std::option::Option<std::vec::Vec<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
     dynamic: CertificateManagerTrustConfigTrustStoresElDynamic,
 }
 
 impl CertificateManagerTrustConfigTrustStoresEl {
-    #[doc= "Set the field `intermediate_cas`.\n"]
+    #[doc = "Set the field `intermediate_cas`.\n"]
     pub fn set_intermediate_cas(
         mut self,
-        v: impl Into<BlockAssignable<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.intermediate_cas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.intermediate_cas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.intermediate_cas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.intermediate_cas = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `trust_anchors`.\n"]
+    #[doc = "Set the field `trust_anchors`.\n"]
     pub fn set_trust_anchors(
         mut self,
-        v: impl Into<BlockAssignable<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.trust_anchors = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.trust_anchors = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.trust_anchors = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.trust_anchors = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CertificateManagerTrustConfigTrustStoresEl {
-    type O = BlockAssignable<CertificateManagerTrustConfigTrustStoresEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresEl {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -639,18 +722,18 @@ impl BuildCertificateManagerTrustConfigTrustStoresEl {
         CertificateManagerTrustConfigTrustStoresEl {
             intermediate_cas: core::default::Default::default(),
             trust_anchors: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CertificateManagerTrustConfigTrustStoresElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CertificateManagerTrustConfigTrustStoresElRef {
-    fn new(shared: StackShared, base: String) -> CertificateManagerTrustConfigTrustStoresElRef {
+impl terrars::Ref for CertificateManagerTrustConfigTrustStoresElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerTrustConfigTrustStoresElRef {
         CertificateManagerTrustConfigTrustStoresElRef {
             shared: shared,
             base: base.to_string(),
@@ -659,22 +742,22 @@ impl Ref for CertificateManagerTrustConfigTrustStoresElRef {
 }
 
 impl CertificateManagerTrustConfigTrustStoresElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `intermediate_cas` after provisioning.\n"]
-    pub fn intermediate_cas(&self) -> ListRef<CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.intermediate_cas", self.base))
+    #[doc = "Get a reference to the value of field `intermediate_cas` after provisioning.\n"]
+    pub fn intermediate_cas(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.intermediate_cas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `trust_anchors` after provisioning.\n"]
-    pub fn trust_anchors(&self) -> ListRef<CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.trust_anchors", self.base))
+    #[doc = "Get a reference to the value of field `trust_anchors` after provisioning.\n"]
+    pub fn trust_anchors(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.trust_anchors", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CertificateManagerTrustConfigDynamic {
-    trust_stores: Option<DynamicBlock<CertificateManagerTrustConfigTrustStoresEl>>,
+    trust_stores: std::option::Option<terrars::DynamicBlock<CertificateManagerTrustConfigTrustStoresEl>>,
 }

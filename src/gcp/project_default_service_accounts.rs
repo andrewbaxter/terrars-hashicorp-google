@@ -1,50 +1,54 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct ProjectDefaultServiceAccountsData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    action: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    project: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    restore_policy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ProjectDefaultServiceAccountsTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    action: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    project: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    restore_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ProjectDefaultServiceAccountsTimeoutsEl>,
 }
 
 struct ProjectDefaultServiceAccounts_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ProjectDefaultServiceAccountsData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ProjectDefaultServiceAccountsData>,
 }
 
 #[derive(Clone)]
-pub struct ProjectDefaultServiceAccounts(Rc<ProjectDefaultServiceAccounts_>);
+pub struct ProjectDefaultServiceAccounts(std::rc::Rc<ProjectDefaultServiceAccounts_>);
 
 impl ProjectDefaultServiceAccounts {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -59,85 +63,123 @@ impl ProjectDefaultServiceAccounts {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `restore_policy`.\nThe action to be performed in the default service accounts on the resource destroy.\n\t\t\t\tValid values are NONE, REVERT and REVERT_AND_IGNORE_FAILURE. It is applied for any action but in the DEPRIVILEGE."]
-    pub fn set_restore_policy(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().restore_policy = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ProjectDefaultServiceAccountsTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `action` after provisioning.\nThe action to be performed in the default service accounts. Valid values are: DEPRIVILEGE, DELETE, DISABLE.\n\t\t\t\tNote that DEPRIVILEGE action will ignore the REVERT configuration in the restore_policy."]
-    pub fn action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Set the field `restore_policy`.\nThe action to be performed in the default service accounts on the resource destroy.\n\t\t\t\tValid values are NONE, REVERT and REVERT_AND_IGNORE_FAILURE. It is applied for any action but in the DEPRIVILEGE."]
+    pub fn set_restore_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().restore_policy = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe project ID where service accounts are created."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ProjectDefaultServiceAccountsTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `restore_policy` after provisioning.\nThe action to be performed in the default service accounts on the resource destroy.\n\t\t\t\tValid values are NONE, REVERT and REVERT_AND_IGNORE_FAILURE. It is applied for any action but in the DEPRIVILEGE."]
-    pub fn restore_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.restore_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `action` after provisioning.\nThe action to be performed in the default service accounts. Valid values are: DEPRIVILEGE, DELETE, DISABLE.\n\t\t\t\tNote that DEPRIVILEGE action will ignore the REVERT configuration in the restore_policy."]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_accounts` after provisioning.\nThe Service Accounts changed by this resource. It is used for revert the action on the destroy."]
-    pub fn service_accounts(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.service_accounts", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe project ID where service accounts are created."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `restore_policy` after provisioning.\nThe action to be performed in the default service accounts on the resource destroy.\n\t\t\t\tValid values are NONE, REVERT and REVERT_AND_IGNORE_FAILURE. It is applied for any action but in the DEPRIVILEGE."]
+    pub fn restore_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.restore_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `service_accounts` after provisioning.\nThe Service Accounts changed by this resource. It is used for revert the action on the destroy."]
+    pub fn service_accounts(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.service_accounts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ProjectDefaultServiceAccountsTimeoutsElRef {
         ProjectDefaultServiceAccountsTimeoutsElRef::new(
             self.shared().clone(),
@@ -146,29 +188,29 @@ impl ProjectDefaultServiceAccounts {
     }
 }
 
-impl Referable for ProjectDefaultServiceAccounts {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ProjectDefaultServiceAccounts {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ProjectDefaultServiceAccounts { }
+impl terrars::Resource for ProjectDefaultServiceAccounts { }
 
-impl ToListMappable for ProjectDefaultServiceAccounts {
-    type O = ListRef<ProjectDefaultServiceAccountsRef>;
+impl terrars::ToListMappable for ProjectDefaultServiceAccounts {
+    type O = terrars::ListRef<ProjectDefaultServiceAccountsRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ProjectDefaultServiceAccounts_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ProjectDefaultServiceAccounts_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_project_default_service_accounts".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -178,23 +220,25 @@ impl Resource_ for ProjectDefaultServiceAccounts_ {
 }
 
 pub struct BuildProjectDefaultServiceAccounts {
-    pub tf_id: String,
-    #[doc= "The action to be performed in the default service accounts. Valid values are: DEPRIVILEGE, DELETE, DISABLE.\n\t\t\t\tNote that DEPRIVILEGE action will ignore the REVERT configuration in the restore_policy."]
-    pub action: PrimField<String>,
-    #[doc= "The project ID where service accounts are created."]
-    pub project: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "The action to be performed in the default service accounts. Valid values are: DEPRIVILEGE, DELETE, DISABLE.\n\t\t\t\tNote that DEPRIVILEGE action will ignore the REVERT configuration in the restore_policy."]
+    pub action: terrars::PrimField<std::string::String>,
+    #[doc = "The project ID where service accounts are created."]
+    pub project: terrars::PrimField<std::string::String>,
 }
 
 impl BuildProjectDefaultServiceAccounts {
-    pub fn build(self, stack: &mut Stack) -> ProjectDefaultServiceAccounts {
-        let out = ProjectDefaultServiceAccounts(Rc::new(ProjectDefaultServiceAccounts_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ProjectDefaultServiceAccounts {
+        let out = ProjectDefaultServiceAccounts(std::rc::Rc::new(ProjectDefaultServiceAccounts_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ProjectDefaultServiceAccountsData {
+            data: std::cell::RefCell::new(ProjectDefaultServiceAccountsData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 action: self.action,
                 id: core::default::Default::default(),
                 project: self.project,
@@ -208,12 +252,12 @@ impl BuildProjectDefaultServiceAccounts {
 }
 
 pub struct ProjectDefaultServiceAccountsRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ProjectDefaultServiceAccountsRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ProjectDefaultServiceAccountsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -222,40 +266,44 @@ impl Ref for ProjectDefaultServiceAccountsRef {
 }
 
 impl ProjectDefaultServiceAccountsRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `action` after provisioning.\nThe action to be performed in the default service accounts. Valid values are: DEPRIVILEGE, DELETE, DISABLE.\n\t\t\t\tNote that DEPRIVILEGE action will ignore the REVERT configuration in the restore_policy."]
-    pub fn action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `action` after provisioning.\nThe action to be performed in the default service accounts. Valid values are: DEPRIVILEGE, DELETE, DISABLE.\n\t\t\t\tNote that DEPRIVILEGE action will ignore the REVERT configuration in the restore_policy."]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe project ID where service accounts are created."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe project ID where service accounts are created."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `restore_policy` after provisioning.\nThe action to be performed in the default service accounts on the resource destroy.\n\t\t\t\tValid values are NONE, REVERT and REVERT_AND_IGNORE_FAILURE. It is applied for any action but in the DEPRIVILEGE."]
-    pub fn restore_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.restore_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `restore_policy` after provisioning.\nThe action to be performed in the default service accounts on the resource destroy.\n\t\t\t\tValid values are NONE, REVERT and REVERT_AND_IGNORE_FAILURE. It is applied for any action but in the DEPRIVILEGE."]
+    pub fn restore_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.restore_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_accounts` after provisioning.\nThe Service Accounts changed by this resource. It is used for revert the action on the destroy."]
-    pub fn service_accounts(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.service_accounts", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `service_accounts` after provisioning.\nThe Service Accounts changed by this resource. It is used for revert the action on the destroy."]
+    pub fn service_accounts(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.service_accounts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ProjectDefaultServiceAccountsTimeoutsElRef {
         ProjectDefaultServiceAccountsTimeoutsElRef::new(
             self.shared().clone(),
@@ -266,39 +314,39 @@ impl ProjectDefaultServiceAccountsRef {
 
 #[derive(Serialize)]
 pub struct ProjectDefaultServiceAccountsTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    read: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ProjectDefaultServiceAccountsTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.read = Some(v.into());
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ProjectDefaultServiceAccountsTimeoutsEl {
-    type O = BlockAssignable<ProjectDefaultServiceAccountsTimeoutsEl>;
+impl terrars::ToListMappable for ProjectDefaultServiceAccountsTimeoutsEl {
+    type O = terrars::BlockAssignable<ProjectDefaultServiceAccountsTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -319,12 +367,12 @@ impl BuildProjectDefaultServiceAccountsTimeoutsEl {
 }
 
 pub struct ProjectDefaultServiceAccountsTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ProjectDefaultServiceAccountsTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ProjectDefaultServiceAccountsTimeoutsElRef {
+impl terrars::Ref for ProjectDefaultServiceAccountsTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectDefaultServiceAccountsTimeoutsElRef {
         ProjectDefaultServiceAccountsTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -333,22 +381,22 @@ impl Ref for ProjectDefaultServiceAccountsTimeoutsElRef {
 }
 
 impl ProjectDefaultServiceAccountsTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `read` after provisioning.\n"]
-    pub fn read(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
 }

@@ -1,53 +1,57 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct BigqueryReservationAssignmentData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    assignee: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    job_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    reservation: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<BigqueryReservationAssignmentTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    assignee: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    job_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    reservation: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<BigqueryReservationAssignmentTimeoutsEl>,
 }
 
 struct BigqueryReservationAssignment_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<BigqueryReservationAssignmentData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<BigqueryReservationAssignmentData>,
 }
 
 #[derive(Clone)]
-pub struct BigqueryReservationAssignment(Rc<BigqueryReservationAssignment_>);
+pub struct BigqueryReservationAssignment(std::rc::Rc<BigqueryReservationAssignment_>);
 
 impl BigqueryReservationAssignment {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -62,106 +66,143 @@ impl BigqueryReservationAssignment {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\nThe location for the resource"]
-    pub fn set_location(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().location = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\nThe project for the resource"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<BigqueryReservationAssignmentTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `assignee` after provisioning.\nThe resource which will use the reservation. E.g. projects/myproject, folders/123, organizations/456."]
-    pub fn assignee(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.assignee", self.extract_ref()))
+    #[doc = "Set the field `location`.\nThe location for the resource"]
+    pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `project`.\nThe project for the resource"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `job_type` after provisioning.\nTypes of job, which could be specified when using the reservation. Possible values: JOB_TYPE_UNSPECIFIED, PIPELINE, QUERY"]
-    pub fn job_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_type", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryReservationAssignmentTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location for the resource"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `assignee` after provisioning.\nThe resource which will use the reservation. E.g. projects/myproject, folders/123, organizations/456."]
+    pub fn assignee(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.assignee", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nOutput only. The resource name of the assignment."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `job_type` after provisioning.\nTypes of job, which could be specified when using the reservation. Possible values: JOB_TYPE_UNSPECIFIED, PIPELINE, QUERY"]
+    pub fn job_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `reservation` after provisioning.\nThe reservation for the resource"]
-    pub fn reservation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reservation", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location for the resource"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nAssignment will remain in PENDING state if no active capacity commitment is present. It will become ACTIVE when some capacity commitment becomes active. Possible values: STATE_UNSPECIFIED, PENDING, ACTIVE"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nOutput only. The resource name of the assignment."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `reservation` after provisioning.\nThe reservation for the resource"]
+    pub fn reservation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reservation", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `state` after provisioning.\nAssignment will remain in PENDING state if no active capacity commitment is present. It will become ACTIVE when some capacity commitment becomes active. Possible values: STATE_UNSPECIFIED, PENDING, ACTIVE"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> BigqueryReservationAssignmentTimeoutsElRef {
         BigqueryReservationAssignmentTimeoutsElRef::new(
             self.shared().clone(),
@@ -170,29 +211,29 @@ impl BigqueryReservationAssignment {
     }
 }
 
-impl Referable for BigqueryReservationAssignment {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for BigqueryReservationAssignment {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for BigqueryReservationAssignment { }
+impl terrars::Resource for BigqueryReservationAssignment { }
 
-impl ToListMappable for BigqueryReservationAssignment {
-    type O = ListRef<BigqueryReservationAssignmentRef>;
+impl terrars::ToListMappable for BigqueryReservationAssignment {
+    type O = terrars::ListRef<BigqueryReservationAssignmentRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for BigqueryReservationAssignment_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for BigqueryReservationAssignment_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_bigquery_reservation_assignment".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -202,25 +243,27 @@ impl Resource_ for BigqueryReservationAssignment_ {
 }
 
 pub struct BuildBigqueryReservationAssignment {
-    pub tf_id: String,
-    #[doc= "The resource which will use the reservation. E.g. projects/myproject, folders/123, organizations/456."]
-    pub assignee: PrimField<String>,
-    #[doc= "Types of job, which could be specified when using the reservation. Possible values: JOB_TYPE_UNSPECIFIED, PIPELINE, QUERY"]
-    pub job_type: PrimField<String>,
-    #[doc= "The reservation for the resource"]
-    pub reservation: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The resource which will use the reservation. E.g. projects/myproject, folders/123, organizations/456."]
+    pub assignee: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Types of job, which could be specified when using the reservation. Possible values: JOB_TYPE_UNSPECIFIED, PIPELINE, QUERY"]
+    pub job_type: terrars::PrimField<std::string::String>,
+    #[doc = "The reservation for the resource"]
+    pub reservation: terrars::PrimField<std::string::String>,
 }
 
 impl BuildBigqueryReservationAssignment {
-    pub fn build(self, stack: &mut Stack) -> BigqueryReservationAssignment {
-        let out = BigqueryReservationAssignment(Rc::new(BigqueryReservationAssignment_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> BigqueryReservationAssignment {
+        let out = BigqueryReservationAssignment(std::rc::Rc::new(BigqueryReservationAssignment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(BigqueryReservationAssignmentData {
+            data: std::cell::RefCell::new(BigqueryReservationAssignmentData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 assignee: self.assignee,
                 id: core::default::Default::default(),
                 job_type: self.job_type,
@@ -236,12 +279,12 @@ impl BuildBigqueryReservationAssignment {
 }
 
 pub struct BigqueryReservationAssignmentRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for BigqueryReservationAssignmentRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for BigqueryReservationAssignmentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -250,55 +293,59 @@ impl Ref for BigqueryReservationAssignmentRef {
 }
 
 impl BigqueryReservationAssignmentRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `assignee` after provisioning.\nThe resource which will use the reservation. E.g. projects/myproject, folders/123, organizations/456."]
-    pub fn assignee(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.assignee", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `assignee` after provisioning.\nThe resource which will use the reservation. E.g. projects/myproject, folders/123, organizations/456."]
+    pub fn assignee(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.assignee", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `job_type` after provisioning.\nTypes of job, which could be specified when using the reservation. Possible values: JOB_TYPE_UNSPECIFIED, PIPELINE, QUERY"]
-    pub fn job_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_type", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `job_type` after provisioning.\nTypes of job, which could be specified when using the reservation. Possible values: JOB_TYPE_UNSPECIFIED, PIPELINE, QUERY"]
+    pub fn job_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location for the resource"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location for the resource"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nOutput only. The resource name of the assignment."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nOutput only. The resource name of the assignment."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `reservation` after provisioning.\nThe reservation for the resource"]
-    pub fn reservation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reservation", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `reservation` after provisioning.\nThe reservation for the resource"]
+    pub fn reservation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reservation", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nAssignment will remain in PENDING state if no active capacity commitment is present. It will become ACTIVE when some capacity commitment becomes active. Possible values: STATE_UNSPECIFIED, PENDING, ACTIVE"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `state` after provisioning.\nAssignment will remain in PENDING state if no active capacity commitment is present. It will become ACTIVE when some capacity commitment becomes active. Possible values: STATE_UNSPECIFIED, PENDING, ACTIVE"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> BigqueryReservationAssignmentTimeoutsElRef {
         BigqueryReservationAssignmentTimeoutsElRef::new(
             self.shared().clone(),
@@ -309,31 +356,31 @@ impl BigqueryReservationAssignmentRef {
 
 #[derive(Serialize)]
 pub struct BigqueryReservationAssignmentTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl BigqueryReservationAssignmentTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for BigqueryReservationAssignmentTimeoutsEl {
-    type O = BlockAssignable<BigqueryReservationAssignmentTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryReservationAssignmentTimeoutsEl {
+    type O = terrars::BlockAssignable<BigqueryReservationAssignmentTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -353,12 +400,12 @@ impl BuildBigqueryReservationAssignmentTimeoutsEl {
 }
 
 pub struct BigqueryReservationAssignmentTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for BigqueryReservationAssignmentTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> BigqueryReservationAssignmentTimeoutsElRef {
+impl terrars::Ref for BigqueryReservationAssignmentTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryReservationAssignmentTimeoutsElRef {
         BigqueryReservationAssignmentTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -367,17 +414,17 @@ impl Ref for BigqueryReservationAssignmentTimeoutsElRef {
 }
 
 impl BigqueryReservationAssignmentTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }

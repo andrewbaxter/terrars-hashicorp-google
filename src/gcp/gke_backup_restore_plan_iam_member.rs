@@ -1,54 +1,58 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct GkeBackupRestorePlanIamMemberData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    member: PrimField<String>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    role: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    condition: Option<Vec<GkeBackupRestorePlanIamMemberConditionEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    member: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    role: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    condition: std::option::Option<std::vec::Vec<GkeBackupRestorePlanIamMemberConditionEl>>,
     dynamic: GkeBackupRestorePlanIamMemberDynamic,
 }
 
 struct GkeBackupRestorePlanIamMember_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<GkeBackupRestorePlanIamMemberData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<GkeBackupRestorePlanIamMemberData>,
 }
 
 #[derive(Clone)]
-pub struct GkeBackupRestorePlanIamMember(Rc<GkeBackupRestorePlanIamMember_>);
+pub struct GkeBackupRestorePlanIamMember(std::rc::Rc<GkeBackupRestorePlanIamMember_>);
 
 impl GkeBackupRestorePlanIamMember {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -63,136 +67,172 @@ impl GkeBackupRestorePlanIamMember {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().location = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `condition`.\n"]
-    pub fn set_condition(self, v: impl Into<BlockAssignable<GkeBackupRestorePlanIamMemberConditionEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `condition`.\n"]
+    pub fn set_condition(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlanIamMemberConditionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().condition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().condition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.condition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.condition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `member` after provisioning.\n"]
-    pub fn member(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.member", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `member` after provisioning.\n"]
+    pub fn member(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.member", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role` after provisioning.\n"]
-    pub fn role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
+    pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> ListRef<GkeBackupRestorePlanIamMemberConditionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
+    pub fn condition(&self) -> terrars::ListRef<GkeBackupRestorePlanIamMemberConditionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
-impl Referable for GkeBackupRestorePlanIamMember {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for GkeBackupRestorePlanIamMember {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for GkeBackupRestorePlanIamMember { }
+impl terrars::Resource for GkeBackupRestorePlanIamMember { }
 
-impl ToListMappable for GkeBackupRestorePlanIamMember {
-    type O = ListRef<GkeBackupRestorePlanIamMemberRef>;
+impl terrars::ToListMappable for GkeBackupRestorePlanIamMember {
+    type O = terrars::ListRef<GkeBackupRestorePlanIamMemberRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for GkeBackupRestorePlanIamMember_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for GkeBackupRestorePlanIamMember_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_gke_backup_restore_plan_iam_member".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -202,25 +242,26 @@ impl Resource_ for GkeBackupRestorePlanIamMember_ {
 }
 
 pub struct BuildGkeBackupRestorePlanIamMember {
-    pub tf_id: String,
-    #[doc= ""]
-    pub member: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub role: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub member: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeBackupRestorePlanIamMember {
-    pub fn build(self, stack: &mut Stack) -> GkeBackupRestorePlanIamMember {
-        let out = GkeBackupRestorePlanIamMember(Rc::new(GkeBackupRestorePlanIamMember_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> GkeBackupRestorePlanIamMember {
+        let out = GkeBackupRestorePlanIamMember(std::rc::Rc::new(GkeBackupRestorePlanIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(GkeBackupRestorePlanIamMemberData {
+            data: std::cell::RefCell::new(GkeBackupRestorePlanIamMemberData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: core::default::Default::default(),
                 member: self.member,
@@ -228,7 +269,7 @@ impl BuildGkeBackupRestorePlanIamMember {
                 project: core::default::Default::default(),
                 role: self.role,
                 condition: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -237,12 +278,12 @@ impl BuildGkeBackupRestorePlanIamMember {
 }
 
 pub struct GkeBackupRestorePlanIamMemberRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupRestorePlanIamMemberRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for GkeBackupRestorePlanIamMemberRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -251,76 +292,76 @@ impl Ref for GkeBackupRestorePlanIamMemberRef {
 }
 
 impl GkeBackupRestorePlanIamMemberRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `member` after provisioning.\n"]
-    pub fn member(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.member", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `member` after provisioning.\n"]
+    pub fn member(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.member", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role` after provisioning.\n"]
-    pub fn role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
+    pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> ListRef<GkeBackupRestorePlanIamMemberConditionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
+    pub fn condition(&self) -> terrars::ListRef<GkeBackupRestorePlanIamMemberConditionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupRestorePlanIamMemberConditionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    expression: PrimField<String>,
-    title: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    expression: terrars::PrimField<std::string::String>,
+    title: terrars::PrimField<std::string::String>,
 }
 
 impl GkeBackupRestorePlanIamMemberConditionEl {
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.description = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeBackupRestorePlanIamMemberConditionEl {
-    type O = BlockAssignable<GkeBackupRestorePlanIamMemberConditionEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlanIamMemberConditionEl {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlanIamMemberConditionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -329,10 +370,10 @@ impl ToListMappable for GkeBackupRestorePlanIamMemberConditionEl {
 }
 
 pub struct BuildGkeBackupRestorePlanIamMemberConditionEl {
-    #[doc= ""]
-    pub expression: PrimField<String>,
-    #[doc= ""]
-    pub title: PrimField<String>,
+    #[doc = ""]
+    pub expression: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub title: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeBackupRestorePlanIamMemberConditionEl {
@@ -346,12 +387,12 @@ impl BuildGkeBackupRestorePlanIamMemberConditionEl {
 }
 
 pub struct GkeBackupRestorePlanIamMemberConditionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupRestorePlanIamMemberConditionElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupRestorePlanIamMemberConditionElRef {
+impl terrars::Ref for GkeBackupRestorePlanIamMemberConditionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupRestorePlanIamMemberConditionElRef {
         GkeBackupRestorePlanIamMemberConditionElRef {
             shared: shared,
             base: base.to_string(),
@@ -360,27 +401,27 @@ impl Ref for GkeBackupRestorePlanIamMemberConditionElRef {
 }
 
 impl GkeBackupRestorePlanIamMemberConditionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `expression` after provisioning.\n"]
-    pub fn expression(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `title` after provisioning.\n"]
-    pub fn title(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
+    #[doc = "Get a reference to the value of field `title` after provisioning.\n"]
+    pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GkeBackupRestorePlanIamMemberDynamic {
-    condition: Option<DynamicBlock<GkeBackupRestorePlanIamMemberConditionEl>>,
+    condition: std::option::Option<terrars::DynamicBlock<GkeBackupRestorePlanIamMemberConditionEl>>,
 }

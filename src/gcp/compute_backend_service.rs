@@ -1,100 +1,104 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct ComputeBackendServiceData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    affinity_cookie_ttl_sec: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compression_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    connection_draining_timeout_sec: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_request_headers: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_response_headers: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    edge_security_policy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_cdn: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    health_checks: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    load_balancing_scheme: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    locality_lb_policy: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    port_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    protocol: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_policy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    session_affinity: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_sec: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backend: Option<Vec<ComputeBackendServiceBackendEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cdn_policy: Option<Vec<ComputeBackendServiceCdnPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    circuit_breakers: Option<Vec<ComputeBackendServiceCircuitBreakersEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    consistent_hash: Option<Vec<ComputeBackendServiceConsistentHashEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iap: Option<Vec<ComputeBackendServiceIapEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    locality_lb_policies: Option<Vec<ComputeBackendServiceLocalityLbPoliciesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    log_config: Option<Vec<ComputeBackendServiceLogConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    outlier_detection: Option<Vec<ComputeBackendServiceOutlierDetectionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_settings: Option<Vec<ComputeBackendServiceSecuritySettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ComputeBackendServiceTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    affinity_cookie_ttl_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compression_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_draining_timeout_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_request_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_response_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    edge_security_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_cdn: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    health_checks: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancing_scheme: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    locality_lb_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    session_affinity: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backend: std::option::Option<std::vec::Vec<ComputeBackendServiceBackendEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cdn_policy: std::option::Option<std::vec::Vec<ComputeBackendServiceCdnPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    circuit_breakers: std::option::Option<std::vec::Vec<ComputeBackendServiceCircuitBreakersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    consistent_hash: std::option::Option<std::vec::Vec<ComputeBackendServiceConsistentHashEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iap: std::option::Option<std::vec::Vec<ComputeBackendServiceIapEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    locality_lb_policies: std::option::Option<std::vec::Vec<ComputeBackendServiceLocalityLbPoliciesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_config: std::option::Option<std::vec::Vec<ComputeBackendServiceLogConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    outlier_detection: std::option::Option<std::vec::Vec<ComputeBackendServiceOutlierDetectionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_settings: std::option::Option<std::vec::Vec<ComputeBackendServiceSecuritySettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeBackendServiceTimeoutsEl>,
     dynamic: ComputeBackendServiceDynamic,
 }
 
 struct ComputeBackendService_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ComputeBackendServiceData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ComputeBackendServiceData>,
 }
 
 #[derive(Clone)]
-pub struct ComputeBackendService(Rc<ComputeBackendService_>);
+pub struct ComputeBackendService(std::rc::Rc<ComputeBackendService_>);
 
 impl ComputeBackendService {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -109,459 +113,558 @@ impl ComputeBackendService {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `affinity_cookie_ttl_sec`.\nLifetime of cookies in seconds if session_affinity is\nGENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts\nonly until the end of the browser session (or equivalent). The\nmaximum allowed value for TTL is one day.\n\nWhen the load balancing scheme is INTERNAL, this field is not used."]
-    pub fn set_affinity_cookie_ttl_sec(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().affinity_cookie_ttl_sec = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `compression_mode`.\nCompress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. Possible values: [\"AUTOMATIC\", \"DISABLED\"]"]
-    pub fn set_compression_mode(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().compression_mode = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `connection_draining_timeout_sec`.\nTime for which instance will be drained (not accept new\nconnections, but still work to finish started)."]
-    pub fn set_connection_draining_timeout_sec(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().connection_draining_timeout_sec = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `custom_request_headers`.\nHeaders that the HTTP/S load balancer should add to proxied\nrequests."]
-    pub fn set_custom_request_headers(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_request_headers = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `custom_response_headers`.\nHeaders that the HTTP/S load balancer should add to proxied\nresponses."]
-    pub fn set_custom_response_headers(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_response_headers = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `description`.\nAn optional description of this resource."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `edge_security_policy`.\nThe resource URL for the edge security policy associated with this backend service."]
-    pub fn set_edge_security_policy(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().edge_security_policy = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `enable_cdn`.\nIf true, enable Cloud CDN for this BackendService."]
-    pub fn set_enable_cdn(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_cdn = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `health_checks`.\nThe set of URLs to the HttpHealthCheck or HttpsHealthCheck resource\nfor health checking this BackendService. Currently at most one health\ncheck can be specified.\n\nA health check must be specified unless the backend service uses an internet\nor serverless NEG as a backend.\n\nFor internal load balancing, a URL to a HealthCheck resource must be specified instead."]
-    pub fn set_health_checks(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().health_checks = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `load_balancing_scheme`.\nIndicates whether the backend service will be used with internal or\nexternal load balancing. A backend service created for one type of\nload balancing cannot be used with the other. For more information, refer to\n[Choosing a load balancer](https://cloud.google.com/load-balancing/docs/backend-service). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"INTERNAL_SELF_MANAGED\", \"INTERNAL_MANAGED\", \"EXTERNAL_MANAGED\"]"]
-    pub fn set_load_balancing_scheme(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().load_balancing_scheme = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `locality_lb_policy`.\nThe load balancing algorithm used within the scope of the locality.\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                 is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                   hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n               hashing to backends. The algorithm has the property that the\n               addition/removal of a host from a set of N hosts only affects\n               1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824\n\n* 'WEIGHTED_MAGLEV': Per-instance weighted Load Balancing via health check\n                     reported weights. If set, the Backend Service must\n                     configure a non legacy HTTP-based Health Check, and\n                     health check replies are expected to contain\n                     non-standard HTTP response header field\n                     X-Load-Balancing-Endpoint-Weight to specify the\n                     per-instance weights. If set, Load Balancing is weight\n                     based on the per-instance weights reported in the last\n                     processed health check replies, as long as every\n                     instance either reported a valid weight or had\n                     UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains\n                     equal-weight.\n\n\nThis field is applicable to either:\n\n* A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2,\n  and loadBalancingScheme set to INTERNAL_MANAGED.\n* A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.\n* A regional backend service with loadBalancingScheme set to EXTERNAL (External Network\n  Load Balancing). Only MAGLEV and WEIGHTED_MAGLEV values are possible for External\n  Network Load Balancing. The default is MAGLEV.\n\n\nIf session_affinity is not NONE, and this field is not set to MAGLEV, WEIGHTED_MAGLEV,\nor RING_HASH, session affinity settings will not take effect.\n\nOnly ROUND_ROBIN and RING_HASH are supported when the backend service is referenced\nby a URL map that is bound to target gRPC proxy that has validate_for_proxyless\nfield set to true. Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\", \"WEIGHTED_MAGLEV\"]"]
-    pub fn set_locality_lb_policy(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().locality_lb_policy = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `port_name`.\nName of backend port. The same name should appear in the instance\ngroups referenced by this service. Required when the load balancing\nscheme is EXTERNAL."]
-    pub fn set_port_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().port_name = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `protocol`.\nThe protocol this BackendService uses to communicate with backends.\nThe default is HTTP. **NOTE**: HTTP2 is only valid for beta HTTP/2 load balancer\ntypes and may result in errors if used with the GA API. **NOTE**: With protocol “UNSPECIFIED”,\nthe backend service can be used by Layer 4 Internal Load Balancing or Network Load Balancing\nwith TCP/UDP/L3_DEFAULT Forwarding Rule protocol. Possible values: [\"HTTP\", \"HTTPS\", \"HTTP2\", \"TCP\", \"SSL\", \"GRPC\", \"UNSPECIFIED\"]"]
-    pub fn set_protocol(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().protocol = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `security_policy`.\nThe security policy associated with this backend service."]
-    pub fn set_security_policy(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().security_policy = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `session_affinity`.\nType of session affinity to use. The default is NONE. Session affinity is\nnot applicable if the protocol is UDP. Possible values: [\"NONE\", \"CLIENT_IP\", \"CLIENT_IP_PORT_PROTO\", \"CLIENT_IP_PROTO\", \"GENERATED_COOKIE\", \"HEADER_FIELD\", \"HTTP_COOKIE\"]"]
-    pub fn set_session_affinity(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().session_affinity = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `timeout_sec`.\nHow many seconds to wait for the backend before considering it a\nfailed request. Default is 30 seconds. Valid range is [1, 86400]."]
-    pub fn set_timeout_sec(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().timeout_sec = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `backend`.\n"]
-    pub fn set_backend(self, v: impl Into<BlockAssignable<ComputeBackendServiceBackendEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().backend = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.backend = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `cdn_policy`.\n"]
-    pub fn set_cdn_policy(self, v: impl Into<BlockAssignable<ComputeBackendServiceCdnPolicyEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cdn_policy = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cdn_policy = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `circuit_breakers`.\n"]
-    pub fn set_circuit_breakers(self, v: impl Into<BlockAssignable<ComputeBackendServiceCircuitBreakersEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().circuit_breakers = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.circuit_breakers = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `consistent_hash`.\n"]
-    pub fn set_consistent_hash(self, v: impl Into<BlockAssignable<ComputeBackendServiceConsistentHashEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().consistent_hash = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.consistent_hash = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `iap`.\n"]
-    pub fn set_iap(self, v: impl Into<BlockAssignable<ComputeBackendServiceIapEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().iap = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.iap = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `locality_lb_policies`.\n"]
-    pub fn set_locality_lb_policies(
+    pub fn add_lifecycle_precondition(
         self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceLocalityLbPoliciesEl>>,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc =
+        "Set the field `affinity_cookie_ttl_sec`.\nLifetime of cookies in seconds if session_affinity is\nGENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts\nonly until the end of the browser session (or equivalent). The\nmaximum allowed value for TTL is one day.\n\nWhen the load balancing scheme is INTERNAL, this field is not used."]
+    pub fn set_affinity_cookie_ttl_sec(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().affinity_cookie_ttl_sec = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `compression_mode`.\nCompress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. Possible values: [\"AUTOMATIC\", \"DISABLED\"]"]
+    pub fn set_compression_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().compression_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `connection_draining_timeout_sec`.\nTime for which instance will be drained (not accept new\nconnections, but still work to finish started)."]
+    pub fn set_connection_draining_timeout_sec(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().connection_draining_timeout_sec = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `custom_request_headers`.\nHeaders that the HTTP/S load balancer should add to proxied\nrequests."]
+    pub fn set_custom_request_headers(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_request_headers = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `custom_response_headers`.\nHeaders that the HTTP/S load balancer should add to proxied\nresponses."]
+    pub fn set_custom_response_headers(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_response_headers = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `description`.\nAn optional description of this resource."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `edge_security_policy`.\nThe resource URL for the edge security policy associated with this backend service."]
+    pub fn set_edge_security_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().edge_security_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_cdn`.\nIf true, enable Cloud CDN for this BackendService."]
+    pub fn set_enable_cdn(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_cdn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `health_checks`.\nThe set of URLs to the HttpHealthCheck or HttpsHealthCheck resource\nfor health checking this BackendService. Currently at most one health\ncheck can be specified.\n\nA health check must be specified unless the backend service uses an internet\nor serverless NEG as a backend.\n\nFor internal load balancing, a URL to a HealthCheck resource must be specified instead."]
+    pub fn set_health_checks(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().health_checks = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `load_balancing_scheme`.\nIndicates whether the backend service will be used with internal or\nexternal load balancing. A backend service created for one type of\nload balancing cannot be used with the other. For more information, refer to\n[Choosing a load balancer](https://cloud.google.com/load-balancing/docs/backend-service). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"INTERNAL_SELF_MANAGED\", \"INTERNAL_MANAGED\", \"EXTERNAL_MANAGED\"]"]
+    pub fn set_load_balancing_scheme(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().load_balancing_scheme = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `locality_lb_policy`.\nThe load balancing algorithm used within the scope of the locality.\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                 is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                   hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n               hashing to backends. The algorithm has the property that the\n               addition/removal of a host from a set of N hosts only affects\n               1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824\n\n* 'WEIGHTED_MAGLEV': Per-instance weighted Load Balancing via health check\n                     reported weights. If set, the Backend Service must\n                     configure a non legacy HTTP-based Health Check, and\n                     health check replies are expected to contain\n                     non-standard HTTP response header field\n                     X-Load-Balancing-Endpoint-Weight to specify the\n                     per-instance weights. If set, Load Balancing is weight\n                     based on the per-instance weights reported in the last\n                     processed health check replies, as long as every\n                     instance either reported a valid weight or had\n                     UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains\n                     equal-weight.\n\n\nThis field is applicable to either:\n\n* A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2,\n  and loadBalancingScheme set to INTERNAL_MANAGED.\n* A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.\n* A regional backend service with loadBalancingScheme set to EXTERNAL (External Network\n  Load Balancing). Only MAGLEV and WEIGHTED_MAGLEV values are possible for External\n  Network Load Balancing. The default is MAGLEV.\n\n\nIf session_affinity is not NONE, and this field is not set to MAGLEV, WEIGHTED_MAGLEV,\nor RING_HASH, session affinity settings will not take effect.\n\nOnly ROUND_ROBIN and RING_HASH are supported when the backend service is referenced\nby a URL map that is bound to target gRPC proxy that has validate_for_proxyless\nfield set to true. Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\", \"WEIGHTED_MAGLEV\"]"]
+    pub fn set_locality_lb_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().locality_lb_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `port_name`.\nName of backend port. The same name should appear in the instance\ngroups referenced by this service. Required when the load balancing\nscheme is EXTERNAL."]
+    pub fn set_port_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().port_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `protocol`.\nThe protocol this BackendService uses to communicate with backends.\nThe default is HTTP. **NOTE**: HTTP2 is only valid for beta HTTP/2 load balancer\ntypes and may result in errors if used with the GA API. **NOTE**: With protocol “UNSPECIFIED”,\nthe backend service can be used by Layer 4 Internal Load Balancing or Network Load Balancing\nwith TCP/UDP/L3_DEFAULT Forwarding Rule protocol. Possible values: [\"HTTP\", \"HTTPS\", \"HTTP2\", \"TCP\", \"SSL\", \"GRPC\", \"UNSPECIFIED\"]"]
+    pub fn set_protocol(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().protocol = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `security_policy`.\nThe security policy associated with this backend service."]
+    pub fn set_security_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().security_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `session_affinity`.\nType of session affinity to use. The default is NONE. Session affinity is\nnot applicable if the protocol is UDP. Possible values: [\"NONE\", \"CLIENT_IP\", \"CLIENT_IP_PORT_PROTO\", \"CLIENT_IP_PROTO\", \"GENERATED_COOKIE\", \"HEADER_FIELD\", \"HTTP_COOKIE\"]"]
+    pub fn set_session_affinity(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().session_affinity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `timeout_sec`.\nHow many seconds to wait for the backend before considering it a\nfailed request. Default is 30 seconds. Valid range is [1, 86400]."]
+    pub fn set_timeout_sec(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().timeout_sec = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `backend`.\n"]
+    pub fn set_backend(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceBackendEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().locality_lb_policies = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().backend = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.locality_lb_policies = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.backend = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `log_config`.\n"]
-    pub fn set_log_config(self, v: impl Into<BlockAssignable<ComputeBackendServiceLogConfigEl>>) -> Self {
+    #[doc = "Set the field `cdn_policy`.\n"]
+    pub fn set_cdn_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceCdnPolicyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().log_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cdn_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.log_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cdn_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `outlier_detection`.\n"]
-    pub fn set_outlier_detection(self, v: impl Into<BlockAssignable<ComputeBackendServiceOutlierDetectionEl>>) -> Self {
+    #[doc = "Set the field `circuit_breakers`.\n"]
+    pub fn set_circuit_breakers(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceCircuitBreakersEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().outlier_detection = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().circuit_breakers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.outlier_detection = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.circuit_breakers = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `security_settings`.\n"]
-    pub fn set_security_settings(self, v: impl Into<BlockAssignable<ComputeBackendServiceSecuritySettingsEl>>) -> Self {
+    #[doc = "Set the field `consistent_hash`.\n"]
+    pub fn set_consistent_hash(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceConsistentHashEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().security_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().consistent_hash = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.security_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.consistent_hash = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ComputeBackendServiceTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `iap`.\n"]
+    pub fn set_iap(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceIapEl>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().iap = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.iap = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
-    #[doc= "Get a reference to the value of field `affinity_cookie_ttl_sec` after provisioning.\nLifetime of cookies in seconds if session_affinity is\nGENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts\nonly until the end of the browser session (or equivalent). The\nmaximum allowed value for TTL is one day.\n\nWhen the load balancing scheme is INTERNAL, this field is not used."]
-    pub fn affinity_cookie_ttl_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.affinity_cookie_ttl_sec", self.extract_ref()))
+    #[doc = "Set the field `locality_lb_policies`.\n"]
+    pub fn set_locality_lb_policies(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceLocalityLbPoliciesEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().locality_lb_policies = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.locality_lb_policies = std::option::Option::Some(d);
+            },
+        }
+        self
     }
 
-    #[doc= "Get a reference to the value of field `compression_mode` after provisioning.\nCompress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. Possible values: [\"AUTOMATIC\", \"DISABLED\"]"]
-    pub fn compression_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.compression_mode", self.extract_ref()))
+    #[doc = "Set the field `log_config`.\n"]
+    pub fn set_log_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceLogConfigEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().log_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.log_config = std::option::Option::Some(d);
+            },
+        }
+        self
     }
 
-    #[doc= "Get a reference to the value of field `connection_draining_timeout_sec` after provisioning.\nTime for which instance will be drained (not accept new\nconnections, but still work to finish started)."]
-    pub fn connection_draining_timeout_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.connection_draining_timeout_sec", self.extract_ref()))
+    #[doc = "Set the field `outlier_detection`.\n"]
+    pub fn set_outlier_detection(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceOutlierDetectionEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().outlier_detection = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.outlier_detection = std::option::Option::Some(d);
+            },
+        }
+        self
     }
 
-    #[doc= "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
-    pub fn creation_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    #[doc = "Set the field `security_settings`.\n"]
+    pub fn set_security_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceSecuritySettingsEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().security_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.security_settings = std::option::Option::Some(d);
+            },
+        }
+        self
     }
 
-    #[doc= "Get a reference to the value of field `custom_request_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nrequests."]
-    pub fn custom_request_headers(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.custom_request_headers", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeBackendServiceTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `custom_response_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nresponses."]
-    pub fn custom_response_headers(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.custom_response_headers", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `affinity_cookie_ttl_sec` after provisioning.\nLifetime of cookies in seconds if session_affinity is\nGENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts\nonly until the end of the browser session (or equivalent). The\nmaximum allowed value for TTL is one day.\n\nWhen the load balancing scheme is INTERNAL, this field is not used."]
+    pub fn affinity_cookie_ttl_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.affinity_cookie_ttl_sec", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `compression_mode` after provisioning.\nCompress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. Possible values: [\"AUTOMATIC\", \"DISABLED\"]"]
+    pub fn compression_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `edge_security_policy` after provisioning.\nThe resource URL for the edge security policy associated with this backend service."]
-    pub fn edge_security_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.edge_security_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `connection_draining_timeout_sec` after provisioning.\nTime for which instance will be drained (not accept new\nconnections, but still work to finish started)."]
+    pub fn connection_draining_timeout_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.connection_draining_timeout_sec", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendService."]
-    pub fn enable_cdn(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_cdn", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `fingerprint` after provisioning.\nFingerprint of this resource. A hash of the contents stored in this\nobject. This field is used in optimistic locking."]
-    pub fn fingerprint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_request_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nrequests."]
+    pub fn custom_request_headers(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.custom_request_headers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `generated_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
-    pub fn generated_id(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.generated_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_response_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nresponses."]
+    pub fn custom_response_headers(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.custom_response_headers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `health_checks` after provisioning.\nThe set of URLs to the HttpHealthCheck or HttpsHealthCheck resource\nfor health checking this BackendService. Currently at most one health\ncheck can be specified.\n\nA health check must be specified unless the backend service uses an internet\nor serverless NEG as a backend.\n\nFor internal load balancing, a URL to a HealthCheck resource must be specified instead."]
-    pub fn health_checks(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.health_checks", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `edge_security_policy` after provisioning.\nThe resource URL for the edge security policy associated with this backend service."]
+    pub fn edge_security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.edge_security_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nIndicates whether the backend service will be used with internal or\nexternal load balancing. A backend service created for one type of\nload balancing cannot be used with the other. For more information, refer to\n[Choosing a load balancer](https://cloud.google.com/load-balancing/docs/backend-service). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"INTERNAL_SELF_MANAGED\", \"INTERNAL_MANAGED\", \"EXTERNAL_MANAGED\"]"]
-    pub fn load_balancing_scheme(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendService."]
+    pub fn enable_cdn(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_cdn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `locality_lb_policy` after provisioning.\nThe load balancing algorithm used within the scope of the locality.\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                 is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                   hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n               hashing to backends. The algorithm has the property that the\n               addition/removal of a host from a set of N hosts only affects\n               1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824\n\n* 'WEIGHTED_MAGLEV': Per-instance weighted Load Balancing via health check\n                     reported weights. If set, the Backend Service must\n                     configure a non legacy HTTP-based Health Check, and\n                     health check replies are expected to contain\n                     non-standard HTTP response header field\n                     X-Load-Balancing-Endpoint-Weight to specify the\n                     per-instance weights. If set, Load Balancing is weight\n                     based on the per-instance weights reported in the last\n                     processed health check replies, as long as every\n                     instance either reported a valid weight or had\n                     UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains\n                     equal-weight.\n\n\nThis field is applicable to either:\n\n* A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2,\n  and loadBalancingScheme set to INTERNAL_MANAGED.\n* A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.\n* A regional backend service with loadBalancingScheme set to EXTERNAL (External Network\n  Load Balancing). Only MAGLEV and WEIGHTED_MAGLEV values are possible for External\n  Network Load Balancing. The default is MAGLEV.\n\n\nIf session_affinity is not NONE, and this field is not set to MAGLEV, WEIGHTED_MAGLEV,\nor RING_HASH, session affinity settings will not take effect.\n\nOnly ROUND_ROBIN and RING_HASH are supported when the backend service is referenced\nby a URL map that is bound to target gRPC proxy that has validate_for_proxyless\nfield set to true. Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\", \"WEIGHTED_MAGLEV\"]"]
-    pub fn locality_lb_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.locality_lb_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `fingerprint` after provisioning.\nFingerprint of this resource. A hash of the contents stored in this\nobject. This field is used in optimistic locking."]
+    pub fn fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `generated_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
+    pub fn generated_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generated_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `port_name` after provisioning.\nName of backend port. The same name should appear in the instance\ngroups referenced by this service. Required when the load balancing\nscheme is EXTERNAL."]
-    pub fn port_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `health_checks` after provisioning.\nThe set of URLs to the HttpHealthCheck or HttpsHealthCheck resource\nfor health checking this BackendService. Currently at most one health\ncheck can be specified.\n\nA health check must be specified unless the backend service uses an internet\nor serverless NEG as a backend.\n\nFor internal load balancing, a URL to a HealthCheck resource must be specified instead."]
+    pub fn health_checks(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.health_checks", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `protocol` after provisioning.\nThe protocol this BackendService uses to communicate with backends.\nThe default is HTTP. **NOTE**: HTTP2 is only valid for beta HTTP/2 load balancer\ntypes and may result in errors if used with the GA API. **NOTE**: With protocol “UNSPECIFIED”,\nthe backend service can be used by Layer 4 Internal Load Balancing or Network Load Balancing\nwith TCP/UDP/L3_DEFAULT Forwarding Rule protocol. Possible values: [\"HTTP\", \"HTTPS\", \"HTTP2\", \"TCP\", \"SSL\", \"GRPC\", \"UNSPECIFIED\"]"]
-    pub fn protocol(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nIndicates whether the backend service will be used with internal or\nexternal load balancing. A backend service created for one type of\nload balancing cannot be used with the other. For more information, refer to\n[Choosing a load balancer](https://cloud.google.com/load-balancing/docs/backend-service). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"INTERNAL_SELF_MANAGED\", \"INTERNAL_MANAGED\", \"EXTERNAL_MANAGED\"]"]
+    pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_policy` after provisioning.\nThe security policy associated with this backend service."]
-    pub fn security_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `locality_lb_policy` after provisioning.\nThe load balancing algorithm used within the scope of the locality.\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                 is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                   hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n               hashing to backends. The algorithm has the property that the\n               addition/removal of a host from a set of N hosts only affects\n               1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824\n\n* 'WEIGHTED_MAGLEV': Per-instance weighted Load Balancing via health check\n                     reported weights. If set, the Backend Service must\n                     configure a non legacy HTTP-based Health Check, and\n                     health check replies are expected to contain\n                     non-standard HTTP response header field\n                     X-Load-Balancing-Endpoint-Weight to specify the\n                     per-instance weights. If set, Load Balancing is weight\n                     based on the per-instance weights reported in the last\n                     processed health check replies, as long as every\n                     instance either reported a valid weight or had\n                     UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains\n                     equal-weight.\n\n\nThis field is applicable to either:\n\n* A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2,\n  and loadBalancingScheme set to INTERNAL_MANAGED.\n* A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.\n* A regional backend service with loadBalancingScheme set to EXTERNAL (External Network\n  Load Balancing). Only MAGLEV and WEIGHTED_MAGLEV values are possible for External\n  Network Load Balancing. The default is MAGLEV.\n\n\nIf session_affinity is not NONE, and this field is not set to MAGLEV, WEIGHTED_MAGLEV,\nor RING_HASH, session affinity settings will not take effect.\n\nOnly ROUND_ROBIN and RING_HASH are supported when the backend service is referenced\nby a URL map that is bound to target gRPC proxy that has validate_for_proxyless\nfield set to true. Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\", \"WEIGHTED_MAGLEV\"]"]
+    pub fn locality_lb_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.locality_lb_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\n"]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `session_affinity` after provisioning.\nType of session affinity to use. The default is NONE. Session affinity is\nnot applicable if the protocol is UDP. Possible values: [\"NONE\", \"CLIENT_IP\", \"CLIENT_IP_PORT_PROTO\", \"CLIENT_IP_PROTO\", \"GENERATED_COOKIE\", \"HEADER_FIELD\", \"HTTP_COOKIE\"]"]
-    pub fn session_affinity(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.session_affinity", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `port_name` after provisioning.\nName of backend port. The same name should appear in the instance\ngroups referenced by this service. Required when the load balancing\nscheme is EXTERNAL."]
+    pub fn port_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_sec` after provisioning.\nHow many seconds to wait for the backend before considering it a\nfailed request. Default is 30 seconds. Valid range is [1, 86400]."]
-    pub fn timeout_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_sec", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cdn_policy` after provisioning.\n"]
-    pub fn cdn_policy(&self) -> ListRef<ComputeBackendServiceCdnPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cdn_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `protocol` after provisioning.\nThe protocol this BackendService uses to communicate with backends.\nThe default is HTTP. **NOTE**: HTTP2 is only valid for beta HTTP/2 load balancer\ntypes and may result in errors if used with the GA API. **NOTE**: With protocol “UNSPECIFIED”,\nthe backend service can be used by Layer 4 Internal Load Balancing or Network Load Balancing\nwith TCP/UDP/L3_DEFAULT Forwarding Rule protocol. Possible values: [\"HTTP\", \"HTTPS\", \"HTTP2\", \"TCP\", \"SSL\", \"GRPC\", \"UNSPECIFIED\"]"]
+    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `circuit_breakers` after provisioning.\n"]
-    pub fn circuit_breakers(&self) -> ListRef<ComputeBackendServiceCircuitBreakersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.circuit_breakers", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `security_policy` after provisioning.\nThe security policy associated with this backend service."]
+    pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `consistent_hash` after provisioning.\n"]
-    pub fn consistent_hash(&self) -> ListRef<ComputeBackendServiceConsistentHashElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.consistent_hash", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `iap` after provisioning.\n"]
-    pub fn iap(&self) -> ListRef<ComputeBackendServiceIapElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.iap", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `session_affinity` after provisioning.\nType of session affinity to use. The default is NONE. Session affinity is\nnot applicable if the protocol is UDP. Possible values: [\"NONE\", \"CLIENT_IP\", \"CLIENT_IP_PORT_PROTO\", \"CLIENT_IP_PROTO\", \"GENERATED_COOKIE\", \"HEADER_FIELD\", \"HTTP_COOKIE\"]"]
+    pub fn session_affinity(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.session_affinity", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `locality_lb_policies` after provisioning.\n"]
-    pub fn locality_lb_policies(&self) -> ListRef<ComputeBackendServiceLocalityLbPoliciesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.locality_lb_policies", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `timeout_sec` after provisioning.\nHow many seconds to wait for the backend before considering it a\nfailed request. Default is 30 seconds. Valid range is [1, 86400]."]
+    pub fn timeout_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_sec", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> ListRef<ComputeBackendServiceLogConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cdn_policy` after provisioning.\n"]
+    pub fn cdn_policy(&self) -> terrars::ListRef<ComputeBackendServiceCdnPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cdn_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `outlier_detection` after provisioning.\n"]
-    pub fn outlier_detection(&self) -> ListRef<ComputeBackendServiceOutlierDetectionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.outlier_detection", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `circuit_breakers` after provisioning.\n"]
+    pub fn circuit_breakers(&self) -> terrars::ListRef<ComputeBackendServiceCircuitBreakersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.circuit_breakers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_settings` after provisioning.\n"]
-    pub fn security_settings(&self) -> ListRef<ComputeBackendServiceSecuritySettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.security_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `consistent_hash` after provisioning.\n"]
+    pub fn consistent_hash(&self) -> terrars::ListRef<ComputeBackendServiceConsistentHashElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.consistent_hash", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `iap` after provisioning.\n"]
+    pub fn iap(&self) -> terrars::ListRef<ComputeBackendServiceIapElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iap", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `locality_lb_policies` after provisioning.\n"]
+    pub fn locality_lb_policies(&self) -> terrars::ListRef<ComputeBackendServiceLocalityLbPoliciesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.locality_lb_policies", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
+    pub fn log_config(&self) -> terrars::ListRef<ComputeBackendServiceLogConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `outlier_detection` after provisioning.\n"]
+    pub fn outlier_detection(&self) -> terrars::ListRef<ComputeBackendServiceOutlierDetectionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.outlier_detection", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_settings` after provisioning.\n"]
+    pub fn security_settings(&self) -> terrars::ListRef<ComputeBackendServiceSecuritySettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_settings", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComputeBackendServiceTimeoutsElRef {
         ComputeBackendServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for ComputeBackendService {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ComputeBackendService {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ComputeBackendService { }
+impl terrars::Resource for ComputeBackendService { }
 
-impl ToListMappable for ComputeBackendService {
-    type O = ListRef<ComputeBackendServiceRef>;
+impl terrars::ToListMappable for ComputeBackendService {
+    type O = terrars::ListRef<ComputeBackendServiceRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ComputeBackendService_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ComputeBackendService_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_compute_backend_service".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -571,21 +674,23 @@ impl Resource_ for ComputeBackendService_ {
 }
 
 pub struct BuildComputeBackendService {
-    pub tf_id: String,
-    #[doc= "Name of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "Name of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeBackendService {
-    pub fn build(self, stack: &mut Stack) -> ComputeBackendService {
-        let out = ComputeBackendService(Rc::new(ComputeBackendService_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ComputeBackendService {
+        let out = ComputeBackendService(std::rc::Rc::new(ComputeBackendService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ComputeBackendServiceData {
+            data: std::cell::RefCell::new(ComputeBackendServiceData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 affinity_cookie_ttl_sec: core::default::Default::default(),
                 compression_mode: core::default::Default::default(),
                 connection_draining_timeout_sec: core::default::Default::default(),
@@ -615,7 +720,7 @@ impl BuildComputeBackendService {
                 outlier_detection: core::default::Default::default(),
                 security_settings: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -624,12 +729,12 @@ impl BuildComputeBackendService {
 }
 
 pub struct ComputeBackendServiceRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ComputeBackendServiceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -638,170 +743,193 @@ impl Ref for ComputeBackendServiceRef {
 }
 
 impl ComputeBackendServiceRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `affinity_cookie_ttl_sec` after provisioning.\nLifetime of cookies in seconds if session_affinity is\nGENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts\nonly until the end of the browser session (or equivalent). The\nmaximum allowed value for TTL is one day.\n\nWhen the load balancing scheme is INTERNAL, this field is not used."]
-    pub fn affinity_cookie_ttl_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.affinity_cookie_ttl_sec", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `affinity_cookie_ttl_sec` after provisioning.\nLifetime of cookies in seconds if session_affinity is\nGENERATED_COOKIE. If set to 0, the cookie is non-persistent and lasts\nonly until the end of the browser session (or equivalent). The\nmaximum allowed value for TTL is one day.\n\nWhen the load balancing scheme is INTERNAL, this field is not used."]
+    pub fn affinity_cookie_ttl_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.affinity_cookie_ttl_sec", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `compression_mode` after provisioning.\nCompress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. Possible values: [\"AUTOMATIC\", \"DISABLED\"]"]
-    pub fn compression_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.compression_mode", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `compression_mode` after provisioning.\nCompress text responses using Brotli or gzip compression, based on the client's Accept-Encoding header. Possible values: [\"AUTOMATIC\", \"DISABLED\"]"]
+    pub fn compression_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `connection_draining_timeout_sec` after provisioning.\nTime for which instance will be drained (not accept new\nconnections, but still work to finish started)."]
-    pub fn connection_draining_timeout_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.connection_draining_timeout_sec", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `connection_draining_timeout_sec` after provisioning.\nTime for which instance will be drained (not accept new\nconnections, but still work to finish started)."]
+    pub fn connection_draining_timeout_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.connection_draining_timeout_sec", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
-    pub fn creation_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_request_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nrequests."]
-    pub fn custom_request_headers(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.custom_request_headers", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_request_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nrequests."]
+    pub fn custom_request_headers(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.custom_request_headers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_response_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nresponses."]
-    pub fn custom_response_headers(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.custom_response_headers", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_response_headers` after provisioning.\nHeaders that the HTTP/S load balancer should add to proxied\nresponses."]
+    pub fn custom_response_headers(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.custom_response_headers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `edge_security_policy` after provisioning.\nThe resource URL for the edge security policy associated with this backend service."]
-    pub fn edge_security_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.edge_security_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `edge_security_policy` after provisioning.\nThe resource URL for the edge security policy associated with this backend service."]
+    pub fn edge_security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.edge_security_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendService."]
-    pub fn enable_cdn(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_cdn", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendService."]
+    pub fn enable_cdn(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_cdn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `fingerprint` after provisioning.\nFingerprint of this resource. A hash of the contents stored in this\nobject. This field is used in optimistic locking."]
-    pub fn fingerprint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `fingerprint` after provisioning.\nFingerprint of this resource. A hash of the contents stored in this\nobject. This field is used in optimistic locking."]
+    pub fn fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `generated_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
-    pub fn generated_id(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.generated_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `generated_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
+    pub fn generated_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generated_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `health_checks` after provisioning.\nThe set of URLs to the HttpHealthCheck or HttpsHealthCheck resource\nfor health checking this BackendService. Currently at most one health\ncheck can be specified.\n\nA health check must be specified unless the backend service uses an internet\nor serverless NEG as a backend.\n\nFor internal load balancing, a URL to a HealthCheck resource must be specified instead."]
-    pub fn health_checks(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.health_checks", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `health_checks` after provisioning.\nThe set of URLs to the HttpHealthCheck or HttpsHealthCheck resource\nfor health checking this BackendService. Currently at most one health\ncheck can be specified.\n\nA health check must be specified unless the backend service uses an internet\nor serverless NEG as a backend.\n\nFor internal load balancing, a URL to a HealthCheck resource must be specified instead."]
+    pub fn health_checks(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.health_checks", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nIndicates whether the backend service will be used with internal or\nexternal load balancing. A backend service created for one type of\nload balancing cannot be used with the other. For more information, refer to\n[Choosing a load balancer](https://cloud.google.com/load-balancing/docs/backend-service). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"INTERNAL_SELF_MANAGED\", \"INTERNAL_MANAGED\", \"EXTERNAL_MANAGED\"]"]
-    pub fn load_balancing_scheme(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nIndicates whether the backend service will be used with internal or\nexternal load balancing. A backend service created for one type of\nload balancing cannot be used with the other. For more information, refer to\n[Choosing a load balancer](https://cloud.google.com/load-balancing/docs/backend-service). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"INTERNAL_SELF_MANAGED\", \"INTERNAL_MANAGED\", \"EXTERNAL_MANAGED\"]"]
+    pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `locality_lb_policy` after provisioning.\nThe load balancing algorithm used within the scope of the locality.\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                 is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                   hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n               hashing to backends. The algorithm has the property that the\n               addition/removal of a host from a set of N hosts only affects\n               1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824\n\n* 'WEIGHTED_MAGLEV': Per-instance weighted Load Balancing via health check\n                     reported weights. If set, the Backend Service must\n                     configure a non legacy HTTP-based Health Check, and\n                     health check replies are expected to contain\n                     non-standard HTTP response header field\n                     X-Load-Balancing-Endpoint-Weight to specify the\n                     per-instance weights. If set, Load Balancing is weight\n                     based on the per-instance weights reported in the last\n                     processed health check replies, as long as every\n                     instance either reported a valid weight or had\n                     UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains\n                     equal-weight.\n\n\nThis field is applicable to either:\n\n* A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2,\n  and loadBalancingScheme set to INTERNAL_MANAGED.\n* A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.\n* A regional backend service with loadBalancingScheme set to EXTERNAL (External Network\n  Load Balancing). Only MAGLEV and WEIGHTED_MAGLEV values are possible for External\n  Network Load Balancing. The default is MAGLEV.\n\n\nIf session_affinity is not NONE, and this field is not set to MAGLEV, WEIGHTED_MAGLEV,\nor RING_HASH, session affinity settings will not take effect.\n\nOnly ROUND_ROBIN and RING_HASH are supported when the backend service is referenced\nby a URL map that is bound to target gRPC proxy that has validate_for_proxyless\nfield set to true. Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\", \"WEIGHTED_MAGLEV\"]"]
-    pub fn locality_lb_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.locality_lb_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `locality_lb_policy` after provisioning.\nThe load balancing algorithm used within the scope of the locality.\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                 is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                   hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n               hashing to backends. The algorithm has the property that the\n               addition/removal of a host from a set of N hosts only affects\n               1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824\n\n* 'WEIGHTED_MAGLEV': Per-instance weighted Load Balancing via health check\n                     reported weights. If set, the Backend Service must\n                     configure a non legacy HTTP-based Health Check, and\n                     health check replies are expected to contain\n                     non-standard HTTP response header field\n                     X-Load-Balancing-Endpoint-Weight to specify the\n                     per-instance weights. If set, Load Balancing is weight\n                     based on the per-instance weights reported in the last\n                     processed health check replies, as long as every\n                     instance either reported a valid weight or had\n                     UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains\n                     equal-weight.\n\n\nThis field is applicable to either:\n\n* A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2,\n  and loadBalancingScheme set to INTERNAL_MANAGED.\n* A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.\n* A regional backend service with loadBalancingScheme set to EXTERNAL (External Network\n  Load Balancing). Only MAGLEV and WEIGHTED_MAGLEV values are possible for External\n  Network Load Balancing. The default is MAGLEV.\n\n\nIf session_affinity is not NONE, and this field is not set to MAGLEV, WEIGHTED_MAGLEV,\nor RING_HASH, session affinity settings will not take effect.\n\nOnly ROUND_ROBIN and RING_HASH are supported when the backend service is referenced\nby a URL map that is bound to target gRPC proxy that has validate_for_proxyless\nfield set to true. Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\", \"WEIGHTED_MAGLEV\"]"]
+    pub fn locality_lb_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.locality_lb_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `port_name` after provisioning.\nName of backend port. The same name should appear in the instance\ngroups referenced by this service. Required when the load balancing\nscheme is EXTERNAL."]
-    pub fn port_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `port_name` after provisioning.\nName of backend port. The same name should appear in the instance\ngroups referenced by this service. Required when the load balancing\nscheme is EXTERNAL."]
+    pub fn port_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `protocol` after provisioning.\nThe protocol this BackendService uses to communicate with backends.\nThe default is HTTP. **NOTE**: HTTP2 is only valid for beta HTTP/2 load balancer\ntypes and may result in errors if used with the GA API. **NOTE**: With protocol “UNSPECIFIED”,\nthe backend service can be used by Layer 4 Internal Load Balancing or Network Load Balancing\nwith TCP/UDP/L3_DEFAULT Forwarding Rule protocol. Possible values: [\"HTTP\", \"HTTPS\", \"HTTP2\", \"TCP\", \"SSL\", \"GRPC\", \"UNSPECIFIED\"]"]
-    pub fn protocol(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `protocol` after provisioning.\nThe protocol this BackendService uses to communicate with backends.\nThe default is HTTP. **NOTE**: HTTP2 is only valid for beta HTTP/2 load balancer\ntypes and may result in errors if used with the GA API. **NOTE**: With protocol “UNSPECIFIED”,\nthe backend service can be used by Layer 4 Internal Load Balancing or Network Load Balancing\nwith TCP/UDP/L3_DEFAULT Forwarding Rule protocol. Possible values: [\"HTTP\", \"HTTPS\", \"HTTP2\", \"TCP\", \"SSL\", \"GRPC\", \"UNSPECIFIED\"]"]
+    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_policy` after provisioning.\nThe security policy associated with this backend service."]
-    pub fn security_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `security_policy` after provisioning.\nThe security policy associated with this backend service."]
+    pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\n"]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `session_affinity` after provisioning.\nType of session affinity to use. The default is NONE. Session affinity is\nnot applicable if the protocol is UDP. Possible values: [\"NONE\", \"CLIENT_IP\", \"CLIENT_IP_PORT_PROTO\", \"CLIENT_IP_PROTO\", \"GENERATED_COOKIE\", \"HEADER_FIELD\", \"HTTP_COOKIE\"]"]
-    pub fn session_affinity(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.session_affinity", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `session_affinity` after provisioning.\nType of session affinity to use. The default is NONE. Session affinity is\nnot applicable if the protocol is UDP. Possible values: [\"NONE\", \"CLIENT_IP\", \"CLIENT_IP_PORT_PROTO\", \"CLIENT_IP_PROTO\", \"GENERATED_COOKIE\", \"HEADER_FIELD\", \"HTTP_COOKIE\"]"]
+    pub fn session_affinity(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.session_affinity", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_sec` after provisioning.\nHow many seconds to wait for the backend before considering it a\nfailed request. Default is 30 seconds. Valid range is [1, 86400]."]
-    pub fn timeout_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_sec", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `timeout_sec` after provisioning.\nHow many seconds to wait for the backend before considering it a\nfailed request. Default is 30 seconds. Valid range is [1, 86400]."]
+    pub fn timeout_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_sec", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cdn_policy` after provisioning.\n"]
-    pub fn cdn_policy(&self) -> ListRef<ComputeBackendServiceCdnPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cdn_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cdn_policy` after provisioning.\n"]
+    pub fn cdn_policy(&self) -> terrars::ListRef<ComputeBackendServiceCdnPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cdn_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `circuit_breakers` after provisioning.\n"]
-    pub fn circuit_breakers(&self) -> ListRef<ComputeBackendServiceCircuitBreakersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.circuit_breakers", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `circuit_breakers` after provisioning.\n"]
+    pub fn circuit_breakers(&self) -> terrars::ListRef<ComputeBackendServiceCircuitBreakersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.circuit_breakers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `consistent_hash` after provisioning.\n"]
-    pub fn consistent_hash(&self) -> ListRef<ComputeBackendServiceConsistentHashElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.consistent_hash", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `consistent_hash` after provisioning.\n"]
+    pub fn consistent_hash(&self) -> terrars::ListRef<ComputeBackendServiceConsistentHashElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.consistent_hash", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `iap` after provisioning.\n"]
-    pub fn iap(&self) -> ListRef<ComputeBackendServiceIapElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.iap", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `iap` after provisioning.\n"]
+    pub fn iap(&self) -> terrars::ListRef<ComputeBackendServiceIapElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iap", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `locality_lb_policies` after provisioning.\n"]
-    pub fn locality_lb_policies(&self) -> ListRef<ComputeBackendServiceLocalityLbPoliciesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.locality_lb_policies", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `locality_lb_policies` after provisioning.\n"]
+    pub fn locality_lb_policies(&self) -> terrars::ListRef<ComputeBackendServiceLocalityLbPoliciesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.locality_lb_policies", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> ListRef<ComputeBackendServiceLogConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
+    pub fn log_config(&self) -> terrars::ListRef<ComputeBackendServiceLogConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `outlier_detection` after provisioning.\n"]
-    pub fn outlier_detection(&self) -> ListRef<ComputeBackendServiceOutlierDetectionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.outlier_detection", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `outlier_detection` after provisioning.\n"]
+    pub fn outlier_detection(&self) -> terrars::ListRef<ComputeBackendServiceOutlierDetectionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.outlier_detection", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_settings` after provisioning.\n"]
-    pub fn security_settings(&self) -> ListRef<ComputeBackendServiceSecuritySettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.security_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_settings` after provisioning.\n"]
+    pub fn security_settings(&self) -> terrars::ListRef<ComputeBackendServiceSecuritySettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComputeBackendServiceTimeoutsElRef {
         ComputeBackendServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -809,96 +937,106 @@ impl ComputeBackendServiceRef {
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceBackendEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    balancing_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    capacity_scaler: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    group: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_connections: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_connections_per_endpoint: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_connections_per_instance: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_rate: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_rate_per_endpoint: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_rate_per_instance: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_utilization: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    balancing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity_scaler: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    group: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_connections: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_connections_per_endpoint: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_connections_per_instance: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_rate: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_rate_per_endpoint: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_rate_per_instance: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_utilization: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ComputeBackendServiceBackendEl {
-    #[doc= "Set the field `balancing_mode`.\nSpecifies the balancing mode for this backend.\n\nFor global HTTP(S) or TCP/SSL load balancing, the default is\nUTILIZATION. Valid values are UTILIZATION, RATE (for HTTP(S))\nand CONNECTION (for TCP/SSL).\n\nSee the [Backend Services Overview](https://cloud.google.com/load-balancing/docs/backend-service#balancing-mode)\nfor an explanation of load balancing modes. Default value: \"UTILIZATION\" Possible values: [\"UTILIZATION\", \"RATE\", \"CONNECTION\"]"]
-    pub fn set_balancing_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.balancing_mode = Some(v.into());
+    #[doc =
+        "Set the field `balancing_mode`.\nSpecifies the balancing mode for this backend.\n\nFor global HTTP(S) or TCP/SSL load balancing, the default is\nUTILIZATION. Valid values are UTILIZATION, RATE (for HTTP(S))\nand CONNECTION (for TCP/SSL).\n\nSee the [Backend Services Overview](https://cloud.google.com/load-balancing/docs/backend-service#balancing-mode)\nfor an explanation of load balancing modes. Default value: \"UTILIZATION\" Possible values: [\"UTILIZATION\", \"RATE\", \"CONNECTION\"]"]
+    pub fn set_balancing_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.balancing_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `capacity_scaler`.\nA multiplier applied to the group's maximum servicing capacity\n(based on UTILIZATION, RATE or CONNECTION).\n\nDefault value is 1, which means the group will serve up to 100%\nof its configured capacity (depending on balancingMode). A\nsetting of 0 means the group is completely drained, offering\n0% of its available Capacity. Valid range is [0.0,1.0]."]
-    pub fn set_capacity_scaler(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.capacity_scaler = Some(v.into());
+    #[doc =
+        "Set the field `capacity_scaler`.\nA multiplier applied to the group's maximum servicing capacity\n(based on UTILIZATION, RATE or CONNECTION).\n\nDefault value is 1, which means the group will serve up to 100%\nof its configured capacity (depending on balancingMode). A\nsetting of 0 means the group is completely drained, offering\n0% of its available Capacity. Valid range is [0.0,1.0]."]
+    pub fn set_capacity_scaler(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.capacity_scaler = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `description`.\nAn optional description of this resource.\nProvide this property when you create the resource."]
-    pub fn set_description(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.description = Some(v.into());
+    #[doc =
+        "Set the field `description`.\nAn optional description of this resource.\nProvide this property when you create the resource."]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_connections`.\nThe max number of simultaneous connections for the group. Can\nbe used with either CONNECTION or UTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or one\nof maxConnectionsPerInstance or maxConnectionsPerEndpoint,\nas appropriate for group type, must be set."]
-    pub fn set_max_connections(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_connections = Some(v.into());
+    #[doc =
+        "Set the field `max_connections`.\nThe max number of simultaneous connections for the group. Can\nbe used with either CONNECTION or UTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or one\nof maxConnectionsPerInstance or maxConnectionsPerEndpoint,\nas appropriate for group type, must be set."]
+    pub fn set_max_connections(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_connections = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_connections_per_endpoint`.\nThe max number of simultaneous connections that a single backend\nnetwork endpoint can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either\nmaxConnections or maxConnectionsPerEndpoint must be set."]
-    pub fn set_max_connections_per_endpoint(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_connections_per_endpoint = Some(v.into());
+    #[doc =
+        "Set the field `max_connections_per_endpoint`.\nThe max number of simultaneous connections that a single backend\nnetwork endpoint can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either\nmaxConnections or maxConnectionsPerEndpoint must be set."]
+    pub fn set_max_connections_per_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_connections_per_endpoint = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_connections_per_instance`.\nThe max number of simultaneous connections that a single\nbackend instance can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or\nmaxConnectionsPerInstance must be set."]
-    pub fn set_max_connections_per_instance(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_connections_per_instance = Some(v.into());
+    #[doc =
+        "Set the field `max_connections_per_instance`.\nThe max number of simultaneous connections that a single\nbackend instance can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or\nmaxConnectionsPerInstance must be set."]
+    pub fn set_max_connections_per_instance(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_connections_per_instance = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_rate`.\nThe max requests per second (RPS) of the group.\n\nCan be used with either RATE or UTILIZATION balancing modes,\nbut required if RATE mode. For RATE mode, either maxRate or one\nof maxRatePerInstance or maxRatePerEndpoint, as appropriate for\ngroup type, must be set."]
-    pub fn set_max_rate(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_rate = Some(v.into());
+    #[doc =
+        "Set the field `max_rate`.\nThe max requests per second (RPS) of the group.\n\nCan be used with either RATE or UTILIZATION balancing modes,\nbut required if RATE mode. For RATE mode, either maxRate or one\nof maxRatePerInstance or maxRatePerEndpoint, as appropriate for\ngroup type, must be set."]
+    pub fn set_max_rate(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_rate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_rate_per_endpoint`.\nThe max requests per second (RPS) that a single backend network\nendpoint can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerEndpoint must be set."]
-    pub fn set_max_rate_per_endpoint(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_rate_per_endpoint = Some(v.into());
+    #[doc =
+        "Set the field `max_rate_per_endpoint`.\nThe max requests per second (RPS) that a single backend network\nendpoint can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerEndpoint must be set."]
+    pub fn set_max_rate_per_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_rate_per_endpoint = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_rate_per_instance`.\nThe max requests per second (RPS) that a single backend\ninstance can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerInstance must be set."]
-    pub fn set_max_rate_per_instance(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_rate_per_instance = Some(v.into());
+    #[doc =
+        "Set the field `max_rate_per_instance`.\nThe max requests per second (RPS) that a single backend\ninstance can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerInstance must be set."]
+    pub fn set_max_rate_per_instance(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_rate_per_instance = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_utilization`.\nUsed when balancingMode is UTILIZATION. This ratio defines the\nCPU utilization target for the group. Valid range is [0.0, 1.0]."]
-    pub fn set_max_utilization(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_utilization = Some(v.into());
+    #[doc =
+        "Set the field `max_utilization`.\nUsed when balancingMode is UTILIZATION. This ratio defines the\nCPU utilization target for the group. Valid range is [0.0, 1.0]."]
+    pub fn set_max_utilization(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_utilization = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceBackendEl {
-    type O = BlockAssignable<ComputeBackendServiceBackendEl>;
+impl terrars::ToListMappable for ComputeBackendServiceBackendEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceBackendEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -907,8 +1045,9 @@ impl ToListMappable for ComputeBackendServiceBackendEl {
 }
 
 pub struct BuildComputeBackendServiceBackendEl {
-    #[doc= "The fully-qualified URL of an Instance Group or Network Endpoint\nGroup resource. In case of instance group this defines the list\nof instances that serve traffic. Member virtual machine\ninstances from each instance group must live in the same zone as\nthe instance group itself. No two backends in a backend service\nare allowed to use same Instance Group resource.\n\nFor Network Endpoint Groups this defines list of endpoints. All\nendpoints of Network Endpoint Group must be hosted on instances\nlocated in the same zone as the Network Endpoint Group.\n\nBackend services cannot mix Instance Group and\nNetwork Endpoint Group backends.\n\nNote that you must specify an Instance Group or Network Endpoint\nGroup resource using the fully-qualified URL, rather than a\npartial URL."]
-    pub group: PrimField<String>,
+    #[doc =
+        "The fully-qualified URL of an Instance Group or Network Endpoint\nGroup resource. In case of instance group this defines the list\nof instances that serve traffic. Member virtual machine\ninstances from each instance group must live in the same zone as\nthe instance group itself. No two backends in a backend service\nare allowed to use same Instance Group resource.\n\nFor Network Endpoint Groups this defines list of endpoints. All\nendpoints of Network Endpoint Group must be hosted on instances\nlocated in the same zone as the Network Endpoint Group.\n\nBackend services cannot mix Instance Group and\nNetwork Endpoint Group backends.\n\nNote that you must specify an Instance Group or Network Endpoint\nGroup resource using the fully-qualified URL, rather than a\npartial URL."]
+    pub group: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeBackendServiceBackendEl {
@@ -930,12 +1069,12 @@ impl BuildComputeBackendServiceBackendEl {
 }
 
 pub struct ComputeBackendServiceBackendElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceBackendElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceBackendElRef {
+impl terrars::Ref for ComputeBackendServiceBackendElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceBackendElRef {
         ComputeBackendServiceBackendElRef {
             shared: shared,
             base: base.to_string(),
@@ -944,78 +1083,89 @@ impl Ref for ComputeBackendServiceBackendElRef {
 }
 
 impl ComputeBackendServiceBackendElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `balancing_mode` after provisioning.\nSpecifies the balancing mode for this backend.\n\nFor global HTTP(S) or TCP/SSL load balancing, the default is\nUTILIZATION. Valid values are UTILIZATION, RATE (for HTTP(S))\nand CONNECTION (for TCP/SSL).\n\nSee the [Backend Services Overview](https://cloud.google.com/load-balancing/docs/backend-service#balancing-mode)\nfor an explanation of load balancing modes. Default value: \"UTILIZATION\" Possible values: [\"UTILIZATION\", \"RATE\", \"CONNECTION\"]"]
-    pub fn balancing_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.balancing_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `balancing_mode` after provisioning.\nSpecifies the balancing mode for this backend.\n\nFor global HTTP(S) or TCP/SSL load balancing, the default is\nUTILIZATION. Valid values are UTILIZATION, RATE (for HTTP(S))\nand CONNECTION (for TCP/SSL).\n\nSee the [Backend Services Overview](https://cloud.google.com/load-balancing/docs/backend-service#balancing-mode)\nfor an explanation of load balancing modes. Default value: \"UTILIZATION\" Possible values: [\"UTILIZATION\", \"RATE\", \"CONNECTION\"]"]
+    pub fn balancing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.balancing_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `capacity_scaler` after provisioning.\nA multiplier applied to the group's maximum servicing capacity\n(based on UTILIZATION, RATE or CONNECTION).\n\nDefault value is 1, which means the group will serve up to 100%\nof its configured capacity (depending on balancingMode). A\nsetting of 0 means the group is completely drained, offering\n0% of its available Capacity. Valid range is [0.0,1.0]."]
-    pub fn capacity_scaler(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.capacity_scaler", self.base))
+    #[doc =
+        "Get a reference to the value of field `capacity_scaler` after provisioning.\nA multiplier applied to the group's maximum servicing capacity\n(based on UTILIZATION, RATE or CONNECTION).\n\nDefault value is 1, which means the group will serve up to 100%\nof its configured capacity (depending on balancingMode). A\nsetting of 0 means the group is completely drained, offering\n0% of its available Capacity. Valid range is [0.0,1.0]."]
+    pub fn capacity_scaler(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.capacity_scaler", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource.\nProvide this property when you create the resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource.\nProvide this property when you create the resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `group` after provisioning.\nThe fully-qualified URL of an Instance Group or Network Endpoint\nGroup resource. In case of instance group this defines the list\nof instances that serve traffic. Member virtual machine\ninstances from each instance group must live in the same zone as\nthe instance group itself. No two backends in a backend service\nare allowed to use same Instance Group resource.\n\nFor Network Endpoint Groups this defines list of endpoints. All\nendpoints of Network Endpoint Group must be hosted on instances\nlocated in the same zone as the Network Endpoint Group.\n\nBackend services cannot mix Instance Group and\nNetwork Endpoint Group backends.\n\nNote that you must specify an Instance Group or Network Endpoint\nGroup resource using the fully-qualified URL, rather than a\npartial URL."]
-    pub fn group(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.group", self.base))
+    #[doc =
+        "Get a reference to the value of field `group` after provisioning.\nThe fully-qualified URL of an Instance Group or Network Endpoint\nGroup resource. In case of instance group this defines the list\nof instances that serve traffic. Member virtual machine\ninstances from each instance group must live in the same zone as\nthe instance group itself. No two backends in a backend service\nare allowed to use same Instance Group resource.\n\nFor Network Endpoint Groups this defines list of endpoints. All\nendpoints of Network Endpoint Group must be hosted on instances\nlocated in the same zone as the Network Endpoint Group.\n\nBackend services cannot mix Instance Group and\nNetwork Endpoint Group backends.\n\nNote that you must specify an Instance Group or Network Endpoint\nGroup resource using the fully-qualified URL, rather than a\npartial URL."]
+    pub fn group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_connections` after provisioning.\nThe max number of simultaneous connections for the group. Can\nbe used with either CONNECTION or UTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or one\nof maxConnectionsPerInstance or maxConnectionsPerEndpoint,\nas appropriate for group type, must be set."]
-    pub fn max_connections(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_connections", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_connections` after provisioning.\nThe max number of simultaneous connections for the group. Can\nbe used with either CONNECTION or UTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or one\nof maxConnectionsPerInstance or maxConnectionsPerEndpoint,\nas appropriate for group type, must be set."]
+    pub fn max_connections(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_connections", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_connections_per_endpoint` after provisioning.\nThe max number of simultaneous connections that a single backend\nnetwork endpoint can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either\nmaxConnections or maxConnectionsPerEndpoint must be set."]
-    pub fn max_connections_per_endpoint(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_connections_per_endpoint", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_connections_per_endpoint` after provisioning.\nThe max number of simultaneous connections that a single backend\nnetwork endpoint can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either\nmaxConnections or maxConnectionsPerEndpoint must be set."]
+    pub fn max_connections_per_endpoint(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_connections_per_endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_connections_per_instance` after provisioning.\nThe max number of simultaneous connections that a single\nbackend instance can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or\nmaxConnectionsPerInstance must be set."]
-    pub fn max_connections_per_instance(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_connections_per_instance", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_connections_per_instance` after provisioning.\nThe max number of simultaneous connections that a single\nbackend instance can handle. This is used to calculate the\ncapacity of the group. Can be used in either CONNECTION or\nUTILIZATION balancing modes.\n\nFor CONNECTION mode, either maxConnections or\nmaxConnectionsPerInstance must be set."]
+    pub fn max_connections_per_instance(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_connections_per_instance", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_rate` after provisioning.\nThe max requests per second (RPS) of the group.\n\nCan be used with either RATE or UTILIZATION balancing modes,\nbut required if RATE mode. For RATE mode, either maxRate or one\nof maxRatePerInstance or maxRatePerEndpoint, as appropriate for\ngroup type, must be set."]
-    pub fn max_rate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_rate", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_rate` after provisioning.\nThe max requests per second (RPS) of the group.\n\nCan be used with either RATE or UTILIZATION balancing modes,\nbut required if RATE mode. For RATE mode, either maxRate or one\nof maxRatePerInstance or maxRatePerEndpoint, as appropriate for\ngroup type, must be set."]
+    pub fn max_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_rate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_rate_per_endpoint` after provisioning.\nThe max requests per second (RPS) that a single backend network\nendpoint can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerEndpoint must be set."]
-    pub fn max_rate_per_endpoint(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_rate_per_endpoint", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_rate_per_endpoint` after provisioning.\nThe max requests per second (RPS) that a single backend network\nendpoint can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerEndpoint must be set."]
+    pub fn max_rate_per_endpoint(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_rate_per_endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_rate_per_instance` after provisioning.\nThe max requests per second (RPS) that a single backend\ninstance can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerInstance must be set."]
-    pub fn max_rate_per_instance(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_rate_per_instance", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_rate_per_instance` after provisioning.\nThe max requests per second (RPS) that a single backend\ninstance can handle. This is used to calculate the capacity of\nthe group. Can be used in either balancing mode. For RATE mode,\neither maxRate or maxRatePerInstance must be set."]
+    pub fn max_rate_per_instance(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_rate_per_instance", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_utilization` after provisioning.\nUsed when balancingMode is UTILIZATION. This ratio defines the\nCPU utilization target for the group. Valid range is [0.0, 1.0]."]
-    pub fn max_utilization(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_utilization", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_utilization` after provisioning.\nUsed when balancingMode is UTILIZATION. This ratio defines the\nCPU utilization target for the group. Valid range is [0.0, 1.0]."]
+    pub fn max_utilization(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_utilization", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl {
-    header_name: PrimField<String>,
+    header_name: terrars::PrimField<std::string::String>,
 }
 
 impl ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl { }
 
-impl ToListMappable for ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl {
-    type O = BlockAssignable<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>;
+impl terrars::ToListMappable for ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1024,8 +1174,8 @@ impl ToListMappable for ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHead
 }
 
 pub struct BuildComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl {
-    #[doc= "The header field name to match on when bypassing cache. Values are case-insensitive."]
-    pub header_name: PrimField<String>,
+    #[doc = "The header field name to match on when bypassing cache. Values are case-insensitive."]
+    pub header_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl {
@@ -1035,12 +1185,15 @@ impl BuildComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl {
 }
 
 pub struct ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
+impl terrars::Ref for ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
         ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
             shared: shared,
             base: base.to_string(),
@@ -1049,83 +1202,100 @@ impl Ref for ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
 }
 
 impl ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `header_name` after provisioning.\nThe header field name to match on when bypassing cache. Values are case-insensitive."]
-    pub fn header_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `header_name` after provisioning.\nThe header field name to match on when bypassing cache. Values are case-insensitive."]
+    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_host: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_http_headers: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_named_cookies: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_protocol: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_query_string: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    query_string_blacklist: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    query_string_whitelist: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_host: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_http_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_named_cookies: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_protocol: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_query_string: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    query_string_blacklist: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    query_string_whitelist: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl {
-    #[doc= "Set the field `include_host`.\nIf true requests to different hosts will be cached separately."]
-    pub fn set_include_host(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.include_host = Some(v.into());
+    #[doc = "Set the field `include_host`.\nIf true requests to different hosts will be cached separately."]
+    pub fn set_include_host(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_host = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_http_headers`.\nAllows HTTP request headers (by name) to be used in the\ncache key."]
-    pub fn set_include_http_headers(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.include_http_headers = Some(v.into());
+    #[doc =
+        "Set the field `include_http_headers`.\nAllows HTTP request headers (by name) to be used in the\ncache key."]
+    pub fn set_include_http_headers(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.include_http_headers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_named_cookies`.\nNames of cookies to include in cache keys."]
-    pub fn set_include_named_cookies(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.include_named_cookies = Some(v.into());
+    #[doc = "Set the field `include_named_cookies`.\nNames of cookies to include in cache keys."]
+    pub fn set_include_named_cookies(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.include_named_cookies = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_protocol`.\nIf true, http and https requests will be cached separately."]
-    pub fn set_include_protocol(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.include_protocol = Some(v.into());
+    #[doc = "Set the field `include_protocol`.\nIf true, http and https requests will be cached separately."]
+    pub fn set_include_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_protocol = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_query_string`.\nIf true, include query string parameters in the cache key\naccording to query_string_whitelist and\nquery_string_blacklist. If neither is set, the entire query\nstring will be included.\n\nIf false, the query string will be excluded from the cache\nkey entirely."]
-    pub fn set_include_query_string(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.include_query_string = Some(v.into());
+    #[doc =
+        "Set the field `include_query_string`.\nIf true, include query string parameters in the cache key\naccording to query_string_whitelist and\nquery_string_blacklist. If neither is set, the entire query\nstring will be included.\n\nIf false, the query string will be excluded from the cache\nkey entirely."]
+    pub fn set_include_query_string(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_query_string = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `query_string_blacklist`.\nNames of query string parameters to exclude in cache keys.\n\nAll other parameters will be included. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
-    pub fn set_query_string_blacklist(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.query_string_blacklist = Some(v.into());
+    #[doc =
+        "Set the field `query_string_blacklist`.\nNames of query string parameters to exclude in cache keys.\n\nAll other parameters will be included. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
+    pub fn set_query_string_blacklist(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.query_string_blacklist = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `query_string_whitelist`.\nNames of query string parameters to include in cache keys.\n\nAll other parameters will be excluded. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
-    pub fn set_query_string_whitelist(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.query_string_whitelist = Some(v.into());
+    #[doc =
+        "Set the field `query_string_whitelist`.\nNames of query string parameters to include in cache keys.\n\nAll other parameters will be excluded. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
+    pub fn set_query_string_whitelist(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.query_string_whitelist = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl {
-    type O = BlockAssignable<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>;
+impl terrars::ToListMappable for ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1150,12 +1320,15 @@ impl BuildComputeBackendServiceCdnPolicyElCacheKeyPolicyEl {
 }
 
 pub struct ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
+impl terrars::Ref for ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
         ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -1164,73 +1337,82 @@ impl Ref for ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
 }
 
 impl ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `include_host` after provisioning.\nIf true requests to different hosts will be cached separately."]
-    pub fn include_host(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_host", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_host` after provisioning.\nIf true requests to different hosts will be cached separately."]
+    pub fn include_host(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_host", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_http_headers` after provisioning.\nAllows HTTP request headers (by name) to be used in the\ncache key."]
-    pub fn include_http_headers(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.include_http_headers", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_http_headers` after provisioning.\nAllows HTTP request headers (by name) to be used in the\ncache key."]
+    pub fn include_http_headers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.include_http_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_named_cookies` after provisioning.\nNames of cookies to include in cache keys."]
-    pub fn include_named_cookies(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.include_named_cookies", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_named_cookies` after provisioning.\nNames of cookies to include in cache keys."]
+    pub fn include_named_cookies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.include_named_cookies", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_protocol` after provisioning.\nIf true, http and https requests will be cached separately."]
-    pub fn include_protocol(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_protocol", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_protocol` after provisioning.\nIf true, http and https requests will be cached separately."]
+    pub fn include_protocol(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_protocol", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_query_string` after provisioning.\nIf true, include query string parameters in the cache key\naccording to query_string_whitelist and\nquery_string_blacklist. If neither is set, the entire query\nstring will be included.\n\nIf false, the query string will be excluded from the cache\nkey entirely."]
-    pub fn include_query_string(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_query_string", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_query_string` after provisioning.\nIf true, include query string parameters in the cache key\naccording to query_string_whitelist and\nquery_string_blacklist. If neither is set, the entire query\nstring will be included.\n\nIf false, the query string will be excluded from the cache\nkey entirely."]
+    pub fn include_query_string(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_query_string", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `query_string_blacklist` after provisioning.\nNames of query string parameters to exclude in cache keys.\n\nAll other parameters will be included. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
-    pub fn query_string_blacklist(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.query_string_blacklist", self.base))
+    #[doc =
+        "Get a reference to the value of field `query_string_blacklist` after provisioning.\nNames of query string parameters to exclude in cache keys.\n\nAll other parameters will be included. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
+    pub fn query_string_blacklist(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.query_string_blacklist", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `query_string_whitelist` after provisioning.\nNames of query string parameters to include in cache keys.\n\nAll other parameters will be excluded. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
-    pub fn query_string_whitelist(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.query_string_whitelist", self.base))
+    #[doc =
+        "Get a reference to the value of field `query_string_whitelist` after provisioning.\nNames of query string parameters to include in cache keys.\n\nAll other parameters will be excluded. Either specify\nquery_string_whitelist or query_string_blacklist, not both.\n'&' and '=' will be percent encoded and not treated as\ndelimiters."]
+    pub fn query_string_whitelist(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.query_string_whitelist", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    code: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ttl: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl {
-    #[doc= "Set the field `code`.\nThe HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 308, 404, 405, 410, 421, 451 and 501\ncan be specified as values, and you cannot specify a status code more than once."]
-    pub fn set_code(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.code = Some(v.into());
+    #[doc =
+        "Set the field `code`.\nThe HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 308, 404, 405, 410, 421, 451 and 501\ncan be specified as values, and you cannot specify a status code more than once."]
+    pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.code = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ttl`.\nThe TTL (in seconds) for which to cache responses with the corresponding status code. The maximum allowed value is 1800s\n(30 minutes), noting that infrequently accessed objects may be evicted from the cache before the defined TTL."]
-    pub fn set_ttl(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ttl = Some(v.into());
+    #[doc =
+        "Set the field `ttl`.\nThe TTL (in seconds) for which to cache responses with the corresponding status code. The maximum allowed value is 1800s\n(30 minutes), noting that infrequently accessed objects may be evicted from the cache before the defined TTL."]
+    pub fn set_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ttl = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl {
-    type O = BlockAssignable<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>;
+impl terrars::ToListMappable for ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1250,12 +1432,15 @@ impl BuildComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl {
 }
 
 pub struct ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
+impl terrars::Ref for ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
         ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -1264,152 +1449,173 @@ impl Ref for ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
 }
 
 impl ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `code` after provisioning.\nThe HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 308, 404, 405, 410, 421, 451 and 501\ncan be specified as values, and you cannot specify a status code more than once."]
-    pub fn code(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.code", self.base))
+    #[doc =
+        "Get a reference to the value of field `code` after provisioning.\nThe HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 308, 404, 405, 410, 421, 451 and 501\ncan be specified as values, and you cannot specify a status code more than once."]
+    pub fn code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\nThe TTL (in seconds) for which to cache responses with the corresponding status code. The maximum allowed value is 1800s\n(30 minutes), noting that infrequently accessed objects may be evicted from the cache before the defined TTL."]
-    pub fn ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.base))
+    #[doc =
+        "Get a reference to the value of field `ttl` after provisioning.\nThe TTL (in seconds) for which to cache responses with the corresponding status code. The maximum allowed value is 1800s\n(30 minutes), noting that infrequently accessed objects may be evicted from the cache before the defined TTL."]
+    pub fn ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputeBackendServiceCdnPolicyElDynamic {
-    bypass_cache_on_request_headers: Option<
-        DynamicBlock<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>,
-    >,
-    cache_key_policy: Option<DynamicBlock<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>>,
-    negative_caching_policy: Option<DynamicBlock<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>>,
+    bypass_cache_on_request_headers: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>>,
+    cache_key_policy: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>>,
+    negative_caching_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceCdnPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cache_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    client_ttl: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_ttl: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_ttl: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    negative_caching: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    serve_while_stale: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    signed_url_cache_max_age_sec: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bypass_cache_on_request_headers: Option<Vec<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cache_key_policy: Option<Vec<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    negative_caching_policy: Option<Vec<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cache_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_ttl: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_ttl: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_ttl: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    negative_caching: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serve_while_stale: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    signed_url_cache_max_age_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bypass_cache_on_request_headers: std
+    ::option
+    ::Option<std::vec::Vec<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cache_key_policy: std::option::Option<std::vec::Vec<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    negative_caching_policy: std::option::Option<std::vec::Vec<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>>,
     dynamic: ComputeBackendServiceCdnPolicyElDynamic,
 }
 
 impl ComputeBackendServiceCdnPolicyEl {
-    #[doc= "Set the field `cache_mode`.\nSpecifies the cache setting for all responses from this backend.\nThe possible values are: USE_ORIGIN_HEADERS, FORCE_CACHE_ALL and CACHE_ALL_STATIC Possible values: [\"USE_ORIGIN_HEADERS\", \"FORCE_CACHE_ALL\", \"CACHE_ALL_STATIC\"]"]
-    pub fn set_cache_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cache_mode = Some(v.into());
+    #[doc =
+        "Set the field `cache_mode`.\nSpecifies the cache setting for all responses from this backend.\nThe possible values are: USE_ORIGIN_HEADERS, FORCE_CACHE_ALL and CACHE_ALL_STATIC Possible values: [\"USE_ORIGIN_HEADERS\", \"FORCE_CACHE_ALL\", \"CACHE_ALL_STATIC\"]"]
+    pub fn set_cache_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cache_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `client_ttl`.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
-    pub fn set_client_ttl(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.client_ttl = Some(v.into());
+    #[doc = "Set the field `client_ttl`.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
+    pub fn set_client_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.client_ttl = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `default_ttl`.\nSpecifies the default TTL for cached content served by this origin for responses\nthat do not have an existing valid TTL (max-age or s-max-age)."]
-    pub fn set_default_ttl(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.default_ttl = Some(v.into());
+    #[doc =
+        "Set the field `default_ttl`.\nSpecifies the default TTL for cached content served by this origin for responses\nthat do not have an existing valid TTL (max-age or s-max-age)."]
+    pub fn set_default_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.default_ttl = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_ttl`.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
-    pub fn set_max_ttl(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_ttl = Some(v.into());
+    #[doc = "Set the field `max_ttl`.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
+    pub fn set_max_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_ttl = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `negative_caching`.\nNegative caching allows per-status code TTLs to be set, in order to apply fine-grained caching for common errors or redirects."]
-    pub fn set_negative_caching(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.negative_caching = Some(v.into());
+    #[doc =
+        "Set the field `negative_caching`.\nNegative caching allows per-status code TTLs to be set, in order to apply fine-grained caching for common errors or redirects."]
+    pub fn set_negative_caching(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.negative_caching = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `serve_while_stale`.\nServe existing content from the cache (if available) when revalidating content with the origin, or when an error is encountered when refreshing the cache."]
-    pub fn set_serve_while_stale(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.serve_while_stale = Some(v.into());
+    #[doc =
+        "Set the field `serve_while_stale`.\nServe existing content from the cache (if available) when revalidating content with the origin, or when an error is encountered when refreshing the cache."]
+    pub fn set_serve_while_stale(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.serve_while_stale = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `signed_url_cache_max_age_sec`.\nMaximum number of seconds the response to a signed URL request\nwill be considered fresh, defaults to 1hr (3600s). After this\ntime period, the response will be revalidated before\nbeing served.\n\nWhen serving responses to signed URL requests, Cloud CDN will\ninternally behave as though all responses from this backend had a\n\"Cache-Control: public, max-age=[TTL]\" header, regardless of any\nexisting Cache-Control header. The actual headers served in\nresponses will not be altered."]
-    pub fn set_signed_url_cache_max_age_sec(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.signed_url_cache_max_age_sec = Some(v.into());
+    #[doc =
+        "Set the field `signed_url_cache_max_age_sec`.\nMaximum number of seconds the response to a signed URL request\nwill be considered fresh, defaults to 1hr (3600s). After this\ntime period, the response will be revalidated before\nbeing served.\n\nWhen serving responses to signed URL requests, Cloud CDN will\ninternally behave as though all responses from this backend had a\n\"Cache-Control: public, max-age=[TTL]\" header, regardless of any\nexisting Cache-Control header. The actual headers served in\nresponses will not be altered."]
+    pub fn set_signed_url_cache_max_age_sec(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.signed_url_cache_max_age_sec = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `bypass_cache_on_request_headers`.\n"]
+    #[doc = "Set the field `bypass_cache_on_request_headers`.\n"]
     pub fn set_bypass_cache_on_request_headers(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.bypass_cache_on_request_headers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.bypass_cache_on_request_headers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.bypass_cache_on_request_headers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.bypass_cache_on_request_headers = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cache_key_policy`.\n"]
+    #[doc = "Set the field `cache_key_policy`.\n"]
     pub fn set_cache_key_policy(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceCdnPolicyElCacheKeyPolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cache_key_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cache_key_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cache_key_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cache_key_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `negative_caching_policy`.\n"]
+    #[doc = "Set the field `negative_caching_policy`.\n"]
     pub fn set_negative_caching_policy(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.negative_caching_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.negative_caching_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.negative_caching_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.negative_caching_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceCdnPolicyEl {
-    type O = BlockAssignable<ComputeBackendServiceCdnPolicyEl>;
+impl terrars::ToListMappable for ComputeBackendServiceCdnPolicyEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceCdnPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1432,18 +1638,18 @@ impl BuildComputeBackendServiceCdnPolicyEl {
             bypass_cache_on_request_headers: core::default::Default::default(),
             cache_key_policy: core::default::Default::default(),
             negative_caching_policy: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputeBackendServiceCdnPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceCdnPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceCdnPolicyElRef {
+impl terrars::Ref for ComputeBackendServiceCdnPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceCdnPolicyElRef {
         ComputeBackendServiceCdnPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -1452,114 +1658,128 @@ impl Ref for ComputeBackendServiceCdnPolicyElRef {
 }
 
 impl ComputeBackendServiceCdnPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cache_mode` after provisioning.\nSpecifies the cache setting for all responses from this backend.\nThe possible values are: USE_ORIGIN_HEADERS, FORCE_CACHE_ALL and CACHE_ALL_STATIC Possible values: [\"USE_ORIGIN_HEADERS\", \"FORCE_CACHE_ALL\", \"CACHE_ALL_STATIC\"]"]
-    pub fn cache_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cache_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `cache_mode` after provisioning.\nSpecifies the cache setting for all responses from this backend.\nThe possible values are: USE_ORIGIN_HEADERS, FORCE_CACHE_ALL and CACHE_ALL_STATIC Possible values: [\"USE_ORIGIN_HEADERS\", \"FORCE_CACHE_ALL\", \"CACHE_ALL_STATIC\"]"]
+    pub fn cache_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `client_ttl` after provisioning.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
-    pub fn client_ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.client_ttl", self.base))
+    #[doc =
+        "Get a reference to the value of field `client_ttl` after provisioning.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
+    pub fn client_ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_ttl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `default_ttl` after provisioning.\nSpecifies the default TTL for cached content served by this origin for responses\nthat do not have an existing valid TTL (max-age or s-max-age)."]
-    pub fn default_ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.default_ttl", self.base))
+    #[doc =
+        "Get a reference to the value of field `default_ttl` after provisioning.\nSpecifies the default TTL for cached content served by this origin for responses\nthat do not have an existing valid TTL (max-age or s-max-age)."]
+    pub fn default_ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_ttl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_ttl` after provisioning.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
-    pub fn max_ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_ttl", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_ttl` after provisioning.\nSpecifies the maximum allowed TTL for cached content served by this origin."]
+    pub fn max_ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_ttl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `negative_caching` after provisioning.\nNegative caching allows per-status code TTLs to be set, in order to apply fine-grained caching for common errors or redirects."]
-    pub fn negative_caching(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.negative_caching", self.base))
+    #[doc =
+        "Get a reference to the value of field `negative_caching` after provisioning.\nNegative caching allows per-status code TTLs to be set, in order to apply fine-grained caching for common errors or redirects."]
+    pub fn negative_caching(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.negative_caching", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `serve_while_stale` after provisioning.\nServe existing content from the cache (if available) when revalidating content with the origin, or when an error is encountered when refreshing the cache."]
-    pub fn serve_while_stale(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.serve_while_stale", self.base))
+    #[doc =
+        "Get a reference to the value of field `serve_while_stale` after provisioning.\nServe existing content from the cache (if available) when revalidating content with the origin, or when an error is encountered when refreshing the cache."]
+    pub fn serve_while_stale(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.serve_while_stale", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `signed_url_cache_max_age_sec` after provisioning.\nMaximum number of seconds the response to a signed URL request\nwill be considered fresh, defaults to 1hr (3600s). After this\ntime period, the response will be revalidated before\nbeing served.\n\nWhen serving responses to signed URL requests, Cloud CDN will\ninternally behave as though all responses from this backend had a\n\"Cache-Control: public, max-age=[TTL]\" header, regardless of any\nexisting Cache-Control header. The actual headers served in\nresponses will not be altered."]
-    pub fn signed_url_cache_max_age_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.signed_url_cache_max_age_sec", self.base))
+    #[doc =
+        "Get a reference to the value of field `signed_url_cache_max_age_sec` after provisioning.\nMaximum number of seconds the response to a signed URL request\nwill be considered fresh, defaults to 1hr (3600s). After this\ntime period, the response will be revalidated before\nbeing served.\n\nWhen serving responses to signed URL requests, Cloud CDN will\ninternally behave as though all responses from this backend had a\n\"Cache-Control: public, max-age=[TTL]\" header, regardless of any\nexisting Cache-Control header. The actual headers served in\nresponses will not be altered."]
+    pub fn signed_url_cache_max_age_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signed_url_cache_max_age_sec", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `bypass_cache_on_request_headers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `bypass_cache_on_request_headers` after provisioning.\n"]
     pub fn bypass_cache_on_request_headers(
         &self,
-    ) -> ListRef<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.bypass_cache_on_request_headers", self.base))
+    ) -> terrars::ListRef<ComputeBackendServiceCdnPolicyElBypassCacheOnRequestHeadersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bypass_cache_on_request_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cache_key_policy` after provisioning.\n"]
-    pub fn cache_key_policy(&self) -> ListRef<ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cache_key_policy", self.base))
+    #[doc = "Get a reference to the value of field `cache_key_policy` after provisioning.\n"]
+    pub fn cache_key_policy(&self) -> terrars::ListRef<ComputeBackendServiceCdnPolicyElCacheKeyPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_key_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `negative_caching_policy` after provisioning.\n"]
-    pub fn negative_caching_policy(&self) -> ListRef<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.negative_caching_policy", self.base))
+    #[doc = "Get a reference to the value of field `negative_caching_policy` after provisioning.\n"]
+    pub fn negative_caching_policy(
+        &self,
+    ) -> terrars::ListRef<ComputeBackendServiceCdnPolicyElNegativeCachingPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.negative_caching_policy", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceCircuitBreakersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_connections: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_pending_requests: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_requests: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_requests_per_connection: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_retries: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_connections: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_pending_requests: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_requests: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_requests_per_connection: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_retries: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ComputeBackendServiceCircuitBreakersEl {
-    #[doc= "Set the field `max_connections`.\nThe maximum number of connections to the backend cluster.\nDefaults to 1024."]
-    pub fn set_max_connections(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_connections = Some(v.into());
+    #[doc =
+        "Set the field `max_connections`.\nThe maximum number of connections to the backend cluster.\nDefaults to 1024."]
+    pub fn set_max_connections(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_connections = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_pending_requests`.\nThe maximum number of pending requests to the backend cluster.\nDefaults to 1024."]
-    pub fn set_max_pending_requests(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_pending_requests = Some(v.into());
+    #[doc =
+        "Set the field `max_pending_requests`.\nThe maximum number of pending requests to the backend cluster.\nDefaults to 1024."]
+    pub fn set_max_pending_requests(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_pending_requests = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_requests`.\nThe maximum number of parallel requests to the backend cluster.\nDefaults to 1024."]
-    pub fn set_max_requests(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_requests = Some(v.into());
+    #[doc =
+        "Set the field `max_requests`.\nThe maximum number of parallel requests to the backend cluster.\nDefaults to 1024."]
+    pub fn set_max_requests(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_requests = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_requests_per_connection`.\nMaximum requests for a single backend connection. This parameter\nis respected by both the HTTP/1.1 and HTTP/2 implementations. If\nnot specified, there is no limit. Setting this parameter to 1\nwill effectively disable keep alive."]
-    pub fn set_max_requests_per_connection(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_requests_per_connection = Some(v.into());
+    #[doc =
+        "Set the field `max_requests_per_connection`.\nMaximum requests for a single backend connection. This parameter\nis respected by both the HTTP/1.1 and HTTP/2 implementations. If\nnot specified, there is no limit. Setting this parameter to 1\nwill effectively disable keep alive."]
+    pub fn set_max_requests_per_connection(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_requests_per_connection = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_retries`.\nThe maximum number of parallel retries to the backend cluster.\nDefaults to 3."]
-    pub fn set_max_retries(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_retries = Some(v.into());
+    #[doc =
+        "Set the field `max_retries`.\nThe maximum number of parallel retries to the backend cluster.\nDefaults to 3."]
+    pub fn set_max_retries(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_retries = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceCircuitBreakersEl {
-    type O = BlockAssignable<ComputeBackendServiceCircuitBreakersEl>;
+impl terrars::ToListMappable for ComputeBackendServiceCircuitBreakersEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceCircuitBreakersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1582,12 +1802,12 @@ impl BuildComputeBackendServiceCircuitBreakersEl {
 }
 
 pub struct ComputeBackendServiceCircuitBreakersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceCircuitBreakersElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceCircuitBreakersElRef {
+impl terrars::Ref for ComputeBackendServiceCircuitBreakersElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceCircuitBreakersElRef {
         ComputeBackendServiceCircuitBreakersElRef {
             shared: shared,
             base: base.to_string(),
@@ -1596,56 +1816,62 @@ impl Ref for ComputeBackendServiceCircuitBreakersElRef {
 }
 
 impl ComputeBackendServiceCircuitBreakersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_connections` after provisioning.\nThe maximum number of connections to the backend cluster.\nDefaults to 1024."]
-    pub fn max_connections(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_connections", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_connections` after provisioning.\nThe maximum number of connections to the backend cluster.\nDefaults to 1024."]
+    pub fn max_connections(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_connections", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_pending_requests` after provisioning.\nThe maximum number of pending requests to the backend cluster.\nDefaults to 1024."]
-    pub fn max_pending_requests(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_pending_requests", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_pending_requests` after provisioning.\nThe maximum number of pending requests to the backend cluster.\nDefaults to 1024."]
+    pub fn max_pending_requests(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_pending_requests", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_requests` after provisioning.\nThe maximum number of parallel requests to the backend cluster.\nDefaults to 1024."]
-    pub fn max_requests(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_requests", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_requests` after provisioning.\nThe maximum number of parallel requests to the backend cluster.\nDefaults to 1024."]
+    pub fn max_requests(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_requests", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_requests_per_connection` after provisioning.\nMaximum requests for a single backend connection. This parameter\nis respected by both the HTTP/1.1 and HTTP/2 implementations. If\nnot specified, there is no limit. Setting this parameter to 1\nwill effectively disable keep alive."]
-    pub fn max_requests_per_connection(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_requests_per_connection", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_requests_per_connection` after provisioning.\nMaximum requests for a single backend connection. This parameter\nis respected by both the HTTP/1.1 and HTTP/2 implementations. If\nnot specified, there is no limit. Setting this parameter to 1\nwill effectively disable keep alive."]
+    pub fn max_requests_per_connection(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_requests_per_connection", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_retries` after provisioning.\nThe maximum number of parallel retries to the backend cluster.\nDefaults to 3."]
-    pub fn max_retries(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_retries", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_retries` after provisioning.\nThe maximum number of parallel retries to the backend cluster.\nDefaults to 3."]
+    pub fn max_retries(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_retries", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nanos: Option<PrimField<f64>>,
-    seconds: PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<f64>,
 }
 
 impl ComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
-    #[doc= "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond\nresolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must\nbe from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.nanos = Some(v.into());
+    #[doc =
+        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond\nresolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must\nbe from 0 to 999,999,999 inclusive."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
-    type O = BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>;
+impl terrars::ToListMappable for ComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1654,8 +1880,8 @@ impl ToListMappable for ComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
 }
 
 pub struct BuildComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
-    #[doc= "Span of time at a resolution of a second.\nMust be from 0 to 315,576,000,000 inclusive."]
-    pub seconds: PrimField<f64>,
+    #[doc = "Span of time at a resolution of a second.\nMust be from 0 to 315,576,000,000 inclusive."]
+    pub seconds: terrars::PrimField<f64>,
 }
 
 impl BuildComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
@@ -1668,12 +1894,15 @@ impl BuildComputeBackendServiceConsistentHashElHttpCookieElTtlEl {
 }
 
 pub struct ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
+impl terrars::Ref for ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
         ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
             shared: shared,
             base: base.to_string(),
@@ -1682,72 +1911,74 @@ impl Ref for ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
 }
 
 impl ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond\nresolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must\nbe from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond\nresolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must\nbe from 0 to 999,999,999 inclusive."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second.\nMust be from 0 to 315,576,000,000 inclusive."]
-    pub fn seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second.\nMust be from 0 to 315,576,000,000 inclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputeBackendServiceConsistentHashElHttpCookieElDynamic {
-    ttl: Option<DynamicBlock<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>>,
+    ttl: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceConsistentHashElHttpCookieEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ttl: Option<Vec<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<std::vec::Vec<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>>,
     dynamic: ComputeBackendServiceConsistentHashElHttpCookieElDynamic,
 }
 
 impl ComputeBackendServiceConsistentHashElHttpCookieEl {
-    #[doc= "Set the field `name`.\nName of the cookie."]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\nName of the cookie."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `path`.\nPath to set for the cookie."]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\nPath to set for the cookie."]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ttl`.\n"]
+    #[doc = "Set the field `ttl`.\n"]
     pub fn set_ttl(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieElTtlEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.ttl = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.ttl = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.ttl = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ttl = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceConsistentHashElHttpCookieEl {
-    type O = BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieEl>;
+impl terrars::ToListMappable for ComputeBackendServiceConsistentHashElHttpCookieEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1763,18 +1994,21 @@ impl BuildComputeBackendServiceConsistentHashElHttpCookieEl {
             name: core::default::Default::default(),
             path: core::default::Default::default(),
             ttl: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputeBackendServiceConsistentHashElHttpCookieElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceConsistentHashElHttpCookieElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceConsistentHashElHttpCookieElRef {
+impl terrars::Ref for ComputeBackendServiceConsistentHashElHttpCookieElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceConsistentHashElHttpCookieElRef {
         ComputeBackendServiceConsistentHashElHttpCookieElRef {
             shared: shared,
             base: base.to_string(),
@@ -1783,77 +2017,79 @@ impl Ref for ComputeBackendServiceConsistentHashElHttpCookieElRef {
 }
 
 impl ComputeBackendServiceConsistentHashElHttpCookieElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the cookie."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nName of the cookie."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nPath to set for the cookie."]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc = "Get a reference to the value of field `path` after provisioning.\nPath to set for the cookie."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\n"]
-    pub fn ttl(&self) -> ListRef<ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ttl", self.base))
+    #[doc = "Get a reference to the value of field `ttl` after provisioning.\n"]
+    pub fn ttl(&self) -> terrars::ListRef<ComputeBackendServiceConsistentHashElHttpCookieElTtlElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ttl", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputeBackendServiceConsistentHashElDynamic {
-    http_cookie: Option<DynamicBlock<ComputeBackendServiceConsistentHashElHttpCookieEl>>,
+    http_cookie: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceConsistentHashElHttpCookieEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceConsistentHashEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_header_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    minimum_ring_size: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_cookie: Option<Vec<ComputeBackendServiceConsistentHashElHttpCookieEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_header_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum_ring_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_cookie: std::option::Option<std::vec::Vec<ComputeBackendServiceConsistentHashElHttpCookieEl>>,
     dynamic: ComputeBackendServiceConsistentHashElDynamic,
 }
 
 impl ComputeBackendServiceConsistentHashEl {
-    #[doc= "Set the field `http_header_name`.\nThe hash based on the value of the specified header field.\nThis field is applicable if the sessionAffinity is set to HEADER_FIELD."]
-    pub fn set_http_header_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.http_header_name = Some(v.into());
+    #[doc =
+        "Set the field `http_header_name`.\nThe hash based on the value of the specified header field.\nThis field is applicable if the sessionAffinity is set to HEADER_FIELD."]
+    pub fn set_http_header_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.http_header_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `minimum_ring_size`.\nThe minimum number of virtual nodes to use for the hash ring.\nLarger ring sizes result in more granular load\ndistributions. If the number of hosts in the load balancing pool\nis larger than the ring size, each host will be assigned a single\nvirtual node.\nDefaults to 1024."]
-    pub fn set_minimum_ring_size(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.minimum_ring_size = Some(v.into());
+    #[doc =
+        "Set the field `minimum_ring_size`.\nThe minimum number of virtual nodes to use for the hash ring.\nLarger ring sizes result in more granular load\ndistributions. If the number of hosts in the load balancing pool\nis larger than the ring size, each host will be assigned a single\nvirtual node.\nDefaults to 1024."]
+    pub fn set_minimum_ring_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.minimum_ring_size = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `http_cookie`.\n"]
+    #[doc = "Set the field `http_cookie`.\n"]
     pub fn set_http_cookie(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceConsistentHashElHttpCookieEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_cookie = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_cookie = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_cookie = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_cookie = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceConsistentHashEl {
-    type O = BlockAssignable<ComputeBackendServiceConsistentHashEl>;
+impl terrars::ToListMappable for ComputeBackendServiceConsistentHashEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceConsistentHashEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1869,18 +2105,18 @@ impl BuildComputeBackendServiceConsistentHashEl {
             http_header_name: core::default::Default::default(),
             minimum_ring_size: core::default::Default::default(),
             http_cookie: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputeBackendServiceConsistentHashElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceConsistentHashElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceConsistentHashElRef {
+impl terrars::Ref for ComputeBackendServiceConsistentHashElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceConsistentHashElRef {
         ComputeBackendServiceConsistentHashElRef {
             shared: shared,
             base: base.to_string(),
@@ -1889,39 +2125,41 @@ impl Ref for ComputeBackendServiceConsistentHashElRef {
 }
 
 impl ComputeBackendServiceConsistentHashElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `http_header_name` after provisioning.\nThe hash based on the value of the specified header field.\nThis field is applicable if the sessionAffinity is set to HEADER_FIELD."]
-    pub fn http_header_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.http_header_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `http_header_name` after provisioning.\nThe hash based on the value of the specified header field.\nThis field is applicable if the sessionAffinity is set to HEADER_FIELD."]
+    pub fn http_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_header_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `minimum_ring_size` after provisioning.\nThe minimum number of virtual nodes to use for the hash ring.\nLarger ring sizes result in more granular load\ndistributions. If the number of hosts in the load balancing pool\nis larger than the ring size, each host will be assigned a single\nvirtual node.\nDefaults to 1024."]
-    pub fn minimum_ring_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.minimum_ring_size", self.base))
+    #[doc =
+        "Get a reference to the value of field `minimum_ring_size` after provisioning.\nThe minimum number of virtual nodes to use for the hash ring.\nLarger ring sizes result in more granular load\ndistributions. If the number of hosts in the load balancing pool\nis larger than the ring size, each host will be assigned a single\nvirtual node.\nDefaults to 1024."]
+    pub fn minimum_ring_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_ring_size", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_cookie` after provisioning.\n"]
-    pub fn http_cookie(&self) -> ListRef<ComputeBackendServiceConsistentHashElHttpCookieElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_cookie", self.base))
+    #[doc = "Get a reference to the value of field `http_cookie` after provisioning.\n"]
+    pub fn http_cookie(&self) -> terrars::ListRef<ComputeBackendServiceConsistentHashElHttpCookieElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_cookie", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceIapEl {
-    oauth2_client_id: PrimField<String>,
-    oauth2_client_secret: PrimField<String>,
+    oauth2_client_id: terrars::PrimField<std::string::String>,
+    oauth2_client_secret: terrars::PrimField<std::string::String>,
 }
 
 impl ComputeBackendServiceIapEl { }
 
-impl ToListMappable for ComputeBackendServiceIapEl {
-    type O = BlockAssignable<ComputeBackendServiceIapEl>;
+impl terrars::ToListMappable for ComputeBackendServiceIapEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceIapEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1930,10 +2168,10 @@ impl ToListMappable for ComputeBackendServiceIapEl {
 }
 
 pub struct BuildComputeBackendServiceIapEl {
-    #[doc= "OAuth2 Client ID for IAP"]
-    pub oauth2_client_id: PrimField<String>,
-    #[doc= "OAuth2 Client Secret for IAP"]
-    pub oauth2_client_secret: PrimField<String>,
+    #[doc = "OAuth2 Client ID for IAP"]
+    pub oauth2_client_id: terrars::PrimField<std::string::String>,
+    #[doc = "OAuth2 Client Secret for IAP"]
+    pub oauth2_client_secret: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeBackendServiceIapEl {
@@ -1946,12 +2184,12 @@ impl BuildComputeBackendServiceIapEl {
 }
 
 pub struct ComputeBackendServiceIapElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceIapElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceIapElRef {
+impl terrars::Ref for ComputeBackendServiceIapElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceIapElRef {
         ComputeBackendServiceIapElRef {
             shared: shared,
             base: base.to_string(),
@@ -1960,46 +2198,49 @@ impl Ref for ComputeBackendServiceIapElRef {
 }
 
 impl ComputeBackendServiceIapElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `oauth2_client_id` after provisioning.\nOAuth2 Client ID for IAP"]
-    pub fn oauth2_client_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.oauth2_client_id", self.base))
+    #[doc = "Get a reference to the value of field `oauth2_client_id` after provisioning.\nOAuth2 Client ID for IAP"]
+    pub fn oauth2_client_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.oauth2_client_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oauth2_client_secret` after provisioning.\nOAuth2 Client Secret for IAP"]
-    pub fn oauth2_client_secret(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.oauth2_client_secret", self.base))
+    #[doc =
+        "Get a reference to the value of field `oauth2_client_secret` after provisioning.\nOAuth2 Client Secret for IAP"]
+    pub fn oauth2_client_secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.oauth2_client_secret", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oauth2_client_secret_sha256` after provisioning.\nOAuth2 Client Secret SHA-256 for IAP"]
-    pub fn oauth2_client_secret_sha256(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.oauth2_client_secret_sha256", self.base))
+    #[doc =
+        "Get a reference to the value of field `oauth2_client_secret_sha256` after provisioning.\nOAuth2 Client Secret SHA-256 for IAP"]
+    pub fn oauth2_client_secret_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.oauth2_client_secret_sha256", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data: Option<PrimField<String>>,
-    name: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl {
-    #[doc= "Set the field `data`.\nAn optional, arbitrary JSON object with configuration data, understood\nby a locally installed custom policy implementation."]
-    pub fn set_data(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data = Some(v.into());
+    #[doc =
+        "Set the field `data`.\nAn optional, arbitrary JSON object with configuration data, understood\nby a locally installed custom policy implementation."]
+    pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl {
-    type O = BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>;
+impl terrars::ToListMappable for ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2008,8 +2249,9 @@ impl ToListMappable for ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl 
 }
 
 pub struct BuildComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl {
-    #[doc= "Identifies the custom policy.\n\nThe value should match the type the custom implementation is registered\nwith on the gRPC clients. It should follow protocol buffer\nmessage naming conventions and include the full path (e.g.\nmyorg.CustomLbPolicy). The maximum length is 256 characters.\n\nNote that specifying the same custom policy more than once for a\nbackend is not a valid configuration and will be rejected."]
-    pub name: PrimField<String>,
+    #[doc =
+        "Identifies the custom policy.\n\nThe value should match the type the custom implementation is registered\nwith on the gRPC clients. It should follow protocol buffer\nmessage naming conventions and include the full path (e.g.\nmyorg.CustomLbPolicy). The maximum length is 256 characters.\n\nNote that specifying the same custom policy more than once for a\nbackend is not a valid configuration and will be rejected."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl {
@@ -2022,12 +2264,15 @@ impl BuildComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl {
 }
 
 pub struct ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
+impl terrars::Ref for ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
         ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -2036,33 +2281,35 @@ impl Ref for ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
 }
 
 impl ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `data` after provisioning.\nAn optional, arbitrary JSON object with configuration data, understood\nby a locally installed custom policy implementation."]
-    pub fn data(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data", self.base))
+    #[doc =
+        "Get a reference to the value of field `data` after provisioning.\nAn optional, arbitrary JSON object with configuration data, understood\nby a locally installed custom policy implementation."]
+    pub fn data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nIdentifies the custom policy.\n\nThe value should match the type the custom implementation is registered\nwith on the gRPC clients. It should follow protocol buffer\nmessage naming conventions and include the full path (e.g.\nmyorg.CustomLbPolicy). The maximum length is 256 characters.\n\nNote that specifying the same custom policy more than once for a\nbackend is not a valid configuration and will be rejected."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nIdentifies the custom policy.\n\nThe value should match the type the custom implementation is registered\nwith on the gRPC clients. It should follow protocol buffer\nmessage naming conventions and include the full path (e.g.\nmyorg.CustomLbPolicy). The maximum length is 256 characters.\n\nNote that specifying the same custom policy more than once for a\nbackend is not a valid configuration and will be rejected."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceLocalityLbPoliciesElPolicyEl {
-    name: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl ComputeBackendServiceLocalityLbPoliciesElPolicyEl { }
 
-impl ToListMappable for ComputeBackendServiceLocalityLbPoliciesElPolicyEl {
-    type O = BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>;
+impl terrars::ToListMappable for ComputeBackendServiceLocalityLbPoliciesElPolicyEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2071,8 +2318,9 @@ impl ToListMappable for ComputeBackendServiceLocalityLbPoliciesElPolicyEl {
 }
 
 pub struct BuildComputeBackendServiceLocalityLbPoliciesElPolicyEl {
-    #[doc= "The name of a locality load balancer policy to be used. The value\nshould be one of the predefined ones as supported by localityLbPolicy,\nalthough at the moment only ROUND_ROBIN is supported.\n\nThis field should only be populated when the customPolicy field is not\nused.\n\nNote that specifying the same policy more than once for a backend is\nnot a valid configuration and will be rejected.\n\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                  hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n              hashing to backends. The algorithm has the property that the\n              addition/removal of a host from a set of N hosts only affects\n              1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824 Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\"]"]
-    pub name: PrimField<String>,
+    #[doc =
+        "The name of a locality load balancer policy to be used. The value\nshould be one of the predefined ones as supported by localityLbPolicy,\nalthough at the moment only ROUND_ROBIN is supported.\n\nThis field should only be populated when the customPolicy field is not\nused.\n\nNote that specifying the same policy more than once for a backend is\nnot a valid configuration and will be rejected.\n\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                  hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n              hashing to backends. The algorithm has the property that the\n              addition/removal of a host from a set of N hosts only affects\n              1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824 Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\"]"]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeBackendServiceLocalityLbPoliciesElPolicyEl {
@@ -2082,12 +2330,15 @@ impl BuildComputeBackendServiceLocalityLbPoliciesElPolicyEl {
 }
 
 pub struct ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
+impl terrars::Ref for ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
         ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -2096,70 +2347,78 @@ impl Ref for ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
 }
 
 impl ComputeBackendServiceLocalityLbPoliciesElPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of a locality load balancer policy to be used. The value\nshould be one of the predefined ones as supported by localityLbPolicy,\nalthough at the moment only ROUND_ROBIN is supported.\n\nThis field should only be populated when the customPolicy field is not\nused.\n\nNote that specifying the same policy more than once for a backend is\nnot a valid configuration and will be rejected.\n\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                  hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n              hashing to backends. The algorithm has the property that the\n              addition/removal of a host from a set of N hosts only affects\n              1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824 Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\"]"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name of a locality load balancer policy to be used. The value\nshould be one of the predefined ones as supported by localityLbPolicy,\nalthough at the moment only ROUND_ROBIN is supported.\n\nThis field should only be populated when the customPolicy field is not\nused.\n\nNote that specifying the same policy more than once for a backend is\nnot a valid configuration and will be rejected.\n\nThe possible values are:\n\n* 'ROUND_ROBIN': This is a simple policy in which each healthy backend\n                is selected in round robin order.\n\n* 'LEAST_REQUEST': An O(1) algorithm which selects two random healthy\n                  hosts and picks the host which has fewer active requests.\n\n* 'RING_HASH': The ring/modulo hash load balancer implements consistent\n              hashing to backends. The algorithm has the property that the\n              addition/removal of a host from a set of N hosts only affects\n              1/N of the requests.\n\n* 'RANDOM': The load balancer selects a random healthy host.\n\n* 'ORIGINAL_DESTINATION': Backend host is selected based on the client\n                          connection metadata, i.e., connections are opened\n                          to the same address as the destination address of\n                          the incoming connection before the connection\n                          was redirected to the load balancer.\n\n* 'MAGLEV': used as a drop in replacement for the ring hash load balancer.\n            Maglev is not as stable as ring hash but has faster table lookup\n            build times and host selection times. For more information about\n            Maglev, refer to https://ai.google/research/pubs/pub44824 Possible values: [\"ROUND_ROBIN\", \"LEAST_REQUEST\", \"RING_HASH\", \"RANDOM\", \"ORIGINAL_DESTINATION\", \"MAGLEV\"]"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputeBackendServiceLocalityLbPoliciesElDynamic {
-    custom_policy: Option<DynamicBlock<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>>,
-    policy: Option<DynamicBlock<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>>,
+    custom_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>>,
+    policy: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceLocalityLbPoliciesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_policy: Option<Vec<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    policy: Option<Vec<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_policy: std::option::Option<std::vec::Vec<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy: std::option::Option<std::vec::Vec<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>>,
     dynamic: ComputeBackendServiceLocalityLbPoliciesElDynamic,
 }
 
 impl ComputeBackendServiceLocalityLbPoliciesEl {
-    #[doc= "Set the field `custom_policy`.\n"]
+    #[doc = "Set the field `custom_policy`.\n"]
     pub fn set_custom_policy(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `policy`.\n"]
+    #[doc = "Set the field `policy`.\n"]
     pub fn set_policy(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceLocalityLbPoliciesElPolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.policy = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceLocalityLbPoliciesEl {
-    type O = BlockAssignable<ComputeBackendServiceLocalityLbPoliciesEl>;
+impl terrars::ToListMappable for ComputeBackendServiceLocalityLbPoliciesEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceLocalityLbPoliciesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2174,18 +2433,18 @@ impl BuildComputeBackendServiceLocalityLbPoliciesEl {
         ComputeBackendServiceLocalityLbPoliciesEl {
             custom_policy: core::default::Default::default(),
             policy: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputeBackendServiceLocalityLbPoliciesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceLocalityLbPoliciesElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceLocalityLbPoliciesElRef {
+impl terrars::Ref for ComputeBackendServiceLocalityLbPoliciesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceLocalityLbPoliciesElRef {
         ComputeBackendServiceLocalityLbPoliciesElRef {
             shared: shared,
             base: base.to_string(),
@@ -2194,48 +2453,50 @@ impl Ref for ComputeBackendServiceLocalityLbPoliciesElRef {
 }
 
 impl ComputeBackendServiceLocalityLbPoliciesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `custom_policy` after provisioning.\n"]
-    pub fn custom_policy(&self) -> ListRef<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_policy", self.base))
+    #[doc = "Get a reference to the value of field `custom_policy` after provisioning.\n"]
+    pub fn custom_policy(&self) -> terrars::ListRef<ComputeBackendServiceLocalityLbPoliciesElCustomPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `policy` after provisioning.\n"]
-    pub fn policy(&self) -> ListRef<ComputeBackendServiceLocalityLbPoliciesElPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.policy", self.base))
+    #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
+    pub fn policy(&self) -> terrars::ListRef<ComputeBackendServiceLocalityLbPoliciesElPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policy", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceLogConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sample_rate: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sample_rate: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ComputeBackendServiceLogConfigEl {
-    #[doc= "Set the field `enable`.\nWhether to enable logging for the load balancer traffic served by this backend service."]
-    pub fn set_enable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable = Some(v.into());
+    #[doc =
+        "Set the field `enable`.\nWhether to enable logging for the load balancer traffic served by this backend service."]
+    pub fn set_enable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sample_rate`.\nThis field can only be specified if logging is enabled for this backend service. The value of\nthe field must be in [0, 1]. This configures the sampling rate of requests to the load balancer\nwhere 1.0 means all logged requests are reported and 0.0 means no logged requests are reported.\nThe default value is 1.0."]
-    pub fn set_sample_rate(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.sample_rate = Some(v.into());
+    #[doc =
+        "Set the field `sample_rate`.\nThis field can only be specified if logging is enabled for this backend service. The value of\nthe field must be in [0, 1]. This configures the sampling rate of requests to the load balancer\nwhere 1.0 means all logged requests are reported and 0.0 means no logged requests are reported.\nThe default value is 1.0."]
+    pub fn set_sample_rate(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.sample_rate = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceLogConfigEl {
-    type O = BlockAssignable<ComputeBackendServiceLogConfigEl>;
+impl terrars::ToListMappable for ComputeBackendServiceLogConfigEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceLogConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2255,12 +2516,12 @@ impl BuildComputeBackendServiceLogConfigEl {
 }
 
 pub struct ComputeBackendServiceLogConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceLogConfigElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceLogConfigElRef {
+impl terrars::Ref for ComputeBackendServiceLogConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceLogConfigElRef {
         ComputeBackendServiceLogConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2269,41 +2530,44 @@ impl Ref for ComputeBackendServiceLogConfigElRef {
 }
 
 impl ComputeBackendServiceLogConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable` after provisioning.\nWhether to enable logging for the load balancer traffic served by this backend service."]
-    pub fn enable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable` after provisioning.\nWhether to enable logging for the load balancer traffic served by this backend service."]
+    pub fn enable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sample_rate` after provisioning.\nThis field can only be specified if logging is enabled for this backend service. The value of\nthe field must be in [0, 1]. This configures the sampling rate of requests to the load balancer\nwhere 1.0 means all logged requests are reported and 0.0 means no logged requests are reported.\nThe default value is 1.0."]
-    pub fn sample_rate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sample_rate", self.base))
+    #[doc =
+        "Get a reference to the value of field `sample_rate` after provisioning.\nThis field can only be specified if logging is enabled for this backend service. The value of\nthe field must be in [0, 1]. This configures the sampling rate of requests to the load balancer\nwhere 1.0 means all logged requests are reported and 0.0 means no logged requests are reported.\nThe default value is 1.0."]
+    pub fn sample_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sample_rate", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nanos: Option<PrimField<f64>>,
-    seconds: PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<f64>,
 }
 
 impl ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl {
-    #[doc= "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.nanos = Some(v.into());
+    #[doc =
+        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl {
-    type O = BlockAssignable<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>;
+impl terrars::ToListMappable for ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2312,8 +2576,8 @@ impl ToListMappable for ComputeBackendServiceOutlierDetectionElBaseEjectionTimeE
 }
 
 pub struct BuildComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl {
-    #[doc= "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub seconds: PrimField<f64>,
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
+    pub seconds: terrars::PrimField<f64>,
 }
 
 impl BuildComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl {
@@ -2326,12 +2590,15 @@ impl BuildComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl {
 }
 
 pub struct ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
+impl terrars::Ref for ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
         ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2340,41 +2607,44 @@ impl Ref for ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
 }
 
 impl ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub fn seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceOutlierDetectionElIntervalEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nanos: Option<PrimField<f64>>,
-    seconds: PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<f64>,
 }
 
 impl ComputeBackendServiceOutlierDetectionElIntervalEl {
-    #[doc= "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.nanos = Some(v.into());
+    #[doc =
+        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceOutlierDetectionElIntervalEl {
-    type O = BlockAssignable<ComputeBackendServiceOutlierDetectionElIntervalEl>;
+impl terrars::ToListMappable for ComputeBackendServiceOutlierDetectionElIntervalEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceOutlierDetectionElIntervalEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2383,8 +2653,8 @@ impl ToListMappable for ComputeBackendServiceOutlierDetectionElIntervalEl {
 }
 
 pub struct BuildComputeBackendServiceOutlierDetectionElIntervalEl {
-    #[doc= "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub seconds: PrimField<f64>,
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
+    pub seconds: terrars::PrimField<f64>,
 }
 
 impl BuildComputeBackendServiceOutlierDetectionElIntervalEl {
@@ -2397,12 +2667,15 @@ impl BuildComputeBackendServiceOutlierDetectionElIntervalEl {
 }
 
 pub struct ComputeBackendServiceOutlierDetectionElIntervalElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceOutlierDetectionElIntervalElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceOutlierDetectionElIntervalElRef {
+impl terrars::Ref for ComputeBackendServiceOutlierDetectionElIntervalElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeBackendServiceOutlierDetectionElIntervalElRef {
         ComputeBackendServiceOutlierDetectionElIntervalElRef {
             shared: shared,
             base: base.to_string(),
@@ -2411,147 +2684,168 @@ impl Ref for ComputeBackendServiceOutlierDetectionElIntervalElRef {
 }
 
 impl ComputeBackendServiceOutlierDetectionElIntervalElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub fn seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputeBackendServiceOutlierDetectionElDynamic {
-    base_ejection_time: Option<DynamicBlock<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>>,
-    interval: Option<DynamicBlock<ComputeBackendServiceOutlierDetectionElIntervalEl>>,
+    base_ejection_time: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>>,
+    interval: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceOutlierDetectionElIntervalEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceOutlierDetectionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    consecutive_errors: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    consecutive_gateway_failure: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enforcing_consecutive_errors: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enforcing_consecutive_gateway_failure: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enforcing_success_rate: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_ejection_percent: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    success_rate_minimum_hosts: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    success_rate_request_volume: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    success_rate_stdev_factor: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    base_ejection_time: Option<Vec<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval: Option<Vec<ComputeBackendServiceOutlierDetectionElIntervalEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    consecutive_errors: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    consecutive_gateway_failure: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforcing_consecutive_errors: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforcing_consecutive_gateway_failure: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforcing_success_rate: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_ejection_percent: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    success_rate_minimum_hosts: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    success_rate_request_volume: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    success_rate_stdev_factor: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    base_ejection_time: std::option::Option<std::vec::Vec<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval: std::option::Option<std::vec::Vec<ComputeBackendServiceOutlierDetectionElIntervalEl>>,
     dynamic: ComputeBackendServiceOutlierDetectionElDynamic,
 }
 
 impl ComputeBackendServiceOutlierDetectionEl {
-    #[doc= "Set the field `consecutive_errors`.\nNumber of errors before a host is ejected from the connection pool. When the\nbackend host is accessed over HTTP, a 5xx return code qualifies as an error.\nDefaults to 5."]
-    pub fn set_consecutive_errors(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.consecutive_errors = Some(v.into());
+    #[doc =
+        "Set the field `consecutive_errors`.\nNumber of errors before a host is ejected from the connection pool. When the\nbackend host is accessed over HTTP, a 5xx return code qualifies as an error.\nDefaults to 5."]
+    pub fn set_consecutive_errors(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.consecutive_errors = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `consecutive_gateway_failure`.\nThe number of consecutive gateway failures (502, 503, 504 status or connection\nerrors that are mapped to one of those status codes) before a consecutive\ngateway failure ejection occurs. Defaults to 5."]
-    pub fn set_consecutive_gateway_failure(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.consecutive_gateway_failure = Some(v.into());
+    #[doc =
+        "Set the field `consecutive_gateway_failure`.\nThe number of consecutive gateway failures (502, 503, 504 status or connection\nerrors that are mapped to one of those status codes) before a consecutive\ngateway failure ejection occurs. Defaults to 5."]
+    pub fn set_consecutive_gateway_failure(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.consecutive_gateway_failure = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enforcing_consecutive_errors`.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive 5xx. This setting can be used to disable\nejection or to ramp it up slowly. Defaults to 100."]
-    pub fn set_enforcing_consecutive_errors(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.enforcing_consecutive_errors = Some(v.into());
+    #[doc =
+        "Set the field `enforcing_consecutive_errors`.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive 5xx. This setting can be used to disable\nejection or to ramp it up slowly. Defaults to 100."]
+    pub fn set_enforcing_consecutive_errors(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.enforcing_consecutive_errors = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enforcing_consecutive_gateway_failure`.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive gateway failures. This setting can be\nused to disable ejection or to ramp it up slowly. Defaults to 0."]
-    pub fn set_enforcing_consecutive_gateway_failure(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.enforcing_consecutive_gateway_failure = Some(v.into());
+    #[doc =
+        "Set the field `enforcing_consecutive_gateway_failure`.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive gateway failures. This setting can be\nused to disable ejection or to ramp it up slowly. Defaults to 0."]
+    pub fn set_enforcing_consecutive_gateway_failure(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.enforcing_consecutive_gateway_failure = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enforcing_success_rate`.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through success rate statistics. This setting can be used to\ndisable ejection or to ramp it up slowly. Defaults to 100."]
-    pub fn set_enforcing_success_rate(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.enforcing_success_rate = Some(v.into());
+    #[doc =
+        "Set the field `enforcing_success_rate`.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through success rate statistics. This setting can be used to\ndisable ejection or to ramp it up slowly. Defaults to 100."]
+    pub fn set_enforcing_success_rate(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.enforcing_success_rate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_ejection_percent`.\nMaximum percentage of hosts in the load balancing pool for the backend service\nthat can be ejected. Defaults to 10%."]
-    pub fn set_max_ejection_percent(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_ejection_percent = Some(v.into());
+    #[doc =
+        "Set the field `max_ejection_percent`.\nMaximum percentage of hosts in the load balancing pool for the backend service\nthat can be ejected. Defaults to 10%."]
+    pub fn set_max_ejection_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_ejection_percent = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `success_rate_minimum_hosts`.\nThe number of hosts in a cluster that must have enough request volume to detect\nsuccess rate outliers. If the number of hosts is less than this setting, outlier\ndetection via success rate statistics is not performed for any host in the\ncluster. Defaults to 5."]
-    pub fn set_success_rate_minimum_hosts(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.success_rate_minimum_hosts = Some(v.into());
+    #[doc =
+        "Set the field `success_rate_minimum_hosts`.\nThe number of hosts in a cluster that must have enough request volume to detect\nsuccess rate outliers. If the number of hosts is less than this setting, outlier\ndetection via success rate statistics is not performed for any host in the\ncluster. Defaults to 5."]
+    pub fn set_success_rate_minimum_hosts(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.success_rate_minimum_hosts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `success_rate_request_volume`.\nThe minimum number of total requests that must be collected in one interval (as\ndefined by the interval duration above) to include this host in success rate\nbased outlier detection. If the volume is lower than this setting, outlier\ndetection via success rate statistics is not performed for that host. Defaults\nto 100."]
-    pub fn set_success_rate_request_volume(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.success_rate_request_volume = Some(v.into());
+    #[doc =
+        "Set the field `success_rate_request_volume`.\nThe minimum number of total requests that must be collected in one interval (as\ndefined by the interval duration above) to include this host in success rate\nbased outlier detection. If the volume is lower than this setting, outlier\ndetection via success rate statistics is not performed for that host. Defaults\nto 100."]
+    pub fn set_success_rate_request_volume(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.success_rate_request_volume = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `success_rate_stdev_factor`.\nThis factor is used to determine the ejection threshold for success rate outlier\nejection. The ejection threshold is the difference between the mean success\nrate, and the product of this factor and the standard deviation of the mean\nsuccess rate: mean - (stdev * success_rate_stdev_factor). This factor is divided\nby a thousand to get a double. That is, if the desired factor is 1.9, the\nruntime value should be 1900. Defaults to 1900."]
-    pub fn set_success_rate_stdev_factor(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.success_rate_stdev_factor = Some(v.into());
+    #[doc =
+        "Set the field `success_rate_stdev_factor`.\nThis factor is used to determine the ejection threshold for success rate outlier\nejection. The ejection threshold is the difference between the mean success\nrate, and the product of this factor and the standard deviation of the mean\nsuccess rate: mean - (stdev * success_rate_stdev_factor). This factor is divided\nby a thousand to get a double. That is, if the desired factor is 1.9, the\nruntime value should be 1900. Defaults to 1900."]
+    pub fn set_success_rate_stdev_factor(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.success_rate_stdev_factor = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `base_ejection_time`.\n"]
+    #[doc = "Set the field `base_ejection_time`.\n"]
     pub fn set_base_ejection_time(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.base_ejection_time = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.base_ejection_time = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.base_ejection_time = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.base_ejection_time = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `interval`.\n"]
+    #[doc = "Set the field `interval`.\n"]
     pub fn set_interval(
         mut self,
-        v: impl Into<BlockAssignable<ComputeBackendServiceOutlierDetectionElIntervalEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeBackendServiceOutlierDetectionElIntervalEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.interval = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.interval = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.interval = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.interval = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceOutlierDetectionEl {
-    type O = BlockAssignable<ComputeBackendServiceOutlierDetectionEl>;
+impl terrars::ToListMappable for ComputeBackendServiceOutlierDetectionEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceOutlierDetectionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2575,18 +2869,18 @@ impl BuildComputeBackendServiceOutlierDetectionEl {
             success_rate_stdev_factor: core::default::Default::default(),
             base_ejection_time: core::default::Default::default(),
             interval: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputeBackendServiceOutlierDetectionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceOutlierDetectionElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceOutlierDetectionElRef {
+impl terrars::Ref for ComputeBackendServiceOutlierDetectionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceOutlierDetectionElRef {
         ComputeBackendServiceOutlierDetectionElRef {
             shared: shared,
             base: base.to_string(),
@@ -2595,79 +2889,88 @@ impl Ref for ComputeBackendServiceOutlierDetectionElRef {
 }
 
 impl ComputeBackendServiceOutlierDetectionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `consecutive_errors` after provisioning.\nNumber of errors before a host is ejected from the connection pool. When the\nbackend host is accessed over HTTP, a 5xx return code qualifies as an error.\nDefaults to 5."]
-    pub fn consecutive_errors(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.consecutive_errors", self.base))
+    #[doc =
+        "Get a reference to the value of field `consecutive_errors` after provisioning.\nNumber of errors before a host is ejected from the connection pool. When the\nbackend host is accessed over HTTP, a 5xx return code qualifies as an error.\nDefaults to 5."]
+    pub fn consecutive_errors(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consecutive_errors", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `consecutive_gateway_failure` after provisioning.\nThe number of consecutive gateway failures (502, 503, 504 status or connection\nerrors that are mapped to one of those status codes) before a consecutive\ngateway failure ejection occurs. Defaults to 5."]
-    pub fn consecutive_gateway_failure(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.consecutive_gateway_failure", self.base))
+    #[doc =
+        "Get a reference to the value of field `consecutive_gateway_failure` after provisioning.\nThe number of consecutive gateway failures (502, 503, 504 status or connection\nerrors that are mapped to one of those status codes) before a consecutive\ngateway failure ejection occurs. Defaults to 5."]
+    pub fn consecutive_gateway_failure(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consecutive_gateway_failure", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enforcing_consecutive_errors` after provisioning.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive 5xx. This setting can be used to disable\nejection or to ramp it up slowly. Defaults to 100."]
-    pub fn enforcing_consecutive_errors(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enforcing_consecutive_errors", self.base))
+    #[doc =
+        "Get a reference to the value of field `enforcing_consecutive_errors` after provisioning.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive 5xx. This setting can be used to disable\nejection or to ramp it up slowly. Defaults to 100."]
+    pub fn enforcing_consecutive_errors(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enforcing_consecutive_errors", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enforcing_consecutive_gateway_failure` after provisioning.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive gateway failures. This setting can be\nused to disable ejection or to ramp it up slowly. Defaults to 0."]
-    pub fn enforcing_consecutive_gateway_failure(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enforcing_consecutive_gateway_failure", self.base))
+    #[doc =
+        "Get a reference to the value of field `enforcing_consecutive_gateway_failure` after provisioning.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through consecutive gateway failures. This setting can be\nused to disable ejection or to ramp it up slowly. Defaults to 0."]
+    pub fn enforcing_consecutive_gateway_failure(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enforcing_consecutive_gateway_failure", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enforcing_success_rate` after provisioning.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through success rate statistics. This setting can be used to\ndisable ejection or to ramp it up slowly. Defaults to 100."]
-    pub fn enforcing_success_rate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enforcing_success_rate", self.base))
+    #[doc =
+        "Get a reference to the value of field `enforcing_success_rate` after provisioning.\nThe percentage chance that a host will be actually ejected when an outlier\nstatus is detected through success rate statistics. This setting can be used to\ndisable ejection or to ramp it up slowly. Defaults to 100."]
+    pub fn enforcing_success_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enforcing_success_rate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_ejection_percent` after provisioning.\nMaximum percentage of hosts in the load balancing pool for the backend service\nthat can be ejected. Defaults to 10%."]
-    pub fn max_ejection_percent(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_ejection_percent", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_ejection_percent` after provisioning.\nMaximum percentage of hosts in the load balancing pool for the backend service\nthat can be ejected. Defaults to 10%."]
+    pub fn max_ejection_percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_ejection_percent", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `success_rate_minimum_hosts` after provisioning.\nThe number of hosts in a cluster that must have enough request volume to detect\nsuccess rate outliers. If the number of hosts is less than this setting, outlier\ndetection via success rate statistics is not performed for any host in the\ncluster. Defaults to 5."]
-    pub fn success_rate_minimum_hosts(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.success_rate_minimum_hosts", self.base))
+    #[doc =
+        "Get a reference to the value of field `success_rate_minimum_hosts` after provisioning.\nThe number of hosts in a cluster that must have enough request volume to detect\nsuccess rate outliers. If the number of hosts is less than this setting, outlier\ndetection via success rate statistics is not performed for any host in the\ncluster. Defaults to 5."]
+    pub fn success_rate_minimum_hosts(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.success_rate_minimum_hosts", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `success_rate_request_volume` after provisioning.\nThe minimum number of total requests that must be collected in one interval (as\ndefined by the interval duration above) to include this host in success rate\nbased outlier detection. If the volume is lower than this setting, outlier\ndetection via success rate statistics is not performed for that host. Defaults\nto 100."]
-    pub fn success_rate_request_volume(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.success_rate_request_volume", self.base))
+    #[doc =
+        "Get a reference to the value of field `success_rate_request_volume` after provisioning.\nThe minimum number of total requests that must be collected in one interval (as\ndefined by the interval duration above) to include this host in success rate\nbased outlier detection. If the volume is lower than this setting, outlier\ndetection via success rate statistics is not performed for that host. Defaults\nto 100."]
+    pub fn success_rate_request_volume(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.success_rate_request_volume", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `success_rate_stdev_factor` after provisioning.\nThis factor is used to determine the ejection threshold for success rate outlier\nejection. The ejection threshold is the difference between the mean success\nrate, and the product of this factor and the standard deviation of the mean\nsuccess rate: mean - (stdev * success_rate_stdev_factor). This factor is divided\nby a thousand to get a double. That is, if the desired factor is 1.9, the\nruntime value should be 1900. Defaults to 1900."]
-    pub fn success_rate_stdev_factor(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.success_rate_stdev_factor", self.base))
+    #[doc =
+        "Get a reference to the value of field `success_rate_stdev_factor` after provisioning.\nThis factor is used to determine the ejection threshold for success rate outlier\nejection. The ejection threshold is the difference between the mean success\nrate, and the product of this factor and the standard deviation of the mean\nsuccess rate: mean - (stdev * success_rate_stdev_factor). This factor is divided\nby a thousand to get a double. That is, if the desired factor is 1.9, the\nruntime value should be 1900. Defaults to 1900."]
+    pub fn success_rate_stdev_factor(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.success_rate_stdev_factor", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `base_ejection_time` after provisioning.\n"]
-    pub fn base_ejection_time(&self) -> ListRef<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.base_ejection_time", self.base))
+    #[doc = "Get a reference to the value of field `base_ejection_time` after provisioning.\n"]
+    pub fn base_ejection_time(&self) -> terrars::ListRef<ComputeBackendServiceOutlierDetectionElBaseEjectionTimeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.base_ejection_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> ListRef<ComputeBackendServiceOutlierDetectionElIntervalElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::ListRef<ComputeBackendServiceOutlierDetectionElIntervalElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceSecuritySettingsEl {
-    client_tls_policy: PrimField<String>,
-    subject_alt_names: ListField<PrimField<String>>,
+    client_tls_policy: terrars::PrimField<std::string::String>,
+    subject_alt_names: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputeBackendServiceSecuritySettingsEl { }
 
-impl ToListMappable for ComputeBackendServiceSecuritySettingsEl {
-    type O = BlockAssignable<ComputeBackendServiceSecuritySettingsEl>;
+impl terrars::ToListMappable for ComputeBackendServiceSecuritySettingsEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceSecuritySettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2676,10 +2979,12 @@ impl ToListMappable for ComputeBackendServiceSecuritySettingsEl {
 }
 
 pub struct BuildComputeBackendServiceSecuritySettingsEl {
-    #[doc= "ClientTlsPolicy is a resource that specifies how a client should authenticate\nconnections to backends of a service. This resource itself does not affect\nconfiguration unless it is attached to a backend service resource."]
-    pub client_tls_policy: PrimField<String>,
-    #[doc= "A list of alternate names to verify the subject identity in the certificate.\nIf specified, the client will verify that the server certificate's subject\nalt name matches one of the specified values."]
-    pub subject_alt_names: ListField<PrimField<String>>,
+    #[doc =
+        "ClientTlsPolicy is a resource that specifies how a client should authenticate\nconnections to backends of a service. This resource itself does not affect\nconfiguration unless it is attached to a backend service resource."]
+    pub client_tls_policy: terrars::PrimField<std::string::String>,
+    #[doc =
+        "A list of alternate names to verify the subject identity in the certificate.\nIf specified, the client will verify that the server certificate's subject\nalt name matches one of the specified values."]
+    pub subject_alt_names: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildComputeBackendServiceSecuritySettingsEl {
@@ -2692,12 +2997,12 @@ impl BuildComputeBackendServiceSecuritySettingsEl {
 }
 
 pub struct ComputeBackendServiceSecuritySettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceSecuritySettingsElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceSecuritySettingsElRef {
+impl terrars::Ref for ComputeBackendServiceSecuritySettingsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceSecuritySettingsElRef {
         ComputeBackendServiceSecuritySettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2706,56 +3011,58 @@ impl Ref for ComputeBackendServiceSecuritySettingsElRef {
 }
 
 impl ComputeBackendServiceSecuritySettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `client_tls_policy` after provisioning.\nClientTlsPolicy is a resource that specifies how a client should authenticate\nconnections to backends of a service. This resource itself does not affect\nconfiguration unless it is attached to a backend service resource."]
-    pub fn client_tls_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.client_tls_policy", self.base))
+    #[doc =
+        "Get a reference to the value of field `client_tls_policy` after provisioning.\nClientTlsPolicy is a resource that specifies how a client should authenticate\nconnections to backends of a service. This resource itself does not affect\nconfiguration unless it is attached to a backend service resource."]
+    pub fn client_tls_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_tls_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subject_alt_names` after provisioning.\nA list of alternate names to verify the subject identity in the certificate.\nIf specified, the client will verify that the server certificate's subject\nalt name matches one of the specified values."]
-    pub fn subject_alt_names(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.subject_alt_names", self.base))
+    #[doc =
+        "Get a reference to the value of field `subject_alt_names` after provisioning.\nA list of alternate names to verify the subject identity in the certificate.\nIf specified, the client will verify that the server certificate's subject\nalt name matches one of the specified values."]
+    pub fn subject_alt_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.subject_alt_names", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeBackendServiceTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputeBackendServiceTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeBackendServiceTimeoutsEl {
-    type O = BlockAssignable<ComputeBackendServiceTimeoutsEl>;
+impl terrars::ToListMappable for ComputeBackendServiceTimeoutsEl {
+    type O = terrars::BlockAssignable<ComputeBackendServiceTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2776,12 +3083,12 @@ impl BuildComputeBackendServiceTimeoutsEl {
 }
 
 pub struct ComputeBackendServiceTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeBackendServiceTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ComputeBackendServiceTimeoutsElRef {
+impl terrars::Ref for ComputeBackendServiceTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendServiceTimeoutsElRef {
         ComputeBackendServiceTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2790,35 +3097,35 @@ impl Ref for ComputeBackendServiceTimeoutsElRef {
 }
 
 impl ComputeBackendServiceTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputeBackendServiceDynamic {
-    backend: Option<DynamicBlock<ComputeBackendServiceBackendEl>>,
-    cdn_policy: Option<DynamicBlock<ComputeBackendServiceCdnPolicyEl>>,
-    circuit_breakers: Option<DynamicBlock<ComputeBackendServiceCircuitBreakersEl>>,
-    consistent_hash: Option<DynamicBlock<ComputeBackendServiceConsistentHashEl>>,
-    iap: Option<DynamicBlock<ComputeBackendServiceIapEl>>,
-    locality_lb_policies: Option<DynamicBlock<ComputeBackendServiceLocalityLbPoliciesEl>>,
-    log_config: Option<DynamicBlock<ComputeBackendServiceLogConfigEl>>,
-    outlier_detection: Option<DynamicBlock<ComputeBackendServiceOutlierDetectionEl>>,
-    security_settings: Option<DynamicBlock<ComputeBackendServiceSecuritySettingsEl>>,
+    backend: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceBackendEl>>,
+    cdn_policy: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceCdnPolicyEl>>,
+    circuit_breakers: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceCircuitBreakersEl>>,
+    consistent_hash: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceConsistentHashEl>>,
+    iap: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceIapEl>>,
+    locality_lb_policies: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceLocalityLbPoliciesEl>>,
+    log_config: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceLogConfigEl>>,
+    outlier_detection: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceOutlierDetectionEl>>,
+    security_settings: std::option::Option<terrars::DynamicBlock<ComputeBackendServiceSecuritySettingsEl>>,
 }

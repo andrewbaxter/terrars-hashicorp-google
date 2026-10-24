@@ -1,91 +1,119 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataFoldersData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    parent_id: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    parent_id: terrars::PrimField<std::string::String>,
 }
 
 struct DataFolders_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataFoldersData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataFoldersData>,
 }
 
 #[derive(Clone)]
-pub struct DataFolders(Rc<DataFolders_>);
+pub struct DataFolders(std::rc::Rc<DataFolders_>);
 
 impl DataFolders {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `folders` after provisioning.\n"]
-    pub fn folders(&self) -> ListRef<DataFoldersFoldersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.folders", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `parent_id` after provisioning.\n"]
-    pub fn parent_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parent_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `folders` after provisioning.\n"]
+    pub fn folders(&self) -> terrars::ListRef<DataFoldersFoldersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.folders", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `parent_id` after provisioning.\n"]
+    pub fn parent_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_id", self.extract_ref()))
     }
 }
 
-impl Referable for DataFolders {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataFolders {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataFolders { }
+impl terrars::Datasource for DataFolders { }
 
-impl ToListMappable for DataFolders {
-    type O = ListRef<DataFoldersRef>;
+impl terrars::ToListMappable for DataFolders {
+    type O = terrars::ListRef<DataFoldersRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataFolders_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataFolders_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_folders".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -95,20 +123,21 @@ impl Datasource_ for DataFolders_ {
 }
 
 pub struct BuildDataFolders {
-    pub tf_id: String,
-    #[doc= ""]
-    pub parent_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub parent_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataFolders {
-    pub fn build(self, stack: &mut Stack) -> DataFolders {
-        let out = DataFolders(Rc::new(DataFolders_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataFolders {
+        let out = DataFolders(std::rc::Rc::new(DataFolders_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataFoldersData {
+            data: std::cell::RefCell::new(DataFoldersData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 parent_id: self.parent_id,
             }),
@@ -119,12 +148,12 @@ impl BuildDataFolders {
 }
 
 pub struct DataFoldersRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataFoldersRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataFoldersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -133,105 +162,105 @@ impl Ref for DataFoldersRef {
 }
 
 impl DataFoldersRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `folders` after provisioning.\n"]
-    pub fn folders(&self) -> ListRef<DataFoldersFoldersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.folders", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `folders` after provisioning.\n"]
+    pub fn folders(&self) -> terrars::ListRef<DataFoldersFoldersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.folders", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `parent_id` after provisioning.\n"]
-    pub fn parent_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parent_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `parent_id` after provisioning.\n"]
+    pub fn parent_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_id", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataFoldersFoldersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create_time: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete_time: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    display_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    etag: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parent: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    state: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update_time: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    etag: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parent: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataFoldersFoldersEl {
-    #[doc= "Set the field `create_time`.\n"]
-    pub fn set_create_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create_time = Some(v.into());
+    #[doc = "Set the field `create_time`.\n"]
+    pub fn set_create_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete_time`.\n"]
-    pub fn set_delete_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete_time = Some(v.into());
+    #[doc = "Set the field `delete_time`.\n"]
+    pub fn set_delete_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `display_name`.\n"]
-    pub fn set_display_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.display_name = Some(v.into());
+    #[doc = "Set the field `display_name`.\n"]
+    pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.display_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `etag`.\n"]
-    pub fn set_etag(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.etag = Some(v.into());
+    #[doc = "Set the field `etag`.\n"]
+    pub fn set_etag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.etag = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `parent`.\n"]
-    pub fn set_parent(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.parent = Some(v.into());
+    #[doc = "Set the field `parent`.\n"]
+    pub fn set_parent(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.parent = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `state`.\n"]
-    pub fn set_state(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.state = Some(v.into());
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update_time`.\n"]
-    pub fn set_update_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update_time = Some(v.into());
+    #[doc = "Set the field `update_time`.\n"]
+    pub fn set_update_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataFoldersFoldersEl {
-    type O = BlockAssignable<DataFoldersFoldersEl>;
+impl terrars::ToListMappable for DataFoldersFoldersEl {
+    type O = terrars::BlockAssignable<DataFoldersFoldersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -257,12 +286,12 @@ impl BuildDataFoldersFoldersEl {
 }
 
 pub struct DataFoldersFoldersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataFoldersFoldersElRef {
-    fn new(shared: StackShared, base: String) -> DataFoldersFoldersElRef {
+impl terrars::Ref for DataFoldersFoldersElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFoldersFoldersElRef {
         DataFoldersFoldersElRef {
             shared: shared,
             base: base.to_string(),
@@ -271,47 +300,47 @@ impl Ref for DataFoldersFoldersElRef {
 }
 
 impl DataFoldersFoldersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\n"]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.base))
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete_time` after provisioning.\n"]
-    pub fn delete_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.base))
+    #[doc = "Get a reference to the value of field `delete_time` after provisioning.\n"]
+    pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\n"]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.base))
+    #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.base))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `parent` after provisioning.\n"]
-    pub fn parent(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parent", self.base))
+    #[doc = "Get a reference to the value of field `parent` after provisioning.\n"]
+    pub fn parent(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\n"]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.base))
+    #[doc = "Get a reference to the value of field `update_time` after provisioning.\n"]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.base))
     }
 }

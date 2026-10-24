@@ -1,123 +1,151 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataComputeInstanceSerialPortData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    instance: PrimField<String>,
-    port: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    zone: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    instance: terrars::PrimField<std::string::String>,
+    port: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataComputeInstanceSerialPort_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataComputeInstanceSerialPortData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataComputeInstanceSerialPortData>,
 }
 
 #[derive(Clone)]
-pub struct DataComputeInstanceSerialPort(Rc<DataComputeInstanceSerialPort_>);
+pub struct DataComputeInstanceSerialPort(std::rc::Rc<DataComputeInstanceSerialPort_>);
 
 impl DataComputeInstanceSerialPort {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `zone`.\n"]
-    pub fn set_zone(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().zone = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `contents` after provisioning.\n"]
-    pub fn contents(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.contents", self.extract_ref()))
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `zone`.\n"]
+    pub fn set_zone(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().zone = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `instance` after provisioning.\n"]
-    pub fn instance(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `contents` after provisioning.\n"]
+    pub fn contents(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.contents", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance` after provisioning.\n"]
+    pub fn instance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `zone` after provisioning.\n"]
-    pub fn zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `zone` after provisioning.\n"]
+    pub fn zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 }
 
-impl Referable for DataComputeInstanceSerialPort {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataComputeInstanceSerialPort {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataComputeInstanceSerialPort { }
+impl terrars::Datasource for DataComputeInstanceSerialPort { }
 
-impl ToListMappable for DataComputeInstanceSerialPort {
-    type O = ListRef<DataComputeInstanceSerialPortRef>;
+impl terrars::ToListMappable for DataComputeInstanceSerialPort {
+    type O = terrars::ListRef<DataComputeInstanceSerialPortRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataComputeInstanceSerialPort_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataComputeInstanceSerialPort_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_compute_instance_serial_port".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -127,22 +155,23 @@ impl Datasource_ for DataComputeInstanceSerialPort_ {
 }
 
 pub struct BuildDataComputeInstanceSerialPort {
-    pub tf_id: String,
-    #[doc= ""]
-    pub instance: PrimField<String>,
-    #[doc= ""]
-    pub port: PrimField<f64>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub instance: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub port: terrars::PrimField<f64>,
 }
 
 impl BuildDataComputeInstanceSerialPort {
-    pub fn build(self, stack: &mut Stack) -> DataComputeInstanceSerialPort {
-        let out = DataComputeInstanceSerialPort(Rc::new(DataComputeInstanceSerialPort_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataComputeInstanceSerialPort {
+        let out = DataComputeInstanceSerialPort(std::rc::Rc::new(DataComputeInstanceSerialPort_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataComputeInstanceSerialPortData {
+            data: std::cell::RefCell::new(DataComputeInstanceSerialPortData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 instance: self.instance,
                 port: self.port,
@@ -156,12 +185,12 @@ impl BuildDataComputeInstanceSerialPort {
 }
 
 pub struct DataComputeInstanceSerialPortRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeInstanceSerialPortRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataComputeInstanceSerialPortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -170,41 +199,41 @@ impl Ref for DataComputeInstanceSerialPortRef {
 }
 
 impl DataComputeInstanceSerialPortRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `contents` after provisioning.\n"]
-    pub fn contents(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.contents", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `contents` after provisioning.\n"]
+    pub fn contents(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.contents", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance` after provisioning.\n"]
-    pub fn instance(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance` after provisioning.\n"]
+    pub fn instance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `zone` after provisioning.\n"]
-    pub fn zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `zone` after provisioning.\n"]
+    pub fn zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 }

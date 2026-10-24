@@ -1,96 +1,124 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataHealthcareHl7V2StoreIamPolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    hl7_v2_store_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    hl7_v2_store_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataHealthcareHl7V2StoreIamPolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataHealthcareHl7V2StoreIamPolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataHealthcareHl7V2StoreIamPolicyData>,
 }
 
 #[derive(Clone)]
-pub struct DataHealthcareHl7V2StoreIamPolicy(Rc<DataHealthcareHl7V2StoreIamPolicy_>);
+pub struct DataHealthcareHl7V2StoreIamPolicy(std::rc::Rc<DataHealthcareHl7V2StoreIamPolicy_>);
 
 impl DataHealthcareHl7V2StoreIamPolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `hl7_v2_store_id` after provisioning.\n"]
-    pub fn hl7_v2_store_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hl7_v2_store_id", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy_data` after provisioning.\n"]
-    pub fn policy_data(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_data", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `hl7_v2_store_id` after provisioning.\n"]
+    pub fn hl7_v2_store_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hl7_v2_store_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `policy_data` after provisioning.\n"]
+    pub fn policy_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_data", self.extract_ref()))
     }
 }
 
-impl Referable for DataHealthcareHl7V2StoreIamPolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataHealthcareHl7V2StoreIamPolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataHealthcareHl7V2StoreIamPolicy { }
+impl terrars::Datasource for DataHealthcareHl7V2StoreIamPolicy { }
 
-impl ToListMappable for DataHealthcareHl7V2StoreIamPolicy {
-    type O = ListRef<DataHealthcareHl7V2StoreIamPolicyRef>;
+impl terrars::ToListMappable for DataHealthcareHl7V2StoreIamPolicy {
+    type O = terrars::ListRef<DataHealthcareHl7V2StoreIamPolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataHealthcareHl7V2StoreIamPolicy_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataHealthcareHl7V2StoreIamPolicy_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_healthcare_hl7_v2_store_iam_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -100,20 +128,21 @@ impl Datasource_ for DataHealthcareHl7V2StoreIamPolicy_ {
 }
 
 pub struct BuildDataHealthcareHl7V2StoreIamPolicy {
-    pub tf_id: String,
-    #[doc= ""]
-    pub hl7_v2_store_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub hl7_v2_store_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataHealthcareHl7V2StoreIamPolicy {
-    pub fn build(self, stack: &mut Stack) -> DataHealthcareHl7V2StoreIamPolicy {
-        let out = DataHealthcareHl7V2StoreIamPolicy(Rc::new(DataHealthcareHl7V2StoreIamPolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataHealthcareHl7V2StoreIamPolicy {
+        let out = DataHealthcareHl7V2StoreIamPolicy(std::rc::Rc::new(DataHealthcareHl7V2StoreIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataHealthcareHl7V2StoreIamPolicyData {
+            data: std::cell::RefCell::new(DataHealthcareHl7V2StoreIamPolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 hl7_v2_store_id: self.hl7_v2_store_id,
                 id: core::default::Default::default(),
             }),
@@ -124,12 +153,12 @@ impl BuildDataHealthcareHl7V2StoreIamPolicy {
 }
 
 pub struct DataHealthcareHl7V2StoreIamPolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataHealthcareHl7V2StoreIamPolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataHealthcareHl7V2StoreIamPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -138,31 +167,31 @@ impl Ref for DataHealthcareHl7V2StoreIamPolicyRef {
 }
 
 impl DataHealthcareHl7V2StoreIamPolicyRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `hl7_v2_store_id` after provisioning.\n"]
-    pub fn hl7_v2_store_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hl7_v2_store_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `hl7_v2_store_id` after provisioning.\n"]
+    pub fn hl7_v2_store_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hl7_v2_store_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy_data` after provisioning.\n"]
-    pub fn policy_data(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_data", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy_data` after provisioning.\n"]
+    pub fn policy_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_data", self.extract_ref()))
     }
 }

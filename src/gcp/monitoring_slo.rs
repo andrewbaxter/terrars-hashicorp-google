@@ -1,67 +1,71 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct MonitoringSloData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    calendar_period: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    display_name: Option<PrimField<String>>,
-    goal: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rolling_period_days: Option<PrimField<f64>>,
-    service: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    slo_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    user_labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    basic_sli: Option<Vec<MonitoringSloBasicSliEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    request_based_sli: Option<Vec<MonitoringSloRequestBasedSliEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<MonitoringSloTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    windows_based_sli: Option<Vec<MonitoringSloWindowsBasedSliEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    calendar_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    goal: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rolling_period_days: std::option::Option<terrars::PrimField<f64>>,
+    service: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slo_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_sli: std::option::Option<std::vec::Vec<MonitoringSloBasicSliEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    request_based_sli: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MonitoringSloTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    windows_based_sli: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliEl>>,
     dynamic: MonitoringSloDynamic,
 }
 
 struct MonitoringSlo_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<MonitoringSloData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<MonitoringSloData>,
 }
 
 #[derive(Clone)]
-pub struct MonitoringSlo(Rc<MonitoringSlo_>);
+pub struct MonitoringSlo(std::rc::Rc<MonitoringSlo_>);
 
 impl MonitoringSlo {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -76,222 +80,276 @@ impl MonitoringSlo {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `calendar_period`.\nA calendar period, semantically \"since the start of the current\n<calendarPeriod>\". Possible values: [\"DAY\", \"WEEK\", \"FORTNIGHT\", \"MONTH\"]"]
-    pub fn set_calendar_period(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().calendar_period = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `display_name`.\nName used for UI elements listing this SLO."]
-    pub fn set_display_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().display_name = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc =
+        "Set the field `calendar_period`.\nA calendar period, semantically \"since the start of the current\n<calendarPeriod>\". Possible values: [\"DAY\", \"WEEK\", \"FORTNIGHT\", \"MONTH\"]"]
+    pub fn set_calendar_period(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().calendar_period = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `rolling_period_days`.\nA rolling time period, semantically \"in the past X days\".\nMust be between 1 to 30 days, inclusive."]
-    pub fn set_rolling_period_days(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().rolling_period_days = Some(v.into());
+    #[doc = "Set the field `display_name`.\nName used for UI elements listing this SLO."]
+    pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `slo_id`.\nThe id to use for this ServiceLevelObjective. If omitted, an id will be generated instead."]
-    pub fn set_slo_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().slo_id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `user_labels`.\nThis field is intended to be used for organizing and identifying the AlertPolicy\nobjects.The field can contain up to 64 entries. Each key and value is limited\nto 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values\ncan contain only lowercase letters, numerals, underscores, and dashes. Keys\nmust begin with a letter."]
-    pub fn set_user_labels(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().user_labels = Some(v.into());
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `basic_sli`.\n"]
-    pub fn set_basic_sli(self, v: impl Into<BlockAssignable<MonitoringSloBasicSliEl>>) -> Self {
+    #[doc =
+        "Set the field `rolling_period_days`.\nA rolling time period, semantically \"in the past X days\".\nMust be between 1 to 30 days, inclusive."]
+    pub fn set_rolling_period_days(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().rolling_period_days = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `slo_id`.\nThe id to use for this ServiceLevelObjective. If omitted, an id will be generated instead."]
+    pub fn set_slo_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().slo_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `user_labels`.\nThis field is intended to be used for organizing and identifying the AlertPolicy\nobjects.The field can contain up to 64 entries. Each key and value is limited\nto 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values\ncan contain only lowercase letters, numerals, underscores, and dashes. Keys\nmust begin with a letter."]
+    pub fn set_user_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().user_labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `basic_sli`.\n"]
+    pub fn set_basic_sli(self, v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloBasicSliEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().basic_sli = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().basic_sli = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.basic_sli = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.basic_sli = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `request_based_sli`.\n"]
-    pub fn set_request_based_sli(self, v: impl Into<BlockAssignable<MonitoringSloRequestBasedSliEl>>) -> Self {
+    #[doc = "Set the field `request_based_sli`.\n"]
+    pub fn set_request_based_sli(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().request_based_sli = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().request_based_sli = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.request_based_sli = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.request_based_sli = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<MonitoringSloTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringSloTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `windows_based_sli`.\n"]
-    pub fn set_windows_based_sli(self, v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliEl>>) -> Self {
+    #[doc = "Set the field `windows_based_sli`.\n"]
+    pub fn set_windows_based_sli(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().windows_based_sli = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().windows_based_sli = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.windows_based_sli = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.windows_based_sli = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `calendar_period` after provisioning.\nA calendar period, semantically \"since the start of the current\n<calendarPeriod>\". Possible values: [\"DAY\", \"WEEK\", \"FORTNIGHT\", \"MONTH\"]"]
-    pub fn calendar_period(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.calendar_period", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `calendar_period` after provisioning.\nA calendar period, semantically \"since the start of the current\n<calendarPeriod>\". Possible values: [\"DAY\", \"WEEK\", \"FORTNIGHT\", \"MONTH\"]"]
+    pub fn calendar_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.calendar_period", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this SLO."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this SLO."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `goal` after provisioning.\nThe fraction of service that must be good in order for this objective\nto be met. 0 < goal <= 0.999"]
-    pub fn goal(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.goal", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `goal` after provisioning.\nThe fraction of service that must be good in order for this objective\nto be met. 0 < goal <= 0.999"]
+    pub fn goal(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.goal", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe full resource name for this service. The syntax is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe full resource name for this service. The syntax is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rolling_period_days` after provisioning.\nA rolling time period, semantically \"in the past X days\".\nMust be between 1 to 30 days, inclusive."]
-    pub fn rolling_period_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rolling_period_days", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `rolling_period_days` after provisioning.\nA rolling time period, semantically \"in the past X days\".\nMust be between 1 to 30 days, inclusive."]
+    pub fn rolling_period_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rolling_period_days", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service` after provisioning.\nID of the service to which this SLO belongs."]
-    pub fn service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nID of the service to which this SLO belongs."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `slo_id` after provisioning.\nThe id to use for this ServiceLevelObjective. If omitted, an id will be generated instead."]
-    pub fn slo_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.slo_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `slo_id` after provisioning.\nThe id to use for this ServiceLevelObjective. If omitted, an id will be generated instead."]
+    pub fn slo_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.slo_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `user_labels` after provisioning.\nThis field is intended to be used for organizing and identifying the AlertPolicy\nobjects.The field can contain up to 64 entries. Each key and value is limited\nto 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values\ncan contain only lowercase letters, numerals, underscores, and dashes. Keys\nmust begin with a letter."]
-    pub fn user_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.user_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `user_labels` after provisioning.\nThis field is intended to be used for organizing and identifying the AlertPolicy\nobjects.The field can contain up to 64 entries. Each key and value is limited\nto 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values\ncan contain only lowercase letters, numerals, underscores, and dashes. Keys\nmust begin with a letter."]
+    pub fn user_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.user_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `basic_sli` after provisioning.\n"]
-    pub fn basic_sli(&self) -> ListRef<MonitoringSloBasicSliElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.basic_sli", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `basic_sli` after provisioning.\n"]
+    pub fn basic_sli(&self) -> terrars::ListRef<MonitoringSloBasicSliElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_sli", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `request_based_sli` after provisioning.\n"]
-    pub fn request_based_sli(&self) -> ListRef<MonitoringSloRequestBasedSliElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.request_based_sli", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `request_based_sli` after provisioning.\n"]
+    pub fn request_based_sli(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.request_based_sli", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MonitoringSloTimeoutsElRef {
         MonitoringSloTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `windows_based_sli` after provisioning.\n"]
-    pub fn windows_based_sli(&self) -> ListRef<MonitoringSloWindowsBasedSliElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.windows_based_sli", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `windows_based_sli` after provisioning.\n"]
+    pub fn windows_based_sli(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.windows_based_sli", self.extract_ref()))
     }
 }
 
-impl Referable for MonitoringSlo {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for MonitoringSlo {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for MonitoringSlo { }
+impl terrars::Resource for MonitoringSlo { }
 
-impl ToListMappable for MonitoringSlo {
-    type O = ListRef<MonitoringSloRef>;
+impl terrars::ToListMappable for MonitoringSlo {
+    type O = terrars::ListRef<MonitoringSloRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for MonitoringSlo_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for MonitoringSlo_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_monitoring_slo".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -301,23 +359,24 @@ impl Resource_ for MonitoringSlo_ {
 }
 
 pub struct BuildMonitoringSlo {
-    pub tf_id: String,
-    #[doc= "The fraction of service that must be good in order for this objective\nto be met. 0 < goal <= 0.999"]
-    pub goal: PrimField<f64>,
-    #[doc= "ID of the service to which this SLO belongs."]
-    pub service: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The fraction of service that must be good in order for this objective\nto be met. 0 < goal <= 0.999"]
+    pub goal: terrars::PrimField<f64>,
+    #[doc = "ID of the service to which this SLO belongs."]
+    pub service: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMonitoringSlo {
-    pub fn build(self, stack: &mut Stack) -> MonitoringSlo {
-        let out = MonitoringSlo(Rc::new(MonitoringSlo_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> MonitoringSlo {
+        let out = MonitoringSlo(std::rc::Rc::new(MonitoringSlo_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(MonitoringSloData {
+            data: std::cell::RefCell::new(MonitoringSloData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 calendar_period: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 goal: self.goal,
@@ -331,7 +390,7 @@ impl BuildMonitoringSlo {
                 request_based_sli: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 windows_based_sli: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -340,12 +399,12 @@ impl BuildMonitoringSlo {
 }
 
 pub struct MonitoringSloRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for MonitoringSloRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -354,104 +413,113 @@ impl Ref for MonitoringSloRef {
 }
 
 impl MonitoringSloRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `calendar_period` after provisioning.\nA calendar period, semantically \"since the start of the current\n<calendarPeriod>\". Possible values: [\"DAY\", \"WEEK\", \"FORTNIGHT\", \"MONTH\"]"]
-    pub fn calendar_period(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.calendar_period", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `calendar_period` after provisioning.\nA calendar period, semantically \"since the start of the current\n<calendarPeriod>\". Possible values: [\"DAY\", \"WEEK\", \"FORTNIGHT\", \"MONTH\"]"]
+    pub fn calendar_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.calendar_period", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this SLO."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this SLO."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `goal` after provisioning.\nThe fraction of service that must be good in order for this objective\nto be met. 0 < goal <= 0.999"]
-    pub fn goal(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.goal", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `goal` after provisioning.\nThe fraction of service that must be good in order for this objective\nto be met. 0 < goal <= 0.999"]
+    pub fn goal(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.goal", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe full resource name for this service. The syntax is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe full resource name for this service. The syntax is:\nprojects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rolling_period_days` after provisioning.\nA rolling time period, semantically \"in the past X days\".\nMust be between 1 to 30 days, inclusive."]
-    pub fn rolling_period_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rolling_period_days", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `rolling_period_days` after provisioning.\nA rolling time period, semantically \"in the past X days\".\nMust be between 1 to 30 days, inclusive."]
+    pub fn rolling_period_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rolling_period_days", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service` after provisioning.\nID of the service to which this SLO belongs."]
-    pub fn service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nID of the service to which this SLO belongs."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `slo_id` after provisioning.\nThe id to use for this ServiceLevelObjective. If omitted, an id will be generated instead."]
-    pub fn slo_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.slo_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `slo_id` after provisioning.\nThe id to use for this ServiceLevelObjective. If omitted, an id will be generated instead."]
+    pub fn slo_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.slo_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `user_labels` after provisioning.\nThis field is intended to be used for organizing and identifying the AlertPolicy\nobjects.The field can contain up to 64 entries. Each key and value is limited\nto 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values\ncan contain only lowercase letters, numerals, underscores, and dashes. Keys\nmust begin with a letter."]
-    pub fn user_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.user_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `user_labels` after provisioning.\nThis field is intended to be used for organizing and identifying the AlertPolicy\nobjects.The field can contain up to 64 entries. Each key and value is limited\nto 63 Unicode characters or 128 bytes, whichever is smaller. Labels and values\ncan contain only lowercase letters, numerals, underscores, and dashes. Keys\nmust begin with a letter."]
+    pub fn user_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.user_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `basic_sli` after provisioning.\n"]
-    pub fn basic_sli(&self) -> ListRef<MonitoringSloBasicSliElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.basic_sli", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `basic_sli` after provisioning.\n"]
+    pub fn basic_sli(&self) -> terrars::ListRef<MonitoringSloBasicSliElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_sli", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `request_based_sli` after provisioning.\n"]
-    pub fn request_based_sli(&self) -> ListRef<MonitoringSloRequestBasedSliElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.request_based_sli", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `request_based_sli` after provisioning.\n"]
+    pub fn request_based_sli(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.request_based_sli", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MonitoringSloTimeoutsElRef {
         MonitoringSloTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `windows_based_sli` after provisioning.\n"]
-    pub fn windows_based_sli(&self) -> ListRef<MonitoringSloWindowsBasedSliElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.windows_based_sli", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `windows_based_sli` after provisioning.\n"]
+    pub fn windows_based_sli(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.windows_based_sli", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloBasicSliElAvailabilityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl MonitoringSloBasicSliElAvailabilityEl {
-    #[doc= "Set the field `enabled`.\nWhether an availability SLI is enabled or not. Must be set to true. Defaults to 'true'."]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc =
+        "Set the field `enabled`.\nWhether an availability SLI is enabled or not. Must be set to true. Defaults to 'true'."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloBasicSliElAvailabilityEl {
-    type O = BlockAssignable<MonitoringSloBasicSliElAvailabilityEl>;
+impl terrars::ToListMappable for MonitoringSloBasicSliElAvailabilityEl {
+    type O = terrars::BlockAssignable<MonitoringSloBasicSliElAvailabilityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -468,12 +536,12 @@ impl BuildMonitoringSloBasicSliElAvailabilityEl {
 }
 
 pub struct MonitoringSloBasicSliElAvailabilityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloBasicSliElAvailabilityElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloBasicSliElAvailabilityElRef {
+impl terrars::Ref for MonitoringSloBasicSliElAvailabilityElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloBasicSliElAvailabilityElRef {
         MonitoringSloBasicSliElAvailabilityElRef {
             shared: shared,
             base: base.to_string(),
@@ -482,28 +550,29 @@ impl Ref for MonitoringSloBasicSliElAvailabilityElRef {
 }
 
 impl MonitoringSloBasicSliElAvailabilityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether an availability SLI is enabled or not. Must be set to true. Defaults to 'true'."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether an availability SLI is enabled or not. Must be set to true. Defaults to 'true'."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloBasicSliElLatencyEl {
-    threshold: PrimField<String>,
+    threshold: terrars::PrimField<std::string::String>,
 }
 
 impl MonitoringSloBasicSliElLatencyEl { }
 
-impl ToListMappable for MonitoringSloBasicSliElLatencyEl {
-    type O = BlockAssignable<MonitoringSloBasicSliElLatencyEl>;
+impl terrars::ToListMappable for MonitoringSloBasicSliElLatencyEl {
+    type O = terrars::BlockAssignable<MonitoringSloBasicSliElLatencyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -512,8 +581,9 @@ impl ToListMappable for MonitoringSloBasicSliElLatencyEl {
 }
 
 pub struct BuildMonitoringSloBasicSliElLatencyEl {
-    #[doc= "A duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
-    pub threshold: PrimField<String>,
+    #[doc =
+        "A duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
+    pub threshold: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMonitoringSloBasicSliElLatencyEl {
@@ -523,12 +593,12 @@ impl BuildMonitoringSloBasicSliElLatencyEl {
 }
 
 pub struct MonitoringSloBasicSliElLatencyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloBasicSliElLatencyElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloBasicSliElLatencyElRef {
+impl terrars::Ref for MonitoringSloBasicSliElLatencyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloBasicSliElLatencyElRef {
         MonitoringSloBasicSliElLatencyElRef {
             shared: shared,
             base: base.to_string(),
@@ -537,88 +607,107 @@ impl Ref for MonitoringSloBasicSliElLatencyElRef {
 }
 
 impl MonitoringSloBasicSliElLatencyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `threshold` after provisioning.\nA duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
-    pub fn threshold(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
+    #[doc =
+        "Get a reference to the value of field `threshold` after provisioning.\nA duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
+    pub fn threshold(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloBasicSliElDynamic {
-    availability: Option<DynamicBlock<MonitoringSloBasicSliElAvailabilityEl>>,
-    latency: Option<DynamicBlock<MonitoringSloBasicSliElLatencyEl>>,
+    availability: std::option::Option<terrars::DynamicBlock<MonitoringSloBasicSliElAvailabilityEl>>,
+    latency: std::option::Option<terrars::DynamicBlock<MonitoringSloBasicSliElLatencyEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloBasicSliEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    method: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    availability: Option<Vec<MonitoringSloBasicSliElAvailabilityEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    latency: Option<Vec<MonitoringSloBasicSliElLatencyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    method: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability: std::option::Option<std::vec::Vec<MonitoringSloBasicSliElAvailabilityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latency: std::option::Option<std::vec::Vec<MonitoringSloBasicSliElLatencyEl>>,
     dynamic: MonitoringSloBasicSliElDynamic,
 }
 
 impl MonitoringSloBasicSliEl {
-    #[doc= "Set the field `location`.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
-    pub fn set_location(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.location = Some(v.into());
+    #[doc =
+        "Set the field `location`.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
+    pub fn set_location(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `method`.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
-    pub fn set_method(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.method = Some(v.into());
+    #[doc =
+        "Set the field `method`.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
+    pub fn set_method(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.method = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `version`.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
-    pub fn set_version(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.version = Some(v.into());
+    #[doc =
+        "Set the field `version`.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
+    pub fn set_version(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `availability`.\n"]
-    pub fn set_availability(mut self, v: impl Into<BlockAssignable<MonitoringSloBasicSliElAvailabilityEl>>) -> Self {
+    #[doc = "Set the field `availability`.\n"]
+    pub fn set_availability(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloBasicSliElAvailabilityEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.availability = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.availability = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.availability = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.availability = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `latency`.\n"]
-    pub fn set_latency(mut self, v: impl Into<BlockAssignable<MonitoringSloBasicSliElLatencyEl>>) -> Self {
+    #[doc = "Set the field `latency`.\n"]
+    pub fn set_latency(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloBasicSliElLatencyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.latency = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.latency = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.latency = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.latency = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloBasicSliEl {
-    type O = BlockAssignable<MonitoringSloBasicSliEl>;
+impl terrars::ToListMappable for MonitoringSloBasicSliEl {
+    type O = terrars::BlockAssignable<MonitoringSloBasicSliEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -636,18 +725,18 @@ impl BuildMonitoringSloBasicSliEl {
             version: core::default::Default::default(),
             availability: core::default::Default::default(),
             latency: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloBasicSliElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloBasicSliElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloBasicSliElRef {
+impl terrars::Ref for MonitoringSloBasicSliElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloBasicSliElRef {
         MonitoringSloBasicSliElRef {
             shared: shared,
             base: base.to_string(),
@@ -656,63 +745,66 @@ impl Ref for MonitoringSloBasicSliElRef {
 }
 
 impl MonitoringSloBasicSliElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
-    pub fn location(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
+    pub fn location(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `method` after provisioning.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
-    pub fn method(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.method", self.base))
+    #[doc =
+        "Get a reference to the value of field `method` after provisioning.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
+    pub fn method(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.method", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
-    pub fn version(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
+    pub fn version(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `availability` after provisioning.\n"]
-    pub fn availability(&self) -> ListRef<MonitoringSloBasicSliElAvailabilityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.availability", self.base))
+    #[doc = "Get a reference to the value of field `availability` after provisioning.\n"]
+    pub fn availability(&self) -> terrars::ListRef<MonitoringSloBasicSliElAvailabilityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.availability", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `latency` after provisioning.\n"]
-    pub fn latency(&self) -> ListRef<MonitoringSloBasicSliElLatencyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.latency", self.base))
+    #[doc = "Get a reference to the value of field `latency` after provisioning.\n"]
+    pub fn latency(&self) -> terrars::ListRef<MonitoringSloBasicSliElLatencyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.latency", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
-    #[doc= "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn set_max(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max = Some(v.into());
+    #[doc = "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn set_min(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min = Some(v.into());
+    #[doc = "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
-    type O = BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>;
+impl terrars::ToListMappable for MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
+    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -732,12 +824,15 @@ impl BuildMonitoringSloRequestBasedSliElDistributionCutElRangeEl {
 }
 
 pub struct MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
+impl terrars::Ref for MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
         MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -746,57 +841,59 @@ impl Ref for MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
 }
 
 impl MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn max(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    #[doc =
+        "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn min(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    #[doc =
+        "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloRequestBasedSliElDistributionCutElDynamic {
-    range: Option<DynamicBlock<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
+    range: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloRequestBasedSliElDistributionCutEl {
-    distribution_filter: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range: Option<Vec<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
+    distribution_filter: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
     dynamic: MonitoringSloRequestBasedSliElDistributionCutElDynamic,
 }
 
 impl MonitoringSloRequestBasedSliElDistributionCutEl {
-    #[doc= "Set the field `range`.\n"]
+    #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloRequestBasedSliElDistributionCutEl {
-    type O = BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutEl>;
+impl terrars::ToListMappable for MonitoringSloRequestBasedSliElDistributionCutEl {
+    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -805,8 +902,9 @@ impl ToListMappable for MonitoringSloRequestBasedSliElDistributionCutEl {
 }
 
 pub struct BuildMonitoringSloRequestBasedSliElDistributionCutEl {
-    #[doc= "A TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub distribution_filter: PrimField<String>,
+    #[doc =
+        "A TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub distribution_filter: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMonitoringSloRequestBasedSliElDistributionCutEl {
@@ -814,18 +912,21 @@ impl BuildMonitoringSloRequestBasedSliElDistributionCutEl {
         MonitoringSloRequestBasedSliElDistributionCutEl {
             distribution_filter: self.distribution_filter,
             range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloRequestBasedSliElDistributionCutElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloRequestBasedSliElDistributionCutElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloRequestBasedSliElDistributionCutElRef {
+impl terrars::Ref for MonitoringSloRequestBasedSliElDistributionCutElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloRequestBasedSliElDistributionCutElRef {
         MonitoringSloRequestBasedSliElDistributionCutElRef {
             shared: shared,
             base: base.to_string(),
@@ -834,56 +935,69 @@ impl Ref for MonitoringSloRequestBasedSliElDistributionCutElRef {
 }
 
 impl MonitoringSloRequestBasedSliElDistributionCutElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `distribution_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn distribution_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.distribution_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `distribution_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn distribution_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.distribution_filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> ListRef<MonitoringSloRequestBasedSliElDistributionCutElRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.range", self.base))
+    #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
+    pub fn range(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElDistributionCutElRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloRequestBasedSliElGoodTotalRatioEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bad_service_filter: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    good_service_filter: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    total_service_filter: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bad_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    good_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MonitoringSloRequestBasedSliElGoodTotalRatioEl {
-    #[doc= "Set the field `bad_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
-    pub fn set_bad_service_filter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bad_service_filter = Some(v.into());
+    #[doc =
+        "Set the field `bad_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
+    pub fn set_bad_service_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.bad_service_filter = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `good_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided.\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
-    pub fn set_good_service_filter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.good_service_filter = Some(v.into());
+    #[doc =
+        "Set the field `good_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided.\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
+    pub fn set_good_service_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.good_service_filter = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `total_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
-    pub fn set_total_service_filter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.total_service_filter = Some(v.into());
+    #[doc =
+        "Set the field `total_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
+    pub fn set_total_service_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.total_service_filter = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloRequestBasedSliElGoodTotalRatioEl {
-    type O = BlockAssignable<MonitoringSloRequestBasedSliElGoodTotalRatioEl>;
+impl terrars::ToListMappable for MonitoringSloRequestBasedSliElGoodTotalRatioEl {
+    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliElGoodTotalRatioEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -904,12 +1018,15 @@ impl BuildMonitoringSloRequestBasedSliElGoodTotalRatioEl {
 }
 
 pub struct MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
+impl terrars::Ref for MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
         MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
             shared: shared,
             base: base.to_string(),
@@ -918,80 +1035,83 @@ impl Ref for MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
 }
 
 impl MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bad_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
-    pub fn bad_service_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bad_service_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `bad_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
+    pub fn bad_service_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bad_service_filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `good_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided.\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
-    pub fn good_service_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.good_service_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `good_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided.\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
+    pub fn good_service_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.good_service_filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `total_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
-    pub fn total_service_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.total_service_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `total_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
+    pub fn total_service_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_service_filter", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloRequestBasedSliElDynamic {
-    distribution_cut: Option<DynamicBlock<MonitoringSloRequestBasedSliElDistributionCutEl>>,
-    good_total_ratio: Option<DynamicBlock<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
+    distribution_cut: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliElDistributionCutEl>>,
+    good_total_ratio: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloRequestBasedSliEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    distribution_cut: Option<Vec<MonitoringSloRequestBasedSliElDistributionCutEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    good_total_ratio: Option<Vec<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    distribution_cut: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliElDistributionCutEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    good_total_ratio: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
     dynamic: MonitoringSloRequestBasedSliElDynamic,
 }
 
 impl MonitoringSloRequestBasedSliEl {
-    #[doc= "Set the field `distribution_cut`.\n"]
+    #[doc = "Set the field `distribution_cut`.\n"]
     pub fn set_distribution_cut(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.distribution_cut = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.distribution_cut = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.distribution_cut = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.distribution_cut = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `good_total_ratio`.\n"]
+    #[doc = "Set the field `good_total_ratio`.\n"]
     pub fn set_good_total_ratio(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.good_total_ratio = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.good_total_ratio = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.good_total_ratio = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.good_total_ratio = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloRequestBasedSliEl {
-    type O = BlockAssignable<MonitoringSloRequestBasedSliEl>;
+impl terrars::ToListMappable for MonitoringSloRequestBasedSliEl {
+    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1006,18 +1126,18 @@ impl BuildMonitoringSloRequestBasedSliEl {
         MonitoringSloRequestBasedSliEl {
             distribution_cut: core::default::Default::default(),
             good_total_ratio: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloRequestBasedSliElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloRequestBasedSliElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloRequestBasedSliElRef {
+impl terrars::Ref for MonitoringSloRequestBasedSliElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloRequestBasedSliElRef {
         MonitoringSloRequestBasedSliElRef {
             shared: shared,
             base: base.to_string(),
@@ -1026,56 +1146,56 @@ impl Ref for MonitoringSloRequestBasedSliElRef {
 }
 
 impl MonitoringSloRequestBasedSliElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `distribution_cut` after provisioning.\n"]
-    pub fn distribution_cut(&self) -> ListRef<MonitoringSloRequestBasedSliElDistributionCutElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.distribution_cut", self.base))
+    #[doc = "Get a reference to the value of field `distribution_cut` after provisioning.\n"]
+    pub fn distribution_cut(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElDistributionCutElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.distribution_cut", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `good_total_ratio` after provisioning.\n"]
-    pub fn good_total_ratio(&self) -> ListRef<MonitoringSloRequestBasedSliElGoodTotalRatioElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.good_total_ratio", self.base))
+    #[doc = "Get a reference to the value of field `good_total_ratio` after provisioning.\n"]
+    pub fn good_total_ratio(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElGoodTotalRatioElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.good_total_ratio", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MonitoringSloTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloTimeoutsEl {
-    type O = BlockAssignable<MonitoringSloTimeoutsEl>;
+impl terrars::ToListMappable for MonitoringSloTimeoutsEl {
+    type O = terrars::BlockAssignable<MonitoringSloTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1096,12 +1216,12 @@ impl BuildMonitoringSloTimeoutsEl {
 }
 
 pub struct MonitoringSloTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloTimeoutsElRef {
+impl terrars::Ref for MonitoringSloTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloTimeoutsElRef {
         MonitoringSloTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1110,46 +1230,49 @@ impl Ref for MonitoringSloTimeoutsElRef {
 }
 
 impl MonitoringSloTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
-    #[doc= "Set the field `enabled`.\nWhether an availability SLI is enabled or not. Must be set to 'true. Defaults to 'true'."]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc =
+        "Set the field `enabled`.\nWhether an availability SLI is enabled or not. Must be set to 'true. Defaults to 'true'."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
+impl terrars
+::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
     type O =
-        BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>;
+        terrars
+        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1168,14 +1291,14 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerform
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
             shared: shared,
@@ -1185,28 +1308,31 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerf
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether an availability SLI is enabled or not. Must be set to 'true. Defaults to 'true'."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether an availability SLI is enabled or not. Must be set to 'true. Defaults to 'true'."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-    threshold: PrimField<String>,
+    threshold: terrars::PrimField<std::string::String>,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl { }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
+    type O =
+        terrars
+        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1215,8 +1341,9 @@ impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElB
 }
 
 pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-    #[doc= "A duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
-    pub threshold: PrimField<String>,
+    #[doc =
+        "A duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
+    pub threshold: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
@@ -1228,14 +1355,14 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerform
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
             shared: shared,
@@ -1245,112 +1372,142 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerf
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `threshold` after provisioning.\nA duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
-    pub fn threshold(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
+    #[doc =
+        "Get a reference to the value of field `threshold` after provisioning.\nA duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
+    pub fn threshold(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElDynamic {
-    availability: Option<
-        DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>,
+    availability: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>,
     >,
-    latency: Option<
-        DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>,
+    latency: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    method: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    availability: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    latency: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    method: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability: std
+    ::option
+    ::Option<
+        std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latency: std
+    ::option
+    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>>,
     dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElDynamic,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
-    #[doc= "Set the field `location`.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
-    pub fn set_location(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.location = Some(v.into());
+    #[doc =
+        "Set the field `location`.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
+    pub fn set_location(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `method`.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
-    pub fn set_method(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.method = Some(v.into());
+    #[doc =
+        "Set the field `method`.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
+    pub fn set_method(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.method = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `version`.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
-    pub fn set_version(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.version = Some(v.into());
+    #[doc =
+        "Set the field `version`.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
+    pub fn set_version(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `availability`.\n"]
+    #[doc = "Set the field `availability`.\n"]
     pub fn set_availability(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.availability = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.availability = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.availability = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.availability = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `latency`.\n"]
+    #[doc = "Set the field `latency`.\n"]
     pub fn set_latency(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.latency = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.latency = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.latency = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.latency = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1368,20 +1525,20 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerform
             version: core::default::Default::default(),
             availability: core::default::Default::default(),
             latency: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
             shared: shared,
@@ -1391,70 +1548,76 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerf
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
-    pub fn location(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
+    pub fn location(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `method` after provisioning.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
-    pub fn method(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.method", self.base))
+    #[doc =
+        "Get a reference to the value of field `method` after provisioning.\nAn optional set of RPCs to which this SLI is relevant.\nTelemetry from other methods will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nthe Service's methods. For service types that don't support\nbreaking down by method, setting this field will result in an\nerror."]
+    pub fn method(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.method", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
-    pub fn version(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nThe set of API versions to which this SLI is relevant.\nTelemetry from other API versions will not be used to\ncalculate performance for this SLI. If omitted,\nthis SLI applies to all API versions. For service types\nthat don't support breaking down by version, setting this\nfield will result in an error."]
+    pub fn version(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `availability` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `availability` after provisioning.\n"]
     pub fn availability(
         &self,
-    ) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.availability", self.base))
+    ) -> terrars
+    ::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.availability", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `latency` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `latency` after provisioning.\n"]
     pub fn latency(
         &self,
-    ) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.latency", self.base))
+    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.latency", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-    #[doc= "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn set_max(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max = Some(v.into());
+    #[doc = "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn set_min(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min = Some(v.into());
+    #[doc = "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
+impl terrars
+::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1476,14 +1639,14 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDi
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
             shared: shared,
@@ -1493,66 +1656,80 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceE
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn max(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    #[doc =
+        "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn min(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    #[doc =
+        "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElDynamic {
-    range: Option<
-        DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl>,
+    range: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    distribution_filter: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl>>,
+    distribution_filter: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range: std
+    ::option
+    ::Option<
+        std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl>,
+    >,
     dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElDynamic,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    #[doc= "Set the field `range`.\n"]
+    #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
+    type O =
+        terrars
+        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1561,8 +1738,9 @@ impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElP
 }
 
 pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    #[doc= "A TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub distribution_filter: PrimField<String>,
+    #[doc =
+        "A TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub distribution_filter: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
@@ -1570,20 +1748,20 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDi
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
             distribution_filter: self.distribution_filter,
             range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
             shared: shared,
@@ -1593,58 +1771,74 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceE
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `distribution_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn distribution_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.distribution_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `distribution_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn distribution_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.distribution_filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
     pub fn range(
         &self,
-    ) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.range", self.base))
+    ) -> terrars
+    ::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bad_service_filter: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    good_service_filter: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    total_service_filter: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bad_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    good_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
-    #[doc= "Set the field `bad_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn set_bad_service_filter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bad_service_filter = Some(v.into());
+    #[doc =
+        "Set the field `bad_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn set_bad_service_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.bad_service_filter = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `good_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn set_good_service_filter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.good_service_filter = Some(v.into());
+    #[doc =
+        "Set the field `good_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn set_good_service_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.good_service_filter = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `total_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn set_total_service_filter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.total_service_filter = Some(v.into());
+    #[doc =
+        "Set the field `total_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn set_total_service_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.total_service_filter = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
+    type O =
+        terrars
+        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1665,14 +1859,14 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGo
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
             shared: shared,
@@ -1682,98 +1876,115 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceE
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bad_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn bad_service_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bad_service_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `bad_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn bad_service_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bad_service_filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `good_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn good_service_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.good_service_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `good_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying good service provided. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn good_service_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.good_service_filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `total_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn total_service_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.total_service_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `total_service_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying total demanded service. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
+    pub fn total_service_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_service_filter", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDynamic {
-    distribution_cut: Option<
-        DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>,
+    distribution_cut: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>,
     >,
-    good_total_ratio: Option<
-        DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>,
+    good_total_ratio: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    distribution_cut: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    good_total_ratio: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    distribution_cut: std
+    ::option
+    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    good_total_ratio: std
+    ::option
+    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>>,
     dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDynamic,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
-    #[doc= "Set the field `distribution_cut`.\n"]
+    #[doc = "Set the field `distribution_cut`.\n"]
     pub fn set_distribution_cut(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.distribution_cut = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.distribution_cut = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.distribution_cut = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.distribution_cut = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `good_total_ratio`.\n"]
+    #[doc = "Set the field `good_total_ratio`.\n"]
     pub fn set_good_total_ratio(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.good_total_ratio = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.good_total_ratio = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.good_total_ratio = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.good_total_ratio = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1788,20 +1999,20 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
             distribution_cut: core::default::Default::default(),
             good_total_ratio: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
             shared: shared,
@@ -1811,89 +2022,110 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceE
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `distribution_cut` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `distribution_cut` after provisioning.\n"]
     pub fn distribution_cut(
         &self,
-    ) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.distribution_cut", self.base))
+    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.distribution_cut", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `good_total_ratio` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `good_total_ratio` after provisioning.\n"]
     pub fn good_total_ratio(
         &self,
-    ) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.good_total_ratio", self.base))
+    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.good_total_ratio", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElDynamic {
-    basic_sli_performance: Option<
-        DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>,
-    >,
-    performance: Option<DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>>,
+    basic_sli_performance: std
+    ::option
+    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>>,
+    performance: std
+    ::option
+    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    basic_sli_performance: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    performance: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_sli_performance: std
+    ::option
+    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    performance: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>>,
     dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElDynamic,
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
-    #[doc= "Set the field `threshold`.\nIf window performance >= threshold, the window is counted\nas good."]
-    pub fn set_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.threshold = Some(v.into());
+    #[doc = "Set the field `threshold`.\nIf window performance >= threshold, the window is counted\nas good."]
+    pub fn set_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `basic_sli_performance`.\n"]
+    #[doc = "Set the field `basic_sli_performance`.\n"]
     pub fn set_basic_sli_performance(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.basic_sli_performance = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.basic_sli_performance = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.basic_sli_performance = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.basic_sli_performance = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `performance`.\n"]
+    #[doc = "Set the field `performance`.\n"]
     pub fn set_performance(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.performance = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.performance = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.performance = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.performance = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1909,18 +2141,21 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
             threshold: core::default::Default::default(),
             basic_sli_performance: core::default::Default::default(),
             performance: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
         MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
             shared: shared,
             base: base.to_string(),
@@ -1929,55 +2164,60 @@ impl Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
 }
 
 impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `threshold` after provisioning.\nIf window performance >= threshold, the window is counted\nas good."]
-    pub fn threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
+    #[doc =
+        "Get a reference to the value of field `threshold` after provisioning.\nIf window performance >= threshold, the window is counted\nas good."]
+    pub fn threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `basic_sli_performance` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `basic_sli_performance` after provisioning.\n"]
     pub fn basic_sli_performance(
         &self,
-    ) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.basic_sli_performance", self.base))
+    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_sli_performance", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `performance` after provisioning.\n"]
-    pub fn performance(&self) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.performance", self.base))
+    #[doc = "Get a reference to the value of field `performance` after provisioning.\n"]
+    pub fn performance(
+        &self,
+    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.performance", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
-    #[doc= "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
-    pub fn set_max(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max = Some(v.into());
+    #[doc =
+        "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
-    pub fn set_min(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min = Some(v.into());
+    #[doc =
+        "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1997,12 +2237,15 @@ impl BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
 }
 
 pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
         MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2011,57 +2254,64 @@ impl Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
 }
 
 impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
-    pub fn max(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    #[doc =
+        "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
-    pub fn min(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    #[doc =
+        "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElDynamic {
-    range: Option<DynamicBlock<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
+    range: std::option::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
-    time_series: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range: Option<Vec<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
+    time_series: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
     dynamic: MonitoringSloWindowsBasedSliElMetricMeanInRangeElDynamic,
 }
 
 impl MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
-    #[doc= "Set the field `range`.\n"]
+    #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2070,8 +2320,9 @@ impl ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
 }
 
 pub struct BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
-    #[doc= "A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nThe provided TimeSeries must have ValueType = INT64 or\nValueType = DOUBLE and MetricKind = GAUGE. Mean value 'X'\nshould satisfy 'range.min <= X <= range.max'\nunder good service."]
-    pub time_series: PrimField<String>,
+    #[doc =
+        "A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nThe provided TimeSeries must have ValueType = INT64 or\nValueType = DOUBLE and MetricKind = GAUGE. Mean value 'X'\nshould satisfy 'range.min <= X <= range.max'\nunder good service."]
+    pub time_series: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
@@ -2079,18 +2330,21 @@ impl BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
         MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
             time_series: self.time_series,
             range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
         MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2099,48 +2353,51 @@ impl Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
 }
 
 impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `time_series` after provisioning.\nA [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nThe provided TimeSeries must have ValueType = INT64 or\nValueType = DOUBLE and MetricKind = GAUGE. Mean value 'X'\nshould satisfy 'range.min <= X <= range.max'\nunder good service."]
-    pub fn time_series(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.time_series", self.base))
+    #[doc =
+        "Get a reference to the value of field `time_series` after provisioning.\nA [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nThe provided TimeSeries must have ValueType = INT64 or\nValueType = DOUBLE and MetricKind = GAUGE. Mean value 'X'\nshould satisfy 'range.min <= X <= range.max'\nunder good service."]
+    pub fn time_series(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.time_series", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> ListRef<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.range", self.base))
+    #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
+    pub fn range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-    #[doc= "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
-    pub fn set_max(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max = Some(v.into());
+    #[doc =
+        "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
-    pub fn set_min(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min = Some(v.into());
+    #[doc =
+        "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2160,12 +2417,15 @@ impl BuildMonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
 }
 
 pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
         MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2174,57 +2434,64 @@ impl Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
 }
 
 impl MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
-    pub fn max(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    #[doc =
+        "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
-    pub fn min(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    #[doc =
+        "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloWindowsBasedSliElMetricSumInRangeElDynamic {
-    range: Option<DynamicBlock<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
+    range: std::option::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
-    time_series: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range: Option<Vec<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
+    time_series: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
     dynamic: MonitoringSloWindowsBasedSliElMetricSumInRangeElDynamic,
 }
 
 impl MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
-    #[doc= "Set the field `range`.\n"]
+    #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2233,8 +2500,9 @@ impl ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
 }
 
 pub struct BuildMonitoringSloWindowsBasedSliElMetricSumInRangeEl {
-    #[doc= "A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nquality. The provided TimeSeries must have\nValueType = INT64 or ValueType = DOUBLE and\nMetricKind = GAUGE.\n\nSummed value 'X' should satisfy\n'range.min <= X <= range.max' for a good window."]
-    pub time_series: PrimField<String>,
+    #[doc =
+        "A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nquality. The provided TimeSeries must have\nValueType = INT64 or ValueType = DOUBLE and\nMetricKind = GAUGE.\n\nSummed value 'X' should satisfy\n'range.min <= X <= range.max' for a good window."]
+    pub time_series: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMonitoringSloWindowsBasedSliElMetricSumInRangeEl {
@@ -2242,18 +2510,21 @@ impl BuildMonitoringSloWindowsBasedSliElMetricSumInRangeEl {
         MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
             time_series: self.time_series,
             range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
         MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2262,110 +2533,129 @@ impl Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
 }
 
 impl MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `time_series` after provisioning.\nA [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nquality. The provided TimeSeries must have\nValueType = INT64 or ValueType = DOUBLE and\nMetricKind = GAUGE.\n\nSummed value 'X' should satisfy\n'range.min <= X <= range.max' for a good window."]
-    pub fn time_series(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.time_series", self.base))
+    #[doc =
+        "Get a reference to the value of field `time_series` after provisioning.\nA [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nquality. The provided TimeSeries must have\nValueType = INT64 or ValueType = DOUBLE and\nMetricKind = GAUGE.\n\nSummed value 'X' should satisfy\n'range.min <= X <= range.max' for a good window."]
+    pub fn time_series(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.time_series", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> ListRef<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.range", self.base))
+    #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
+    pub fn range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloWindowsBasedSliElDynamic {
-    good_total_ratio_threshold: Option<DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
-    metric_mean_in_range: Option<DynamicBlock<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
-    metric_sum_in_range: Option<DynamicBlock<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
+    good_total_ratio_threshold: std
+    ::option
+    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
+    metric_mean_in_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
+    metric_sum_in_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MonitoringSloWindowsBasedSliEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    good_bad_metric_filter: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    window_period: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    good_total_ratio_threshold: Option<Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_mean_in_range: Option<Vec<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_sum_in_range: Option<Vec<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    good_bad_metric_filter: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    good_total_ratio_threshold: std
+    ::option
+    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_mean_in_range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_sum_in_range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
     dynamic: MonitoringSloWindowsBasedSliElDynamic,
 }
 
 impl MonitoringSloWindowsBasedSliEl {
-    #[doc= "Set the field `good_bad_metric_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nwith ValueType = BOOL. The window is good if any true values\nappear in the window. One of 'good_bad_metric_filter',\n'good_total_ratio_threshold', 'metric_mean_in_range',\n'metric_sum_in_range' must be set for 'windows_based_sli'."]
-    pub fn set_good_bad_metric_filter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.good_bad_metric_filter = Some(v.into());
+    #[doc =
+        "Set the field `good_bad_metric_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nwith ValueType = BOOL. The window is good if any true values\nappear in the window. One of 'good_bad_metric_filter',\n'good_total_ratio_threshold', 'metric_mean_in_range',\n'metric_sum_in_range' must be set for 'windows_based_sli'."]
+    pub fn set_good_bad_metric_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.good_bad_metric_filter = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `window_period`.\nDuration over which window quality is evaluated, given as a\nduration string \"{X}s\" representing X seconds. Must be an\ninteger fraction of a day and at least 60s."]
-    pub fn set_window_period(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.window_period = Some(v.into());
+    #[doc =
+        "Set the field `window_period`.\nDuration over which window quality is evaluated, given as a\nduration string \"{X}s\" representing X seconds. Must be an\ninteger fraction of a day and at least 60s."]
+    pub fn set_window_period(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.window_period = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `good_total_ratio_threshold`.\n"]
+    #[doc = "Set the field `good_total_ratio_threshold`.\n"]
     pub fn set_good_total_ratio_threshold(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.good_total_ratio_threshold = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.good_total_ratio_threshold = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.good_total_ratio_threshold = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.good_total_ratio_threshold = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `metric_mean_in_range`.\n"]
+    #[doc = "Set the field `metric_mean_in_range`.\n"]
     pub fn set_metric_mean_in_range(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_mean_in_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_mean_in_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_mean_in_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_mean_in_range = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `metric_sum_in_range`.\n"]
+    #[doc = "Set the field `metric_sum_in_range`.\n"]
     pub fn set_metric_sum_in_range(
         mut self,
-        v: impl Into<BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_sum_in_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_sum_in_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_sum_in_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_sum_in_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MonitoringSloWindowsBasedSliEl {
-    type O = BlockAssignable<MonitoringSloWindowsBasedSliEl>;
+impl terrars::ToListMappable for MonitoringSloWindowsBasedSliEl {
+    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2383,18 +2673,18 @@ impl BuildMonitoringSloWindowsBasedSliEl {
             good_total_ratio_threshold: core::default::Default::default(),
             metric_mean_in_range: core::default::Default::default(),
             metric_sum_in_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MonitoringSloWindowsBasedSliElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MonitoringSloWindowsBasedSliElRef {
-    fn new(shared: StackShared, base: String) -> MonitoringSloWindowsBasedSliElRef {
+impl terrars::Ref for MonitoringSloWindowsBasedSliElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloWindowsBasedSliElRef {
         MonitoringSloWindowsBasedSliElRef {
             shared: shared,
             base: base.to_string(),
@@ -2403,39 +2693,43 @@ impl Ref for MonitoringSloWindowsBasedSliElRef {
 }
 
 impl MonitoringSloWindowsBasedSliElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `good_bad_metric_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nwith ValueType = BOOL. The window is good if any true values\nappear in the window. One of 'good_bad_metric_filter',\n'good_total_ratio_threshold', 'metric_mean_in_range',\n'metric_sum_in_range' must be set for 'windows_based_sli'."]
-    pub fn good_bad_metric_filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.good_bad_metric_filter", self.base))
+    #[doc =
+        "Get a reference to the value of field `good_bad_metric_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nwith ValueType = BOOL. The window is good if any true values\nappear in the window. One of 'good_bad_metric_filter',\n'good_total_ratio_threshold', 'metric_mean_in_range',\n'metric_sum_in_range' must be set for 'windows_based_sli'."]
+    pub fn good_bad_metric_filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.good_bad_metric_filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `window_period` after provisioning.\nDuration over which window quality is evaluated, given as a\nduration string \"{X}s\" representing X seconds. Must be an\ninteger fraction of a day and at least 60s."]
-    pub fn window_period(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.window_period", self.base))
+    #[doc =
+        "Get a reference to the value of field `window_period` after provisioning.\nDuration over which window quality is evaluated, given as a\nduration string \"{X}s\" representing X seconds. Must be an\ninteger fraction of a day and at least 60s."]
+    pub fn window_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.window_period", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `good_total_ratio_threshold` after provisioning.\n"]
-    pub fn good_total_ratio_threshold(&self) -> ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.good_total_ratio_threshold", self.base))
+    #[doc = "Get a reference to the value of field `good_total_ratio_threshold` after provisioning.\n"]
+    pub fn good_total_ratio_threshold(
+        &self,
+    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.good_total_ratio_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_mean_in_range` after provisioning.\n"]
-    pub fn metric_mean_in_range(&self) -> ListRef<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.metric_mean_in_range", self.base))
+    #[doc = "Get a reference to the value of field `metric_mean_in_range` after provisioning.\n"]
+    pub fn metric_mean_in_range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_mean_in_range", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_sum_in_range` after provisioning.\n"]
-    pub fn metric_sum_in_range(&self) -> ListRef<MonitoringSloWindowsBasedSliElMetricSumInRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.metric_sum_in_range", self.base))
+    #[doc = "Get a reference to the value of field `metric_sum_in_range` after provisioning.\n"]
+    pub fn metric_sum_in_range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricSumInRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_sum_in_range", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitoringSloDynamic {
-    basic_sli: Option<DynamicBlock<MonitoringSloBasicSliEl>>,
-    request_based_sli: Option<DynamicBlock<MonitoringSloRequestBasedSliEl>>,
-    windows_based_sli: Option<DynamicBlock<MonitoringSloWindowsBasedSliEl>>,
+    basic_sli: std::option::Option<terrars::DynamicBlock<MonitoringSloBasicSliEl>>,
+    request_based_sli: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliEl>>,
+    windows_based_sli: std::option::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliEl>>,
 }

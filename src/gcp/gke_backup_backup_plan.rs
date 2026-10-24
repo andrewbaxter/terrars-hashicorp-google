@@ -1,64 +1,68 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct GkeBackupBackupPlanData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    cluster: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    deactivated: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    location: PrimField<String>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backup_config: Option<Vec<GkeBackupBackupPlanBackupConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backup_schedule: Option<Vec<GkeBackupBackupPlanBackupScheduleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retention_policy: Option<Vec<GkeBackupBackupPlanRetentionPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<GkeBackupBackupPlanTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    cluster: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deactivated: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    location: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_config: std::option::Option<std::vec::Vec<GkeBackupBackupPlanBackupConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_schedule: std::option::Option<std::vec::Vec<GkeBackupBackupPlanBackupScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_policy: std::option::Option<std::vec::Vec<GkeBackupBackupPlanRetentionPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<GkeBackupBackupPlanTimeoutsEl>,
     dynamic: GkeBackupBackupPlanDynamic,
 }
 
 struct GkeBackupBackupPlan_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<GkeBackupBackupPlanData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<GkeBackupBackupPlanData>,
 }
 
 #[derive(Clone)]
-pub struct GkeBackupBackupPlan(Rc<GkeBackupBackupPlan_>);
+pub struct GkeBackupBackupPlan(std::rc::Rc<GkeBackupBackupPlan_>);
 
 impl GkeBackupBackupPlan {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -73,235 +77,293 @@ impl GkeBackupBackupPlan {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `deactivated`.\nThis flag indicates whether this BackupPlan has been deactivated.\nSetting this field to True locks the BackupPlan such that no further updates will be allowed\n(except deletes), including the deactivated field itself. It also prevents any new Backups\nfrom being created via this BackupPlan (including scheduled Backups)."]
-    pub fn set_deactivated(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().deactivated = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `description`.\nUser specified descriptive string for this BackupPlan."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `labels`.\nDescription: A set of custom labels supplied by the user.\nA list of key->value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn set_labels(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().labels = Some(v.into());
+    #[doc =
+        "Set the field `deactivated`.\nThis flag indicates whether this BackupPlan has been deactivated.\nSetting this field to True locks the BackupPlan such that no further updates will be allowed\n(except deletes), including the deactivated field itself. It also prevents any new Backups\nfrom being created via this BackupPlan (including scheduled Backups)."]
+    pub fn set_deactivated(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deactivated = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc = "Set the field `description`.\nUser specified descriptive string for this BackupPlan."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `backup_config`.\n"]
-    pub fn set_backup_config(self, v: impl Into<BlockAssignable<GkeBackupBackupPlanBackupConfigEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `labels`.\nDescription: A set of custom labels supplied by the user.\nA list of key->value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `backup_config`.\n"]
+    pub fn set_backup_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().backup_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().backup_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.backup_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.backup_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `backup_schedule`.\n"]
-    pub fn set_backup_schedule(self, v: impl Into<BlockAssignable<GkeBackupBackupPlanBackupScheduleEl>>) -> Self {
+    #[doc = "Set the field `backup_schedule`.\n"]
+    pub fn set_backup_schedule(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupBackupPlanBackupScheduleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().backup_schedule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().backup_schedule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.backup_schedule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.backup_schedule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `retention_policy`.\n"]
-    pub fn set_retention_policy(self, v: impl Into<BlockAssignable<GkeBackupBackupPlanRetentionPolicyEl>>) -> Self {
+    #[doc = "Set the field `retention_policy`.\n"]
+    pub fn set_retention_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupBackupPlanRetentionPolicyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().retention_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().retention_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.retention_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.retention_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<GkeBackupBackupPlanTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeBackupBackupPlanTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `cluster` after provisioning.\nThe source cluster from which Backups will be created via this BackupPlan."]
-    pub fn cluster(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `cluster` after provisioning.\nThe source cluster from which Backups will be created via this BackupPlan."]
+    pub fn cluster(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `deactivated` after provisioning.\nThis flag indicates whether this BackupPlan has been deactivated.\nSetting this field to True locks the BackupPlan such that no further updates will be allowed\n(except deletes), including the deactivated field itself. It also prevents any new Backups\nfrom being created via this BackupPlan (including scheduled Backups)."]
-    pub fn deactivated(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.deactivated", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `deactivated` after provisioning.\nThis flag indicates whether this BackupPlan has been deactivated.\nSetting this field to True locks the BackupPlan such that no further updates will be allowed\n(except deletes), including the deactivated field itself. It also prevents any new Backups\nfrom being created via this BackupPlan (including scheduled Backups)."]
+    pub fn deactivated(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deactivated", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nUser specified descriptive string for this BackupPlan."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nUser specified descriptive string for this BackupPlan."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\netag is used for optimistic concurrency control as a way to help prevent simultaneous\nupdates of a backup plan from overwriting each other. It is strongly suggested that\nsystems make use of the 'etag' in the read-modify-write cycle to perform BackupPlan updates\nin order to avoid race conditions: An etag is returned in the response to backupPlans.get,\nand systems are expected to put that etag in the request to backupPlans.patch or\nbackupPlans.delete to ensure that their change will be applied to the same version of the resource."]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\netag is used for optimistic concurrency control as a way to help prevent simultaneous\nupdates of a backup plan from overwriting each other. It is strongly suggested that\nsystems make use of the 'etag' in the read-modify-write cycle to perform BackupPlan updates\nin order to avoid race conditions: An etag is returned in the response to backupPlans.get,\nand systems are expected to put that etag in the request to backupPlans.patch or\nbackupPlans.delete to ensure that their change will be applied to the same version of the resource."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nDescription: A set of custom labels supplied by the user.\nA list of key->value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nDescription: A set of custom labels supplied by the user.\nA list of key->value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe region of the Backup Plan."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe region of the Backup Plan."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe full name of the BackupPlan Resource."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe full name of the BackupPlan Resource."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `protected_pod_count` after provisioning.\nThe number of Kubernetes Pods backed up in the last successful Backup created via this BackupPlan."]
-    pub fn protected_pod_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protected_pod_count", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `protected_pod_count` after provisioning.\nThe number of Kubernetes Pods backed up in the last successful Backup created via this BackupPlan."]
+    pub fn protected_pod_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protected_pod_count", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe State of the BackupPlan."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe State of the BackupPlan."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state_reason` after provisioning.\nDetailed description of why BackupPlan is in its current state."]
-    pub fn state_reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `state_reason` after provisioning.\nDetailed description of why BackupPlan is in its current state."]
+    pub fn state_reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `uid` after provisioning.\nServer generated, unique identifier of UUID format."]
-    pub fn uid(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `uid` after provisioning.\nServer generated, unique identifier of UUID format."]
+    pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backup_config` after provisioning.\n"]
-    pub fn backup_config(&self) -> ListRef<GkeBackupBackupPlanBackupConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backup_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backup_config` after provisioning.\n"]
+    pub fn backup_config(&self) -> terrars::ListRef<GkeBackupBackupPlanBackupConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backup_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backup_schedule` after provisioning.\n"]
-    pub fn backup_schedule(&self) -> ListRef<GkeBackupBackupPlanBackupScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backup_schedule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backup_schedule` after provisioning.\n"]
+    pub fn backup_schedule(&self) -> terrars::ListRef<GkeBackupBackupPlanBackupScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backup_schedule", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retention_policy` after provisioning.\n"]
-    pub fn retention_policy(&self) -> ListRef<GkeBackupBackupPlanRetentionPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `retention_policy` after provisioning.\n"]
+    pub fn retention_policy(&self) -> terrars::ListRef<GkeBackupBackupPlanRetentionPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> GkeBackupBackupPlanTimeoutsElRef {
         GkeBackupBackupPlanTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for GkeBackupBackupPlan {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for GkeBackupBackupPlan {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for GkeBackupBackupPlan { }
+impl terrars::Resource for GkeBackupBackupPlan { }
 
-impl ToListMappable for GkeBackupBackupPlan {
-    type O = ListRef<GkeBackupBackupPlanRef>;
+impl terrars::ToListMappable for GkeBackupBackupPlan {
+    type O = terrars::ListRef<GkeBackupBackupPlanRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for GkeBackupBackupPlan_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for GkeBackupBackupPlan_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_gke_backup_backup_plan".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -311,25 +373,26 @@ impl Resource_ for GkeBackupBackupPlan_ {
 }
 
 pub struct BuildGkeBackupBackupPlan {
-    pub tf_id: String,
-    #[doc= "The source cluster from which Backups will be created via this BackupPlan."]
-    pub cluster: PrimField<String>,
-    #[doc= "The region of the Backup Plan."]
-    pub location: PrimField<String>,
-    #[doc= "The full name of the BackupPlan Resource."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The source cluster from which Backups will be created via this BackupPlan."]
+    pub cluster: terrars::PrimField<std::string::String>,
+    #[doc = "The region of the Backup Plan."]
+    pub location: terrars::PrimField<std::string::String>,
+    #[doc = "The full name of the BackupPlan Resource."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeBackupBackupPlan {
-    pub fn build(self, stack: &mut Stack) -> GkeBackupBackupPlan {
-        let out = GkeBackupBackupPlan(Rc::new(GkeBackupBackupPlan_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> GkeBackupBackupPlan {
+        let out = GkeBackupBackupPlan(std::rc::Rc::new(GkeBackupBackupPlan_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(GkeBackupBackupPlanData {
+            data: std::cell::RefCell::new(GkeBackupBackupPlanData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 cluster: self.cluster,
                 deactivated: core::default::Default::default(),
                 description: core::default::Default::default(),
@@ -342,7 +405,7 @@ impl BuildGkeBackupBackupPlan {
                 backup_schedule: core::default::Default::default(),
                 retention_policy: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -351,12 +414,12 @@ impl BuildGkeBackupBackupPlan {
 }
 
 pub struct GkeBackupBackupPlanRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for GkeBackupBackupPlanRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -365,105 +428,116 @@ impl Ref for GkeBackupBackupPlanRef {
 }
 
 impl GkeBackupBackupPlanRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cluster` after provisioning.\nThe source cluster from which Backups will be created via this BackupPlan."]
-    pub fn cluster(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `cluster` after provisioning.\nThe source cluster from which Backups will be created via this BackupPlan."]
+    pub fn cluster(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `deactivated` after provisioning.\nThis flag indicates whether this BackupPlan has been deactivated.\nSetting this field to True locks the BackupPlan such that no further updates will be allowed\n(except deletes), including the deactivated field itself. It also prevents any new Backups\nfrom being created via this BackupPlan (including scheduled Backups)."]
-    pub fn deactivated(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.deactivated", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `deactivated` after provisioning.\nThis flag indicates whether this BackupPlan has been deactivated.\nSetting this field to True locks the BackupPlan such that no further updates will be allowed\n(except deletes), including the deactivated field itself. It also prevents any new Backups\nfrom being created via this BackupPlan (including scheduled Backups)."]
+    pub fn deactivated(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deactivated", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nUser specified descriptive string for this BackupPlan."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nUser specified descriptive string for this BackupPlan."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\netag is used for optimistic concurrency control as a way to help prevent simultaneous\nupdates of a backup plan from overwriting each other. It is strongly suggested that\nsystems make use of the 'etag' in the read-modify-write cycle to perform BackupPlan updates\nin order to avoid race conditions: An etag is returned in the response to backupPlans.get,\nand systems are expected to put that etag in the request to backupPlans.patch or\nbackupPlans.delete to ensure that their change will be applied to the same version of the resource."]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\netag is used for optimistic concurrency control as a way to help prevent simultaneous\nupdates of a backup plan from overwriting each other. It is strongly suggested that\nsystems make use of the 'etag' in the read-modify-write cycle to perform BackupPlan updates\nin order to avoid race conditions: An etag is returned in the response to backupPlans.get,\nand systems are expected to put that etag in the request to backupPlans.patch or\nbackupPlans.delete to ensure that their change will be applied to the same version of the resource."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nDescription: A set of custom labels supplied by the user.\nA list of key->value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nDescription: A set of custom labels supplied by the user.\nA list of key->value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe region of the Backup Plan."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe region of the Backup Plan."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe full name of the BackupPlan Resource."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe full name of the BackupPlan Resource."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `protected_pod_count` after provisioning.\nThe number of Kubernetes Pods backed up in the last successful Backup created via this BackupPlan."]
-    pub fn protected_pod_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protected_pod_count", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `protected_pod_count` after provisioning.\nThe number of Kubernetes Pods backed up in the last successful Backup created via this BackupPlan."]
+    pub fn protected_pod_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protected_pod_count", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe State of the BackupPlan."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe State of the BackupPlan."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state_reason` after provisioning.\nDetailed description of why BackupPlan is in its current state."]
-    pub fn state_reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `state_reason` after provisioning.\nDetailed description of why BackupPlan is in its current state."]
+    pub fn state_reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `uid` after provisioning.\nServer generated, unique identifier of UUID format."]
-    pub fn uid(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `uid` after provisioning.\nServer generated, unique identifier of UUID format."]
+    pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backup_config` after provisioning.\n"]
-    pub fn backup_config(&self) -> ListRef<GkeBackupBackupPlanBackupConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backup_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backup_config` after provisioning.\n"]
+    pub fn backup_config(&self) -> terrars::ListRef<GkeBackupBackupPlanBackupConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backup_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backup_schedule` after provisioning.\n"]
-    pub fn backup_schedule(&self) -> ListRef<GkeBackupBackupPlanBackupScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backup_schedule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backup_schedule` after provisioning.\n"]
+    pub fn backup_schedule(&self) -> terrars::ListRef<GkeBackupBackupPlanBackupScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backup_schedule", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retention_policy` after provisioning.\n"]
-    pub fn retention_policy(&self) -> ListRef<GkeBackupBackupPlanRetentionPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `retention_policy` after provisioning.\n"]
+    pub fn retention_policy(&self) -> terrars::ListRef<GkeBackupBackupPlanRetentionPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> GkeBackupBackupPlanTimeoutsElRef {
         GkeBackupBackupPlanTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -471,16 +545,16 @@ impl GkeBackupBackupPlanRef {
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanBackupConfigElEncryptionKeyEl {
-    gcp_kms_encryption_key: PrimField<String>,
+    gcp_kms_encryption_key: terrars::PrimField<std::string::String>,
 }
 
 impl GkeBackupBackupPlanBackupConfigElEncryptionKeyEl { }
 
-impl ToListMappable for GkeBackupBackupPlanBackupConfigElEncryptionKeyEl {
-    type O = BlockAssignable<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanBackupConfigElEncryptionKeyEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -489,8 +563,8 @@ impl ToListMappable for GkeBackupBackupPlanBackupConfigElEncryptionKeyEl {
 }
 
 pub struct BuildGkeBackupBackupPlanBackupConfigElEncryptionKeyEl {
-    #[doc= "Google Cloud KMS encryption key. Format: projects/*/locations/*/keyRings/*/cryptoKeys/*"]
-    pub gcp_kms_encryption_key: PrimField<String>,
+    #[doc = "Google Cloud KMS encryption key. Format: projects/*/locations/*/keyRings/*/cryptoKeys/*"]
+    pub gcp_kms_encryption_key: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeBackupBackupPlanBackupConfigElEncryptionKeyEl {
@@ -500,12 +574,15 @@ impl BuildGkeBackupBackupPlanBackupConfigElEncryptionKeyEl {
 }
 
 pub struct GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
+impl terrars::Ref for GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
         GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
             shared: shared,
             base: base.to_string(),
@@ -514,29 +591,30 @@ impl Ref for GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
 }
 
 impl GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gcp_kms_encryption_key` after provisioning.\nGoogle Cloud KMS encryption key. Format: projects/*/locations/*/keyRings/*/cryptoKeys/*"]
-    pub fn gcp_kms_encryption_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gcp_kms_encryption_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `gcp_kms_encryption_key` after provisioning.\nGoogle Cloud KMS encryption key. Format: projects/*/locations/*/keyRings/*/cryptoKeys/*"]
+    pub fn gcp_kms_encryption_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gcp_kms_encryption_key", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl {
-    name: PrimField<String>,
-    namespace: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    namespace: terrars::PrimField<std::string::String>,
 }
 
 impl GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl { }
 
-impl ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl {
-    type O = BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -545,10 +623,10 @@ impl ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElN
 }
 
 pub struct BuildGkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl {
-    #[doc= "The name of a Kubernetes Resource."]
-    pub name: PrimField<String>,
-    #[doc= "The namespace of a Kubernetes Resource."]
-    pub namespace: PrimField<String>,
+    #[doc = "The name of a Kubernetes Resource."]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = "The namespace of a Kubernetes Resource."]
+    pub namespace: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl {
@@ -561,14 +639,14 @@ impl BuildGkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNames
 }
 
 pub struct GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef {
+impl terrars::Ref for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef {
         GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef {
             shared: shared,
@@ -578,56 +656,69 @@ impl Ref for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNa
 }
 
 impl GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of a Kubernetes Resource."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe name of a Kubernetes Resource."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace` after provisioning.\nThe namespace of a Kubernetes Resource."]
-    pub fn namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    #[doc =
+        "Get a reference to the value of field `namespace` after provisioning.\nThe namespace of a Kubernetes Resource."]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GkeBackupBackupPlanBackupConfigElSelectedApplicationsElDynamic {
-    namespaced_names: Option<DynamicBlock<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>>,
+    namespaced_names: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>>,
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    namespaced_names: Option<Vec<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespaced_names: std
+    ::option
+    ::Option<std::vec::Vec<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>>,
     dynamic: GkeBackupBackupPlanBackupConfigElSelectedApplicationsElDynamic,
 }
 
 impl GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl {
-    #[doc= "Set the field `namespaced_names`.\n"]
+    #[doc = "Set the field `namespaced_names`.\n"]
     pub fn set_namespaced_names(
         mut self,
-        v: impl Into<BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.namespaced_names = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.namespaced_names = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.namespaced_names = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.namespaced_names = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl {
-    type O = BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -641,18 +732,21 @@ impl BuildGkeBackupBackupPlanBackupConfigElSelectedApplicationsEl {
     pub fn build(self) -> GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl {
         GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl {
             namespaced_names: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
+impl terrars::Ref for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
         GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
             shared: shared,
             base: base.to_string(),
@@ -661,30 +755,30 @@ impl Ref for GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
 }
 
 impl GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `namespaced_names` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `namespaced_names` after provisioning.\n"]
     pub fn namespaced_names(
         &self,
-    ) -> ListRef<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.namespaced_names", self.base))
+    ) -> terrars::ListRef<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElNamespacedNamesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.namespaced_names", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl {
-    namespaces: ListField<PrimField<String>>,
+    namespaces: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl { }
 
-impl ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl {
-    type O = BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -693,8 +787,8 @@ impl ToListMappable for GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl {
 }
 
 pub struct BuildGkeBackupBackupPlanBackupConfigElSelectedNamespacesEl {
-    #[doc= "A list of Kubernetes Namespaces."]
-    pub namespaces: ListField<PrimField<String>>,
+    #[doc = "A list of Kubernetes Namespaces."]
+    pub namespaces: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildGkeBackupBackupPlanBackupConfigElSelectedNamespacesEl {
@@ -704,12 +798,15 @@ impl BuildGkeBackupBackupPlanBackupConfigElSelectedNamespacesEl {
 }
 
 pub struct GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
+impl terrars::Ref for GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
         GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
             shared: shared,
             base: base.to_string(),
@@ -718,113 +815,124 @@ impl Ref for GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
 }
 
 impl GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `namespaces` after provisioning.\nA list of Kubernetes Namespaces."]
-    pub fn namespaces(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.namespaces", self.base))
+    #[doc = "Get a reference to the value of field `namespaces` after provisioning.\nA list of Kubernetes Namespaces."]
+    pub fn namespaces(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.namespaces", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GkeBackupBackupPlanBackupConfigElDynamic {
-    encryption_key: Option<DynamicBlock<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>>,
-    selected_applications: Option<DynamicBlock<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>>,
-    selected_namespaces: Option<DynamicBlock<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>>,
+    encryption_key: std::option::Option<terrars::DynamicBlock<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>>,
+    selected_applications: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>>,
+    selected_namespaces: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>>,
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanBackupConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    all_namespaces: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_secrets: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_volume_data: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_key: Option<Vec<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    selected_applications: Option<Vec<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    selected_namespaces: Option<Vec<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    all_namespaces: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_secrets: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_volume_data: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_key: std::option::Option<std::vec::Vec<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    selected_applications: std::option::Option<std::vec::Vec<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    selected_namespaces: std::option::Option<std::vec::Vec<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>>,
     dynamic: GkeBackupBackupPlanBackupConfigElDynamic,
 }
 
 impl GkeBackupBackupPlanBackupConfigEl {
-    #[doc= "Set the field `all_namespaces`.\nIf True, include all namespaced resources."]
-    pub fn set_all_namespaces(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.all_namespaces = Some(v.into());
+    #[doc = "Set the field `all_namespaces`.\nIf True, include all namespaced resources."]
+    pub fn set_all_namespaces(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.all_namespaces = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_secrets`.\nThis flag specifies whether Kubernetes Secret resources should be included\nwhen they fall into the scope of Backups."]
-    pub fn set_include_secrets(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.include_secrets = Some(v.into());
+    #[doc =
+        "Set the field `include_secrets`.\nThis flag specifies whether Kubernetes Secret resources should be included\nwhen they fall into the scope of Backups."]
+    pub fn set_include_secrets(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_secrets = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_volume_data`.\nThis flag specifies whether volume data should be backed up when PVCs are\nincluded in the scope of a Backup."]
-    pub fn set_include_volume_data(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.include_volume_data = Some(v.into());
+    #[doc =
+        "Set the field `include_volume_data`.\nThis flag specifies whether volume data should be backed up when PVCs are\nincluded in the scope of a Backup."]
+    pub fn set_include_volume_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_volume_data = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `encryption_key`.\n"]
+    #[doc = "Set the field `encryption_key`.\n"]
     pub fn set_encryption_key(
         mut self,
-        v: impl Into<BlockAssignable<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigElEncryptionKeyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.encryption_key = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.encryption_key = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.encryption_key = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.encryption_key = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `selected_applications`.\n"]
+    #[doc = "Set the field `selected_applications`.\n"]
     pub fn set_selected_applications(
         mut self,
-        v: impl Into<BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedApplicationsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.selected_applications = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.selected_applications = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.selected_applications = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.selected_applications = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `selected_namespaces`.\n"]
+    #[doc = "Set the field `selected_namespaces`.\n"]
     pub fn set_selected_namespaces(
         mut self,
-        v: impl Into<BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigElSelectedNamespacesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.selected_namespaces = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.selected_namespaces = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.selected_namespaces = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.selected_namespaces = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for GkeBackupBackupPlanBackupConfigEl {
-    type O = BlockAssignable<GkeBackupBackupPlanBackupConfigEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanBackupConfigEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanBackupConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -843,18 +951,18 @@ impl BuildGkeBackupBackupPlanBackupConfigEl {
             encryption_key: core::default::Default::default(),
             selected_applications: core::default::Default::default(),
             selected_namespaces: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct GkeBackupBackupPlanBackupConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanBackupConfigElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupBackupPlanBackupConfigElRef {
+impl terrars::Ref for GkeBackupBackupPlanBackupConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupBackupPlanBackupConfigElRef {
         GkeBackupBackupPlanBackupConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -863,68 +971,73 @@ impl Ref for GkeBackupBackupPlanBackupConfigElRef {
 }
 
 impl GkeBackupBackupPlanBackupConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `all_namespaces` after provisioning.\nIf True, include all namespaced resources."]
-    pub fn all_namespaces(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.all_namespaces", self.base))
+    #[doc =
+        "Get a reference to the value of field `all_namespaces` after provisioning.\nIf True, include all namespaced resources."]
+    pub fn all_namespaces(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.all_namespaces", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_secrets` after provisioning.\nThis flag specifies whether Kubernetes Secret resources should be included\nwhen they fall into the scope of Backups."]
-    pub fn include_secrets(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_secrets", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_secrets` after provisioning.\nThis flag specifies whether Kubernetes Secret resources should be included\nwhen they fall into the scope of Backups."]
+    pub fn include_secrets(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_secrets", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_volume_data` after provisioning.\nThis flag specifies whether volume data should be backed up when PVCs are\nincluded in the scope of a Backup."]
-    pub fn include_volume_data(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_volume_data", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_volume_data` after provisioning.\nThis flag specifies whether volume data should be backed up when PVCs are\nincluded in the scope of a Backup."]
+    pub fn include_volume_data(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_volume_data", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_key` after provisioning.\n"]
-    pub fn encryption_key(&self) -> ListRef<GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_key", self.base))
+    #[doc = "Get a reference to the value of field `encryption_key` after provisioning.\n"]
+    pub fn encryption_key(&self) -> terrars::ListRef<GkeBackupBackupPlanBackupConfigElEncryptionKeyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `selected_applications` after provisioning.\n"]
-    pub fn selected_applications(&self) -> ListRef<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.selected_applications", self.base))
+    #[doc = "Get a reference to the value of field `selected_applications` after provisioning.\n"]
+    pub fn selected_applications(&self) -> terrars::ListRef<GkeBackupBackupPlanBackupConfigElSelectedApplicationsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.selected_applications", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `selected_namespaces` after provisioning.\n"]
-    pub fn selected_namespaces(&self) -> ListRef<GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.selected_namespaces", self.base))
+    #[doc = "Get a reference to the value of field `selected_namespaces` after provisioning.\n"]
+    pub fn selected_namespaces(&self) -> terrars::ListRef<GkeBackupBackupPlanBackupConfigElSelectedNamespacesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.selected_namespaces", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanBackupScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cron_schedule: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    paused: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cron_schedule: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    paused: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl GkeBackupBackupPlanBackupScheduleEl {
-    #[doc= "Set the field `cron_schedule`.\nA standard cron string that defines a repeating schedule for\ncreating Backups via this BackupPlan.\nIf this is defined, then backupRetainDays must also be defined."]
-    pub fn set_cron_schedule(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cron_schedule = Some(v.into());
+    #[doc =
+        "Set the field `cron_schedule`.\nA standard cron string that defines a repeating schedule for\ncreating Backups via this BackupPlan.\nIf this is defined, then backupRetainDays must also be defined."]
+    pub fn set_cron_schedule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cron_schedule = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `paused`.\nThis flag denotes whether automatic Backup creation is paused for this BackupPlan."]
-    pub fn set_paused(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.paused = Some(v.into());
+    #[doc =
+        "Set the field `paused`.\nThis flag denotes whether automatic Backup creation is paused for this BackupPlan."]
+    pub fn set_paused(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.paused = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeBackupBackupPlanBackupScheduleEl {
-    type O = BlockAssignable<GkeBackupBackupPlanBackupScheduleEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanBackupScheduleEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanBackupScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -944,12 +1057,12 @@ impl BuildGkeBackupBackupPlanBackupScheduleEl {
 }
 
 pub struct GkeBackupBackupPlanBackupScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanBackupScheduleElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupBackupPlanBackupScheduleElRef {
+impl terrars::Ref for GkeBackupBackupPlanBackupScheduleElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupBackupPlanBackupScheduleElRef {
         GkeBackupBackupPlanBackupScheduleElRef {
             shared: shared,
             base: base.to_string(),
@@ -958,56 +1071,61 @@ impl Ref for GkeBackupBackupPlanBackupScheduleElRef {
 }
 
 impl GkeBackupBackupPlanBackupScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cron_schedule` after provisioning.\nA standard cron string that defines a repeating schedule for\ncreating Backups via this BackupPlan.\nIf this is defined, then backupRetainDays must also be defined."]
-    pub fn cron_schedule(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cron_schedule", self.base))
+    #[doc =
+        "Get a reference to the value of field `cron_schedule` after provisioning.\nA standard cron string that defines a repeating schedule for\ncreating Backups via this BackupPlan.\nIf this is defined, then backupRetainDays must also be defined."]
+    pub fn cron_schedule(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cron_schedule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `paused` after provisioning.\nThis flag denotes whether automatic Backup creation is paused for this BackupPlan."]
-    pub fn paused(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.paused", self.base))
+    #[doc =
+        "Get a reference to the value of field `paused` after provisioning.\nThis flag denotes whether automatic Backup creation is paused for this BackupPlan."]
+    pub fn paused(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.paused", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanRetentionPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backup_delete_lock_days: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backup_retain_days: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    locked: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_delete_lock_days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_retain_days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    locked: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl GkeBackupBackupPlanRetentionPolicyEl {
-    #[doc= "Set the field `backup_delete_lock_days`.\nMinimum age for a Backup created via this BackupPlan (in days).\nMust be an integer value between 0-90 (inclusive).\nA Backup created under this BackupPlan will not be deletable\nuntil it reaches Backup's (create time + backup_delete_lock_days).\nUpdating this field of a BackupPlan does not affect existing Backups.\nBackups created after a successful update will inherit this new value."]
-    pub fn set_backup_delete_lock_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.backup_delete_lock_days = Some(v.into());
+    #[doc =
+        "Set the field `backup_delete_lock_days`.\nMinimum age for a Backup created via this BackupPlan (in days).\nMust be an integer value between 0-90 (inclusive).\nA Backup created under this BackupPlan will not be deletable\nuntil it reaches Backup's (create time + backup_delete_lock_days).\nUpdating this field of a BackupPlan does not affect existing Backups.\nBackups created after a successful update will inherit this new value."]
+    pub fn set_backup_delete_lock_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.backup_delete_lock_days = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `backup_retain_days`.\nThe default maximum age of a Backup created via this BackupPlan.\nThis field MUST be an integer value >= 0 and <= 365. If specified,\na Backup created under this BackupPlan will be automatically deleted\nafter its age reaches (createTime + backupRetainDays).\nIf not specified, Backups created under this BackupPlan will NOT be\nsubject to automatic deletion. Updating this field does NOT affect\nexisting Backups under it. Backups created AFTER a successful update\nwill automatically pick up the new value.\nNOTE: backupRetainDays must be >= backupDeleteLockDays.\nIf cronSchedule is defined, then this must be <= 360 * the creation interval.]"]
-    pub fn set_backup_retain_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.backup_retain_days = Some(v.into());
+    #[doc =
+        "Set the field `backup_retain_days`.\nThe default maximum age of a Backup created via this BackupPlan.\nThis field MUST be an integer value >= 0 and <= 365. If specified,\na Backup created under this BackupPlan will be automatically deleted\nafter its age reaches (createTime + backupRetainDays).\nIf not specified, Backups created under this BackupPlan will NOT be\nsubject to automatic deletion. Updating this field does NOT affect\nexisting Backups under it. Backups created AFTER a successful update\nwill automatically pick up the new value.\nNOTE: backupRetainDays must be >= backupDeleteLockDays.\nIf cronSchedule is defined, then this must be <= 360 * the creation interval.]"]
+    pub fn set_backup_retain_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.backup_retain_days = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `locked`.\nThis flag denotes whether the retention policy of this BackupPlan is locked.\nIf set to True, no further update is allowed on this policy, including\nthe locked field itself."]
-    pub fn set_locked(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.locked = Some(v.into());
+    #[doc =
+        "Set the field `locked`.\nThis flag denotes whether the retention policy of this BackupPlan is locked.\nIf set to True, no further update is allowed on this policy, including\nthe locked field itself."]
+    pub fn set_locked(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.locked = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeBackupBackupPlanRetentionPolicyEl {
-    type O = BlockAssignable<GkeBackupBackupPlanRetentionPolicyEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanRetentionPolicyEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanRetentionPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1028,12 +1146,12 @@ impl BuildGkeBackupBackupPlanRetentionPolicyEl {
 }
 
 pub struct GkeBackupBackupPlanRetentionPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanRetentionPolicyElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupBackupPlanRetentionPolicyElRef {
+impl terrars::Ref for GkeBackupBackupPlanRetentionPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupBackupPlanRetentionPolicyElRef {
         GkeBackupBackupPlanRetentionPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -1042,61 +1160,64 @@ impl Ref for GkeBackupBackupPlanRetentionPolicyElRef {
 }
 
 impl GkeBackupBackupPlanRetentionPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `backup_delete_lock_days` after provisioning.\nMinimum age for a Backup created via this BackupPlan (in days).\nMust be an integer value between 0-90 (inclusive).\nA Backup created under this BackupPlan will not be deletable\nuntil it reaches Backup's (create time + backup_delete_lock_days).\nUpdating this field of a BackupPlan does not affect existing Backups.\nBackups created after a successful update will inherit this new value."]
-    pub fn backup_delete_lock_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.backup_delete_lock_days", self.base))
+    #[doc =
+        "Get a reference to the value of field `backup_delete_lock_days` after provisioning.\nMinimum age for a Backup created via this BackupPlan (in days).\nMust be an integer value between 0-90 (inclusive).\nA Backup created under this BackupPlan will not be deletable\nuntil it reaches Backup's (create time + backup_delete_lock_days).\nUpdating this field of a BackupPlan does not affect existing Backups.\nBackups created after a successful update will inherit this new value."]
+    pub fn backup_delete_lock_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_delete_lock_days", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `backup_retain_days` after provisioning.\nThe default maximum age of a Backup created via this BackupPlan.\nThis field MUST be an integer value >= 0 and <= 365. If specified,\na Backup created under this BackupPlan will be automatically deleted\nafter its age reaches (createTime + backupRetainDays).\nIf not specified, Backups created under this BackupPlan will NOT be\nsubject to automatic deletion. Updating this field does NOT affect\nexisting Backups under it. Backups created AFTER a successful update\nwill automatically pick up the new value.\nNOTE: backupRetainDays must be >= backupDeleteLockDays.\nIf cronSchedule is defined, then this must be <= 360 * the creation interval.]"]
-    pub fn backup_retain_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.backup_retain_days", self.base))
+    #[doc =
+        "Get a reference to the value of field `backup_retain_days` after provisioning.\nThe default maximum age of a Backup created via this BackupPlan.\nThis field MUST be an integer value >= 0 and <= 365. If specified,\na Backup created under this BackupPlan will be automatically deleted\nafter its age reaches (createTime + backupRetainDays).\nIf not specified, Backups created under this BackupPlan will NOT be\nsubject to automatic deletion. Updating this field does NOT affect\nexisting Backups under it. Backups created AFTER a successful update\nwill automatically pick up the new value.\nNOTE: backupRetainDays must be >= backupDeleteLockDays.\nIf cronSchedule is defined, then this must be <= 360 * the creation interval.]"]
+    pub fn backup_retain_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_retain_days", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `locked` after provisioning.\nThis flag denotes whether the retention policy of this BackupPlan is locked.\nIf set to True, no further update is allowed on this policy, including\nthe locked field itself."]
-    pub fn locked(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.locked", self.base))
+    #[doc =
+        "Get a reference to the value of field `locked` after provisioning.\nThis flag denotes whether the retention policy of this BackupPlan is locked.\nIf set to True, no further update is allowed on this policy, including\nthe locked field itself."]
+    pub fn locked(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.locked", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeBackupBackupPlanTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GkeBackupBackupPlanTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeBackupBackupPlanTimeoutsEl {
-    type O = BlockAssignable<GkeBackupBackupPlanTimeoutsEl>;
+impl terrars::ToListMappable for GkeBackupBackupPlanTimeoutsEl {
+    type O = terrars::BlockAssignable<GkeBackupBackupPlanTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1117,12 +1238,12 @@ impl BuildGkeBackupBackupPlanTimeoutsEl {
 }
 
 pub struct GkeBackupBackupPlanTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeBackupBackupPlanTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> GkeBackupBackupPlanTimeoutsElRef {
+impl terrars::Ref for GkeBackupBackupPlanTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupBackupPlanTimeoutsElRef {
         GkeBackupBackupPlanTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1131,29 +1252,29 @@ impl Ref for GkeBackupBackupPlanTimeoutsElRef {
 }
 
 impl GkeBackupBackupPlanTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GkeBackupBackupPlanDynamic {
-    backup_config: Option<DynamicBlock<GkeBackupBackupPlanBackupConfigEl>>,
-    backup_schedule: Option<DynamicBlock<GkeBackupBackupPlanBackupScheduleEl>>,
-    retention_policy: Option<DynamicBlock<GkeBackupBackupPlanRetentionPolicyEl>>,
+    backup_config: std::option::Option<terrars::DynamicBlock<GkeBackupBackupPlanBackupConfigEl>>,
+    backup_schedule: std::option::Option<terrars::DynamicBlock<GkeBackupBackupPlanBackupScheduleEl>>,
+    retention_policy: std::option::Option<terrars::DynamicBlock<GkeBackupBackupPlanRetentionPolicyEl>>,
 }

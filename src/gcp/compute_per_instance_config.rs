@@ -1,63 +1,67 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct ComputePerInstanceConfigData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    instance_group_manager: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    minimal_action: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    most_disruptive_allowed_action: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    remove_instance_on_destroy: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    remove_instance_state_on_destroy: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    zone: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    preserved_state: Option<Vec<ComputePerInstanceConfigPreservedStateEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ComputePerInstanceConfigTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    instance_group_manager: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimal_action: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    most_disruptive_allowed_action: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    remove_instance_on_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    remove_instance_state_on_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preserved_state: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputePerInstanceConfigTimeoutsEl>,
     dynamic: ComputePerInstanceConfigDynamic,
 }
 
 struct ComputePerInstanceConfig_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ComputePerInstanceConfigData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ComputePerInstanceConfigData>,
 }
 
 #[derive(Clone)]
-pub struct ComputePerInstanceConfig(Rc<ComputePerInstanceConfig_>);
+pub struct ComputePerInstanceConfig(std::rc::Rc<ComputePerInstanceConfig_>);
 
 impl ComputePerInstanceConfig {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -72,181 +76,237 @@ impl ComputePerInstanceConfig {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `minimal_action`.\nThe minimal action to perform on the instance during an update.\nDefault is 'NONE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
-    pub fn set_minimal_action(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().minimal_action = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `most_disruptive_allowed_action`.\nThe most disruptive action to perform on the instance during an update.\nDefault is 'REPLACE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
-    pub fn set_most_disruptive_allowed_action(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().most_disruptive_allowed_action = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `remove_instance_on_destroy`.\nWhen true, deleting this config will immediately remove the underlying instance.\nWhen false, deleting this config will use the behavior as determined by remove_instance_on_destroy."]
-    pub fn set_remove_instance_on_destroy(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().remove_instance_on_destroy = Some(v.into());
+    #[doc =
+        "Set the field `minimal_action`.\nThe minimal action to perform on the instance during an update.\nDefault is 'NONE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
+    pub fn set_minimal_action(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().minimal_action = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `remove_instance_state_on_destroy`.\nWhen true, deleting this config will immediately remove any specified state from the underlying instance.\nWhen false, deleting this config will *not* immediately remove any state from the underlying instance.\nState will be removed on the next instance recreation or update."]
-    pub fn set_remove_instance_state_on_destroy(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().remove_instance_state_on_destroy = Some(v.into());
+    #[doc =
+        "Set the field `most_disruptive_allowed_action`.\nThe most disruptive action to perform on the instance during an update.\nDefault is 'REPLACE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
+    pub fn set_most_disruptive_allowed_action(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().most_disruptive_allowed_action = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `zone`.\nZone where the containing instance group manager is located"]
-    pub fn set_zone(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().zone = Some(v.into());
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `preserved_state`.\n"]
-    pub fn set_preserved_state(self, v: impl Into<BlockAssignable<ComputePerInstanceConfigPreservedStateEl>>) -> Self {
+    #[doc =
+        "Set the field `remove_instance_on_destroy`.\nWhen true, deleting this config will immediately remove the underlying instance.\nWhen false, deleting this config will use the behavior as determined by remove_instance_on_destroy."]
+    pub fn set_remove_instance_on_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().remove_instance_on_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `remove_instance_state_on_destroy`.\nWhen true, deleting this config will immediately remove any specified state from the underlying instance.\nWhen false, deleting this config will *not* immediately remove any state from the underlying instance.\nState will be removed on the next instance recreation or update."]
+    pub fn set_remove_instance_state_on_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().remove_instance_state_on_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `zone`.\nZone where the containing instance group manager is located"]
+    pub fn set_zone(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `preserved_state`.\n"]
+    pub fn set_preserved_state(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().preserved_state = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().preserved_state = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.preserved_state = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.preserved_state = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ComputePerInstanceConfigTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputePerInstanceConfigTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_group_manager` after provisioning.\nThe instance group manager this instance config is part of."]
-    pub fn instance_group_manager(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `instance_group_manager` after provisioning.\nThe instance group manager this instance config is part of."]
+    pub fn instance_group_manager(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `minimal_action` after provisioning.\nThe minimal action to perform on the instance during an update.\nDefault is 'NONE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
-    pub fn minimal_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.minimal_action", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `minimal_action` after provisioning.\nThe minimal action to perform on the instance during an update.\nDefault is 'NONE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
+    pub fn minimal_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimal_action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `most_disruptive_allowed_action` after provisioning.\nThe most disruptive action to perform on the instance during an update.\nDefault is 'REPLACE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
-    pub fn most_disruptive_allowed_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.most_disruptive_allowed_action", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `most_disruptive_allowed_action` after provisioning.\nThe most disruptive action to perform on the instance during an update.\nDefault is 'REPLACE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
+    pub fn most_disruptive_allowed_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.most_disruptive_allowed_action", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name for this per-instance config and its corresponding instance."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name for this per-instance config and its corresponding instance."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remove_instance_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove the underlying instance.\nWhen false, deleting this config will use the behavior as determined by remove_instance_on_destroy."]
-    pub fn remove_instance_on_destroy(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.remove_instance_on_destroy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `remove_instance_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove the underlying instance.\nWhen false, deleting this config will use the behavior as determined by remove_instance_on_destroy."]
+    pub fn remove_instance_on_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.remove_instance_on_destroy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remove_instance_state_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove any specified state from the underlying instance.\nWhen false, deleting this config will *not* immediately remove any state from the underlying instance.\nState will be removed on the next instance recreation or update."]
-    pub fn remove_instance_state_on_destroy(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.remove_instance_state_on_destroy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `remove_instance_state_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove any specified state from the underlying instance.\nWhen false, deleting this config will *not* immediately remove any state from the underlying instance.\nState will be removed on the next instance recreation or update."]
+    pub fn remove_instance_state_on_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.remove_instance_state_on_destroy", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `zone` after provisioning.\nZone where the containing instance group manager is located"]
-    pub fn zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `zone` after provisioning.\nZone where the containing instance group manager is located"]
+    pub fn zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `preserved_state` after provisioning.\n"]
-    pub fn preserved_state(&self) -> ListRef<ComputePerInstanceConfigPreservedStateElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.preserved_state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `preserved_state` after provisioning.\n"]
+    pub fn preserved_state(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.preserved_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComputePerInstanceConfigTimeoutsElRef {
         ComputePerInstanceConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for ComputePerInstanceConfig {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ComputePerInstanceConfig {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ComputePerInstanceConfig { }
+impl terrars::Resource for ComputePerInstanceConfig { }
 
-impl ToListMappable for ComputePerInstanceConfig {
-    type O = ListRef<ComputePerInstanceConfigRef>;
+impl terrars::ToListMappable for ComputePerInstanceConfig {
+    type O = terrars::ListRef<ComputePerInstanceConfigRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ComputePerInstanceConfig_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ComputePerInstanceConfig_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_compute_per_instance_config".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -256,23 +316,24 @@ impl Resource_ for ComputePerInstanceConfig_ {
 }
 
 pub struct BuildComputePerInstanceConfig {
-    pub tf_id: String,
-    #[doc= "The instance group manager this instance config is part of."]
-    pub instance_group_manager: PrimField<String>,
-    #[doc= "The name for this per-instance config and its corresponding instance."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The instance group manager this instance config is part of."]
+    pub instance_group_manager: terrars::PrimField<std::string::String>,
+    #[doc = "The name for this per-instance config and its corresponding instance."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputePerInstanceConfig {
-    pub fn build(self, stack: &mut Stack) -> ComputePerInstanceConfig {
-        let out = ComputePerInstanceConfig(Rc::new(ComputePerInstanceConfig_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ComputePerInstanceConfig {
+        let out = ComputePerInstanceConfig(std::rc::Rc::new(ComputePerInstanceConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ComputePerInstanceConfigData {
+            data: std::cell::RefCell::new(ComputePerInstanceConfigData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_group_manager: self.instance_group_manager,
                 minimal_action: core::default::Default::default(),
@@ -284,7 +345,7 @@ impl BuildComputePerInstanceConfig {
                 zone: core::default::Default::default(),
                 preserved_state: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -293,12 +354,12 @@ impl BuildComputePerInstanceConfig {
 }
 
 pub struct ComputePerInstanceConfigRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ComputePerInstanceConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -307,65 +368,78 @@ impl Ref for ComputePerInstanceConfigRef {
 }
 
 impl ComputePerInstanceConfigRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_group_manager` after provisioning.\nThe instance group manager this instance config is part of."]
-    pub fn instance_group_manager(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `instance_group_manager` after provisioning.\nThe instance group manager this instance config is part of."]
+    pub fn instance_group_manager(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `minimal_action` after provisioning.\nThe minimal action to perform on the instance during an update.\nDefault is 'NONE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
-    pub fn minimal_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.minimal_action", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `minimal_action` after provisioning.\nThe minimal action to perform on the instance during an update.\nDefault is 'NONE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
+    pub fn minimal_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimal_action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `most_disruptive_allowed_action` after provisioning.\nThe most disruptive action to perform on the instance during an update.\nDefault is 'REPLACE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
-    pub fn most_disruptive_allowed_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.most_disruptive_allowed_action", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `most_disruptive_allowed_action` after provisioning.\nThe most disruptive action to perform on the instance during an update.\nDefault is 'REPLACE'. Possible values are:\n* REPLACE\n* RESTART\n* REFRESH\n* NONE"]
+    pub fn most_disruptive_allowed_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.most_disruptive_allowed_action", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name for this per-instance config and its corresponding instance."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name for this per-instance config and its corresponding instance."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remove_instance_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove the underlying instance.\nWhen false, deleting this config will use the behavior as determined by remove_instance_on_destroy."]
-    pub fn remove_instance_on_destroy(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.remove_instance_on_destroy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `remove_instance_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove the underlying instance.\nWhen false, deleting this config will use the behavior as determined by remove_instance_on_destroy."]
+    pub fn remove_instance_on_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.remove_instance_on_destroy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remove_instance_state_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove any specified state from the underlying instance.\nWhen false, deleting this config will *not* immediately remove any state from the underlying instance.\nState will be removed on the next instance recreation or update."]
-    pub fn remove_instance_state_on_destroy(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.remove_instance_state_on_destroy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `remove_instance_state_on_destroy` after provisioning.\nWhen true, deleting this config will immediately remove any specified state from the underlying instance.\nWhen false, deleting this config will *not* immediately remove any state from the underlying instance.\nState will be removed on the next instance recreation or update."]
+    pub fn remove_instance_state_on_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.remove_instance_state_on_destroy", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `zone` after provisioning.\nZone where the containing instance group manager is located"]
-    pub fn zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `zone` after provisioning.\nZone where the containing instance group manager is located"]
+    pub fn zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `preserved_state` after provisioning.\n"]
-    pub fn preserved_state(&self) -> ListRef<ComputePerInstanceConfigPreservedStateElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.preserved_state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `preserved_state` after provisioning.\n"]
+    pub fn preserved_state(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.preserved_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComputePerInstanceConfigTimeoutsElRef {
         ComputePerInstanceConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -373,33 +447,35 @@ impl ComputePerInstanceConfigRef {
 
 #[derive(Serialize)]
 pub struct ComputePerInstanceConfigPreservedStateElDiskEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete_rule: Option<PrimField<String>>,
-    device_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mode: Option<PrimField<String>>,
-    source: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_rule: std::option::Option<terrars::PrimField<std::string::String>>,
+    device_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    source: terrars::PrimField<std::string::String>,
 }
 
 impl ComputePerInstanceConfigPreservedStateElDiskEl {
-    #[doc= "Set the field `delete_rule`.\nA value that prescribes what should happen to the stateful disk when the VM instance is deleted.\nThe available options are 'NEVER' and 'ON_PERMANENT_INSTANCE_DELETION'.\n'NEVER' - detach the disk when the VM is deleted, but do not delete the disk.\n'ON_PERMANENT_INSTANCE_DELETION' will delete the stateful disk when the VM is permanently\ndeleted from the instance group. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
-    pub fn set_delete_rule(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete_rule = Some(v.into());
+    #[doc =
+        "Set the field `delete_rule`.\nA value that prescribes what should happen to the stateful disk when the VM instance is deleted.\nThe available options are 'NEVER' and 'ON_PERMANENT_INSTANCE_DELETION'.\n'NEVER' - detach the disk when the VM is deleted, but do not delete the disk.\n'ON_PERMANENT_INSTANCE_DELETION' will delete the stateful disk when the VM is permanently\ndeleted from the instance group. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
+    pub fn set_delete_rule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete_rule = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `mode`.\nThe mode of the disk. Default value: \"READ_WRITE\" Possible values: [\"READ_ONLY\", \"READ_WRITE\"]"]
-    pub fn set_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.mode = Some(v.into());
+    #[doc =
+        "Set the field `mode`.\nThe mode of the disk. Default value: \"READ_WRITE\" Possible values: [\"READ_ONLY\", \"READ_WRITE\"]"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputePerInstanceConfigPreservedStateElDiskEl {
-    type O = BlockAssignable<ComputePerInstanceConfigPreservedStateElDiskEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElDiskEl {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElDiskEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -408,10 +484,12 @@ impl ToListMappable for ComputePerInstanceConfigPreservedStateElDiskEl {
 }
 
 pub struct BuildComputePerInstanceConfigPreservedStateElDiskEl {
-    #[doc= "A unique device name that is reflected into the /dev/ tree of a Linux operating system running within the instance."]
-    pub device_name: PrimField<String>,
-    #[doc= "The URI of an existing persistent disk to attach under the specified device-name in the format\n'projects/project-id/zones/zone/disks/disk-name'."]
-    pub source: PrimField<String>,
+    #[doc =
+        "A unique device name that is reflected into the /dev/ tree of a Linux operating system running within the instance."]
+    pub device_name: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The URI of an existing persistent disk to attach under the specified device-name in the format\n'projects/project-id/zones/zone/disks/disk-name'."]
+    pub source: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputePerInstanceConfigPreservedStateElDiskEl {
@@ -426,12 +504,15 @@ impl BuildComputePerInstanceConfigPreservedStateElDiskEl {
 }
 
 pub struct ComputePerInstanceConfigPreservedStateElDiskElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigPreservedStateElDiskElRef {
-    fn new(shared: StackShared, base: String) -> ComputePerInstanceConfigPreservedStateElDiskElRef {
+impl terrars::Ref for ComputePerInstanceConfigPreservedStateElDiskElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputePerInstanceConfigPreservedStateElDiskElRef {
         ComputePerInstanceConfigPreservedStateElDiskElRef {
             shared: shared,
             base: base.to_string(),
@@ -440,50 +521,54 @@ impl Ref for ComputePerInstanceConfigPreservedStateElDiskElRef {
 }
 
 impl ComputePerInstanceConfigPreservedStateElDiskElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `delete_rule` after provisioning.\nA value that prescribes what should happen to the stateful disk when the VM instance is deleted.\nThe available options are 'NEVER' and 'ON_PERMANENT_INSTANCE_DELETION'.\n'NEVER' - detach the disk when the VM is deleted, but do not delete the disk.\n'ON_PERMANENT_INSTANCE_DELETION' will delete the stateful disk when the VM is permanently\ndeleted from the instance group. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
-    pub fn delete_rule(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete_rule", self.base))
+    #[doc =
+        "Get a reference to the value of field `delete_rule` after provisioning.\nA value that prescribes what should happen to the stateful disk when the VM instance is deleted.\nThe available options are 'NEVER' and 'ON_PERMANENT_INSTANCE_DELETION'.\n'NEVER' - detach the disk when the VM is deleted, but do not delete the disk.\n'ON_PERMANENT_INSTANCE_DELETION' will delete the stateful disk when the VM is permanently\ndeleted from the instance group. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
+    pub fn delete_rule(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_rule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `device_name` after provisioning.\nA unique device name that is reflected into the /dev/ tree of a Linux operating system running within the instance."]
-    pub fn device_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.device_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `device_name` after provisioning.\nA unique device name that is reflected into the /dev/ tree of a Linux operating system running within the instance."]
+    pub fn device_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.device_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\nThe mode of the disk. Default value: \"READ_WRITE\" Possible values: [\"READ_ONLY\", \"READ_WRITE\"]"]
-    pub fn mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `mode` after provisioning.\nThe mode of the disk. Default value: \"READ_WRITE\" Possible values: [\"READ_ONLY\", \"READ_WRITE\"]"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\nThe URI of an existing persistent disk to attach under the specified device-name in the format\n'projects/project-id/zones/zone/disks/disk-name'."]
-    pub fn source(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source", self.base))
+    #[doc =
+        "Get a reference to the value of field `source` after provisioning.\nThe URI of an existing persistent disk to attach under the specified device-name in the format\n'projects/project-id/zones/zone/disks/disk-name'."]
+    pub fn source(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    address: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
-    #[doc= "Set the field `address`.\nThe URL of the reservation for this IP address."]
-    pub fn set_address(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.address = Some(v.into());
+    #[doc = "Set the field `address`.\nThe URL of the reservation for this IP address."]
+    pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.address = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
-    type O = BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -502,12 +587,15 @@ impl BuildComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
 }
 
 pub struct ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
-    fn new(shared: StackShared, base: String) -> ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
+impl terrars::Ref for ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
         ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
             shared: shared,
             base: base.to_string(),
@@ -516,60 +604,69 @@ impl Ref for ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef 
 }
 
 impl ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `address` after provisioning.\nThe URL of the reservation for this IP address."]
-    pub fn address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
+    #[doc =
+        "Get a reference to the value of field `address` after provisioning.\nThe URL of the reservation for this IP address."]
+    pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputePerInstanceConfigPreservedStateElExternalIpElDynamic {
-    ip_address: Option<DynamicBlock<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
+    ip_address: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputePerInstanceConfigPreservedStateElExternalIpEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_delete: Option<PrimField<String>>,
-    interface_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ip_address: Option<Vec<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    interface_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
     dynamic: ComputePerInstanceConfigPreservedStateElExternalIpElDynamic,
 }
 
 impl ComputePerInstanceConfigPreservedStateElExternalIpEl {
-    #[doc= "Set the field `auto_delete`.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
-    pub fn set_auto_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.auto_delete = Some(v.into());
+    #[doc =
+        "Set the field `auto_delete`.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
+    pub fn set_auto_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.auto_delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ip_address`.\n"]
+    #[doc = "Set the field `ip_address`.\n"]
     pub fn set_ip_address(
         mut self,
-        v: impl Into<BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.ip_address = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.ip_address = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.ip_address = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ip_address = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputePerInstanceConfigPreservedStateElExternalIpEl {
-    type O = BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElExternalIpEl {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -578,8 +675,8 @@ impl ToListMappable for ComputePerInstanceConfigPreservedStateElExternalIpEl {
 }
 
 pub struct BuildComputePerInstanceConfigPreservedStateElExternalIpEl {
-    #[doc= ""]
-    pub interface_name: PrimField<String>,
+    #[doc = ""]
+    pub interface_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputePerInstanceConfigPreservedStateElExternalIpEl {
@@ -588,18 +685,21 @@ impl BuildComputePerInstanceConfigPreservedStateElExternalIpEl {
             auto_delete: core::default::Default::default(),
             interface_name: self.interface_name,
             ip_address: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputePerInstanceConfigPreservedStateElExternalIpElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigPreservedStateElExternalIpElRef {
-    fn new(shared: StackShared, base: String) -> ComputePerInstanceConfigPreservedStateElExternalIpElRef {
+impl terrars::Ref for ComputePerInstanceConfigPreservedStateElExternalIpElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputePerInstanceConfigPreservedStateElExternalIpElRef {
         ComputePerInstanceConfigPreservedStateElExternalIpElRef {
             shared: shared,
             base: base.to_string(),
@@ -608,45 +708,46 @@ impl Ref for ComputePerInstanceConfigPreservedStateElExternalIpElRef {
 }
 
 impl ComputePerInstanceConfigPreservedStateElExternalIpElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `auto_delete` after provisioning.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
-    pub fn auto_delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_delete", self.base))
+    #[doc =
+        "Get a reference to the value of field `auto_delete` after provisioning.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
+    pub fn auto_delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interface_name` after provisioning.\n"]
-    pub fn interface_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interface_name", self.base))
+    #[doc = "Get a reference to the value of field `interface_name` after provisioning.\n"]
+    pub fn interface_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interface_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ip_address` after provisioning.\n"]
-    pub fn ip_address(&self) -> ListRef<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
+    pub fn ip_address(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    address: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-    #[doc= "Set the field `address`.\nThe URL of the reservation for this IP address."]
-    pub fn set_address(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.address = Some(v.into());
+    #[doc = "Set the field `address`.\nThe URL of the reservation for this IP address."]
+    pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.address = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-    type O = BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -665,12 +766,15 @@ impl BuildComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
 }
 
 pub struct ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-    fn new(shared: StackShared, base: String) -> ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
+impl terrars::Ref for ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
         ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
             shared: shared,
             base: base.to_string(),
@@ -679,60 +783,69 @@ impl Ref for ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef 
 }
 
 impl ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `address` after provisioning.\nThe URL of the reservation for this IP address."]
-    pub fn address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
+    #[doc =
+        "Get a reference to the value of field `address` after provisioning.\nThe URL of the reservation for this IP address."]
+    pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputePerInstanceConfigPreservedStateElInternalIpElDynamic {
-    ip_address: Option<DynamicBlock<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
+    ip_address: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputePerInstanceConfigPreservedStateElInternalIpEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_delete: Option<PrimField<String>>,
-    interface_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ip_address: Option<Vec<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    interface_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
     dynamic: ComputePerInstanceConfigPreservedStateElInternalIpElDynamic,
 }
 
 impl ComputePerInstanceConfigPreservedStateElInternalIpEl {
-    #[doc= "Set the field `auto_delete`.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
-    pub fn set_auto_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.auto_delete = Some(v.into());
+    #[doc =
+        "Set the field `auto_delete`.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
+    pub fn set_auto_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.auto_delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ip_address`.\n"]
+    #[doc = "Set the field `ip_address`.\n"]
     pub fn set_ip_address(
         mut self,
-        v: impl Into<BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.ip_address = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.ip_address = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.ip_address = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ip_address = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputePerInstanceConfigPreservedStateElInternalIpEl {
-    type O = BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElInternalIpEl {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -741,8 +854,8 @@ impl ToListMappable for ComputePerInstanceConfigPreservedStateElInternalIpEl {
 }
 
 pub struct BuildComputePerInstanceConfigPreservedStateElInternalIpEl {
-    #[doc= ""]
-    pub interface_name: PrimField<String>,
+    #[doc = ""]
+    pub interface_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputePerInstanceConfigPreservedStateElInternalIpEl {
@@ -751,18 +864,21 @@ impl BuildComputePerInstanceConfigPreservedStateElInternalIpEl {
             auto_delete: core::default::Default::default(),
             interface_name: self.interface_name,
             ip_address: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputePerInstanceConfigPreservedStateElInternalIpElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigPreservedStateElInternalIpElRef {
-    fn new(shared: StackShared, base: String) -> ComputePerInstanceConfigPreservedStateElInternalIpElRef {
+impl terrars::Ref for ComputePerInstanceConfigPreservedStateElInternalIpElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputePerInstanceConfigPreservedStateElInternalIpElRef {
         ComputePerInstanceConfigPreservedStateElInternalIpElRef {
             shared: shared,
             base: base.to_string(),
@@ -771,104 +887,112 @@ impl Ref for ComputePerInstanceConfigPreservedStateElInternalIpElRef {
 }
 
 impl ComputePerInstanceConfigPreservedStateElInternalIpElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `auto_delete` after provisioning.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
-    pub fn auto_delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_delete", self.base))
+    #[doc =
+        "Get a reference to the value of field `auto_delete` after provisioning.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
+    pub fn auto_delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interface_name` after provisioning.\n"]
-    pub fn interface_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interface_name", self.base))
+    #[doc = "Get a reference to the value of field `interface_name` after provisioning.\n"]
+    pub fn interface_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interface_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ip_address` after provisioning.\n"]
-    pub fn ip_address(&self) -> ListRef<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
+    pub fn ip_address(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputePerInstanceConfigPreservedStateElDynamic {
-    disk: Option<DynamicBlock<ComputePerInstanceConfigPreservedStateElDiskEl>>,
-    external_ip: Option<DynamicBlock<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
-    internal_ip: Option<DynamicBlock<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
+    disk: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElDiskEl>>,
+    external_ip: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
+    internal_ip: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComputePerInstanceConfigPreservedStateEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metadata: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk: Option<Vec<ComputePerInstanceConfigPreservedStateElDiskEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    external_ip: Option<Vec<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    internal_ip: Option<Vec<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElDiskEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    external_ip: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internal_ip: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
     dynamic: ComputePerInstanceConfigPreservedStateElDynamic,
 }
 
 impl ComputePerInstanceConfigPreservedStateEl {
-    #[doc= "Set the field `metadata`.\nPreserved metadata defined for this instance. This is a list of key->value pairs."]
-    pub fn set_metadata(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.metadata = Some(v.into());
+    #[doc =
+        "Set the field `metadata`.\nPreserved metadata defined for this instance. This is a list of key->value pairs."]
+    pub fn set_metadata(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.metadata = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk`.\n"]
-    pub fn set_disk(mut self, v: impl Into<BlockAssignable<ComputePerInstanceConfigPreservedStateElDiskEl>>) -> Self {
+    #[doc = "Set the field `disk`.\n"]
+    pub fn set_disk(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElDiskEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.disk = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.disk = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.disk = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.disk = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `external_ip`.\n"]
+    #[doc = "Set the field `external_ip`.\n"]
     pub fn set_external_ip(
         mut self,
-        v: impl Into<BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.external_ip = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.external_ip = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.external_ip = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.external_ip = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `internal_ip`.\n"]
+    #[doc = "Set the field `internal_ip`.\n"]
     pub fn set_internal_ip(
         mut self,
-        v: impl Into<BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.internal_ip = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.internal_ip = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.internal_ip = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.internal_ip = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComputePerInstanceConfigPreservedStateEl {
-    type O = BlockAssignable<ComputePerInstanceConfigPreservedStateEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateEl {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -885,18 +1009,18 @@ impl BuildComputePerInstanceConfigPreservedStateEl {
             disk: core::default::Default::default(),
             external_ip: core::default::Default::default(),
             internal_ip: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComputePerInstanceConfigPreservedStateElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigPreservedStateElRef {
-    fn new(shared: StackShared, base: String) -> ComputePerInstanceConfigPreservedStateElRef {
+impl terrars::Ref for ComputePerInstanceConfigPreservedStateElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePerInstanceConfigPreservedStateElRef {
         ComputePerInstanceConfigPreservedStateElRef {
             shared: shared,
             base: base.to_string(),
@@ -905,51 +1029,52 @@ impl Ref for ComputePerInstanceConfigPreservedStateElRef {
 }
 
 impl ComputePerInstanceConfigPreservedStateElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metadata` after provisioning.\nPreserved metadata defined for this instance. This is a list of key->value pairs."]
-    pub fn metadata(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.metadata", self.base))
+    #[doc =
+        "Get a reference to the value of field `metadata` after provisioning.\nPreserved metadata defined for this instance. This is a list of key->value pairs."]
+    pub fn metadata(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.metadata", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputePerInstanceConfigTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputePerInstanceConfigTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputePerInstanceConfigTimeoutsEl {
-    type O = BlockAssignable<ComputePerInstanceConfigTimeoutsEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfigTimeoutsEl {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfigTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -970,12 +1095,12 @@ impl BuildComputePerInstanceConfigTimeoutsEl {
 }
 
 pub struct ComputePerInstanceConfigTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputePerInstanceConfigTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ComputePerInstanceConfigTimeoutsElRef {
+impl terrars::Ref for ComputePerInstanceConfigTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePerInstanceConfigTimeoutsElRef {
         ComputePerInstanceConfigTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -984,27 +1109,27 @@ impl Ref for ComputePerInstanceConfigTimeoutsElRef {
 }
 
 impl ComputePerInstanceConfigTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputePerInstanceConfigDynamic {
-    preserved_state: Option<DynamicBlock<ComputePerInstanceConfigPreservedStateEl>>,
+    preserved_state: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateEl>>,
 }

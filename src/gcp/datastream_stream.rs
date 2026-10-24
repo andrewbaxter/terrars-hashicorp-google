@@ -1,66 +1,70 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DatastreamStreamData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    customer_managed_encryption_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    desired_state: Option<PrimField<String>>,
-    display_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    location: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    stream_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backfill_all: Option<Vec<DatastreamStreamBackfillAllEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backfill_none: Option<Vec<DatastreamStreamBackfillNoneEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    destination_config: Option<Vec<DatastreamStreamDestinationConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_config: Option<Vec<DatastreamStreamSourceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DatastreamStreamTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customer_managed_encryption_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    desired_state: std::option::Option<terrars::PrimField<std::string::String>>,
+    display_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    location: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    stream_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backfill_all: std::option::Option<std::vec::Vec<DatastreamStreamBackfillAllEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backfill_none: std::option::Option<std::vec::Vec<DatastreamStreamBackfillNoneEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_config: std::option::Option<std::vec::Vec<DatastreamStreamDestinationConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_config: std::option::Option<std::vec::Vec<DatastreamStreamSourceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DatastreamStreamTimeoutsEl>,
     dynamic: DatastreamStreamDynamic,
 }
 
 struct DatastreamStream_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DatastreamStreamData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DatastreamStreamData>,
 }
 
 #[derive(Clone)]
-pub struct DatastreamStream(Rc<DatastreamStream_>);
+pub struct DatastreamStream(std::rc::Rc<DatastreamStream_>);
 
 impl DatastreamStream {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -75,238 +79,301 @@ impl DatastreamStream {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `customer_managed_encryption_key`.\nA reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data\nwill be encrypted using an internal Stream-specific encryption key provisioned through KMS."]
-    pub fn set_customer_managed_encryption_key(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().customer_managed_encryption_key = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `desired_state`.\nDesired state of the Stream. Set this field to 'RUNNING' to start the stream, and 'PAUSED' to pause the stream."]
-    pub fn set_desired_state(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().desired_state = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `labels`.\nLabels.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn set_labels(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().labels = Some(v.into());
+    #[doc =
+        "Set the field `customer_managed_encryption_key`.\nA reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data\nwill be encrypted using an internal Stream-specific encryption key provisioned through KMS."]
+    pub fn set_customer_managed_encryption_key(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().customer_managed_encryption_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc =
+        "Set the field `desired_state`.\nDesired state of the Stream. Set this field to 'RUNNING' to start the stream, and 'PAUSED' to pause the stream."]
+    pub fn set_desired_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().desired_state = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `backfill_all`.\n"]
-    pub fn set_backfill_all(self, v: impl Into<BlockAssignable<DatastreamStreamBackfillAllEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `labels`.\nLabels.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `backfill_all`.\n"]
+    pub fn set_backfill_all(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamBackfillAllEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().backfill_all = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().backfill_all = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.backfill_all = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.backfill_all = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `backfill_none`.\n"]
-    pub fn set_backfill_none(self, v: impl Into<BlockAssignable<DatastreamStreamBackfillNoneEl>>) -> Self {
+    #[doc = "Set the field `backfill_none`.\n"]
+    pub fn set_backfill_none(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamBackfillNoneEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().backfill_none = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().backfill_none = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.backfill_none = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.backfill_none = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `destination_config`.\n"]
-    pub fn set_destination_config(self, v: impl Into<BlockAssignable<DatastreamStreamDestinationConfigEl>>) -> Self {
+    #[doc = "Set the field `destination_config`.\n"]
+    pub fn set_destination_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamDestinationConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().destination_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().destination_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.destination_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.destination_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source_config`.\n"]
-    pub fn set_source_config(self, v: impl Into<BlockAssignable<DatastreamStreamSourceConfigEl>>) -> Self {
+    #[doc = "Set the field `source_config`.\n"]
+    pub fn set_source_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamSourceConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().source_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.source_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DatastreamStreamTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DatastreamStreamTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `customer_managed_encryption_key` after provisioning.\nA reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data\nwill be encrypted using an internal Stream-specific encryption key provisioned through KMS."]
-    pub fn customer_managed_encryption_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.customer_managed_encryption_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `customer_managed_encryption_key` after provisioning.\nA reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data\nwill be encrypted using an internal Stream-specific encryption key provisioned through KMS."]
+    pub fn customer_managed_encryption_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.customer_managed_encryption_key", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the Stream. Set this field to 'RUNNING' to start the stream, and 'PAUSED' to pause the stream."]
-    pub fn desired_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the Stream. Set this field to 'RUNNING' to start the stream, and 'PAUSED' to pause the stream."]
+    pub fn desired_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nLabels.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nLabels.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe name of the location this stream is located in."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe name of the location this stream is located in."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe stream's name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe stream's name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe state of the stream."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe state of the stream."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `stream_id` after provisioning.\nThe stream identifier."]
-    pub fn stream_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `stream_id` after provisioning.\nThe stream identifier."]
+    pub fn stream_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backfill_all` after provisioning.\n"]
-    pub fn backfill_all(&self) -> ListRef<DatastreamStreamBackfillAllElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backfill_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backfill_all` after provisioning.\n"]
+    pub fn backfill_all(&self) -> terrars::ListRef<DatastreamStreamBackfillAllElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backfill_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backfill_none` after provisioning.\n"]
-    pub fn backfill_none(&self) -> ListRef<DatastreamStreamBackfillNoneElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backfill_none", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backfill_none` after provisioning.\n"]
+    pub fn backfill_none(&self) -> terrars::ListRef<DatastreamStreamBackfillNoneElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backfill_none", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `destination_config` after provisioning.\n"]
-    pub fn destination_config(&self) -> ListRef<DatastreamStreamDestinationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `destination_config` after provisioning.\n"]
+    pub fn destination_config(&self) -> terrars::ListRef<DatastreamStreamDestinationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_config` after provisioning.\n"]
-    pub fn source_config(&self) -> ListRef<DatastreamStreamSourceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source_config` after provisioning.\n"]
+    pub fn source_config(&self) -> terrars::ListRef<DatastreamStreamSourceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DatastreamStreamTimeoutsElRef {
         DatastreamStreamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for DatastreamStream {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DatastreamStream {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DatastreamStream { }
+impl terrars::Resource for DatastreamStream { }
 
-impl ToListMappable for DatastreamStream {
-    type O = ListRef<DatastreamStreamRef>;
+impl terrars::ToListMappable for DatastreamStream {
+    type O = terrars::ListRef<DatastreamStreamRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DatastreamStream_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DatastreamStream_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_datastream_stream".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -316,25 +383,26 @@ impl Resource_ for DatastreamStream_ {
 }
 
 pub struct BuildDatastreamStream {
-    pub tf_id: String,
-    #[doc= "Display name."]
-    pub display_name: PrimField<String>,
-    #[doc= "The name of the location this stream is located in."]
-    pub location: PrimField<String>,
-    #[doc= "The stream identifier."]
-    pub stream_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "Display name."]
+    pub display_name: terrars::PrimField<std::string::String>,
+    #[doc = "The name of the location this stream is located in."]
+    pub location: terrars::PrimField<std::string::String>,
+    #[doc = "The stream identifier."]
+    pub stream_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStream {
-    pub fn build(self, stack: &mut Stack) -> DatastreamStream {
-        let out = DatastreamStream(Rc::new(DatastreamStream_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DatastreamStream {
+        let out = DatastreamStream(std::rc::Rc::new(DatastreamStream_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DatastreamStreamData {
+            data: std::cell::RefCell::new(DatastreamStreamData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 customer_managed_encryption_key: core::default::Default::default(),
                 desired_state: core::default::Default::default(),
                 display_name: self.display_name,
@@ -348,7 +416,7 @@ impl BuildDatastreamStream {
                 destination_config: core::default::Default::default(),
                 source_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -357,12 +425,12 @@ impl BuildDatastreamStream {
 }
 
 pub struct DatastreamStreamRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DatastreamStreamRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -371,95 +439,104 @@ impl Ref for DatastreamStreamRef {
 }
 
 impl DatastreamStreamRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `customer_managed_encryption_key` after provisioning.\nA reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data\nwill be encrypted using an internal Stream-specific encryption key provisioned through KMS."]
-    pub fn customer_managed_encryption_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.customer_managed_encryption_key", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `customer_managed_encryption_key` after provisioning.\nA reference to a KMS encryption key. If provided, it will be used to encrypt the data. If left blank, data\nwill be encrypted using an internal Stream-specific encryption key provisioned through KMS."]
+    pub fn customer_managed_encryption_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.customer_managed_encryption_key", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the Stream. Set this field to 'RUNNING' to start the stream, and 'PAUSED' to pause the stream."]
-    pub fn desired_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the Stream. Set this field to 'RUNNING' to start the stream, and 'PAUSED' to pause the stream."]
+    pub fn desired_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nLabels.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nLabels.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe name of the location this stream is located in."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe name of the location this stream is located in."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe stream's name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe stream's name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe state of the stream."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe state of the stream."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `stream_id` after provisioning.\nThe stream identifier."]
-    pub fn stream_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `stream_id` after provisioning.\nThe stream identifier."]
+    pub fn stream_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backfill_all` after provisioning.\n"]
-    pub fn backfill_all(&self) -> ListRef<DatastreamStreamBackfillAllElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backfill_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backfill_all` after provisioning.\n"]
+    pub fn backfill_all(&self) -> terrars::ListRef<DatastreamStreamBackfillAllElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backfill_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `backfill_none` after provisioning.\n"]
-    pub fn backfill_none(&self) -> ListRef<DatastreamStreamBackfillNoneElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backfill_none", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `backfill_none` after provisioning.\n"]
+    pub fn backfill_none(&self) -> terrars::ListRef<DatastreamStreamBackfillNoneElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backfill_none", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `destination_config` after provisioning.\n"]
-    pub fn destination_config(&self) -> ListRef<DatastreamStreamDestinationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `destination_config` after provisioning.\n"]
+    pub fn destination_config(&self) -> terrars::ListRef<DatastreamStreamDestinationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_config` after provisioning.\n"]
-    pub fn source_config(&self) -> ListRef<DatastreamStreamSourceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source_config` after provisioning.\n"]
+    pub fn source_config(&self) -> terrars::ListRef<DatastreamStreamSourceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DatastreamStreamTimeoutsElRef {
         DatastreamStreamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -467,66 +544,69 @@ impl DatastreamStreamRef {
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    collation: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nullable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ordinal_position: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary_key: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    collation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nullable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ordinal_position: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_key: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
-    #[doc= "Set the field `collation`.\nColumn collation."]
-    pub fn set_collation(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.collation = Some(v.into());
+    #[doc = "Set the field `collation`.\nColumn collation."]
+    pub fn set_collation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.collation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `nullable`.\nWhether or not the column can accept a null value."]
-    pub fn set_nullable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.nullable = Some(v.into());
+    #[doc = "Set the field `nullable`.\nWhether or not the column can accept a null value."]
+    pub fn set_nullable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.nullable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
-    pub fn set_ordinal_position(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ordinal_position = Some(v.into());
+    #[doc = "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
+    pub fn set_ordinal_position(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ordinal_position = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
-    pub fn set_primary_key(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.primary_key = Some(v.into());
+    #[doc = "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
+    pub fn set_primary_key(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.primary_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -552,14 +632,15 @@ impl BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMys
 }
 
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
         DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
             shared: shared,
@@ -569,93 +650,106 @@ impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `collation` after provisioning.\nColumn collation."]
-    pub fn collation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.collation", self.base))
+    #[doc = "Get a reference to the value of field `collation` after provisioning.\nColumn collation."]
+    pub fn collation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.collation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElDynamic {
-    mysql_columns: Option<
-        DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl>,
+    mysql_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_columns: Option<
-        Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl>,
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_columns: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl>,
     >,
     dynamic: DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl {
-    #[doc= "Set the field `mysql_columns`.\n"]
+    #[doc = "Set the field `mysql_columns`.\n"]
     pub fn set_mysql_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl {
+    type O =
+        terrars::BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -664,8 +758,8 @@ impl ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysql
 }
 
 pub struct BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl {
@@ -673,20 +767,20 @@ impl BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMys
         DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl {
             table: self.table,
             mysql_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef {
         DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef {
             shared: shared,
@@ -696,68 +790,76 @@ impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mysql_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_columns` after provisioning.\n"]
     pub fn mysql_columns(
         &self,
-    ) -> ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_columns", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElDynamic {
-    mysql_tables: Option<
-        DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl>,
+    mysql_tables: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
-    database: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_tables: Option<Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl>>,
+    database: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_tables: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl>>,
     dynamic: DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
-    #[doc= "Set the field `mysql_tables`.\n"]
+    #[doc = "Set the field `mysql_tables`.\n"]
     pub fn set_mysql_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -766,8 +868,8 @@ impl ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysql
 }
 
 pub struct BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
-    #[doc= "Database name."]
-    pub database: PrimField<String>,
+    #[doc = "Database name."]
+    pub database: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
@@ -775,20 +877,20 @@ impl BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
         DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl {
             database: self.database,
             mysql_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef {
         DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef {
             shared: shared,
@@ -798,58 +900,69 @@ impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `database` after provisioning.\nDatabase name."]
-    pub fn database(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
+    #[doc = "Get a reference to the value of field `database` after provisioning.\nDatabase name."]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mysql_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_tables` after provisioning.\n"]
     pub fn mysql_tables(
         &self,
-    ) -> ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_tables", self.base))
+    ) -> terrars::ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElMysqlTablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElDynamic {
-    mysql_databases: Option<DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>>,
+    mysql_databases: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_databases: Option<Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_databases: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>>,
     dynamic: DatastreamStreamBackfillAllElMysqlExcludedObjectsElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsEl {
-    #[doc= "Set the field `mysql_databases`.\n"]
+    #[doc = "Set the field `mysql_databases`.\n"]
     pub fn set_mysql_databases(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_databases = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_databases = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_databases = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_databases = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElMysqlExcludedObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -863,18 +976,21 @@ impl BuildDatastreamStreamBackfillAllElMysqlExcludedObjectsEl {
     pub fn build(self) -> DatastreamStreamBackfillAllElMysqlExcludedObjectsEl {
         DatastreamStreamBackfillAllElMysqlExcludedObjectsEl {
             mysql_databases: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
         DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
             shared: shared,
             base: base.to_string(),
@@ -883,46 +999,51 @@ impl Ref for DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
 }
 
 impl DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mysql_databases` after provisioning.\n"]
-    pub fn mysql_databases(&self) -> ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_databases", self.base))
+    #[doc = "Get a reference to the value of field `mysql_databases` after provisioning.\n"]
+    pub fn mysql_databases(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElMysqlDatabasesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_databases", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -944,14 +1065,15 @@ impl BuildDatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOra
 }
 
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
         DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
             shared: shared,
@@ -961,103 +1083,120 @@ impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encoding` after provisioning.\nColumn encoding."]
-    pub fn encoding(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
+    #[doc = "Get a reference to the value of field `encoding` after provisioning.\nColumn encoding."]
+    pub fn encoding(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
-    pub fn precision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
+    #[doc = "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
+    pub fn precision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
-    pub fn scale(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
+    #[doc = "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
+    pub fn scale(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElDynamic {
-    oracle_columns: Option<
-        DynamicBlock<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl>,
+    oracle_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
+        >,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_columns: Option<
-        Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl>,
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl>,
     >,
     dynamic: DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl {
-    #[doc= "Set the field `oracle_columns`.\n"]
+    #[doc = "Set the field `oracle_columns`.\n"]
     pub fn set_oracle_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl {
+    type O =
+        terrars::BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1066,8 +1205,8 @@ impl ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOrac
 }
 
 pub struct BuildDatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl {
@@ -1075,20 +1214,20 @@ impl BuildDatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOra
         DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl {
             table: self.table,
             oracle_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef {
         DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef {
             shared: shared,
@@ -1098,68 +1237,76 @@ impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_columns` after provisioning.\n"]
     pub fn oracle_columns(
         &self,
-    ) -> ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_columns", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElDynamic {
-    oracle_tables: Option<
-        DynamicBlock<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl>,
+    oracle_tables: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
-    schema: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_tables: Option<Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl>>,
+    schema: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_tables: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl>>,
     dynamic: DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
-    #[doc= "Set the field `oracle_tables`.\n"]
+    #[doc = "Set the field `oracle_tables`.\n"]
     pub fn set_oracle_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1168,8 +1315,8 @@ impl ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsElOrac
 }
 
 pub struct BuildDatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
-    #[doc= "Schema name."]
-    pub schema: PrimField<String>,
+    #[doc = "Schema name."]
+    pub schema: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
@@ -1177,20 +1324,20 @@ impl BuildDatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
         DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl {
             schema: self.schema,
             oracle_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef {
         DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef {
             shared: shared,
@@ -1200,58 +1347,69 @@ impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schema` after provisioning.\nSchema name."]
-    pub fn schema(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\nSchema name."]
+    pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_tables` after provisioning.\n"]
     pub fn oracle_tables(
         &self,
-    ) -> ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_tables", self.base))
+    ) -> terrars::ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElOracleTablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElOracleExcludedObjectsElDynamic {
-    oracle_schemas: Option<DynamicBlock<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>>,
+    oracle_schemas: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_schemas: Option<Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_schemas: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>>,
     dynamic: DatastreamStreamBackfillAllElOracleExcludedObjectsElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsEl {
-    #[doc= "Set the field `oracle_schemas`.\n"]
+    #[doc = "Set the field `oracle_schemas`.\n"]
     pub fn set_oracle_schemas(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_schemas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_schemas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_schemas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_schemas = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElOracleExcludedObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1265,18 +1423,21 @@ impl BuildDatastreamStreamBackfillAllElOracleExcludedObjectsEl {
     pub fn build(self) -> DatastreamStreamBackfillAllElOracleExcludedObjectsEl {
         DatastreamStreamBackfillAllElOracleExcludedObjectsEl {
             oracle_schemas: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
         DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1285,70 +1446,75 @@ impl Ref for DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
 }
 
 impl DatastreamStreamBackfillAllElOracleExcludedObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `oracle_schemas` after provisioning.\n"]
-    pub fn oracle_schemas(&self) -> ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_schemas", self.base))
+    #[doc = "Get a reference to the value of field `oracle_schemas` after provisioning.\n"]
+    pub fn oracle_schemas(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElOracleSchemasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_schemas", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nullable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ordinal_position: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary_key: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nullable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ordinal_position: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_key: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `nullable`.\nWhether or not the column can accept a null value."]
-    pub fn set_nullable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.nullable = Some(v.into());
+    #[doc = "Set the field `nullable`.\nWhether or not the column can accept a null value."]
+    pub fn set_nullable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.nullable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
-    pub fn set_ordinal_position(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ordinal_position = Some(v.into());
+    #[doc = "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
+    pub fn set_ordinal_position(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ordinal_position = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
-    pub fn set_primary_key(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.primary_key = Some(v.into());
+    #[doc = "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
+    pub fn set_primary_key(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.primary_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1373,14 +1539,15 @@ impl BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSche
 }
 
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
             shared: shared,
@@ -1390,55 +1557,62 @@ impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlS
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
-    pub fn precision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
+    #[doc = "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
+    pub fn precision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
-    pub fn scale(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
+    #[doc = "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
+    pub fn scale(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElDynamic {
-    postgresql_columns: Option<
-        DynamicBlock<
+    postgresql_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >,
     >,
@@ -1446,10 +1620,14 @@ struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemas
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_columns: Option<
-        Vec<
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >,
     >,
@@ -1457,38 +1635,43 @@ pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSch
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    #[doc= "Set the field `postgresql_columns`.\n"]
+    #[doc = "Set the field `postgresql_columns`.\n"]
     pub fn set_postgresql_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl {
+impl terrars
+::ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1497,8 +1680,8 @@ impl ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl
 }
 
 pub struct BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl {
@@ -1508,20 +1691,20 @@ impl BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSche
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl {
             table: self.table,
             postgresql_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
             shared: shared,
@@ -1531,72 +1714,81 @@ impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlS
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_columns` after provisioning.\n"]
     pub fn postgresql_columns(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_columns", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElDynamic {
-    postgresql_tables: Option<
-        DynamicBlock<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl>,
+    postgresql_tables: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl {
-    schema: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_tables: Option<
-        Vec<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl>,
+    schema: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_tables: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl>,
     >,
     dynamic: DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl {
-    #[doc= "Set the field `postgresql_tables`.\n"]
+    #[doc = "Set the field `postgresql_tables`.\n"]
     pub fn set_postgresql_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1605,8 +1797,8 @@ impl ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl
 }
 
 pub struct BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl {
-    #[doc= "Database name."]
-    pub schema: PrimField<String>,
+    #[doc = "Database name."]
+    pub schema: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl {
@@ -1614,20 +1806,20 @@ impl BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSche
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl {
             schema: self.schema,
             postgresql_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef {
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef {
             shared: shared,
@@ -1637,60 +1829,71 @@ impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlS
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schema` after provisioning.\nDatabase name."]
-    pub fn schema(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\nDatabase name."]
+    pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_tables` after provisioning.\n"]
     pub fn postgresql_tables(
         &self,
-    ) -> ListRef<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_tables", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElPostgresqlTablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElDynamic {
-    postgresql_schemas: Option<
-        DynamicBlock<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>,
-    >,
+    postgresql_schemas: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_schemas: Option<Vec<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_schemas: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>>,
     dynamic: DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElDynamic,
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl {
-    #[doc= "Set the field `postgresql_schemas`.\n"]
+    #[doc = "Set the field `postgresql_schemas`.\n"]
     pub fn set_postgresql_schemas(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_schemas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_schemas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_schemas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_schemas = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1704,18 +1907,21 @@ impl BuildDatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl {
     pub fn build(self) -> DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl {
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl {
             postgresql_schemas: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
         DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1724,91 +1930,104 @@ impl Ref for DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
 }
 
 impl DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_schemas` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_schemas` after provisioning.\n"]
     pub fn postgresql_schemas(
         &self,
-    ) -> ListRef<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_schemas", self.base))
+    ) -> terrars::ListRef<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElPostgresqlSchemasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_schemas", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamBackfillAllElDynamic {
-    mysql_excluded_objects: Option<DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>>,
-    oracle_excluded_objects: Option<DynamicBlock<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>>,
-    postgresql_excluded_objects: Option<DynamicBlock<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>>,
+    mysql_excluded_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>>,
+    oracle_excluded_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>>,
+    postgresql_excluded_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamBackfillAllEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_excluded_objects: Option<Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_excluded_objects: Option<Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_excluded_objects: Option<Vec<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_excluded_objects: std::option::Option<std::vec::Vec<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_excluded_objects: std::option::Option<std::vec::Vec<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_excluded_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>>,
     dynamic: DatastreamStreamBackfillAllElDynamic,
 }
 
 impl DatastreamStreamBackfillAllEl {
-    #[doc= "Set the field `mysql_excluded_objects`.\n"]
+    #[doc = "Set the field `mysql_excluded_objects`.\n"]
     pub fn set_mysql_excluded_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamBackfillAllElMysqlExcludedObjectsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_excluded_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_excluded_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_excluded_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_excluded_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `oracle_excluded_objects`.\n"]
+    #[doc = "Set the field `oracle_excluded_objects`.\n"]
     pub fn set_oracle_excluded_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamBackfillAllElOracleExcludedObjectsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_excluded_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_excluded_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_excluded_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_excluded_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `postgresql_excluded_objects`.\n"]
+    #[doc = "Set the field `postgresql_excluded_objects`.\n"]
     pub fn set_postgresql_excluded_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_excluded_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_excluded_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_excluded_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_excluded_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamBackfillAllEl {
-    type O = BlockAssignable<DatastreamStreamBackfillAllEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillAllEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillAllEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1824,18 +2043,18 @@ impl BuildDatastreamStreamBackfillAllEl {
             mysql_excluded_objects: core::default::Default::default(),
             oracle_excluded_objects: core::default::Default::default(),
             postgresql_excluded_objects: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamBackfillAllElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillAllElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamBackfillAllElRef {
+impl terrars::Ref for DatastreamStreamBackfillAllElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamStreamBackfillAllElRef {
         DatastreamStreamBackfillAllElRef {
             shared: shared,
             base: base.to_string(),
@@ -1844,23 +2063,25 @@ impl Ref for DatastreamStreamBackfillAllElRef {
 }
 
 impl DatastreamStreamBackfillAllElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mysql_excluded_objects` after provisioning.\n"]
-    pub fn mysql_excluded_objects(&self) -> ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_excluded_objects", self.base))
+    #[doc = "Get a reference to the value of field `mysql_excluded_objects` after provisioning.\n"]
+    pub fn mysql_excluded_objects(&self) -> terrars::ListRef<DatastreamStreamBackfillAllElMysqlExcludedObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_excluded_objects", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_excluded_objects` after provisioning.\n"]
-    pub fn oracle_excluded_objects(&self) -> ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_excluded_objects", self.base))
+    #[doc = "Get a reference to the value of field `oracle_excluded_objects` after provisioning.\n"]
+    pub fn oracle_excluded_objects(&self) -> terrars::ListRef<DatastreamStreamBackfillAllElOracleExcludedObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_excluded_objects", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_excluded_objects` after provisioning.\n"]
-    pub fn postgresql_excluded_objects(&self) -> ListRef<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_excluded_objects", self.base))
+    #[doc = "Get a reference to the value of field `postgresql_excluded_objects` after provisioning.\n"]
+    pub fn postgresql_excluded_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamBackfillAllElPostgresqlExcludedObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_excluded_objects", self.base))
     }
 }
 
@@ -1869,11 +2090,11 @@ pub struct DatastreamStreamBackfillNoneEl {}
 
 impl DatastreamStreamBackfillNoneEl { }
 
-impl ToListMappable for DatastreamStreamBackfillNoneEl {
-    type O = BlockAssignable<DatastreamStreamBackfillNoneEl>;
+impl terrars::ToListMappable for DatastreamStreamBackfillNoneEl {
+    type O = terrars::BlockAssignable<DatastreamStreamBackfillNoneEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1890,12 +2111,12 @@ impl BuildDatastreamStreamBackfillNoneEl {
 }
 
 pub struct DatastreamStreamBackfillNoneElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamBackfillNoneElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamBackfillNoneElRef {
+impl terrars::Ref for DatastreamStreamBackfillNoneElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamStreamBackfillNoneElRef {
         DatastreamStreamBackfillNoneElRef {
             shared: shared,
             base: base.to_string(),
@@ -1904,23 +2125,25 @@ impl Ref for DatastreamStreamBackfillNoneElRef {
 }
 
 impl DatastreamStreamBackfillNoneElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl {
-    dataset_id: PrimField<String>,
+    dataset_id: terrars::PrimField<std::string::String>,
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl { }
 
-impl ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl {
-    type O = BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl>;
+impl terrars::ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl {
+    type O =
+        terrars
+        ::BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1929,8 +2152,8 @@ impl ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationCo
 }
 
 pub struct BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl {
-    #[doc= "Dataset ID in the format projects/{project}/datasets/{dataset_id} or\n{project}:{dataset_id}"]
-    pub dataset_id: PrimField<String>,
+    #[doc = "Dataset ID in the format projects/{project}/datasets/{dataset_id} or\n{project}:{dataset_id}"]
+    pub dataset_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl {
@@ -1942,14 +2165,14 @@ impl BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTa
 }
 
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef {
+impl terrars::Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef {
         DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef {
             shared: shared,
@@ -1959,47 +2182,52 @@ impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingl
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dataset_id` after provisioning.\nDataset ID in the format projects/{project}/datasets/{dataset_id} or\n{project}:{dataset_id}"]
-    pub fn dataset_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
+    #[doc =
+        "Get a reference to the value of field `dataset_id` after provisioning.\nDataset ID in the format projects/{project}/datasets/{dataset_id} or\n{project}:{dataset_id}"]
+    pub fn dataset_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dataset_id_prefix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_name: Option<PrimField<String>>,
-    location: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dataset_id_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    location: terrars::PrimField<std::string::String>,
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl {
-    #[doc= "Set the field `dataset_id_prefix`.\nIf supplied, every created dataset will have its name prefixed by the provided value.\nThe prefix and name will be separated by an underscore. i.e. _."]
-    pub fn set_dataset_id_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.dataset_id_prefix = Some(v.into());
+    #[doc =
+        "Set the field `dataset_id_prefix`.\nIf supplied, every created dataset will have its name prefixed by the provided value.\nThe prefix and name will be separated by an underscore. i.e. _."]
+    pub fn set_dataset_id_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.dataset_id_prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `kms_key_name`.\nDescribes the Cloud KMS encryption key that will be used to protect destination BigQuery\ntable. The BigQuery Service Account associated with your project requires access to this\nencryption key. i.e. projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{cryptoKey}.\nSee https://cloud.google.com/bigquery/docs/customer-managed-encryption for more information."]
-    pub fn set_kms_key_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_name = Some(v.into());
+    #[doc =
+        "Set the field `kms_key_name`.\nDescribes the Cloud KMS encryption key that will be used to protect destination BigQuery\ntable. The BigQuery Service Account associated with your project requires access to this\nencryption key. i.e. projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{cryptoKey}.\nSee https://cloud.google.com/bigquery/docs/customer-managed-encryption for more information."]
+    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl {
+impl terrars
+::ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2008,8 +2236,9 @@ impl ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationCo
 }
 
 pub struct BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl {
-    #[doc= "The geographic location where the dataset should reside.\nSee https://cloud.google.com/bigquery/docs/locations for supported locations."]
-    pub location: PrimField<String>,
+    #[doc =
+        "The geographic location where the dataset should reside.\nSee https://cloud.google.com/bigquery/docs/locations for supported locations."]
+    pub location: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl {
@@ -2025,14 +2254,15 @@ impl BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHi
 }
 
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateElRef {
+impl terrars
+::Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateElRef {
         DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateElRef {
             shared: shared,
@@ -2042,30 +2272,36 @@ impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourc
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dataset_id_prefix` after provisioning.\nIf supplied, every created dataset will have its name prefixed by the provided value.\nThe prefix and name will be separated by an underscore. i.e. _."]
-    pub fn dataset_id_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dataset_id_prefix", self.base))
+    #[doc =
+        "Get a reference to the value of field `dataset_id_prefix` after provisioning.\nIf supplied, every created dataset will have its name prefixed by the provided value.\nThe prefix and name will be separated by an underscore. i.e. _."]
+    pub fn dataset_id_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset_id_prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_name` after provisioning.\nDescribes the Cloud KMS encryption key that will be used to protect destination BigQuery\ntable. The BigQuery Service Account associated with your project requires access to this\nencryption key. i.e. projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{cryptoKey}.\nSee https://cloud.google.com/bigquery/docs/customer-managed-encryption for more information."]
-    pub fn kms_key_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nDescribes the Cloud KMS encryption key that will be used to protect destination BigQuery\ntable. The BigQuery Service Account associated with your project requires access to this\nencryption key. i.e. projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{cryptoKey}.\nSee https://cloud.google.com/bigquery/docs/customer-managed-encryption for more information."]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the dataset should reside.\nSee https://cloud.google.com/bigquery/docs/locations for supported locations."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the dataset should reside.\nSee https://cloud.google.com/bigquery/docs/locations for supported locations."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDynamic {
-    dataset_template: Option<
-        DynamicBlock<
+    dataset_template: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl,
         >,
     >,
@@ -2073,44 +2309,55 @@ struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHiera
 
 #[derive(Serialize)]
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dataset_template: Option<
-        Vec<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dataset_template: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl,
+        >,
     >,
     dynamic: DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDynamic,
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl {
-    #[doc= "Set the field `dataset_template`.\n"]
+    #[doc = "Set the field `dataset_template`.\n"]
     pub fn set_dataset_template(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dataset_template = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dataset_template = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dataset_template = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dataset_template = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl {
+impl terrars
+::ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl {
     type O =
-        BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl>;
+        terrars
+        ::BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2124,20 +2371,20 @@ impl BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHi
     pub fn build(self) -> DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl {
         DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl {
             dataset_template: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef {
+impl terrars::Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef {
         DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef {
             shared: shared,
@@ -2147,104 +2394,116 @@ impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourc
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dataset_template` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `dataset_template` after provisioning.\n"]
     pub fn dataset_template(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElDatasetTemplateElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.dataset_template", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dataset_template", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElDynamic {
-    single_target_dataset: Option<
-        DynamicBlock<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl>,
+    single_target_dataset: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl>,
     >,
-    source_hierarchy_datasets: Option<
-        DynamicBlock<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl>,
+    source_hierarchy_datasets: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_freshness: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    single_target_dataset: Option<
-        Vec<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_hierarchy_datasets: Option<
-        Vec<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_freshness: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    single_target_dataset: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_hierarchy_datasets: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl>>,
     dynamic: DatastreamStreamDestinationConfigElBigqueryDestinationConfigElDynamic,
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl {
-    #[doc= "Set the field `data_freshness`.\nThe guaranteed data freshness (in seconds) when querying tables created by the stream.\nEditing this field will only affect new tables created in the future, but existing tables\nwill not be impacted. Lower values mean that queries will return fresher data, but may result in higher cost.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
-    pub fn set_data_freshness(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_freshness = Some(v.into());
+    #[doc =
+        "Set the field `data_freshness`.\nThe guaranteed data freshness (in seconds) when querying tables created by the stream.\nEditing this field will only affect new tables created in the future, but existing tables\nwill not be impacted. Lower values mean that queries will return fresher data, but may result in higher cost.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
+    pub fn set_data_freshness(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_freshness = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `single_target_dataset`.\n"]
+    #[doc = "Set the field `single_target_dataset`.\n"]
     pub fn set_single_target_dataset(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.single_target_dataset = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.single_target_dataset = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.single_target_dataset = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.single_target_dataset = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source_hierarchy_datasets`.\n"]
+    #[doc = "Set the field `source_hierarchy_datasets`.\n"]
     pub fn set_source_hierarchy_datasets(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.source_hierarchy_datasets = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.source_hierarchy_datasets = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.source_hierarchy_datasets = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.source_hierarchy_datasets = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl {
-    type O = BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>;
+impl terrars::ToListMappable for DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl {
+    type O = terrars::BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2260,18 +2519,21 @@ impl BuildDatastreamStreamDestinationConfigElBigqueryDestinationConfigEl {
             data_freshness: core::default::Default::default(),
             single_target_dataset: core::default::Default::default(),
             source_hierarchy_datasets: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
+impl terrars::Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
         DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2280,27 +2542,28 @@ impl Ref for DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
 }
 
 impl DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `data_freshness` after provisioning.\nThe guaranteed data freshness (in seconds) when querying tables created by the stream.\nEditing this field will only affect new tables created in the future, but existing tables\nwill not be impacted. Lower values mean that queries will return fresher data, but may result in higher cost.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
-    pub fn data_freshness(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_freshness", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_freshness` after provisioning.\nThe guaranteed data freshness (in seconds) when querying tables created by the stream.\nEditing this field will only affect new tables created in the future, but existing tables\nwill not be impacted. Lower values mean that queries will return fresher data, but may result in higher cost.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
+    pub fn data_freshness(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_freshness", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `single_target_dataset` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `single_target_dataset` after provisioning.\n"]
     pub fn single_target_dataset(
         &self,
-    ) -> ListRef<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.single_target_dataset", self.base))
+    ) -> terrars::ListRef<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSingleTargetDatasetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.single_target_dataset", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_hierarchy_datasets` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `source_hierarchy_datasets` after provisioning.\n"]
     pub fn source_hierarchy_datasets(
         &self,
-    ) -> ListRef<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source_hierarchy_datasets", self.base))
+    ) -> terrars::ListRef<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElSourceHierarchyDatasetsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_hierarchy_datasets", self.base))
     }
 }
 
@@ -2309,11 +2572,11 @@ pub struct DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileForm
 
 impl DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl { }
 
-impl ToListMappable for DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl {
-    type O = BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>;
+impl terrars::ToListMappable for DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl {
+    type O = terrars::BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2330,14 +2593,14 @@ impl BuildDatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileForma
 }
 
 pub struct DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef {
+impl terrars::Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef {
         DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef {
             shared: shared,
@@ -2347,38 +2610,43 @@ impl Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFo
 }
 
 impl DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compression: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    schema_file_format: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compression: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schema_file_format: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl {
-    #[doc= "Set the field `compression`.\nCompression of the loaded JSON file. Possible values: [\"NO_COMPRESSION\", \"GZIP\"]"]
-    pub fn set_compression(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.compression = Some(v.into());
+    #[doc =
+        "Set the field `compression`.\nCompression of the loaded JSON file. Possible values: [\"NO_COMPRESSION\", \"GZIP\"]"]
+    pub fn set_compression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.compression = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `schema_file_format`.\nThe schema file format along JSON data files. Possible values: [\"NO_SCHEMA_FILE\", \"AVRO_SCHEMA_FILE\"]"]
-    pub fn set_schema_file_format(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.schema_file_format = Some(v.into());
+    #[doc =
+        "Set the field `schema_file_format`.\nThe schema file format along JSON data files. Possible values: [\"NO_SCHEMA_FILE\", \"AVRO_SCHEMA_FILE\"]"]
+    pub fn set_schema_file_format(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.schema_file_format = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl {
-    type O = BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>;
+impl terrars::ToListMappable for DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl {
+    type O = terrars::BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2398,14 +2666,14 @@ impl BuildDatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileForma
 }
 
 pub struct DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef {
+impl terrars::Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef {
         DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef {
             shared: shared,
@@ -2415,101 +2683,129 @@ impl Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFo
 }
 
 impl DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `compression` after provisioning.\nCompression of the loaded JSON file. Possible values: [\"NO_COMPRESSION\", \"GZIP\"]"]
-    pub fn compression(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.compression", self.base))
+    #[doc =
+        "Get a reference to the value of field `compression` after provisioning.\nCompression of the loaded JSON file. Possible values: [\"NO_COMPRESSION\", \"GZIP\"]"]
+    pub fn compression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `schema_file_format` after provisioning.\nThe schema file format along JSON data files. Possible values: [\"NO_SCHEMA_FILE\", \"AVRO_SCHEMA_FILE\"]"]
-    pub fn schema_file_format(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schema_file_format", self.base))
+    #[doc =
+        "Get a reference to the value of field `schema_file_format` after provisioning.\nThe schema file format along JSON data files. Possible values: [\"NO_SCHEMA_FILE\", \"AVRO_SCHEMA_FILE\"]"]
+    pub fn schema_file_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema_file_format", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamDestinationConfigElGcsDestinationConfigElDynamic {
-    avro_file_format: Option<DynamicBlock<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>>,
-    json_file_format: Option<
-        DynamicBlock<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>,
-    >,
+    avro_file_format: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>>,
+    json_file_format: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamDestinationConfigElGcsDestinationConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    file_rotation_interval: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    file_rotation_mb: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    avro_file_format: Option<Vec<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    json_file_format: Option<Vec<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_rotation_interval: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_rotation_mb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    avro_file_format: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    json_file_format: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>>,
     dynamic: DatastreamStreamDestinationConfigElGcsDestinationConfigElDynamic,
 }
 
 impl DatastreamStreamDestinationConfigElGcsDestinationConfigEl {
-    #[doc= "Set the field `file_rotation_interval`.\nThe maximum duration for which new events are added before a file is closed and a new file is created.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
-    pub fn set_file_rotation_interval(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.file_rotation_interval = Some(v.into());
+    #[doc =
+        "Set the field `file_rotation_interval`.\nThe maximum duration for which new events are added before a file is closed and a new file is created.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
+    pub fn set_file_rotation_interval(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.file_rotation_interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `file_rotation_mb`.\nThe maximum file size to be saved in the bucket."]
-    pub fn set_file_rotation_mb(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.file_rotation_mb = Some(v.into());
+    #[doc = "Set the field `file_rotation_mb`.\nThe maximum file size to be saved in the bucket."]
+    pub fn set_file_rotation_mb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.file_rotation_mb = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `path`.\nPath inside the Cloud Storage bucket to write data to."]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\nPath inside the Cloud Storage bucket to write data to."]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `avro_file_format`.\n"]
+    #[doc = "Set the field `avro_file_format`.\n"]
     pub fn set_avro_file_format(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.avro_file_format = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.avro_file_format = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.avro_file_format = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.avro_file_format = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `json_file_format`.\n"]
+    #[doc = "Set the field `json_file_format`.\n"]
     pub fn set_json_file_format(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.json_file_format = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.json_file_format = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.json_file_format = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.json_file_format = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamDestinationConfigElGcsDestinationConfigEl {
-    type O = BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>;
+impl terrars::ToListMappable for DatastreamStreamDestinationConfigElGcsDestinationConfigEl {
+    type O = terrars::BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2527,18 +2823,21 @@ impl BuildDatastreamStreamDestinationConfigElGcsDestinationConfigEl {
             path: core::default::Default::default(),
             avro_file_format: core::default::Default::default(),
             json_file_format: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
+impl terrars::Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
         DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2547,95 +2846,114 @@ impl Ref for DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
 }
 
 impl DatastreamStreamDestinationConfigElGcsDestinationConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `file_rotation_interval` after provisioning.\nThe maximum duration for which new events are added before a file is closed and a new file is created.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
-    pub fn file_rotation_interval(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_rotation_interval", self.base))
+    #[doc =
+        "Get a reference to the value of field `file_rotation_interval` after provisioning.\nThe maximum duration for which new events are added before a file is closed and a new file is created.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
+    pub fn file_rotation_interval(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_rotation_interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `file_rotation_mb` after provisioning.\nThe maximum file size to be saved in the bucket."]
-    pub fn file_rotation_mb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_rotation_mb", self.base))
+    #[doc =
+        "Get a reference to the value of field `file_rotation_mb` after provisioning.\nThe maximum file size to be saved in the bucket."]
+    pub fn file_rotation_mb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_rotation_mb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nPath inside the Cloud Storage bucket to write data to."]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nPath inside the Cloud Storage bucket to write data to."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `avro_file_format` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `avro_file_format` after provisioning.\n"]
     pub fn avro_file_format(
         &self,
-    ) -> ListRef<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.avro_file_format", self.base))
+    ) -> terrars::ListRef<DatastreamStreamDestinationConfigElGcsDestinationConfigElAvroFileFormatElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.avro_file_format", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `json_file_format` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `json_file_format` after provisioning.\n"]
     pub fn json_file_format(
         &self,
-    ) -> ListRef<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.json_file_format", self.base))
+    ) -> terrars::ListRef<DatastreamStreamDestinationConfigElGcsDestinationConfigElJsonFileFormatElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.json_file_format", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamDestinationConfigElDynamic {
-    bigquery_destination_config: Option<DynamicBlock<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>>,
-    gcs_destination_config: Option<DynamicBlock<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>>,
+    bigquery_destination_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>>,
+    gcs_destination_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamDestinationConfigEl {
-    destination_connection_profile: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bigquery_destination_config: Option<Vec<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gcs_destination_config: Option<Vec<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>>,
+    destination_connection_profile: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bigquery_destination_config: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gcs_destination_config: std::option::Option<std::vec::Vec<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>>,
     dynamic: DatastreamStreamDestinationConfigElDynamic,
 }
 
 impl DatastreamStreamDestinationConfigEl {
-    #[doc= "Set the field `bigquery_destination_config`.\n"]
+    #[doc = "Set the field `bigquery_destination_config`.\n"]
     pub fn set_bigquery_destination_config(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DatastreamStreamDestinationConfigElBigqueryDestinationConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.bigquery_destination_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.bigquery_destination_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.bigquery_destination_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.bigquery_destination_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gcs_destination_config`.\n"]
+    #[doc = "Set the field `gcs_destination_config`.\n"]
     pub fn set_gcs_destination_config(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DatastreamStreamDestinationConfigElGcsDestinationConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gcs_destination_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gcs_destination_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcs_destination_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gcs_destination_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamDestinationConfigEl {
-    type O = BlockAssignable<DatastreamStreamDestinationConfigEl>;
+impl terrars::ToListMappable for DatastreamStreamDestinationConfigEl {
+    type O = terrars::BlockAssignable<DatastreamStreamDestinationConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2644,8 +2962,9 @@ impl ToListMappable for DatastreamStreamDestinationConfigEl {
 }
 
 pub struct BuildDatastreamStreamDestinationConfigEl {
-    #[doc= "Destination connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
-    pub destination_connection_profile: PrimField<String>,
+    #[doc =
+        "Destination connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
+    pub destination_connection_profile: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamDestinationConfigEl {
@@ -2654,18 +2973,18 @@ impl BuildDatastreamStreamDestinationConfigEl {
             destination_connection_profile: self.destination_connection_profile,
             bigquery_destination_config: core::default::Default::default(),
             gcs_destination_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamDestinationConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamDestinationConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamDestinationConfigElRef {
+impl terrars::Ref for DatastreamStreamDestinationConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamStreamDestinationConfigElRef {
         DatastreamStreamDestinationConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2674,90 +2993,96 @@ impl Ref for DatastreamStreamDestinationConfigElRef {
 }
 
 impl DatastreamStreamDestinationConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `destination_connection_profile` after provisioning.\nDestination connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
-    pub fn destination_connection_profile(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.destination_connection_profile", self.base))
+    #[doc =
+        "Get a reference to the value of field `destination_connection_profile` after provisioning.\nDestination connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
+    pub fn destination_connection_profile(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_connection_profile", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `bigquery_destination_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `bigquery_destination_config` after provisioning.\n"]
     pub fn bigquery_destination_config(
         &self,
-    ) -> ListRef<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.bigquery_destination_config", self.base))
+    ) -> terrars::ListRef<DatastreamStreamDestinationConfigElBigqueryDestinationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_destination_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gcs_destination_config` after provisioning.\n"]
-    pub fn gcs_destination_config(&self) -> ListRef<DatastreamStreamDestinationConfigElGcsDestinationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gcs_destination_config", self.base))
+    #[doc = "Get a reference to the value of field `gcs_destination_config` after provisioning.\n"]
+    pub fn gcs_destination_config(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamDestinationConfigElGcsDestinationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_destination_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    collation: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nullable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ordinal_position: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary_key: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    collation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nullable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ordinal_position: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_key: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
-    #[doc= "Set the field `collation`.\nColumn collation."]
-    pub fn set_collation(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.collation = Some(v.into());
+    #[doc = "Set the field `collation`.\nColumn collation."]
+    pub fn set_collation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.collation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `nullable`.\nWhether or not the column can accept a null value."]
-    pub fn set_nullable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.nullable = Some(v.into());
+    #[doc = "Set the field `nullable`.\nWhether or not the column can accept a null value."]
+    pub fn set_nullable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.nullable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
-    pub fn set_ordinal_position(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ordinal_position = Some(v.into());
+    #[doc = "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
+    pub fn set_ordinal_position(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ordinal_position = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
-    pub fn set_primary_key(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.primary_key = Some(v.into());
+    #[doc = "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
+    pub fn set_primary_key(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.primary_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2783,14 +3108,15 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysql
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
             shared: shared,
@@ -2800,50 +3126,57 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMy
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `collation` after provisioning.\nColumn collation."]
-    pub fn collation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.collation", self.base))
+    #[doc = "Get a reference to the value of field `collation` after provisioning.\nColumn collation."]
+    pub fn collation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.collation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElDynamic {
-    mysql_columns: Option<
-        DynamicBlock<
+    mysql_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
         >,
     >,
@@ -2851,10 +3184,14 @@ struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDat
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_columns: Option<
-        Vec<
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
         >,
     >,
@@ -2862,38 +3199,43 @@ pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysq
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl {
-    #[doc= "Set the field `mysql_columns`.\n"]
+    #[doc = "Set the field `mysql_columns`.\n"]
     pub fn set_mysql_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2902,8 +3244,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExclude
 }
 
 pub struct BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl {
@@ -2913,20 +3255,21 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysql
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl {
             table: self.table,
             mysql_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef {
             shared: shared,
@@ -2936,72 +3279,82 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMy
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mysql_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_columns` after provisioning.\n"]
     pub fn mysql_columns(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_columns", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElDynamic {
-    mysql_tables: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl>,
+    mysql_tables: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl {
-    database: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_tables: Option<
-        Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl>,
+    database: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_tables: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl>,
     >,
     dynamic: DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl {
-    #[doc= "Set the field `mysql_tables`.\n"]
+    #[doc = "Set the field `mysql_tables`.\n"]
     pub fn set_mysql_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl {
+    type O =
+        terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3010,8 +3363,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExclude
 }
 
 pub struct BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl {
-    #[doc= "Database name."]
-    pub database: PrimField<String>,
+    #[doc = "Database name."]
+    pub database: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl {
@@ -3019,20 +3372,20 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysql
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl {
             database: self.database,
             mysql_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef {
             shared: shared,
@@ -3042,67 +3395,75 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMy
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `database` after provisioning.\nDatabase name."]
-    pub fn database(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
+    #[doc = "Get a reference to the value of field `database` after provisioning.\nDatabase name."]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mysql_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_tables` after provisioning.\n"]
     pub fn mysql_tables(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_tables", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElMysqlTablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElDynamic {
-    mysql_databases: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl>,
+    mysql_databases: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_databases: Option<Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_databases: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl>>,
     dynamic: DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl {
-    #[doc= "Set the field `mysql_databases`.\n"]
+    #[doc = "Set the field `mysql_databases`.\n"]
     pub fn set_mysql_databases(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_databases = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_databases = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_databases = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_databases = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3116,20 +3477,20 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl {
     pub fn build(self) -> DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl {
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl {
             mysql_databases: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef {
             shared: shared,
@@ -3139,80 +3500,83 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRe
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mysql_databases` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_databases` after provisioning.\n"]
     pub fn mysql_databases(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_databases", self.base))
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElMysqlDatabasesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_databases", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    collation: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nullable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ordinal_position: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary_key: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    collation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nullable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ordinal_position: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_key: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
-    #[doc= "Set the field `collation`.\nColumn collation."]
-    pub fn set_collation(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.collation = Some(v.into());
+    #[doc = "Set the field `collation`.\nColumn collation."]
+    pub fn set_collation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.collation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `nullable`.\nWhether or not the column can accept a null value."]
-    pub fn set_nullable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.nullable = Some(v.into());
+    #[doc = "Set the field `nullable`.\nWhether or not the column can accept a null value."]
+    pub fn set_nullable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.nullable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
-    pub fn set_ordinal_position(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ordinal_position = Some(v.into());
+    #[doc = "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
+    pub fn set_ordinal_position(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ordinal_position = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
-    pub fn set_primary_key(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.primary_key = Some(v.into());
+    #[doc = "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
+    pub fn set_primary_key(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.primary_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3238,14 +3602,15 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysql
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
             shared: shared,
@@ -3255,50 +3620,57 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMy
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `collation` after provisioning.\nColumn collation."]
-    pub fn collation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.collation", self.base))
+    #[doc = "Get a reference to the value of field `collation` after provisioning.\nColumn collation."]
+    pub fn collation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.collation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe MySQL data type. Full data types list can be found here:\nhttps://dev.mysql.com/doc/refman/8.0/en/data-types.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElDynamic {
-    mysql_columns: Option<
-        DynamicBlock<
+    mysql_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
         >,
     >,
@@ -3306,10 +3678,14 @@ struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDat
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_columns: Option<
-        Vec<
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
         >,
     >,
@@ -3317,38 +3693,43 @@ pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysq
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl {
-    #[doc= "Set the field `mysql_columns`.\n"]
+    #[doc = "Set the field `mysql_columns`.\n"]
     pub fn set_mysql_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3357,8 +3738,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElInclude
 }
 
 pub struct BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl {
@@ -3368,20 +3749,21 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysql
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl {
             table: self.table,
             mysql_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef {
             shared: shared,
@@ -3391,72 +3773,82 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMy
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mysql_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_columns` after provisioning.\n"]
     pub fn mysql_columns(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElMysqlColumnsElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_columns", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElDynamic {
-    mysql_tables: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl>,
+    mysql_tables: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl {
-    database: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_tables: Option<
-        Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl>,
+    database: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_tables: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl>,
     >,
     dynamic: DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl {
-    #[doc= "Set the field `mysql_tables`.\n"]
+    #[doc = "Set the field `mysql_tables`.\n"]
     pub fn set_mysql_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl {
+    type O =
+        terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3465,8 +3857,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElInclude
 }
 
 pub struct BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl {
-    #[doc= "Database name."]
-    pub database: PrimField<String>,
+    #[doc = "Database name."]
+    pub database: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl {
@@ -3474,20 +3866,20 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysql
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl {
             database: self.database,
             mysql_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef {
             shared: shared,
@@ -3497,67 +3889,75 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMy
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `database` after provisioning.\nDatabase name."]
-    pub fn database(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
+    #[doc = "Get a reference to the value of field `database` after provisioning.\nDatabase name."]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mysql_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_tables` after provisioning.\n"]
     pub fn mysql_tables(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_tables", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElMysqlTablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElDynamic {
-    mysql_databases: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl>,
+    mysql_databases: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_databases: Option<Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_databases: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl>>,
     dynamic: DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl {
-    #[doc= "Set the field `mysql_databases`.\n"]
+    #[doc = "Set the field `mysql_databases`.\n"]
     pub fn set_mysql_databases(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_databases = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_databases = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_databases = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_databases = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3571,20 +3971,20 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl {
     pub fn build(self) -> DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl {
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl {
             mysql_databases: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef {
             shared: shared,
@@ -3594,88 +3994,112 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRe
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mysql_databases` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mysql_databases` after provisioning.\n"]
     pub fn mysql_databases(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_databases", self.base))
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElMysqlDatabasesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_databases", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElMysqlSourceConfigElDynamic {
-    exclude_objects: Option<DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>>,
-    include_objects: Option<DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>>,
+    exclude_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>>,
+    include_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_concurrent_backfill_tasks: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_concurrent_cdc_tasks: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclude_objects: Option<Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_objects: Option<Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_concurrent_backfill_tasks: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_concurrent_cdc_tasks: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclude_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>>,
     dynamic: DatastreamStreamSourceConfigElMysqlSourceConfigElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigEl {
-    #[doc= "Set the field `max_concurrent_backfill_tasks`.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn set_max_concurrent_backfill_tasks(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_concurrent_backfill_tasks = Some(v.into());
+    #[doc =
+        "Set the field `max_concurrent_backfill_tasks`.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn set_max_concurrent_backfill_tasks(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_concurrent_backfill_tasks = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_concurrent_cdc_tasks`.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn set_max_concurrent_cdc_tasks(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_concurrent_cdc_tasks = Some(v.into());
+    #[doc =
+        "Set the field `max_concurrent_cdc_tasks`.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn set_max_concurrent_cdc_tasks(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_concurrent_cdc_tasks = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `exclude_objects`.\n"]
+    #[doc = "Set the field `exclude_objects`.\n"]
     pub fn set_exclude_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.exclude_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclude_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.exclude_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclude_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `include_objects`.\n"]
+    #[doc = "Set the field `include_objects`.\n"]
     pub fn set_include_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.include_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.include_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.include_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.include_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElMysqlSourceConfigEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3692,18 +4116,21 @@ impl BuildDatastreamStreamSourceConfigElMysqlSourceConfigEl {
             max_concurrent_cdc_tasks: core::default::Default::default(),
             exclude_objects: core::default::Default::default(),
             include_objects: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
         DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -3712,28 +4139,34 @@ impl Ref for DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
 }
 
 impl DatastreamStreamSourceConfigElMysqlSourceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrent_backfill_tasks` after provisioning.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn max_concurrent_backfill_tasks(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_backfill_tasks", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_concurrent_backfill_tasks` after provisioning.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn max_concurrent_backfill_tasks(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_backfill_tasks", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrent_cdc_tasks` after provisioning.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn max_concurrent_cdc_tasks(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_cdc_tasks", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_concurrent_cdc_tasks` after provisioning.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn max_concurrent_cdc_tasks(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_cdc_tasks", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclude_objects` after provisioning.\n"]
-    pub fn exclude_objects(&self) -> ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.exclude_objects", self.base))
+    #[doc = "Get a reference to the value of field `exclude_objects` after provisioning.\n"]
+    pub fn exclude_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElExcludeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclude_objects", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_objects` after provisioning.\n"]
-    pub fn include_objects(&self) -> ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.include_objects", self.base))
+    #[doc = "Get a reference to the value of field `include_objects` after provisioning.\n"]
+    pub fn include_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElIncludeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.include_objects", self.base))
     }
 }
 
@@ -3742,11 +4175,11 @@ pub struct DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl 
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl { }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3763,14 +4196,14 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl {
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef {
             shared: shared,
@@ -3780,41 +4213,44 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsE
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3836,14 +4272,15 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOrac
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
             shared: shared,
@@ -3853,60 +4290,67 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElO
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encoding` after provisioning.\nColumn encoding."]
-    pub fn encoding(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
+    #[doc = "Get a reference to the value of field `encoding` after provisioning.\nColumn encoding."]
+    pub fn encoding(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
-    pub fn precision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
+    #[doc = "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
+    pub fn precision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
-    pub fn scale(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
+    #[doc = "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
+    pub fn scale(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElDynamic {
-    oracle_columns: Option<
-        DynamicBlock<
+    oracle_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
         >,
     >,
@@ -3914,10 +4358,14 @@ struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleS
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_columns: Option<
-        Vec<
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
         >,
     >,
@@ -3925,38 +4373,43 @@ pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOra
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl {
-    #[doc= "Set the field `oracle_columns`.\n"]
+    #[doc = "Set the field `oracle_columns`.\n"]
     pub fn set_oracle_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3965,8 +4418,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExclud
 }
 
 pub struct BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl {
@@ -3976,20 +4429,21 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOrac
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl {
             table: self.table,
             oracle_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef {
             shared: shared,
@@ -3999,72 +4453,84 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElO
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_columns` after provisioning.\n"]
     pub fn oracle_columns(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_columns", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElDynamic {
-    oracle_tables: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl>,
+    oracle_tables: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl,
+        >,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl {
-    schema: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_tables: Option<
-        Vec<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl>,
+    schema: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_tables: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl>,
     >,
     dynamic: DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl {
-    #[doc= "Set the field `oracle_tables`.\n"]
+    #[doc = "Set the field `oracle_tables`.\n"]
     pub fn set_oracle_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl {
+    type O =
+        terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4073,8 +4539,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExclud
 }
 
 pub struct BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl {
-    #[doc= "Schema name."]
-    pub schema: PrimField<String>,
+    #[doc = "Schema name."]
+    pub schema: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl {
@@ -4082,20 +4548,20 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOrac
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl {
             schema: self.schema,
             oracle_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef {
             shared: shared,
@@ -4105,67 +4571,75 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElO
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schema` after provisioning.\nSchema name."]
-    pub fn schema(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\nSchema name."]
+    pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_tables` after provisioning.\n"]
     pub fn oracle_tables(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_tables", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElOracleTablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElDynamic {
-    oracle_schemas: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl>,
+    oracle_schemas: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_schemas: Option<Vec<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_schemas: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl>>,
     dynamic: DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl {
-    #[doc= "Set the field `oracle_schemas`.\n"]
+    #[doc = "Set the field `oracle_schemas`.\n"]
     pub fn set_oracle_schemas(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_schemas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_schemas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_schemas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_schemas = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4179,20 +4653,20 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl {
     pub fn build(self) -> DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl {
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl {
             oracle_schemas: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef {
             shared: shared,
@@ -4202,48 +4676,51 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElR
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `oracle_schemas` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_schemas` after provisioning.\n"]
     pub fn oracle_schemas(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_schemas", self.base))
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElOracleSchemasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_schemas", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4265,14 +4742,15 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOrac
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
             shared: shared,
@@ -4282,60 +4760,67 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElO
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe Oracle data type. Full data types list can be found here:\nhttps://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/Data-Types.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encoding` after provisioning.\nColumn encoding."]
-    pub fn encoding(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
+    #[doc = "Get a reference to the value of field `encoding` after provisioning.\nColumn encoding."]
+    pub fn encoding(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
-    pub fn precision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
+    #[doc = "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
+    pub fn precision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
-    pub fn scale(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
+    #[doc = "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
+    pub fn scale(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElDynamic {
-    oracle_columns: Option<
-        DynamicBlock<
+    oracle_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
         >,
     >,
@@ -4343,10 +4828,14 @@ struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleS
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_columns: Option<
-        Vec<
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
         >,
     >,
@@ -4354,38 +4843,43 @@ pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOra
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl {
-    #[doc= "Set the field `oracle_columns`.\n"]
+    #[doc = "Set the field `oracle_columns`.\n"]
     pub fn set_oracle_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4394,8 +4888,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElInclud
 }
 
 pub struct BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl {
@@ -4405,20 +4899,21 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOrac
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl {
             table: self.table,
             oracle_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef {
             shared: shared,
@@ -4428,72 +4923,84 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElO
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_columns` after provisioning.\n"]
     pub fn oracle_columns(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElOracleColumnsElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_columns", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElDynamic {
-    oracle_tables: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl>,
+    oracle_tables: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl,
+        >,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl {
-    schema: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_tables: Option<
-        Vec<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl>,
+    schema: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_tables: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl>,
     >,
     dynamic: DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl {
-    #[doc= "Set the field `oracle_tables`.\n"]
+    #[doc = "Set the field `oracle_tables`.\n"]
     pub fn set_oracle_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl {
+    type O =
+        terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4502,8 +5009,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElInclud
 }
 
 pub struct BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl {
-    #[doc= "Schema name."]
-    pub schema: PrimField<String>,
+    #[doc = "Schema name."]
+    pub schema: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl {
@@ -4511,20 +5018,20 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOrac
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl {
             schema: self.schema,
             oracle_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef {
             shared: shared,
@@ -4534,67 +5041,75 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElO
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schema` after provisioning.\nSchema name."]
-    pub fn schema(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\nSchema name."]
+    pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_tables` after provisioning.\n"]
     pub fn oracle_tables(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_tables", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElOracleTablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElDynamic {
-    oracle_schemas: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl>,
+    oracle_schemas: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_schemas: Option<Vec<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_schemas: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl>>,
     dynamic: DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl {
-    #[doc= "Set the field `oracle_schemas`.\n"]
+    #[doc = "Set the field `oracle_schemas`.\n"]
     pub fn set_oracle_schemas(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_schemas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_schemas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_schemas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_schemas = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4608,20 +5123,20 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl {
     pub fn build(self) -> DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl {
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl {
             oracle_schemas: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef {
             shared: shared,
@@ -4631,15 +5146,15 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElR
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `oracle_schemas` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `oracle_schemas` after provisioning.\n"]
     pub fn oracle_schemas(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_schemas", self.base))
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElOracleSchemasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_schemas", self.base))
     }
 }
 
@@ -4648,11 +5163,11 @@ pub struct DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsE
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl { }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4669,14 +5184,14 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef {
             shared: shared,
@@ -4686,121 +5201,166 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObject
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElOracleSourceConfigElDynamic {
-    drop_large_objects: Option<DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>>,
-    exclude_objects: Option<DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>>,
-    include_objects: Option<DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>>,
-    stream_large_objects: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>,
-    >,
+    drop_large_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>>,
+    exclude_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>>,
+    include_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>>,
+    stream_large_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_concurrent_backfill_tasks: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_concurrent_cdc_tasks: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    drop_large_objects: Option<Vec<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclude_objects: Option<Vec<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_objects: Option<Vec<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stream_large_objects: Option<Vec<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_concurrent_backfill_tasks: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_concurrent_cdc_tasks: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    drop_large_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclude_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stream_large_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>>,
     dynamic: DatastreamStreamSourceConfigElOracleSourceConfigElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigEl {
-    #[doc= "Set the field `max_concurrent_backfill_tasks`.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn set_max_concurrent_backfill_tasks(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_concurrent_backfill_tasks = Some(v.into());
+    #[doc =
+        "Set the field `max_concurrent_backfill_tasks`.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn set_max_concurrent_backfill_tasks(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_concurrent_backfill_tasks = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_concurrent_cdc_tasks`.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn set_max_concurrent_cdc_tasks(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_concurrent_cdc_tasks = Some(v.into());
+    #[doc =
+        "Set the field `max_concurrent_cdc_tasks`.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn set_max_concurrent_cdc_tasks(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_concurrent_cdc_tasks = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `drop_large_objects`.\n"]
+    #[doc = "Set the field `drop_large_objects`.\n"]
     pub fn set_drop_large_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.drop_large_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.drop_large_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.drop_large_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.drop_large_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `exclude_objects`.\n"]
+    #[doc = "Set the field `exclude_objects`.\n"]
     pub fn set_exclude_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.exclude_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclude_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.exclude_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclude_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `include_objects`.\n"]
+    #[doc = "Set the field `include_objects`.\n"]
     pub fn set_include_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.include_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.include_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.include_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.include_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `stream_large_objects`.\n"]
+    #[doc = "Set the field `stream_large_objects`.\n"]
     pub fn set_stream_large_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.stream_large_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.stream_large_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.stream_large_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.stream_large_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElOracleSourceConfigEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4819,18 +5379,21 @@ impl BuildDatastreamStreamSourceConfigElOracleSourceConfigEl {
             exclude_objects: core::default::Default::default(),
             include_objects: core::default::Default::default(),
             stream_large_objects: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElOracleSourceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamSourceConfigElOracleSourceConfigElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElOracleSourceConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamSourceConfigElOracleSourceConfigElRef {
         DatastreamStreamSourceConfigElOracleSourceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -4839,97 +5402,108 @@ impl Ref for DatastreamStreamSourceConfigElOracleSourceConfigElRef {
 }
 
 impl DatastreamStreamSourceConfigElOracleSourceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrent_backfill_tasks` after provisioning.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn max_concurrent_backfill_tasks(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_backfill_tasks", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_concurrent_backfill_tasks` after provisioning.\nMaximum number of concurrent backfill tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn max_concurrent_backfill_tasks(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_backfill_tasks", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrent_cdc_tasks` after provisioning.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
-    pub fn max_concurrent_cdc_tasks(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_cdc_tasks", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_concurrent_cdc_tasks` after provisioning.\nMaximum number of concurrent CDC tasks. The number should be non negative.\nIf not set (or set to 0), the system's default value will be used."]
+    pub fn max_concurrent_cdc_tasks(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_cdc_tasks", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `drop_large_objects` after provisioning.\n"]
-    pub fn drop_large_objects(&self) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.drop_large_objects", self.base))
+    #[doc = "Get a reference to the value of field `drop_large_objects` after provisioning.\n"]
+    pub fn drop_large_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElDropLargeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.drop_large_objects", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclude_objects` after provisioning.\n"]
-    pub fn exclude_objects(&self) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.exclude_objects", self.base))
+    #[doc = "Get a reference to the value of field `exclude_objects` after provisioning.\n"]
+    pub fn exclude_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElExcludeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclude_objects", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_objects` after provisioning.\n"]
-    pub fn include_objects(&self) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.include_objects", self.base))
+    #[doc = "Get a reference to the value of field `include_objects` after provisioning.\n"]
+    pub fn include_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElIncludeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.include_objects", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stream_large_objects` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `stream_large_objects` after provisioning.\n"]
     pub fn stream_large_objects(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.stream_large_objects", self.base))
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElStreamLargeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.stream_large_objects", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nullable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ordinal_position: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary_key: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nullable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ordinal_position: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_key: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `nullable`.\nWhether or not the column can accept a null value."]
-    pub fn set_nullable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.nullable = Some(v.into());
+    #[doc = "Set the field `nullable`.\nWhether or not the column can accept a null value."]
+    pub fn set_nullable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.nullable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
-    pub fn set_ordinal_position(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ordinal_position = Some(v.into());
+    #[doc = "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
+    pub fn set_ordinal_position(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ordinal_position = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
-    pub fn set_primary_key(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.primary_key = Some(v.into());
+    #[doc = "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
+    pub fn set_primary_key(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.primary_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4954,14 +5528,15 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
             shared: shared,
@@ -4971,55 +5546,62 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
-    pub fn precision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
+    #[doc = "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
+    pub fn precision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
-    pub fn scale(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
+    #[doc = "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
+    pub fn scale(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElDynamic {
-    postgresql_columns: Option<
-        DynamicBlock<
+    postgresql_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >,
     >,
@@ -5027,10 +5609,14 @@ struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPos
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_columns: Option<
-        Vec<
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >,
     >,
@@ -5038,38 +5624,43 @@ pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsE
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    #[doc= "Set the field `postgresql_columns`.\n"]
+    #[doc = "Set the field `postgresql_columns`.\n"]
     pub fn set_postgresql_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5078,8 +5669,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElEx
 }
 
 pub struct BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
@@ -5089,20 +5680,21 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
             table: self.table,
             postgresql_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
             shared: shared,
@@ -5112,29 +5704,33 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_columns` after provisioning.\n"]
     pub fn postgresql_columns(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_columns", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElDynamic {
-    postgresql_tables: Option<
-        DynamicBlock<
+    postgresql_tables: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
         >,
     >,
@@ -5142,10 +5738,14 @@ struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPos
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl {
-    schema: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_tables: Option<
-        Vec<
+    schema: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_tables: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
         >,
     >,
@@ -5153,36 +5753,41 @@ pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsE
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl {
-    #[doc= "Set the field `postgresql_tables`.\n"]
+    #[doc = "Set the field `postgresql_tables`.\n"]
     pub fn set_postgresql_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl {
     type O =
-        BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl>;
+        terrars
+        ::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5191,8 +5796,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElEx
 }
 
 pub struct BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl {
-    #[doc= "Database name."]
-    pub schema: PrimField<String>,
+    #[doc = "Database name."]
+    pub schema: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl {
@@ -5200,20 +5805,20 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl {
             schema: self.schema,
             postgresql_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef {
             shared: shared,
@@ -5223,71 +5828,80 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schema` after provisioning.\nDatabase name."]
-    pub fn schema(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\nDatabase name."]
+    pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_tables` after provisioning.\n"]
     pub fn postgresql_tables(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_tables", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElDynamic {
-    postgresql_schemas: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl>,
+    postgresql_schemas: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_schemas: Option<
-        Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_schemas: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl>,
     >,
     dynamic: DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl {
-    #[doc= "Set the field `postgresql_schemas`.\n"]
+    #[doc = "Set the field `postgresql_schemas`.\n"]
     pub fn set_postgresql_schemas(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_schemas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_schemas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_schemas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_schemas = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5301,20 +5915,20 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl
     pub fn build(self) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl {
             postgresql_schemas: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef {
             shared: shared,
@@ -5324,72 +5938,76 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_schemas` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_schemas` after provisioning.\n"]
     pub fn postgresql_schemas(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_schemas", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElPostgresqlSchemasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_schemas", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    column: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nullable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ordinal_position: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary_key: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    column: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nullable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ordinal_position: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_key: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
-    #[doc= "Set the field `column`.\nColumn name."]
-    pub fn set_column(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.column = Some(v.into());
+    #[doc = "Set the field `column`.\nColumn name."]
+    pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.column = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_type`.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
-    pub fn set_data_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_type = Some(v.into());
+    #[doc =
+        "Set the field `data_type`.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `nullable`.\nWhether or not the column can accept a null value."]
-    pub fn set_nullable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.nullable = Some(v.into());
+    #[doc = "Set the field `nullable`.\nWhether or not the column can accept a null value."]
+    pub fn set_nullable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.nullable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
-    pub fn set_ordinal_position(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ordinal_position = Some(v.into());
+    #[doc = "Set the field `ordinal_position`.\nThe ordinal position of the column in the table."]
+    pub fn set_ordinal_position(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ordinal_position = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
-    pub fn set_primary_key(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.primary_key = Some(v.into());
+    #[doc = "Set the field `primary_key`.\nWhether or not the column represents a primary key."]
+    pub fn set_primary_key(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.primary_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5414,14 +6032,15 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
             shared: shared,
@@ -5431,55 +6050,62 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `column` after provisioning.\nColumn name."]
-    pub fn column(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
+    #[doc = "Get a reference to the value of field `column` after provisioning.\nColumn name."]
+    pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_type` after provisioning.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
-    pub fn data_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `data_type` after provisioning.\nThe PostgreSQL data type. Full data types list can be found here:\nhttps://www.postgresql.org/docs/current/datatype.html"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `length` after provisioning.\nColumn length."]
-    pub fn length(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
+    #[doc = "Get a reference to the value of field `length` after provisioning.\nColumn length."]
+    pub fn length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.length", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
-    pub fn nullable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
+    #[doc =
+        "Get a reference to the value of field `nullable` after provisioning.\nWhether or not the column can accept a null value."]
+    pub fn nullable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nullable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
-    pub fn ordinal_position(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
+    #[doc =
+        "Get a reference to the value of field `ordinal_position` after provisioning.\nThe ordinal position of the column in the table."]
+    pub fn ordinal_position(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ordinal_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
-    pub fn precision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
+    #[doc = "Get a reference to the value of field `precision` after provisioning.\nColumn precision."]
+    pub fn precision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.precision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
-    pub fn primary_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `primary_key` after provisioning.\nWhether or not the column represents a primary key."]
+    pub fn primary_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
-    pub fn scale(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
+    #[doc = "Get a reference to the value of field `scale` after provisioning.\nColumn scale."]
+    pub fn scale(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElDynamic {
-    postgresql_columns: Option<
-        DynamicBlock<
+    postgresql_columns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >,
     >,
@@ -5487,10 +6113,14 @@ struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPos
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    table: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_columns: Option<
-        Vec<
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_columns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
         >,
     >,
@@ -5498,38 +6128,43 @@ pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsE
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    #[doc= "Set the field `postgresql_columns`.\n"]
+    #[doc = "Set the field `postgresql_columns`.\n"]
     pub fn set_postgresql_columns(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_columns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_columns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_columns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_columns = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5538,8 +6173,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIn
 }
 
 pub struct BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
-    #[doc= "Table name."]
-    pub table: PrimField<String>,
+    #[doc = "Table name."]
+    pub table: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
@@ -5549,20 +6184,21 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl {
             table: self.table,
             postgresql_columns: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
+impl terrars
+::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
             shared: shared,
@@ -5572,29 +6208,33 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\nTable name."]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\nTable name."]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_columns` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_columns` after provisioning.\n"]
     pub fn postgresql_columns(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElPostgresqlColumnsElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_columns", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_columns", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElDynamic {
-    postgresql_tables: Option<
-        DynamicBlock<
+    postgresql_tables: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
         >,
     >,
@@ -5602,10 +6242,14 @@ struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPos
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl {
-    schema: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_tables: Option<
-        Vec<
+    schema: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_tables: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
         >,
     >,
@@ -5613,36 +6257,41 @@ pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsE
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl {
-    #[doc= "Set the field `postgresql_tables`.\n"]
+    #[doc = "Set the field `postgresql_tables`.\n"]
     pub fn set_postgresql_tables(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_tables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_tables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_tables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_tables = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl {
+impl terrars
+::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl {
     type O =
-        BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl>;
+        terrars
+        ::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5651,8 +6300,8 @@ impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIn
 }
 
 pub struct BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl {
-    #[doc= "Database name."]
-    pub schema: PrimField<String>,
+    #[doc = "Database name."]
+    pub schema: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl {
@@ -5660,20 +6309,20 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl {
             schema: self.schema,
             postgresql_tables: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef {
             shared: shared,
@@ -5683,71 +6332,80 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schema` after provisioning.\nDatabase name."]
-    pub fn schema(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\nDatabase name."]
+    pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_tables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_tables` after provisioning.\n"]
     pub fn postgresql_tables(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElPostgresqlTablesElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_tables", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_tables", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElDynamic {
-    postgresql_schemas: Option<
-        DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl>,
+    postgresql_schemas: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_schemas: Option<
-        Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_schemas: std
+    ::option
+    ::Option<
+        std::vec::Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl>,
     >,
     dynamic: DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl {
-    #[doc= "Set the field `postgresql_schemas`.\n"]
+    #[doc = "Set the field `postgresql_schemas`.\n"]
     pub fn set_postgresql_schemas(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_schemas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_schemas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_schemas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_schemas = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5761,20 +6419,20 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl
     pub fn build(self) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl {
             postgresql_schemas: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef {
             shared: shared,
@@ -5784,82 +6442,108 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObject
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_schemas` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `postgresql_schemas` after provisioning.\n"]
     pub fn postgresql_schemas(
         &self,
-    ) -> ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_schemas", self.base))
+    ) -> terrars
+    ::ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElPostgresqlSchemasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_schemas", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElDynamic {
-    exclude_objects: Option<DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>>,
-    include_objects: Option<DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>>,
+    exclude_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>>,
+    include_objects: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_concurrent_backfill_tasks: Option<PrimField<f64>>,
-    publication: PrimField<String>,
-    replication_slot: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclude_objects: Option<Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_objects: Option<Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_concurrent_backfill_tasks: std::option::Option<terrars::PrimField<f64>>,
+    publication: terrars::PrimField<std::string::String>,
+    replication_slot: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclude_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_objects: std
+    ::option
+    ::Option<std::vec::Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>>,
     dynamic: DatastreamStreamSourceConfigElPostgresqlSourceConfigElDynamic,
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
-    #[doc= "Set the field `max_concurrent_backfill_tasks`.\nMaximum number of concurrent backfill tasks. The number should be non\nnegative. If not set (or set to 0), the system's default value will be used."]
-    pub fn set_max_concurrent_backfill_tasks(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_concurrent_backfill_tasks = Some(v.into());
+    #[doc =
+        "Set the field `max_concurrent_backfill_tasks`.\nMaximum number of concurrent backfill tasks. The number should be non\nnegative. If not set (or set to 0), the system's default value will be used."]
+    pub fn set_max_concurrent_backfill_tasks(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_concurrent_backfill_tasks = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `exclude_objects`.\n"]
+    #[doc = "Set the field `exclude_objects`.\n"]
     pub fn set_exclude_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.exclude_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclude_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.exclude_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclude_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `include_objects`.\n"]
+    #[doc = "Set the field `include_objects`.\n"]
     pub fn set_include_objects(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.include_objects = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.include_objects = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.include_objects = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.include_objects = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5868,10 +6552,11 @@ impl ToListMappable for DatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
 }
 
 pub struct BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
-    #[doc= "The name of the publication that includes the set of all tables\nthat are defined in the stream's include_objects."]
-    pub publication: PrimField<String>,
-    #[doc= "The name of the logical replication slot that's configured with\nthe pgoutput plugin."]
-    pub replication_slot: PrimField<String>,
+    #[doc =
+        "The name of the publication that includes the set of all tables\nthat are defined in the stream's include_objects."]
+    pub publication: terrars::PrimField<std::string::String>,
+    #[doc = "The name of the logical replication slot that's configured with\nthe pgoutput plugin."]
+    pub replication_slot: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
@@ -5882,18 +6567,21 @@ impl BuildDatastreamStreamSourceConfigElPostgresqlSourceConfigEl {
             replication_slot: self.replication_slot,
             exclude_objects: core::default::Default::default(),
             include_objects: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
         DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -5902,110 +6590,123 @@ impl Ref for DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
 }
 
 impl DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrent_backfill_tasks` after provisioning.\nMaximum number of concurrent backfill tasks. The number should be non\nnegative. If not set (or set to 0), the system's default value will be used."]
-    pub fn max_concurrent_backfill_tasks(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_backfill_tasks", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_concurrent_backfill_tasks` after provisioning.\nMaximum number of concurrent backfill tasks. The number should be non\nnegative. If not set (or set to 0), the system's default value will be used."]
+    pub fn max_concurrent_backfill_tasks(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_backfill_tasks", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `publication` after provisioning.\nThe name of the publication that includes the set of all tables\nthat are defined in the stream's include_objects."]
-    pub fn publication(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.publication", self.base))
+    #[doc =
+        "Get a reference to the value of field `publication` after provisioning.\nThe name of the publication that includes the set of all tables\nthat are defined in the stream's include_objects."]
+    pub fn publication(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.publication", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `replication_slot` after provisioning.\nThe name of the logical replication slot that's configured with\nthe pgoutput plugin."]
-    pub fn replication_slot(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.replication_slot", self.base))
+    #[doc =
+        "Get a reference to the value of field `replication_slot` after provisioning.\nThe name of the logical replication slot that's configured with\nthe pgoutput plugin."]
+    pub fn replication_slot(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_slot", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclude_objects` after provisioning.\n"]
-    pub fn exclude_objects(&self) -> ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.exclude_objects", self.base))
+    #[doc = "Get a reference to the value of field `exclude_objects` after provisioning.\n"]
+    pub fn exclude_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElExcludeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclude_objects", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_objects` after provisioning.\n"]
-    pub fn include_objects(&self) -> ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.include_objects", self.base))
+    #[doc = "Get a reference to the value of field `include_objects` after provisioning.\n"]
+    pub fn include_objects(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElIncludeObjectsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.include_objects", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamSourceConfigElDynamic {
-    mysql_source_config: Option<DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigEl>>,
-    oracle_source_config: Option<DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigEl>>,
-    postgresql_source_config: Option<DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>>,
+    mysql_source_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElMysqlSourceConfigEl>>,
+    oracle_source_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElOracleSourceConfigEl>>,
+    postgresql_source_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamSourceConfigEl {
-    source_connection_profile: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mysql_source_config: Option<Vec<DatastreamStreamSourceConfigElMysqlSourceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oracle_source_config: Option<Vec<DatastreamStreamSourceConfigElOracleSourceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    postgresql_source_config: Option<Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>>,
+    source_connection_profile: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mysql_source_config: std::option::Option<std::vec::Vec<DatastreamStreamSourceConfigElMysqlSourceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oracle_source_config: std::option::Option<std::vec::Vec<DatastreamStreamSourceConfigElOracleSourceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    postgresql_source_config: std::option::Option<std::vec::Vec<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>>,
     dynamic: DatastreamStreamSourceConfigElDynamic,
 }
 
 impl DatastreamStreamSourceConfigEl {
-    #[doc= "Set the field `mysql_source_config`.\n"]
+    #[doc = "Set the field `mysql_source_config`.\n"]
     pub fn set_mysql_source_config(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamSourceConfigElMysqlSourceConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mysql_source_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mysql_source_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mysql_source_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mysql_source_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `oracle_source_config`.\n"]
+    #[doc = "Set the field `oracle_source_config`.\n"]
     pub fn set_oracle_source_config(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamSourceConfigElOracleSourceConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oracle_source_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oracle_source_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oracle_source_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oracle_source_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `postgresql_source_config`.\n"]
+    #[doc = "Set the field `postgresql_source_config`.\n"]
     pub fn set_postgresql_source_config(
         mut self,
-        v: impl Into<BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamStreamSourceConfigElPostgresqlSourceConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.postgresql_source_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.postgresql_source_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.postgresql_source_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.postgresql_source_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamSourceConfigEl {
-    type O = BlockAssignable<DatastreamStreamSourceConfigEl>;
+impl terrars::ToListMappable for DatastreamStreamSourceConfigEl {
+    type O = terrars::BlockAssignable<DatastreamStreamSourceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6014,8 +6715,9 @@ impl ToListMappable for DatastreamStreamSourceConfigEl {
 }
 
 pub struct BuildDatastreamStreamSourceConfigEl {
-    #[doc= "Source connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
-    pub source_connection_profile: PrimField<String>,
+    #[doc =
+        "Source connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
+    pub source_connection_profile: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatastreamStreamSourceConfigEl {
@@ -6025,18 +6727,18 @@ impl BuildDatastreamStreamSourceConfigEl {
             mysql_source_config: core::default::Default::default(),
             oracle_source_config: core::default::Default::default(),
             postgresql_source_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DatastreamStreamSourceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamSourceConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamSourceConfigElRef {
+impl terrars::Ref for DatastreamStreamSourceConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamStreamSourceConfigElRef {
         DatastreamStreamSourceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -6045,66 +6747,69 @@ impl Ref for DatastreamStreamSourceConfigElRef {
 }
 
 impl DatastreamStreamSourceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `source_connection_profile` after provisioning.\nSource connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
-    pub fn source_connection_profile(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_connection_profile", self.base))
+    #[doc =
+        "Get a reference to the value of field `source_connection_profile` after provisioning.\nSource connection profile resource. Format: projects/{project}/locations/{location}/connectionProfiles/{name}"]
+    pub fn source_connection_profile(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_connection_profile", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mysql_source_config` after provisioning.\n"]
-    pub fn mysql_source_config(&self) -> ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mysql_source_config", self.base))
+    #[doc = "Get a reference to the value of field `mysql_source_config` after provisioning.\n"]
+    pub fn mysql_source_config(&self) -> terrars::ListRef<DatastreamStreamSourceConfigElMysqlSourceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mysql_source_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oracle_source_config` after provisioning.\n"]
-    pub fn oracle_source_config(&self) -> ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oracle_source_config", self.base))
+    #[doc = "Get a reference to the value of field `oracle_source_config` after provisioning.\n"]
+    pub fn oracle_source_config(&self) -> terrars::ListRef<DatastreamStreamSourceConfigElOracleSourceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oracle_source_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `postgresql_source_config` after provisioning.\n"]
-    pub fn postgresql_source_config(&self) -> ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.postgresql_source_config", self.base))
+    #[doc = "Get a reference to the value of field `postgresql_source_config` after provisioning.\n"]
+    pub fn postgresql_source_config(
+        &self,
+    ) -> terrars::ListRef<DatastreamStreamSourceConfigElPostgresqlSourceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.postgresql_source_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatastreamStreamTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DatastreamStreamTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatastreamStreamTimeoutsEl {
-    type O = BlockAssignable<DatastreamStreamTimeoutsEl>;
+impl terrars::ToListMappable for DatastreamStreamTimeoutsEl {
+    type O = terrars::BlockAssignable<DatastreamStreamTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6125,12 +6830,12 @@ impl BuildDatastreamStreamTimeoutsEl {
 }
 
 pub struct DatastreamStreamTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatastreamStreamTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DatastreamStreamTimeoutsElRef {
+impl terrars::Ref for DatastreamStreamTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamStreamTimeoutsElRef {
         DatastreamStreamTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -6139,30 +6844,30 @@ impl Ref for DatastreamStreamTimeoutsElRef {
 }
 
 impl DatastreamStreamTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatastreamStreamDynamic {
-    backfill_all: Option<DynamicBlock<DatastreamStreamBackfillAllEl>>,
-    backfill_none: Option<DynamicBlock<DatastreamStreamBackfillNoneEl>>,
-    destination_config: Option<DynamicBlock<DatastreamStreamDestinationConfigEl>>,
-    source_config: Option<DynamicBlock<DatastreamStreamSourceConfigEl>>,
+    backfill_all: std::option::Option<terrars::DynamicBlock<DatastreamStreamBackfillAllEl>>,
+    backfill_none: std::option::Option<terrars::DynamicBlock<DatastreamStreamBackfillNoneEl>>,
+    destination_config: std::option::Option<terrars::DynamicBlock<DatastreamStreamDestinationConfigEl>>,
+    source_config: std::option::Option<terrars::DynamicBlock<DatastreamStreamSourceConfigEl>>,
 }

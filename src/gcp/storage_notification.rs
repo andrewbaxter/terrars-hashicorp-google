@@ -1,53 +1,57 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct StorageNotificationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    bucket: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_attributes: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    event_types: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object_name_prefix: Option<PrimField<String>>,
-    payload_format: PrimField<String>,
-    topic: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_attributes: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    payload_format: terrars::PrimField<std::string::String>,
+    topic: terrars::PrimField<std::string::String>,
 }
 
 struct StorageNotification_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<StorageNotificationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<StorageNotificationData>,
 }
 
 #[derive(Clone)]
-pub struct StorageNotification(Rc<StorageNotification_>);
+pub struct StorageNotification(std::rc::Rc<StorageNotification_>);
 
 impl StorageNotification {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -62,134 +66,182 @@ impl StorageNotification {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `custom_attributes`.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
-    pub fn set_custom_attributes(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_attributes = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `event_types`.\nList of event type filters for this notification config. If not specified, Cloud Storage will send notifications for all event types. The valid types are: \"OBJECT_FINALIZE\", \"OBJECT_METADATA_UPDATE\", \"OBJECT_DELETE\", \"OBJECT_ARCHIVE\""]
-    pub fn set_event_types(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().event_types = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `object_name_prefix`.\nSpecifies a prefix path filter for this notification config. Cloud Storage will only send notifications for objects in this bucket whose names begin with the specified prefix."]
-    pub fn set_object_name_prefix(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().object_name_prefix = Some(v.into());
+    #[doc =
+        "Set the field `custom_attributes`.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
+    pub fn set_custom_attributes(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_attributes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\nThe name of the bucket."]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc =
+        "Set the field `event_types`.\nList of event type filters for this notification config. If not specified, Cloud Storage will send notifications for all event types. The valid types are: \"OBJECT_FINALIZE\", \"OBJECT_METADATA_UPDATE\", \"OBJECT_DELETE\", \"OBJECT_ARCHIVE\""]
+    pub fn set_event_types(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().event_types = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `custom_attributes` after provisioning.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
-    pub fn custom_attributes(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.custom_attributes", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `event_types` after provisioning.\nList of event type filters for this notification config. If not specified, Cloud Storage will send notifications for all event types. The valid types are: \"OBJECT_FINALIZE\", \"OBJECT_METADATA_UPDATE\", \"OBJECT_DELETE\", \"OBJECT_ARCHIVE\""]
-    pub fn event_types(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.event_types", self.extract_ref()))
+    #[doc =
+        "Set the field `object_name_prefix`.\nSpecifies a prefix path filter for this notification config. Cloud Storage will only send notifications for objects in this bucket whose names begin with the specified prefix."]
+    pub fn set_object_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().object_name_prefix = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nThe name of the bucket."]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notification_id` after provisioning.\nThe ID of the created notification."]
-    pub fn notification_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.notification_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_attributes` after provisioning.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
+    pub fn custom_attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.custom_attributes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `object_name_prefix` after provisioning.\nSpecifies a prefix path filter for this notification config. Cloud Storage will only send notifications for objects in this bucket whose names begin with the specified prefix."]
-    pub fn object_name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_name_prefix", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `event_types` after provisioning.\nList of event type filters for this notification config. If not specified, Cloud Storage will send notifications for all event types. The valid types are: \"OBJECT_FINALIZE\", \"OBJECT_METADATA_UPDATE\", \"OBJECT_DELETE\", \"OBJECT_ARCHIVE\""]
+    pub fn event_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.event_types", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `payload_format` after provisioning.\nThe desired content of the Payload. One of \"JSON_API_V1\" or \"NONE\"."]
-    pub fn payload_format(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.payload_format", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\nThe URI of the created resource."]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `notification_id` after provisioning.\nThe ID of the created notification."]
+    pub fn notification_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.notification_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `object_name_prefix` after provisioning.\nSpecifies a prefix path filter for this notification config. Cloud Storage will only send notifications for objects in this bucket whose names begin with the specified prefix."]
+    pub fn object_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `payload_format` after provisioning.\nThe desired content of the Payload. One of \"JSON_API_V1\" or \"NONE\"."]
+    pub fn payload_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_format", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\nThe URI of the created resource."]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }
 }
 
-impl Referable for StorageNotification {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for StorageNotification {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for StorageNotification { }
+impl terrars::Resource for StorageNotification { }
 
-impl ToListMappable for StorageNotification {
-    type O = ListRef<StorageNotificationRef>;
+impl terrars::ToListMappable for StorageNotification {
+    type O = terrars::ListRef<StorageNotificationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for StorageNotification_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for StorageNotification_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_storage_notification".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -199,25 +251,27 @@ impl Resource_ for StorageNotification_ {
 }
 
 pub struct BuildStorageNotification {
-    pub tf_id: String,
-    #[doc= "The name of the bucket."]
-    pub bucket: PrimField<String>,
-    #[doc= "The desired content of the Payload. One of \"JSON_API_V1\" or \"NONE\"."]
-    pub payload_format: PrimField<String>,
-    #[doc= "The Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
-    pub topic: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The name of the bucket."]
+    pub bucket: terrars::PrimField<std::string::String>,
+    #[doc = "The desired content of the Payload. One of \"JSON_API_V1\" or \"NONE\"."]
+    pub payload_format: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
+    pub topic: terrars::PrimField<std::string::String>,
 }
 
 impl BuildStorageNotification {
-    pub fn build(self, stack: &mut Stack) -> StorageNotification {
-        let out = StorageNotification(Rc::new(StorageNotification_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> StorageNotification {
+        let out = StorageNotification(std::rc::Rc::new(StorageNotification_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(StorageNotificationData {
+            data: std::cell::RefCell::new(StorageNotificationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 bucket: self.bucket,
                 custom_attributes: core::default::Default::default(),
                 event_types: core::default::Default::default(),
@@ -233,12 +287,12 @@ impl BuildStorageNotification {
 }
 
 pub struct StorageNotificationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for StorageNotificationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for StorageNotificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -247,56 +301,62 @@ impl Ref for StorageNotificationRef {
 }
 
 impl StorageNotificationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\nThe name of the bucket."]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nThe name of the bucket."]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_attributes` after provisioning.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
-    pub fn custom_attributes(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.custom_attributes", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_attributes` after provisioning.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
+    pub fn custom_attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.custom_attributes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `event_types` after provisioning.\nList of event type filters for this notification config. If not specified, Cloud Storage will send notifications for all event types. The valid types are: \"OBJECT_FINALIZE\", \"OBJECT_METADATA_UPDATE\", \"OBJECT_DELETE\", \"OBJECT_ARCHIVE\""]
-    pub fn event_types(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.event_types", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `event_types` after provisioning.\nList of event type filters for this notification config. If not specified, Cloud Storage will send notifications for all event types. The valid types are: \"OBJECT_FINALIZE\", \"OBJECT_METADATA_UPDATE\", \"OBJECT_DELETE\", \"OBJECT_ARCHIVE\""]
+    pub fn event_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.event_types", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notification_id` after provisioning.\nThe ID of the created notification."]
-    pub fn notification_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.notification_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `notification_id` after provisioning.\nThe ID of the created notification."]
+    pub fn notification_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.notification_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `object_name_prefix` after provisioning.\nSpecifies a prefix path filter for this notification config. Cloud Storage will only send notifications for objects in this bucket whose names begin with the specified prefix."]
-    pub fn object_name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_name_prefix", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `object_name_prefix` after provisioning.\nSpecifies a prefix path filter for this notification config. Cloud Storage will only send notifications for objects in this bucket whose names begin with the specified prefix."]
+    pub fn object_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_name_prefix", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `payload_format` after provisioning.\nThe desired content of the Payload. One of \"JSON_API_V1\" or \"NONE\"."]
-    pub fn payload_format(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.payload_format", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `payload_format` after provisioning.\nThe desired content of the Payload. One of \"JSON_API_V1\" or \"NONE\"."]
+    pub fn payload_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_format", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\nThe URI of the created resource."]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\nThe URI of the created resource."]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }
 }

@@ -1,57 +1,61 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DnsRecordSetData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    managed_zone: PrimField<String>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rrdatas: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ttl: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    managed_zone: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rrdatas: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<terrars::PrimField<f64>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    routing_policy: Option<Vec<DnsRecordSetRoutingPolicyEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_policy: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyEl>>,
     dynamic: DnsRecordSetDynamic,
 }
 
 struct DnsRecordSet_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DnsRecordSetData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DnsRecordSetData>,
 }
 
 #[derive(Clone)]
-pub struct DnsRecordSet(Rc<DnsRecordSet_>);
+pub struct DnsRecordSet(std::rc::Rc<DnsRecordSet_>);
 
 impl DnsRecordSet {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -66,142 +70,188 @@ impl DnsRecordSet {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `project`.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `rrdatas`.\nThe string data for the records in this record set whose meaning depends on the DNS type. For TXT record, if the string data contains spaces, add surrounding \\\" if you don't want your string to get split on spaces. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add \\\"\\\" inside the Terraform configuration string (e.g. \"first255characters\\\"\\\"morecharacters\")."]
-    pub fn set_rrdatas(self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().rrdatas = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `ttl`.\nThe time-to-live of this record set (seconds)."]
-    pub fn set_ttl(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().ttl = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `routing_policy`.\n"]
-    pub fn set_routing_policy(self, v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyEl>>) -> Self {
+    #[doc =
+        "Set the field `project`.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `rrdatas`.\nThe string data for the records in this record set whose meaning depends on the DNS type. For TXT record, if the string data contains spaces, add surrounding \\\" if you don't want your string to get split on spaces. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add \\\"\\\" inside the Terraform configuration string (e.g. \"first255characters\\\"\\\"morecharacters\")."]
+    pub fn set_rrdatas(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().rrdatas = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ttl`.\nThe time-to-live of this record set (seconds)."]
+    pub fn set_ttl(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().ttl = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_policy`.\n"]
+    pub fn set_routing_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().routing_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().routing_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.routing_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.routing_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `managed_zone` after provisioning.\nThe name of the zone in which this record set will reside."]
-    pub fn managed_zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.managed_zone", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `managed_zone` after provisioning.\nThe name of the zone in which this record set will reside."]
+    pub fn managed_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_zone", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe DNS name this record set will apply to."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe DNS name this record set will apply to."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rrdatas` after provisioning.\nThe string data for the records in this record set whose meaning depends on the DNS type. For TXT record, if the string data contains spaces, add surrounding \\\" if you don't want your string to get split on spaces. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add \\\"\\\" inside the Terraform configuration string (e.g. \"first255characters\\\"\\\"morecharacters\")."]
-    pub fn rrdatas(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `rrdatas` after provisioning.\nThe string data for the records in this record set whose meaning depends on the DNS type. For TXT record, if the string data contains spaces, add surrounding \\\" if you don't want your string to get split on spaces. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add \\\"\\\" inside the Terraform configuration string (e.g. \"first255characters\\\"\\\"morecharacters\")."]
+    pub fn rrdatas(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\nThe time-to-live of this record set (seconds)."]
-    pub fn ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `ttl` after provisioning.\nThe time-to-live of this record set (seconds)."]
+    pub fn ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\nThe DNS record set type."]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\nThe DNS record set type."]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `routing_policy` after provisioning.\n"]
-    pub fn routing_policy(&self) -> ListRef<DnsRecordSetRoutingPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.routing_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `routing_policy` after provisioning.\n"]
+    pub fn routing_policy(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.routing_policy", self.extract_ref()))
     }
 }
 
-impl Referable for DnsRecordSet {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DnsRecordSet {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DnsRecordSet { }
+impl terrars::Resource for DnsRecordSet { }
 
-impl ToListMappable for DnsRecordSet {
-    type O = ListRef<DnsRecordSetRef>;
+impl terrars::ToListMappable for DnsRecordSet {
+    type O = terrars::ListRef<DnsRecordSetRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DnsRecordSet_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DnsRecordSet_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_dns_record_set".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -211,25 +261,26 @@ impl Resource_ for DnsRecordSet_ {
 }
 
 pub struct BuildDnsRecordSet {
-    pub tf_id: String,
-    #[doc= "The name of the zone in which this record set will reside."]
-    pub managed_zone: PrimField<String>,
-    #[doc= "The DNS name this record set will apply to."]
-    pub name: PrimField<String>,
-    #[doc= "The DNS record set type."]
-    pub type_: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The name of the zone in which this record set will reside."]
+    pub managed_zone: terrars::PrimField<std::string::String>,
+    #[doc = "The DNS name this record set will apply to."]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = "The DNS record set type."]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsRecordSet {
-    pub fn build(self, stack: &mut Stack) -> DnsRecordSet {
-        let out = DnsRecordSet(Rc::new(DnsRecordSet_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DnsRecordSet {
+        let out = DnsRecordSet(std::rc::Rc::new(DnsRecordSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DnsRecordSetData {
+            data: std::cell::RefCell::new(DnsRecordSetData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 managed_zone: self.managed_zone,
                 name: self.name,
@@ -238,7 +289,7 @@ impl BuildDnsRecordSet {
                 ttl: core::default::Default::default(),
                 type_: self.type_,
                 routing_policy: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -247,12 +298,12 @@ impl BuildDnsRecordSet {
 }
 
 pub struct DnsRecordSetRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DnsRecordSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -261,80 +312,85 @@ impl Ref for DnsRecordSetRef {
 }
 
 impl DnsRecordSetRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `managed_zone` after provisioning.\nThe name of the zone in which this record set will reside."]
-    pub fn managed_zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.managed_zone", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `managed_zone` after provisioning.\nThe name of the zone in which this record set will reside."]
+    pub fn managed_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_zone", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe DNS name this record set will apply to."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe DNS name this record set will apply to."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rrdatas` after provisioning.\nThe string data for the records in this record set whose meaning depends on the DNS type. For TXT record, if the string data contains spaces, add surrounding \\\" if you don't want your string to get split on spaces. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add \\\"\\\" inside the Terraform configuration string (e.g. \"first255characters\\\"\\\"morecharacters\")."]
-    pub fn rrdatas(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `rrdatas` after provisioning.\nThe string data for the records in this record set whose meaning depends on the DNS type. For TXT record, if the string data contains spaces, add surrounding \\\" if you don't want your string to get split on spaces. To specify a single record value longer than 255 characters such as a TXT record for DKIM, add \\\"\\\" inside the Terraform configuration string (e.g. \"first255characters\\\"\\\"morecharacters\")."]
+    pub fn rrdatas(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\nThe time-to-live of this record set (seconds)."]
-    pub fn ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `ttl` after provisioning.\nThe time-to-live of this record set (seconds)."]
+    pub fn ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\nThe DNS record set type."]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\nThe DNS record set type."]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `routing_policy` after provisioning.\n"]
-    pub fn routing_policy(&self) -> ListRef<DnsRecordSetRoutingPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.routing_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `routing_policy` after provisioning.\n"]
+    pub fn routing_policy(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.routing_policy", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
-    ip_address: PrimField<String>,
-    ip_protocol: PrimField<String>,
-    load_balancer_type: PrimField<String>,
-    network_url: PrimField<String>,
-    port: PrimField<String>,
-    project: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    region: Option<PrimField<String>>,
+    ip_address: terrars::PrimField<std::string::String>,
+    ip_protocol: terrars::PrimField<std::string::String>,
+    load_balancer_type: terrars::PrimField<std::string::String>,
+    network_url: terrars::PrimField<std::string::String>,
+    port: terrars::PrimField<std::string::String>,
+    project: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
-    #[doc= "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn set_region(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.region = Some(v.into());
+    #[doc = "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -343,18 +399,21 @@ impl ToListMappable for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElIn
 }
 
 pub struct BuildDnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
-    #[doc= "The frontend IP address of the load balancer."]
-    pub ip_address: PrimField<String>,
-    #[doc= "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub ip_protocol: PrimField<String>,
-    #[doc= "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub load_balancer_type: PrimField<String>,
-    #[doc= "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub network_url: PrimField<String>,
-    #[doc= "The configured port of the load balancer."]
-    pub port: PrimField<String>,
-    #[doc= "The ID of the project in which the load balancer belongs."]
-    pub project: PrimField<String>,
+    #[doc = "The frontend IP address of the load balancer."]
+    pub ip_address: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub ip_protocol: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub load_balancer_type: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub network_url: terrars::PrimField<std::string::String>,
+    #[doc = "The configured port of the load balancer."]
+    pub port: terrars::PrimField<std::string::String>,
+    #[doc = "The ID of the project in which the load balancer belongs."]
+    pub project: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
@@ -372,14 +431,14 @@ impl BuildDnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBala
 }
 
 pub struct DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
         DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
             shared: shared,
@@ -389,83 +448,102 @@ impl Ref for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadB
 }
 
 impl DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
-    pub fn ip_address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
+    pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub fn ip_protocol(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub fn ip_protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub fn load_balancer_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub fn load_balancer_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub fn network_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
+    #[doc =
+        "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub fn network_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
-    pub fn port(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
+    pub fn port(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElDynamic {
-    internal_load_balancers: Option<
-        DynamicBlock<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl>,
-    >,
+    internal_load_balancers: std
+    ::option
+    ::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    internal_load_balancers: Option<Vec<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internal_load_balancers: std
+    ::option
+    ::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl>>,
     dynamic: DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl {
-    #[doc= "Set the field `internal_load_balancers`.\n"]
+    #[doc = "Set the field `internal_load_balancers`.\n"]
     pub fn set_internal_load_balancers(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.internal_load_balancers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.internal_load_balancers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.internal_load_balancers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.internal_load_balancers = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -479,18 +557,21 @@ impl BuildDnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl {
     pub fn build(self) -> DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl {
         DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl {
             internal_load_balancers: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
         DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
             shared: shared,
             base: base.to_string(),
@@ -499,62 +580,67 @@ impl Ref for DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
     pub fn internal_load_balancers(
         &self,
-    ) -> ListRef<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
+    ) -> terrars::ListRef<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElInternalLoadBalancersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElGeoElDynamic {
-    health_checked_targets: Option<DynamicBlock<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>>,
+    health_checked_targets: std
+    ::option
+    ::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElGeoEl {
-    location: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rrdatas: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    health_checked_targets: Option<Vec<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>>,
+    location: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rrdatas: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    health_checked_targets: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>>,
     dynamic: DnsRecordSetRoutingPolicyElGeoElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElGeoEl {
-    #[doc= "Set the field `rrdatas`.\n"]
-    pub fn set_rrdatas(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.rrdatas = Some(v.into());
+    #[doc = "Set the field `rrdatas`.\n"]
+    pub fn set_rrdatas(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.rrdatas = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `health_checked_targets`.\n"]
+    #[doc = "Set the field `health_checked_targets`.\n"]
     pub fn set_health_checked_targets(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.health_checked_targets = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.health_checked_targets = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.health_checked_targets = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.health_checked_targets = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElGeoEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElGeoEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElGeoEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElGeoEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -563,8 +649,8 @@ impl ToListMappable for DnsRecordSetRoutingPolicyElGeoEl {
 }
 
 pub struct BuildDnsRecordSetRoutingPolicyElGeoEl {
-    #[doc= "The location name defined in Google Cloud."]
-    pub location: PrimField<String>,
+    #[doc = "The location name defined in Google Cloud."]
+    pub location: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsRecordSetRoutingPolicyElGeoEl {
@@ -573,18 +659,18 @@ impl BuildDnsRecordSetRoutingPolicyElGeoEl {
             location: self.location,
             rrdatas: core::default::Default::default(),
             health_checked_targets: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElGeoElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElGeoElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElGeoElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElGeoElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsRecordSetRoutingPolicyElGeoElRef {
         DnsRecordSetRoutingPolicyElGeoElRef {
             shared: shared,
             base: base.to_string(),
@@ -593,54 +679,57 @@ impl Ref for DnsRecordSetRoutingPolicyElGeoElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElGeoElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location name defined in Google Cloud."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location name defined in Google Cloud."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `rrdatas` after provisioning.\n"]
-    pub fn rrdatas(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
+    #[doc = "Get a reference to the value of field `rrdatas` after provisioning.\n"]
+    pub fn rrdatas(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `health_checked_targets` after provisioning.\n"]
-    pub fn health_checked_targets(&self) -> ListRef<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.health_checked_targets", self.base))
+    #[doc = "Get a reference to the value of field `health_checked_targets` after provisioning.\n"]
+    pub fn health_checked_targets(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElGeoElHealthCheckedTargetsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.health_checked_targets", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
-    ip_address: PrimField<String>,
-    ip_protocol: PrimField<String>,
-    load_balancer_type: PrimField<String>,
-    network_url: PrimField<String>,
-    port: PrimField<String>,
-    project: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    region: Option<PrimField<String>>,
+    ip_address: terrars::PrimField<std::string::String>,
+    ip_protocol: terrars::PrimField<std::string::String>,
+    load_balancer_type: terrars::PrimField<std::string::String>,
+    network_url: terrars::PrimField<std::string::String>,
+    port: terrars::PrimField<std::string::String>,
+    project: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
-    #[doc= "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn set_region(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.region = Some(v.into());
+    #[doc = "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
+impl terrars
+::ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -649,18 +738,21 @@ impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHea
 }
 
 pub struct BuildDnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
-    #[doc= "The frontend IP address of the load balancer."]
-    pub ip_address: PrimField<String>,
-    #[doc= "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub ip_protocol: PrimField<String>,
-    #[doc= "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub load_balancer_type: PrimField<String>,
-    #[doc= "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub network_url: PrimField<String>,
-    #[doc= "The configured port of the load balancer."]
-    pub port: PrimField<String>,
-    #[doc= "The ID of the project in which the load balancer belongs."]
-    pub project: PrimField<String>,
+    #[doc = "The frontend IP address of the load balancer."]
+    pub ip_address: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub ip_protocol: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub load_balancer_type: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub network_url: terrars::PrimField<std::string::String>,
+    #[doc = "The configured port of the load balancer."]
+    pub port: terrars::PrimField<std::string::String>,
+    #[doc = "The ID of the project in which the load balancer belongs."]
+    pub project: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl {
@@ -680,14 +772,15 @@ impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTarg
 }
 
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
+impl terrars
+::Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
         DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
             shared: shared,
@@ -697,50 +790,60 @@ impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedT
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
-    pub fn ip_address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
+    pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub fn ip_protocol(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub fn ip_protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub fn load_balancer_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub fn load_balancer_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub fn network_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
+    #[doc =
+        "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub fn network_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
-    pub fn port(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
+    pub fn port(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElDynamic {
-    internal_load_balancers: Option<
-        DynamicBlock<
+    internal_load_balancers: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl,
         >,
     >,
@@ -748,43 +851,50 @@ struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargets
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    internal_load_balancers: Option<
-        Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internal_load_balancers: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl>,
     >,
     dynamic: DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl {
-    #[doc= "Set the field `internal_load_balancers`.\n"]
+    #[doc = "Set the field `internal_load_balancers`.\n"]
     pub fn set_internal_load_balancers(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.internal_load_balancers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.internal_load_balancers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.internal_load_balancers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.internal_load_balancers = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -798,20 +908,20 @@ impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTarg
     pub fn build(self) -> DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl {
         DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl {
             internal_load_balancers: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef {
         DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef {
             shared: shared,
@@ -821,66 +931,78 @@ impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedT
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
     pub fn internal_load_balancers(
         &self,
-    ) -> ListRef<
-        DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef,
-    > {
-        ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
+    ) -> terrars
+    ::ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElInternalLoadBalancersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElDynamic {
-    health_checked_targets: Option<
-        DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>,
-    >,
+    health_checked_targets: std
+    ::option
+    ::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
-    location: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rrdatas: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    health_checked_targets: Option<Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>>,
+    location: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rrdatas: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    health_checked_targets: std
+    ::option
+    ::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>>,
     dynamic: DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
-    #[doc= "Set the field `rrdatas`.\n"]
-    pub fn set_rrdatas(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.rrdatas = Some(v.into());
+    #[doc = "Set the field `rrdatas`.\n"]
+    pub fn set_rrdatas(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.rrdatas = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `health_checked_targets`.\n"]
+    #[doc = "Set the field `health_checked_targets`.\n"]
     pub fn set_health_checked_targets(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.health_checked_targets = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.health_checked_targets = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.health_checked_targets = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.health_checked_targets = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -889,8 +1011,8 @@ impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
 }
 
 pub struct BuildDnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
-    #[doc= "The location name defined in Google Cloud."]
-    pub location: PrimField<String>,
+    #[doc = "The location name defined in Google Cloud."]
+    pub location: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
@@ -899,18 +1021,21 @@ impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl {
             location: self.location,
             rrdatas: core::default::Default::default(),
             health_checked_targets: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
         DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
             shared: shared,
             base: base.to_string(),
@@ -919,53 +1044,54 @@ impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location name defined in Google Cloud."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location name defined in Google Cloud."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `rrdatas` after provisioning.\n"]
-    pub fn rrdatas(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
+    #[doc = "Get a reference to the value of field `rrdatas` after provisioning.\n"]
+    pub fn rrdatas(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `health_checked_targets` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `health_checked_targets` after provisioning.\n"]
     pub fn health_checked_targets(
         &self,
-    ) -> ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.health_checked_targets", self.base))
+    ) -> terrars::ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElHealthCheckedTargetsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.health_checked_targets", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl {
-    ip_address: PrimField<String>,
-    ip_protocol: PrimField<String>,
-    load_balancer_type: PrimField<String>,
-    network_url: PrimField<String>,
-    port: PrimField<String>,
-    project: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    region: Option<PrimField<String>>,
+    ip_address: terrars::PrimField<std::string::String>,
+    ip_protocol: terrars::PrimField<std::string::String>,
+    load_balancer_type: terrars::PrimField<std::string::String>,
+    network_url: terrars::PrimField<std::string::String>,
+    port: terrars::PrimField<std::string::String>,
+    project: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl {
-    #[doc= "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn set_region(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.region = Some(v.into());
+    #[doc = "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -974,18 +1100,21 @@ impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInter
 }
 
 pub struct BuildDnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl {
-    #[doc= "The frontend IP address of the load balancer."]
-    pub ip_address: PrimField<String>,
-    #[doc= "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub ip_protocol: PrimField<String>,
-    #[doc= "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub load_balancer_type: PrimField<String>,
-    #[doc= "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub network_url: PrimField<String>,
-    #[doc= "The configured port of the load balancer."]
-    pub port: PrimField<String>,
-    #[doc= "The ID of the project in which the load balancer belongs."]
-    pub project: PrimField<String>,
+    #[doc = "The frontend IP address of the load balancer."]
+    pub ip_address: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub ip_protocol: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub load_balancer_type: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub network_url: terrars::PrimField<std::string::String>,
+    #[doc = "The configured port of the load balancer."]
+    pub port: terrars::PrimField<std::string::String>,
+    #[doc = "The ID of the project in which the load balancer belongs."]
+    pub project: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl {
@@ -1003,14 +1132,14 @@ impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalance
 }
 
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef {
         DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef {
             shared: shared,
@@ -1020,83 +1149,100 @@ impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBala
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
-    pub fn ip_address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
+    pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub fn ip_protocol(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub fn ip_protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub fn load_balancer_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub fn load_balancer_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub fn network_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
+    #[doc =
+        "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub fn network_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
-    pub fn port(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
+    pub fn port(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElDynamic {
-    internal_load_balancers: Option<
-        DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>,
-    >,
+    internal_load_balancers: std
+    ::option
+    ::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    internal_load_balancers: Option<Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internal_load_balancers: std
+    ::option
+    ::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>>,
     dynamic: DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl {
-    #[doc= "Set the field `internal_load_balancers`.\n"]
+    #[doc = "Set the field `internal_load_balancers`.\n"]
     pub fn set_internal_load_balancers(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.internal_load_balancers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.internal_load_balancers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.internal_load_balancers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.internal_load_balancers = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1110,18 +1256,21 @@ impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl {
     pub fn build(self) -> DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl {
         DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl {
             internal_load_balancers: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
         DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
             shared: shared,
             base: base.to_string(),
@@ -1130,88 +1279,90 @@ impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
     pub fn internal_load_balancers(
         &self,
-    ) -> ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
+    ) -> terrars::ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElInternalLoadBalancersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElPrimaryBackupElDynamic {
-    backup_geo: Option<DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>>,
-    primary: Option<DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>>,
+    backup_geo: std::option::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>>,
+    primary: std::option::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_geo_fencing_for_backups: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    trickle_ratio: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    backup_geo: Option<Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary: Option<Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_geo_fencing_for_backups: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trickle_ratio: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_geo: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>>,
     dynamic: DnsRecordSetRoutingPolicyElPrimaryBackupElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupEl {
-    #[doc= "Set the field `enable_geo_fencing_for_backups`.\nSpecifies whether to enable fencing for backup geo queries."]
-    pub fn set_enable_geo_fencing_for_backups(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_geo_fencing_for_backups = Some(v.into());
+    #[doc =
+        "Set the field `enable_geo_fencing_for_backups`.\nSpecifies whether to enable fencing for backup geo queries."]
+    pub fn set_enable_geo_fencing_for_backups(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_geo_fencing_for_backups = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `trickle_ratio`.\nSpecifies the percentage of traffic to send to the backup targets even when the primary targets are healthy."]
-    pub fn set_trickle_ratio(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.trickle_ratio = Some(v.into());
+    #[doc =
+        "Set the field `trickle_ratio`.\nSpecifies the percentage of traffic to send to the backup targets even when the primary targets are healthy."]
+    pub fn set_trickle_ratio(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.trickle_ratio = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `backup_geo`.\n"]
+    #[doc = "Set the field `backup_geo`.\n"]
     pub fn set_backup_geo(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.backup_geo = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.backup_geo = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.backup_geo = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.backup_geo = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `primary`.\n"]
+    #[doc = "Set the field `primary`.\n"]
     pub fn set_primary(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.primary = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.primary = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.primary = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.primary = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElPrimaryBackupEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1228,18 +1379,18 @@ impl BuildDnsRecordSetRoutingPolicyElPrimaryBackupEl {
             trickle_ratio: core::default::Default::default(),
             backup_geo: core::default::Default::default(),
             primary: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
         DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
             shared: shared,
             base: base.to_string(),
@@ -1248,56 +1399,58 @@ impl Ref for DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElPrimaryBackupElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_geo_fencing_for_backups` after provisioning.\nSpecifies whether to enable fencing for backup geo queries."]
-    pub fn enable_geo_fencing_for_backups(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_geo_fencing_for_backups", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_geo_fencing_for_backups` after provisioning.\nSpecifies whether to enable fencing for backup geo queries."]
+    pub fn enable_geo_fencing_for_backups(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_geo_fencing_for_backups", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `trickle_ratio` after provisioning.\nSpecifies the percentage of traffic to send to the backup targets even when the primary targets are healthy."]
-    pub fn trickle_ratio(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.trickle_ratio", self.base))
+    #[doc =
+        "Get a reference to the value of field `trickle_ratio` after provisioning.\nSpecifies the percentage of traffic to send to the backup targets even when the primary targets are healthy."]
+    pub fn trickle_ratio(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.trickle_ratio", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `backup_geo` after provisioning.\n"]
-    pub fn backup_geo(&self) -> ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.backup_geo", self.base))
+    #[doc = "Get a reference to the value of field `backup_geo` after provisioning.\n"]
+    pub fn backup_geo(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElBackupGeoElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backup_geo", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary` after provisioning.\n"]
-    pub fn primary(&self) -> ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.primary", self.base))
+    #[doc = "Get a reference to the value of field `primary` after provisioning.\n"]
+    pub fn primary(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElPrimaryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.primary", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl {
-    ip_address: PrimField<String>,
-    ip_protocol: PrimField<String>,
-    load_balancer_type: PrimField<String>,
-    network_url: PrimField<String>,
-    port: PrimField<String>,
-    project: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    region: Option<PrimField<String>>,
+    ip_address: terrars::PrimField<std::string::String>,
+    ip_protocol: terrars::PrimField<std::string::String>,
+    load_balancer_type: terrars::PrimField<std::string::String>,
+    network_url: terrars::PrimField<std::string::String>,
+    port: terrars::PrimField<std::string::String>,
+    project: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl {
-    #[doc= "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn set_region(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.region = Some(v.into());
+    #[doc = "Set the field `region`.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1306,18 +1459,21 @@ impl ToListMappable for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElIn
 }
 
 pub struct BuildDnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl {
-    #[doc= "The frontend IP address of the load balancer."]
-    pub ip_address: PrimField<String>,
-    #[doc= "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub ip_protocol: PrimField<String>,
-    #[doc= "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub load_balancer_type: PrimField<String>,
-    #[doc= "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub network_url: PrimField<String>,
-    #[doc= "The configured port of the load balancer."]
-    pub port: PrimField<String>,
-    #[doc= "The ID of the project in which the load balancer belongs."]
-    pub project: PrimField<String>,
+    #[doc = "The frontend IP address of the load balancer."]
+    pub ip_address: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub ip_protocol: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub load_balancer_type: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub network_url: terrars::PrimField<std::string::String>,
+    #[doc = "The configured port of the load balancer."]
+    pub port: terrars::PrimField<std::string::String>,
+    #[doc = "The ID of the project in which the load balancer belongs."]
+    pub project: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl {
@@ -1335,14 +1491,14 @@ impl BuildDnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBala
 }
 
 pub struct DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef {
         DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef {
             shared: shared,
@@ -1352,83 +1508,102 @@ impl Ref for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadB
 }
 
 impl DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
-    pub fn ip_address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_address` after provisioning.\nThe frontend IP address of the load balancer."]
+    pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
-    pub fn ip_protocol(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
+    #[doc =
+        "Get a reference to the value of field `ip_protocol` after provisioning.\nThe configured IP protocol of the load balancer. This value is case-sensitive. Possible values: [\"tcp\", \"udp\"]"]
+    pub fn ip_protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
-    pub fn load_balancer_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `load_balancer_type` after provisioning.\nThe type of load balancer. This value is case-sensitive. Possible values: [\"regionalL4ilb\", \"regionalL7ilb\", \"globalL7ilb\"]"]
+    pub fn load_balancer_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
-    pub fn network_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
+    #[doc =
+        "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified url of the network in which the load balancer belongs. This should be formatted like `https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`."]
+    pub fn network_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
-    pub fn port(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nThe configured port of the load balancer."]
+    pub fn port(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the load balancer belongs."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nThe region of the load balancer. Only needed for regional load balancers."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElDynamic {
-    internal_load_balancers: Option<
-        DynamicBlock<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl>,
-    >,
+    internal_load_balancers: std
+    ::option
+    ::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    internal_load_balancers: Option<Vec<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internal_load_balancers: std
+    ::option
+    ::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl>>,
     dynamic: DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl {
-    #[doc= "Set the field `internal_load_balancers`.\n"]
+    #[doc = "Set the field `internal_load_balancers`.\n"]
     pub fn set_internal_load_balancers(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.internal_load_balancers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.internal_load_balancers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.internal_load_balancers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.internal_load_balancers = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1442,18 +1617,21 @@ impl BuildDnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl {
     pub fn build(self) -> DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl {
         DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl {
             internal_load_balancers: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
         DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1462,62 +1640,67 @@ impl Ref for DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `internal_load_balancers` after provisioning.\n"]
     pub fn internal_load_balancers(
         &self,
-    ) -> ListRef<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
+    ) -> terrars::ListRef<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElInternalLoadBalancersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.internal_load_balancers", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElWrrElDynamic {
-    health_checked_targets: Option<DynamicBlock<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>>,
+    health_checked_targets: std
+    ::option
+    ::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyElWrrEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rrdatas: Option<ListField<PrimField<String>>>,
-    weight: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    health_checked_targets: Option<Vec<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rrdatas: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    weight: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    health_checked_targets: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>>,
     dynamic: DnsRecordSetRoutingPolicyElWrrElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyElWrrEl {
-    #[doc= "Set the field `rrdatas`.\n"]
-    pub fn set_rrdatas(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.rrdatas = Some(v.into());
+    #[doc = "Set the field `rrdatas`.\n"]
+    pub fn set_rrdatas(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.rrdatas = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `health_checked_targets`.\n"]
+    #[doc = "Set the field `health_checked_targets`.\n"]
     pub fn set_health_checked_targets(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.health_checked_targets = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.health_checked_targets = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.health_checked_targets = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.health_checked_targets = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyElWrrEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyElWrrEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyElWrrEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyElWrrEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1526,8 +1709,8 @@ impl ToListMappable for DnsRecordSetRoutingPolicyElWrrEl {
 }
 
 pub struct BuildDnsRecordSetRoutingPolicyElWrrEl {
-    #[doc= "The ratio of traffic routed to the target."]
-    pub weight: PrimField<f64>,
+    #[doc = "The ratio of traffic routed to the target."]
+    pub weight: terrars::PrimField<f64>,
 }
 
 impl BuildDnsRecordSetRoutingPolicyElWrrEl {
@@ -1536,18 +1719,18 @@ impl BuildDnsRecordSetRoutingPolicyElWrrEl {
             rrdatas: core::default::Default::default(),
             weight: self.weight,
             health_checked_targets: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElWrrElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElWrrElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElWrrElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElWrrElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsRecordSetRoutingPolicyElWrrElRef {
         DnsRecordSetRoutingPolicyElWrrElRef {
             shared: shared,
             base: base.to_string(),
@@ -1556,101 +1739,108 @@ impl Ref for DnsRecordSetRoutingPolicyElWrrElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElWrrElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `rrdatas` after provisioning.\n"]
-    pub fn rrdatas(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
+    #[doc = "Get a reference to the value of field `rrdatas` after provisioning.\n"]
+    pub fn rrdatas(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `weight` after provisioning.\nThe ratio of traffic routed to the target."]
-    pub fn weight(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
+    #[doc =
+        "Get a reference to the value of field `weight` after provisioning.\nThe ratio of traffic routed to the target."]
+    pub fn weight(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `health_checked_targets` after provisioning.\n"]
-    pub fn health_checked_targets(&self) -> ListRef<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.health_checked_targets", self.base))
+    #[doc = "Get a reference to the value of field `health_checked_targets` after provisioning.\n"]
+    pub fn health_checked_targets(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElWrrElHealthCheckedTargetsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.health_checked_targets", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetRoutingPolicyElDynamic {
-    geo: Option<DynamicBlock<DnsRecordSetRoutingPolicyElGeoEl>>,
-    primary_backup: Option<DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupEl>>,
-    wrr: Option<DynamicBlock<DnsRecordSetRoutingPolicyElWrrEl>>,
+    geo: std::option::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElGeoEl>>,
+    primary_backup: std::option::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElPrimaryBackupEl>>,
+    wrr: std::option::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyElWrrEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsRecordSetRoutingPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_geo_fencing: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    geo: Option<Vec<DnsRecordSetRoutingPolicyElGeoEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    primary_backup: Option<Vec<DnsRecordSetRoutingPolicyElPrimaryBackupEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    wrr: Option<Vec<DnsRecordSetRoutingPolicyElWrrEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_geo_fencing: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    geo: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElGeoEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_backup: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElPrimaryBackupEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    wrr: std::option::Option<std::vec::Vec<DnsRecordSetRoutingPolicyElWrrEl>>,
     dynamic: DnsRecordSetRoutingPolicyElDynamic,
 }
 
 impl DnsRecordSetRoutingPolicyEl {
-    #[doc= "Set the field `enable_geo_fencing`.\nSpecifies whether to enable fencing for geo queries."]
-    pub fn set_enable_geo_fencing(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_geo_fencing = Some(v.into());
+    #[doc = "Set the field `enable_geo_fencing`.\nSpecifies whether to enable fencing for geo queries."]
+    pub fn set_enable_geo_fencing(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_geo_fencing = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `geo`.\n"]
-    pub fn set_geo(mut self, v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElGeoEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.geo = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.geo = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `primary_backup`.\n"]
-    pub fn set_primary_backup(
+    #[doc = "Set the field `geo`.\n"]
+    pub fn set_geo(
         mut self,
-        v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyElGeoEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.primary_backup = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.geo = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.primary_backup = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.geo = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `wrr`.\n"]
-    pub fn set_wrr(mut self, v: impl Into<BlockAssignable<DnsRecordSetRoutingPolicyElWrrEl>>) -> Self {
+    #[doc = "Set the field `primary_backup`.\n"]
+    pub fn set_primary_backup(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyElPrimaryBackupEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.wrr = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.primary_backup = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.wrr = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.primary_backup = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `wrr`.\n"]
+    pub fn set_wrr(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsRecordSetRoutingPolicyElWrrEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.wrr = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.wrr = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsRecordSetRoutingPolicyEl {
-    type O = BlockAssignable<DnsRecordSetRoutingPolicyEl>;
+impl terrars::ToListMappable for DnsRecordSetRoutingPolicyEl {
+    type O = terrars::BlockAssignable<DnsRecordSetRoutingPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1667,18 +1857,18 @@ impl BuildDnsRecordSetRoutingPolicyEl {
             geo: core::default::Default::default(),
             primary_backup: core::default::Default::default(),
             wrr: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsRecordSetRoutingPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsRecordSetRoutingPolicyElRef {
-    fn new(shared: StackShared, base: String) -> DnsRecordSetRoutingPolicyElRef {
+impl terrars::Ref for DnsRecordSetRoutingPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsRecordSetRoutingPolicyElRef {
         DnsRecordSetRoutingPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -1687,32 +1877,33 @@ impl Ref for DnsRecordSetRoutingPolicyElRef {
 }
 
 impl DnsRecordSetRoutingPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_geo_fencing` after provisioning.\nSpecifies whether to enable fencing for geo queries."]
-    pub fn enable_geo_fencing(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_geo_fencing", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_geo_fencing` after provisioning.\nSpecifies whether to enable fencing for geo queries."]
+    pub fn enable_geo_fencing(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_geo_fencing", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `geo` after provisioning.\n"]
-    pub fn geo(&self) -> ListRef<DnsRecordSetRoutingPolicyElGeoElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.geo", self.base))
+    #[doc = "Get a reference to the value of field `geo` after provisioning.\n"]
+    pub fn geo(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElGeoElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.geo", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `primary_backup` after provisioning.\n"]
-    pub fn primary_backup(&self) -> ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.primary_backup", self.base))
+    #[doc = "Get a reference to the value of field `primary_backup` after provisioning.\n"]
+    pub fn primary_backup(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElPrimaryBackupElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.primary_backup", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `wrr` after provisioning.\n"]
-    pub fn wrr(&self) -> ListRef<DnsRecordSetRoutingPolicyElWrrElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.wrr", self.base))
+    #[doc = "Get a reference to the value of field `wrr` after provisioning.\n"]
+    pub fn wrr(&self) -> terrars::ListRef<DnsRecordSetRoutingPolicyElWrrElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.wrr", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsRecordSetDynamic {
-    routing_policy: Option<DynamicBlock<DnsRecordSetRoutingPolicyEl>>,
+    routing_policy: std::option::Option<terrars::DynamicBlock<DnsRecordSetRoutingPolicyEl>>,
 }

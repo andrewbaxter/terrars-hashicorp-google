@@ -1,54 +1,58 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DnsResponsePolicyRuleData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    dns_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    response_policy: PrimField<String>,
-    rule_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_data: Option<Vec<DnsResponsePolicyRuleLocalDataEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DnsResponsePolicyRuleTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    dns_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    response_policy: terrars::PrimField<std::string::String>,
+    rule_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_data: std::option::Option<std::vec::Vec<DnsResponsePolicyRuleLocalDataEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DnsResponsePolicyRuleTimeoutsEl>,
     dynamic: DnsResponsePolicyRuleDynamic,
 }
 
 struct DnsResponsePolicyRule_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DnsResponsePolicyRuleData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DnsResponsePolicyRuleData>,
 }
 
 #[derive(Clone)]
-pub struct DnsResponsePolicyRule(Rc<DnsResponsePolicyRule_>);
+pub struct DnsResponsePolicyRule(std::rc::Rc<DnsResponsePolicyRule_>);
 
 impl DnsResponsePolicyRule {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -63,131 +67,170 @@ impl DnsResponsePolicyRule {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `local_data`.\n"]
-    pub fn set_local_data(self, v: impl Into<BlockAssignable<DnsResponsePolicyRuleLocalDataEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `local_data`.\n"]
+    pub fn set_local_data(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().local_data = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().local_data = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.local_data = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.local_data = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DnsResponsePolicyRuleTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DnsResponsePolicyRuleTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `dns_name` after provisioning.\nThe DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule."]
-    pub fn dns_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `dns_name` after provisioning.\nThe DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule."]
+    pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `response_policy` after provisioning.\nIdentifies the response policy addressed by this request."]
-    pub fn response_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.response_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `response_policy` after provisioning.\nIdentifies the response policy addressed by this request."]
+    pub fn response_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule_name` after provisioning.\nAn identifier for this rule. Must be unique with the ResponsePolicy."]
-    pub fn rule_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `rule_name` after provisioning.\nAn identifier for this rule. Must be unique with the ResponsePolicy."]
+    pub fn rule_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `local_data` after provisioning.\n"]
-    pub fn local_data(&self) -> ListRef<DnsResponsePolicyRuleLocalDataElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_data", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `local_data` after provisioning.\n"]
+    pub fn local_data(&self) -> terrars::ListRef<DnsResponsePolicyRuleLocalDataElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_data", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DnsResponsePolicyRuleTimeoutsElRef {
         DnsResponsePolicyRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for DnsResponsePolicyRule {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DnsResponsePolicyRule {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DnsResponsePolicyRule { }
+impl terrars::Resource for DnsResponsePolicyRule { }
 
-impl ToListMappable for DnsResponsePolicyRule {
-    type O = ListRef<DnsResponsePolicyRuleRef>;
+impl terrars::ToListMappable for DnsResponsePolicyRule {
+    type O = terrars::ListRef<DnsResponsePolicyRuleRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DnsResponsePolicyRule_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DnsResponsePolicyRule_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_dns_response_policy_rule".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -197,25 +240,26 @@ impl Resource_ for DnsResponsePolicyRule_ {
 }
 
 pub struct BuildDnsResponsePolicyRule {
-    pub tf_id: String,
-    #[doc= "The DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule."]
-    pub dns_name: PrimField<String>,
-    #[doc= "Identifies the response policy addressed by this request."]
-    pub response_policy: PrimField<String>,
-    #[doc= "An identifier for this rule. Must be unique with the ResponsePolicy."]
-    pub rule_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule."]
+    pub dns_name: terrars::PrimField<std::string::String>,
+    #[doc = "Identifies the response policy addressed by this request."]
+    pub response_policy: terrars::PrimField<std::string::String>,
+    #[doc = "An identifier for this rule. Must be unique with the ResponsePolicy."]
+    pub rule_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsResponsePolicyRule {
-    pub fn build(self, stack: &mut Stack) -> DnsResponsePolicyRule {
-        let out = DnsResponsePolicyRule(Rc::new(DnsResponsePolicyRule_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DnsResponsePolicyRule {
+        let out = DnsResponsePolicyRule(std::rc::Rc::new(DnsResponsePolicyRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DnsResponsePolicyRuleData {
+            data: std::cell::RefCell::new(DnsResponsePolicyRuleData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 dns_name: self.dns_name,
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -223,7 +267,7 @@ impl BuildDnsResponsePolicyRule {
                 rule_name: self.rule_name,
                 local_data: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -232,12 +276,12 @@ impl BuildDnsResponsePolicyRule {
 }
 
 pub struct DnsResponsePolicyRuleRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyRuleRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DnsResponsePolicyRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -246,45 +290,48 @@ impl Ref for DnsResponsePolicyRuleRef {
 }
 
 impl DnsResponsePolicyRuleRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dns_name` after provisioning.\nThe DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule."]
-    pub fn dns_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `dns_name` after provisioning.\nThe DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule."]
+    pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `response_policy` after provisioning.\nIdentifies the response policy addressed by this request."]
-    pub fn response_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.response_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `response_policy` after provisioning.\nIdentifies the response policy addressed by this request."]
+    pub fn response_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule_name` after provisioning.\nAn identifier for this rule. Must be unique with the ResponsePolicy."]
-    pub fn rule_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `rule_name` after provisioning.\nAn identifier for this rule. Must be unique with the ResponsePolicy."]
+    pub fn rule_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `local_data` after provisioning.\n"]
-    pub fn local_data(&self) -> ListRef<DnsResponsePolicyRuleLocalDataElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_data", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `local_data` after provisioning.\n"]
+    pub fn local_data(&self) -> terrars::ListRef<DnsResponsePolicyRuleLocalDataElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_data", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DnsResponsePolicyRuleTimeoutsElRef {
         DnsResponsePolicyRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -292,34 +339,37 @@ impl DnsResponsePolicyRuleRef {
 
 #[derive(Serialize)]
 pub struct DnsResponsePolicyRuleLocalDataElLocalDatasEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rrdatas: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ttl: Option<PrimField<f64>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rrdatas: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<terrars::PrimField<f64>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl DnsResponsePolicyRuleLocalDataElLocalDatasEl {
-    #[doc= "Set the field `rrdatas`.\nAs defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1)"]
-    pub fn set_rrdatas(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.rrdatas = Some(v.into());
+    #[doc = "Set the field `rrdatas`.\nAs defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1)"]
+    pub fn set_rrdatas(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.rrdatas = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ttl`.\nNumber of seconds that this ResourceRecordSet can be cached by\nresolvers."]
-    pub fn set_ttl(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ttl = Some(v.into());
+    #[doc = "Set the field `ttl`.\nNumber of seconds that this ResourceRecordSet can be cached by\nresolvers."]
+    pub fn set_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ttl = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DnsResponsePolicyRuleLocalDataElLocalDatasEl {
-    type O = BlockAssignable<DnsResponsePolicyRuleLocalDataElLocalDatasEl>;
+impl terrars::ToListMappable for DnsResponsePolicyRuleLocalDataElLocalDatasEl {
+    type O = terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataElLocalDatasEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -328,10 +378,11 @@ impl ToListMappable for DnsResponsePolicyRuleLocalDataElLocalDatasEl {
 }
 
 pub struct BuildDnsResponsePolicyRuleLocalDataElLocalDatasEl {
-    #[doc= "For example, www.example.com."]
-    pub name: PrimField<String>,
-    #[doc= "One of valid DNS resource types. Possible values: [\"A\", \"AAAA\", \"CAA\", \"CNAME\", \"DNSKEY\", \"DS\", \"HTTPS\", \"IPSECVPNKEY\", \"MX\", \"NAPTR\", \"NS\", \"PTR\", \"SOA\", \"SPF\", \"SRV\", \"SSHFP\", \"SVCB\", \"TLSA\", \"TXT\"]"]
-    pub type_: PrimField<String>,
+    #[doc = "For example, www.example.com."]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc =
+        "One of valid DNS resource types. Possible values: [\"A\", \"AAAA\", \"CAA\", \"CNAME\", \"DNSKEY\", \"DS\", \"HTTPS\", \"IPSECVPNKEY\", \"MX\", \"NAPTR\", \"NS\", \"PTR\", \"SOA\", \"SPF\", \"SRV\", \"SSHFP\", \"SVCB\", \"TLSA\", \"TXT\"]"]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsResponsePolicyRuleLocalDataElLocalDatasEl {
@@ -346,12 +397,15 @@ impl BuildDnsResponsePolicyRuleLocalDataElLocalDatasEl {
 }
 
 pub struct DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
-    fn new(shared: StackShared, base: String) -> DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
+impl terrars::Ref for DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
         DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
             shared: shared,
             base: base.to_string(),
@@ -360,66 +414,69 @@ impl Ref for DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
 }
 
 impl DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nFor example, www.example.com."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nFor example, www.example.com."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `rrdatas` after provisioning.\nAs defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1)"]
-    pub fn rrdatas(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
+    #[doc =
+        "Get a reference to the value of field `rrdatas` after provisioning.\nAs defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1)"]
+    pub fn rrdatas(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rrdatas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\nNumber of seconds that this ResourceRecordSet can be cached by\nresolvers."]
-    pub fn ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.base))
+    #[doc =
+        "Get a reference to the value of field `ttl` after provisioning.\nNumber of seconds that this ResourceRecordSet can be cached by\nresolvers."]
+    pub fn ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\nOne of valid DNS resource types. Possible values: [\"A\", \"AAAA\", \"CAA\", \"CNAME\", \"DNSKEY\", \"DS\", \"HTTPS\", \"IPSECVPNKEY\", \"MX\", \"NAPTR\", \"NS\", \"PTR\", \"SOA\", \"SPF\", \"SRV\", \"SSHFP\", \"SVCB\", \"TLSA\", \"TXT\"]"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\nOne of valid DNS resource types. Possible values: [\"A\", \"AAAA\", \"CAA\", \"CNAME\", \"DNSKEY\", \"DS\", \"HTTPS\", \"IPSECVPNKEY\", \"MX\", \"NAPTR\", \"NS\", \"PTR\", \"SOA\", \"SPF\", \"SRV\", \"SSHFP\", \"SVCB\", \"TLSA\", \"TXT\"]"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsResponsePolicyRuleLocalDataElDynamic {
-    local_datas: Option<DynamicBlock<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
+    local_datas: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DnsResponsePolicyRuleLocalDataEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_datas: Option<Vec<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_datas: std::option::Option<std::vec::Vec<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
     dynamic: DnsResponsePolicyRuleLocalDataElDynamic,
 }
 
 impl DnsResponsePolicyRuleLocalDataEl {
-    #[doc= "Set the field `local_datas`.\n"]
+    #[doc = "Set the field `local_datas`.\n"]
     pub fn set_local_datas(
         mut self,
-        v: impl Into<BlockAssignable<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.local_datas = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.local_datas = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.local_datas = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.local_datas = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DnsResponsePolicyRuleLocalDataEl {
-    type O = BlockAssignable<DnsResponsePolicyRuleLocalDataEl>;
+impl terrars::ToListMappable for DnsResponsePolicyRuleLocalDataEl {
+    type O = terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -433,18 +490,18 @@ impl BuildDnsResponsePolicyRuleLocalDataEl {
     pub fn build(self) -> DnsResponsePolicyRuleLocalDataEl {
         DnsResponsePolicyRuleLocalDataEl {
             local_datas: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DnsResponsePolicyRuleLocalDataElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyRuleLocalDataElRef {
-    fn new(shared: StackShared, base: String) -> DnsResponsePolicyRuleLocalDataElRef {
+impl terrars::Ref for DnsResponsePolicyRuleLocalDataElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyRuleLocalDataElRef {
         DnsResponsePolicyRuleLocalDataElRef {
             shared: shared,
             base: base.to_string(),
@@ -453,51 +510,51 @@ impl Ref for DnsResponsePolicyRuleLocalDataElRef {
 }
 
 impl DnsResponsePolicyRuleLocalDataElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `local_datas` after provisioning.\n"]
-    pub fn local_datas(&self) -> ListRef<DnsResponsePolicyRuleLocalDataElLocalDatasElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_datas", self.base))
+    #[doc = "Get a reference to the value of field `local_datas` after provisioning.\n"]
+    pub fn local_datas(&self) -> terrars::ListRef<DnsResponsePolicyRuleLocalDataElLocalDatasElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_datas", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DnsResponsePolicyRuleTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DnsResponsePolicyRuleTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DnsResponsePolicyRuleTimeoutsEl {
-    type O = BlockAssignable<DnsResponsePolicyRuleTimeoutsEl>;
+impl terrars::ToListMappable for DnsResponsePolicyRuleTimeoutsEl {
+    type O = terrars::BlockAssignable<DnsResponsePolicyRuleTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -518,12 +575,12 @@ impl BuildDnsResponsePolicyRuleTimeoutsEl {
 }
 
 pub struct DnsResponsePolicyRuleTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyRuleTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DnsResponsePolicyRuleTimeoutsElRef {
+impl terrars::Ref for DnsResponsePolicyRuleTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyRuleTimeoutsElRef {
         DnsResponsePolicyRuleTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -532,27 +589,27 @@ impl Ref for DnsResponsePolicyRuleTimeoutsElRef {
 }
 
 impl DnsResponsePolicyRuleTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsResponsePolicyRuleDynamic {
-    local_data: Option<DynamicBlock<DnsResponsePolicyRuleLocalDataEl>>,
+    local_data: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyRuleLocalDataEl>>,
 }

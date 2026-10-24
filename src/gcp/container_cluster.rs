@@ -1,168 +1,174 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct ContainerClusterData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allow_net_admin: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_ipv4_cidr: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    datapath_provider: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_max_pods_per_node: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    deletion_protection: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_autopilot: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_intranode_visibility: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_kubernetes_alpha: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_l4_ilb_subsetting: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_legacy_abac: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_shielded_nodes: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_tpu: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    logging_service: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_master_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    monitoring_service: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    networking_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_locations: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    private_ipv6_google_access: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    remove_default_node_pool: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subnetwork: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    addons_config: Option<Vec<ContainerClusterAddonsConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    authenticator_groups_config: Option<Vec<ContainerClusterAuthenticatorGroupsConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    binary_authorization: Option<Vec<ContainerClusterBinaryAuthorizationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_autoscaling: Option<Vec<ContainerClusterClusterAutoscalingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    confidential_nodes: Option<Vec<ContainerClusterConfidentialNodesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cost_management_config: Option<Vec<ContainerClusterCostManagementConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    database_encryption: Option<Vec<ContainerClusterDatabaseEncryptionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_snat_status: Option<Vec<ContainerClusterDefaultSnatStatusEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dns_config: Option<Vec<ContainerClusterDnsConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_k8s_beta_apis: Option<Vec<ContainerClusterEnableK8sBetaApisEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    fleet: Option<Vec<ContainerClusterFleetEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gateway_api_config: Option<Vec<ContainerClusterGatewayApiConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    identity_service_config: Option<Vec<ContainerClusterIdentityServiceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ip_allocation_policy: Option<Vec<ContainerClusterIpAllocationPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    logging_config: Option<Vec<ContainerClusterLoggingConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maintenance_policy: Option<Vec<ContainerClusterMaintenancePolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_auth: Option<Vec<ContainerClusterMasterAuthEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_authorized_networks_config: Option<Vec<ContainerClusterMasterAuthorizedNetworksConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mesh_certificates: Option<Vec<ContainerClusterMeshCertificatesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    monitoring_config: Option<Vec<ContainerClusterMonitoringConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_policy: Option<Vec<ContainerClusterNetworkPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_config: Option<Vec<ContainerClusterNodeConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_pool: Option<Vec<ContainerClusterNodePoolEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_pool_auto_config: Option<Vec<ContainerClusterNodePoolAutoConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_pool_defaults: Option<Vec<ContainerClusterNodePoolDefaultsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    notification_config: Option<Vec<ContainerClusterNotificationConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    private_cluster_config: Option<Vec<ContainerClusterPrivateClusterConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    release_channel: Option<Vec<ContainerClusterReleaseChannelEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_usage_export_config: Option<Vec<ContainerClusterResourceUsageExportConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_posture_config: Option<Vec<ContainerClusterSecurityPostureConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_external_ips_config: Option<Vec<ContainerClusterServiceExternalIpsConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ContainerClusterTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vertical_pod_autoscaling: Option<Vec<ContainerClusterVerticalPodAutoscalingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    workload_identity_config: Option<Vec<ContainerClusterWorkloadIdentityConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_net_admin: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_ipv4_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    datapath_provider: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_max_pods_per_node: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_protection: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_autopilot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_intranode_visibility: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_kubernetes_alpha: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_l4_ilb_subsetting: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_legacy_abac: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_shielded_nodes: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_tpu: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logging_service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_master_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    monitoring_service: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    networking_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_locations: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_ipv6_google_access: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    remove_default_node_pool: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    addons_config: std::option::Option<std::vec::Vec<ContainerClusterAddonsConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authenticator_groups_config: std::option::Option<std::vec::Vec<ContainerClusterAuthenticatorGroupsConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    binary_authorization: std::option::Option<std::vec::Vec<ContainerClusterBinaryAuthorizationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_autoscaling: std::option::Option<std::vec::Vec<ContainerClusterClusterAutoscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confidential_nodes: std::option::Option<std::vec::Vec<ContainerClusterConfidentialNodesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_management_config: std::option::Option<std::vec::Vec<ContainerClusterCostManagementConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    database_encryption: std::option::Option<std::vec::Vec<ContainerClusterDatabaseEncryptionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_snat_status: std::option::Option<std::vec::Vec<ContainerClusterDefaultSnatStatusEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_config: std::option::Option<std::vec::Vec<ContainerClusterDnsConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_k8s_beta_apis: std::option::Option<std::vec::Vec<ContainerClusterEnableK8sBetaApisEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fleet: std::option::Option<std::vec::Vec<ContainerClusterFleetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gateway_api_config: std::option::Option<std::vec::Vec<ContainerClusterGatewayApiConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    identity_service_config: std::option::Option<std::vec::Vec<ContainerClusterIdentityServiceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_allocation_policy: std::option::Option<std::vec::Vec<ContainerClusterIpAllocationPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logging_config: std::option::Option<std::vec::Vec<ContainerClusterLoggingConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance_policy: std::option::Option<std::vec::Vec<ContainerClusterMaintenancePolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_auth: std::option::Option<std::vec::Vec<ContainerClusterMasterAuthEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_authorized_networks_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterMasterAuthorizedNetworksConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mesh_certificates: std::option::Option<std::vec::Vec<ContainerClusterMeshCertificatesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    monitoring_config: std::option::Option<std::vec::Vec<ContainerClusterMonitoringConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_policy: std::option::Option<std::vec::Vec<ContainerClusterNetworkPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_config: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_pool: std::option::Option<std::vec::Vec<ContainerClusterNodePoolEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_pool_auto_config: std::option::Option<std::vec::Vec<ContainerClusterNodePoolAutoConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_pool_defaults: std::option::Option<std::vec::Vec<ContainerClusterNodePoolDefaultsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    notification_config: std::option::Option<std::vec::Vec<ContainerClusterNotificationConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_cluster_config: std::option::Option<std::vec::Vec<ContainerClusterPrivateClusterConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    release_channel: std::option::Option<std::vec::Vec<ContainerClusterReleaseChannelEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_usage_export_config: std::option::Option<std::vec::Vec<ContainerClusterResourceUsageExportConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_posture_config: std::option::Option<std::vec::Vec<ContainerClusterSecurityPostureConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_external_ips_config: std::option::Option<std::vec::Vec<ContainerClusterServiceExternalIpsConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ContainerClusterTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vertical_pod_autoscaling: std::option::Option<std::vec::Vec<ContainerClusterVerticalPodAutoscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workload_identity_config: std::option::Option<std::vec::Vec<ContainerClusterWorkloadIdentityConfigEl>>,
     dynamic: ContainerClusterDynamic,
 }
 
 struct ContainerCluster_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ContainerClusterData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ContainerClusterData>,
 }
 
 #[derive(Clone)]
-pub struct ContainerCluster(Rc<ContainerCluster_>);
+pub struct ContainerCluster(std::rc::Rc<ContainerCluster_>);
 
 impl ContainerCluster {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -177,1048 +183,1216 @@ impl ContainerCluster {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `allow_net_admin`.\nEnable NET_ADMIN for this cluster."]
-    pub fn set_allow_net_admin(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().allow_net_admin = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `cluster_ipv4_cidr`.\nThe IP address range of the Kubernetes pods in this cluster in CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8. This field will only work for routes-based clusters, where ip_allocation_policy is not defined."]
-    pub fn set_cluster_ipv4_cidr(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().cluster_ipv4_cidr = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `datapath_provider`.\nThe desired datapath provider for this cluster. By default, uses the IPTables-based kube-proxy implementation."]
-    pub fn set_datapath_provider(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().datapath_provider = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `default_max_pods_per_node`.\nThe default maximum number of pods per node in this cluster. This doesn't work on \"routes-based\" clusters, clusters that don't have IP Aliasing enabled."]
-    pub fn set_default_max_pods_per_node(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().default_max_pods_per_node = Some(v.into());
+    #[doc = "Set the field `allow_net_admin`.\nEnable NET_ADMIN for this cluster."]
+    pub fn set_allow_net_admin(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().allow_net_admin = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `deletion_protection`.\nWhether or not to allow Terraform to destroy the instance. Defaults to true. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the cluster will fail."]
-    pub fn set_deletion_protection(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().deletion_protection = Some(v.into());
+    #[doc =
+        "Set the field `cluster_ipv4_cidr`.\nThe IP address range of the Kubernetes pods in this cluster in CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8. This field will only work for routes-based clusters, where ip_allocation_policy is not defined."]
+    pub fn set_cluster_ipv4_cidr(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().cluster_ipv4_cidr = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `description`.\n Description of the cluster."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc =
+        "Set the field `datapath_provider`.\nThe desired datapath provider for this cluster. By default, uses the IPTables-based kube-proxy implementation."]
+    pub fn set_datapath_provider(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().datapath_provider = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_autopilot`.\nEnable Autopilot for this cluster."]
-    pub fn set_enable_autopilot(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_autopilot = Some(v.into());
+    #[doc =
+        "Set the field `default_max_pods_per_node`.\nThe default maximum number of pods per node in this cluster. This doesn't work on \"routes-based\" clusters, clusters that don't have IP Aliasing enabled."]
+    pub fn set_default_max_pods_per_node(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().default_max_pods_per_node = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_intranode_visibility`.\nWhether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible for VPC network."]
-    pub fn set_enable_intranode_visibility(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_intranode_visibility = Some(v.into());
+    #[doc =
+        "Set the field `deletion_protection`.\nWhether or not to allow Terraform to destroy the instance. Defaults to true. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the cluster will fail."]
+    pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_kubernetes_alpha`.\nWhether to enable Kubernetes Alpha features for this cluster. Note that when this option is enabled, the cluster cannot be upgraded and will be automatically deleted after 30 days."]
-    pub fn set_enable_kubernetes_alpha(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_kubernetes_alpha = Some(v.into());
+    #[doc = "Set the field `description`.\n Description of the cluster."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_l4_ilb_subsetting`.\nWhether L4ILB Subsetting is enabled for this cluster."]
-    pub fn set_enable_l4_ilb_subsetting(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_l4_ilb_subsetting = Some(v.into());
+    #[doc = "Set the field `enable_autopilot`.\nEnable Autopilot for this cluster."]
+    pub fn set_enable_autopilot(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_autopilot = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_legacy_abac`.\nWhether the ABAC authorizer is enabled for this cluster. When enabled, identities in the system, including service accounts, nodes, and controllers, will have statically granted permissions beyond those provided by the RBAC configuration or IAM. Defaults to false."]
-    pub fn set_enable_legacy_abac(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_legacy_abac = Some(v.into());
+    #[doc =
+        "Set the field `enable_intranode_visibility`.\nWhether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible for VPC network."]
+    pub fn set_enable_intranode_visibility(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_intranode_visibility = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_shielded_nodes`.\nEnable Shielded Nodes features on all nodes in this cluster. Defaults to true."]
-    pub fn set_enable_shielded_nodes(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_shielded_nodes = Some(v.into());
+    #[doc =
+        "Set the field `enable_kubernetes_alpha`.\nWhether to enable Kubernetes Alpha features for this cluster. Note that when this option is enabled, the cluster cannot be upgraded and will be automatically deleted after 30 days."]
+    pub fn set_enable_kubernetes_alpha(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_kubernetes_alpha = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_tpu`.\nWhether to enable Cloud TPU resources in this cluster."]
-    pub fn set_enable_tpu(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_tpu = Some(v.into());
+    #[doc = "Set the field `enable_l4_ilb_subsetting`.\nWhether L4ILB Subsetting is enabled for this cluster."]
+    pub fn set_enable_l4_ilb_subsetting(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_l4_ilb_subsetting = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc =
+        "Set the field `enable_legacy_abac`.\nWhether the ABAC authorizer is enabled for this cluster. When enabled, identities in the system, including service accounts, nodes, and controllers, will have statically granted permissions beyond those provided by the RBAC configuration or IAM. Defaults to false."]
+    pub fn set_enable_legacy_abac(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_legacy_abac = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_node_count`.\nThe number of nodes to create in this cluster's default node pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Must be set if node_pool is not set. If you're using google_container_node_pool objects with no default node pool, you'll need to set this to a value of at least 1, alongside setting remove_default_node_pool to true."]
-    pub fn set_initial_node_count(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().initial_node_count = Some(v.into());
+    #[doc =
+        "Set the field `enable_shielded_nodes`.\nEnable Shielded Nodes features on all nodes in this cluster. Defaults to true."]
+    pub fn set_enable_shielded_nodes(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_shielded_nodes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\nThe location (region or zone) in which the cluster master will be created, as well as the default node location. If you specify a zone (such as us-central1-a), the cluster will be a zonal cluster with a single cluster master. If you specify a region (such as us-west1), the cluster will be a regional cluster with multiple masters spread across zones in the region, and with default node locations in those zones as well."]
-    pub fn set_location(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().location = Some(v.into());
+    #[doc = "Set the field `enable_tpu`.\nWhether to enable Cloud TPU resources in this cluster."]
+    pub fn set_enable_tpu(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_tpu = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `logging_service`.\nThe logging service that the cluster should write logs to. Available options include logging.googleapis.com(Legacy Stackdriver), logging.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Logging), and none. Defaults to logging.googleapis.com/kubernetes."]
-    pub fn set_logging_service(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().logging_service = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_master_version`.\nThe minimum version of the master. GKE will auto-update the master to new versions, so this does not guarantee the current master version--use the read-only master_version field to obtain that. If unset, the cluster's version will be set by GKE to the version of the most recent official release (which is not necessarily the latest version)."]
-    pub fn set_min_master_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().min_master_version = Some(v.into());
+    #[doc =
+        "Set the field `initial_node_count`.\nThe number of nodes to create in this cluster's default node pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Must be set if node_pool is not set. If you're using google_container_node_pool objects with no default node pool, you'll need to set this to a value of at least 1, alongside setting remove_default_node_pool to true."]
+    pub fn set_initial_node_count(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().initial_node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `monitoring_service`.\nThe monitoring service that the cluster should write metrics to. Automatically send metrics from pods in the cluster to the Google Cloud Monitoring API. VM metrics will be collected by Google Compute Engine regardless of this setting Available options include monitoring.googleapis.com(Legacy Stackdriver), monitoring.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Monitoring), and none. Defaults to monitoring.googleapis.com/kubernetes."]
-    pub fn set_monitoring_service(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().monitoring_service = Some(v.into());
+    #[doc =
+        "Set the field `location`.\nThe location (region or zone) in which the cluster master will be created, as well as the default node location. If you specify a zone (such as us-central1-a), the cluster will be a zonal cluster with a single cluster master. If you specify a region (such as us-west1), the cluster will be a regional cluster with multiple masters spread across zones in the region, and with default node locations in those zones as well."]
+    pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `network`.\nThe name or self_link of the Google Compute Engine network to which the cluster is connected. For Shared VPC, set this to the self link of the shared network."]
-    pub fn set_network(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().network = Some(v.into());
+    #[doc =
+        "Set the field `logging_service`.\nThe logging service that the cluster should write logs to. Available options include logging.googleapis.com(Legacy Stackdriver), logging.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Logging), and none. Defaults to logging.googleapis.com/kubernetes."]
+    pub fn set_logging_service(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().logging_service = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `networking_mode`.\nDetermines whether alias IPs or routes will be used for pod IPs in the cluster. Defaults to VPC_NATIVE for new clusters."]
-    pub fn set_networking_mode(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().networking_mode = Some(v.into());
+    #[doc =
+        "Set the field `min_master_version`.\nThe minimum version of the master. GKE will auto-update the master to new versions, so this does not guarantee the current master version--use the read-only master_version field to obtain that. If unset, the cluster's version will be set by GKE to the version of the most recent official release (which is not necessarily the latest version)."]
+    pub fn set_min_master_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().min_master_version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `node_locations`.\nThe list of zones in which the cluster's nodes are located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If this is specified for a zonal cluster, omit the cluster's zone."]
-    pub fn set_node_locations(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().node_locations = Some(v.into());
+    #[doc =
+        "Set the field `monitoring_service`.\nThe monitoring service that the cluster should write metrics to. Automatically send metrics from pods in the cluster to the Google Cloud Monitoring API. VM metrics will be collected by Google Compute Engine regardless of this setting Available options include monitoring.googleapis.com(Legacy Stackdriver), monitoring.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Monitoring), and none. Defaults to monitoring.googleapis.com/kubernetes."]
+    pub fn set_monitoring_service(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().monitoring_service = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `node_version`.\nThe Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create. Defaults to the default version set by GKE which is not necessarily the latest version. This only affects nodes in the default node pool. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way. To update nodes in other node pools, use the version attribute on the node pool."]
-    pub fn set_node_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().node_version = Some(v.into());
+    #[doc =
+        "Set the field `network`.\nThe name or self_link of the Google Compute Engine network to which the cluster is connected. For Shared VPC, set this to the self link of the shared network."]
+    pub fn set_network(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `private_ipv6_google_access`.\nThe desired state of IPv6 connectivity to Google Services. By default, no private IPv6 access to or from Google Services (all access will be via IPv4)."]
-    pub fn set_private_ipv6_google_access(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().private_ipv6_google_access = Some(v.into());
+    #[doc =
+        "Set the field `networking_mode`.\nDetermines whether alias IPs or routes will be used for pod IPs in the cluster. Defaults to VPC_NATIVE for new clusters."]
+    pub fn set_networking_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().networking_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `project`.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc =
+        "Set the field `node_locations`.\nThe list of zones in which the cluster's nodes are located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If this is specified for a zonal cluster, omit the cluster's zone."]
+    pub fn set_node_locations(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().node_locations = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `remove_default_node_pool`.\nIf true, deletes the default node pool upon cluster creation. If you're using google_container_node_pool resources with no default node pool, this should be set to true, alongside setting initial_node_count to at least 1."]
-    pub fn set_remove_default_node_pool(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().remove_default_node_pool = Some(v.into());
+    #[doc =
+        "Set the field `node_version`.\nThe Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create. Defaults to the default version set by GKE which is not necessarily the latest version. This only affects nodes in the default node pool. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way. To update nodes in other node pools, use the version attribute on the node pool."]
+    pub fn set_node_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().node_version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_labels`.\nThe GCE resource labels (a map of key/value pairs) to be applied to the cluster."]
-    pub fn set_resource_labels(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().resource_labels = Some(v.into());
+    #[doc =
+        "Set the field `private_ipv6_google_access`.\nThe desired state of IPv6 connectivity to Google Services. By default, no private IPv6 access to or from Google Services (all access will be via IPv4)."]
+    pub fn set_private_ipv6_google_access(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().private_ipv6_google_access = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `subnetwork`.\nThe name or self_link of the Google Compute Engine subnetwork in which the cluster's instances are launched."]
-    pub fn set_subnetwork(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().subnetwork = Some(v.into());
+    #[doc =
+        "Set the field `project`.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `addons_config`.\n"]
-    pub fn set_addons_config(self, v: impl Into<BlockAssignable<ContainerClusterAddonsConfigEl>>) -> Self {
+    #[doc =
+        "Set the field `remove_default_node_pool`.\nIf true, deletes the default node pool upon cluster creation. If you're using google_container_node_pool resources with no default node pool, this should be set to true, alongside setting initial_node_count to at least 1."]
+    pub fn set_remove_default_node_pool(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().remove_default_node_pool = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `resource_labels`.\nThe GCE resource labels (a map of key/value pairs) to be applied to the cluster."]
+    pub fn set_resource_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().resource_labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `subnetwork`.\nThe name or self_link of the Google Compute Engine subnetwork in which the cluster's instances are launched."]
+    pub fn set_subnetwork(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().subnetwork = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `addons_config`.\n"]
+    pub fn set_addons_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().addons_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().addons_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.addons_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.addons_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `authenticator_groups_config`.\n"]
+    #[doc = "Set the field `authenticator_groups_config`.\n"]
     pub fn set_authenticator_groups_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterAuthenticatorGroupsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAuthenticatorGroupsConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().authenticator_groups_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().authenticator_groups_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.authenticator_groups_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.authenticator_groups_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `binary_authorization`.\n"]
-    pub fn set_binary_authorization(self, v: impl Into<BlockAssignable<ContainerClusterBinaryAuthorizationEl>>) -> Self {
+    #[doc = "Set the field `binary_authorization`.\n"]
+    pub fn set_binary_authorization(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterBinaryAuthorizationEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().binary_authorization = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().binary_authorization = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.binary_authorization = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.binary_authorization = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cluster_autoscaling`.\n"]
-    pub fn set_cluster_autoscaling(self, v: impl Into<BlockAssignable<ContainerClusterClusterAutoscalingEl>>) -> Self {
+    #[doc = "Set the field `cluster_autoscaling`.\n"]
+    pub fn set_cluster_autoscaling(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterClusterAutoscalingEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cluster_autoscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cluster_autoscaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cluster_autoscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cluster_autoscaling = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `confidential_nodes`.\n"]
-    pub fn set_confidential_nodes(self, v: impl Into<BlockAssignable<ContainerClusterConfidentialNodesEl>>) -> Self {
+    #[doc = "Set the field `confidential_nodes`.\n"]
+    pub fn set_confidential_nodes(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterConfidentialNodesEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().confidential_nodes = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().confidential_nodes = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.confidential_nodes = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.confidential_nodes = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cost_management_config`.\n"]
+    #[doc = "Set the field `cost_management_config`.\n"]
     pub fn set_cost_management_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterCostManagementConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterCostManagementConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cost_management_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cost_management_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cost_management_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cost_management_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `database_encryption`.\n"]
-    pub fn set_database_encryption(self, v: impl Into<BlockAssignable<ContainerClusterDatabaseEncryptionEl>>) -> Self {
+    #[doc = "Set the field `database_encryption`.\n"]
+    pub fn set_database_encryption(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterDatabaseEncryptionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().database_encryption = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().database_encryption = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.database_encryption = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.database_encryption = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `default_snat_status`.\n"]
-    pub fn set_default_snat_status(self, v: impl Into<BlockAssignable<ContainerClusterDefaultSnatStatusEl>>) -> Self {
+    #[doc = "Set the field `default_snat_status`.\n"]
+    pub fn set_default_snat_status(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterDefaultSnatStatusEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().default_snat_status = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().default_snat_status = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.default_snat_status = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.default_snat_status = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dns_config`.\n"]
-    pub fn set_dns_config(self, v: impl Into<BlockAssignable<ContainerClusterDnsConfigEl>>) -> Self {
+    #[doc = "Set the field `dns_config`.\n"]
+    pub fn set_dns_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterDnsConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().dns_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().dns_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.dns_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.dns_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `enable_k8s_beta_apis`.\n"]
-    pub fn set_enable_k8s_beta_apis(self, v: impl Into<BlockAssignable<ContainerClusterEnableK8sBetaApisEl>>) -> Self {
+    #[doc = "Set the field `enable_k8s_beta_apis`.\n"]
+    pub fn set_enable_k8s_beta_apis(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterEnableK8sBetaApisEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().enable_k8s_beta_apis = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().enable_k8s_beta_apis = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.enable_k8s_beta_apis = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.enable_k8s_beta_apis = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `fleet`.\n"]
-    pub fn set_fleet(self, v: impl Into<BlockAssignable<ContainerClusterFleetEl>>) -> Self {
+    #[doc = "Set the field `fleet`.\n"]
+    pub fn set_fleet(self, v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterFleetEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().fleet = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().fleet = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.fleet = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.fleet = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gateway_api_config`.\n"]
-    pub fn set_gateway_api_config(self, v: impl Into<BlockAssignable<ContainerClusterGatewayApiConfigEl>>) -> Self {
+    #[doc = "Set the field `gateway_api_config`.\n"]
+    pub fn set_gateway_api_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterGatewayApiConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().gateway_api_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().gateway_api_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.gateway_api_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.gateway_api_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `identity_service_config`.\n"]
+    #[doc = "Set the field `identity_service_config`.\n"]
     pub fn set_identity_service_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterIdentityServiceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterIdentityServiceConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().identity_service_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().identity_service_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.identity_service_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.identity_service_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `ip_allocation_policy`.\n"]
-    pub fn set_ip_allocation_policy(self, v: impl Into<BlockAssignable<ContainerClusterIpAllocationPolicyEl>>) -> Self {
+    #[doc = "Set the field `ip_allocation_policy`.\n"]
+    pub fn set_ip_allocation_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterIpAllocationPolicyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().ip_allocation_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().ip_allocation_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.ip_allocation_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.ip_allocation_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `logging_config`.\n"]
-    pub fn set_logging_config(self, v: impl Into<BlockAssignable<ContainerClusterLoggingConfigEl>>) -> Self {
+    #[doc = "Set the field `logging_config`.\n"]
+    pub fn set_logging_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterLoggingConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().logging_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().logging_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.logging_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.logging_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `maintenance_policy`.\n"]
-    pub fn set_maintenance_policy(self, v: impl Into<BlockAssignable<ContainerClusterMaintenancePolicyEl>>) -> Self {
+    #[doc = "Set the field `maintenance_policy`.\n"]
+    pub fn set_maintenance_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMaintenancePolicyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().maintenance_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().maintenance_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.maintenance_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.maintenance_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `master_auth`.\n"]
-    pub fn set_master_auth(self, v: impl Into<BlockAssignable<ContainerClusterMasterAuthEl>>) -> Self {
+    #[doc = "Set the field `master_auth`.\n"]
+    pub fn set_master_auth(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMasterAuthEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().master_auth = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().master_auth = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.master_auth = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.master_auth = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `master_authorized_networks_config`.\n"]
+    #[doc = "Set the field `master_authorized_networks_config`.\n"]
     pub fn set_master_authorized_networks_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().master_authorized_networks_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().master_authorized_networks_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.master_authorized_networks_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.master_authorized_networks_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `mesh_certificates`.\n"]
-    pub fn set_mesh_certificates(self, v: impl Into<BlockAssignable<ContainerClusterMeshCertificatesEl>>) -> Self {
+    #[doc = "Set the field `mesh_certificates`.\n"]
+    pub fn set_mesh_certificates(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMeshCertificatesEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().mesh_certificates = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().mesh_certificates = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.mesh_certificates = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.mesh_certificates = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `monitoring_config`.\n"]
-    pub fn set_monitoring_config(self, v: impl Into<BlockAssignable<ContainerClusterMonitoringConfigEl>>) -> Self {
+    #[doc = "Set the field `monitoring_config`.\n"]
+    pub fn set_monitoring_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMonitoringConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().monitoring_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().monitoring_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.monitoring_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.monitoring_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_policy`.\n"]
-    pub fn set_network_policy(self, v: impl Into<BlockAssignable<ContainerClusterNetworkPolicyEl>>) -> Self {
+    #[doc = "Set the field `network_policy`.\n"]
+    pub fn set_network_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNetworkPolicyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().network_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().network_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.network_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.network_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `node_config`.\n"]
-    pub fn set_node_config(self, v: impl Into<BlockAssignable<ContainerClusterNodeConfigEl>>) -> Self {
+    #[doc = "Set the field `node_config`.\n"]
+    pub fn set_node_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().node_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().node_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.node_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.node_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `node_pool`.\n"]
-    pub fn set_node_pool(self, v: impl Into<BlockAssignable<ContainerClusterNodePoolEl>>) -> Self {
+    #[doc = "Set the field `node_pool`.\n"]
+    pub fn set_node_pool(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().node_pool = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().node_pool = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.node_pool = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.node_pool = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `node_pool_auto_config`.\n"]
-    pub fn set_node_pool_auto_config(self, v: impl Into<BlockAssignable<ContainerClusterNodePoolAutoConfigEl>>) -> Self {
+    #[doc = "Set the field `node_pool_auto_config`.\n"]
+    pub fn set_node_pool_auto_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolAutoConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().node_pool_auto_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().node_pool_auto_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.node_pool_auto_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.node_pool_auto_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `node_pool_defaults`.\n"]
-    pub fn set_node_pool_defaults(self, v: impl Into<BlockAssignable<ContainerClusterNodePoolDefaultsEl>>) -> Self {
+    #[doc = "Set the field `node_pool_defaults`.\n"]
+    pub fn set_node_pool_defaults(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolDefaultsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().node_pool_defaults = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().node_pool_defaults = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.node_pool_defaults = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.node_pool_defaults = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `notification_config`.\n"]
-    pub fn set_notification_config(self, v: impl Into<BlockAssignable<ContainerClusterNotificationConfigEl>>) -> Self {
+    #[doc = "Set the field `notification_config`.\n"]
+    pub fn set_notification_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNotificationConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().notification_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().notification_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.notification_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.notification_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `private_cluster_config`.\n"]
+    #[doc = "Set the field `private_cluster_config`.\n"]
     pub fn set_private_cluster_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterPrivateClusterConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterPrivateClusterConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().private_cluster_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().private_cluster_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.private_cluster_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.private_cluster_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `release_channel`.\n"]
-    pub fn set_release_channel(self, v: impl Into<BlockAssignable<ContainerClusterReleaseChannelEl>>) -> Self {
+    #[doc = "Set the field `release_channel`.\n"]
+    pub fn set_release_channel(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterReleaseChannelEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().release_channel = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().release_channel = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.release_channel = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.release_channel = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_usage_export_config`.\n"]
+    #[doc = "Set the field `resource_usage_export_config`.\n"]
     pub fn set_resource_usage_export_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterResourceUsageExportConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterResourceUsageExportConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().resource_usage_export_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().resource_usage_export_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.resource_usage_export_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.resource_usage_export_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `security_posture_config`.\n"]
+    #[doc = "Set the field `security_posture_config`.\n"]
     pub fn set_security_posture_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterSecurityPostureConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterSecurityPostureConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().security_posture_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().security_posture_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.security_posture_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.security_posture_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `service_external_ips_config`.\n"]
+    #[doc = "Set the field `service_external_ips_config`.\n"]
     pub fn set_service_external_ips_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterServiceExternalIpsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterServiceExternalIpsConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().service_external_ips_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().service_external_ips_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.service_external_ips_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.service_external_ips_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ContainerClusterTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerClusterTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vertical_pod_autoscaling`.\n"]
+    #[doc = "Set the field `vertical_pod_autoscaling`.\n"]
     pub fn set_vertical_pod_autoscaling(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterVerticalPodAutoscalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterVerticalPodAutoscalingEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().vertical_pod_autoscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().vertical_pod_autoscaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.vertical_pod_autoscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.vertical_pod_autoscaling = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `workload_identity_config`.\n"]
+    #[doc = "Set the field `workload_identity_config`.\n"]
     pub fn set_workload_identity_config(
         self,
-        v: impl Into<BlockAssignable<ContainerClusterWorkloadIdentityConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterWorkloadIdentityConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().workload_identity_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().workload_identity_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.workload_identity_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.workload_identity_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `allow_net_admin` after provisioning.\nEnable NET_ADMIN for this cluster."]
-    pub fn allow_net_admin(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.allow_net_admin", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `allow_net_admin` after provisioning.\nEnable NET_ADMIN for this cluster."]
+    pub fn allow_net_admin(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_net_admin", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes pods in this cluster in CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8. This field will only work for routes-based clusters, where ip_allocation_policy is not defined."]
-    pub fn cluster_ipv4_cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_ipv4_cidr", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `cluster_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes pods in this cluster in CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8. This field will only work for routes-based clusters, where ip_allocation_policy is not defined."]
+    pub fn cluster_ipv4_cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_ipv4_cidr", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `datapath_provider` after provisioning.\nThe desired datapath provider for this cluster. By default, uses the IPTables-based kube-proxy implementation."]
-    pub fn datapath_provider(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.datapath_provider", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `datapath_provider` after provisioning.\nThe desired datapath provider for this cluster. By default, uses the IPTables-based kube-proxy implementation."]
+    pub fn datapath_provider(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.datapath_provider", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_max_pods_per_node` after provisioning.\nThe default maximum number of pods per node in this cluster. This doesn't work on \"routes-based\" clusters, clusters that don't have IP Aliasing enabled."]
-    pub fn default_max_pods_per_node(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.default_max_pods_per_node", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `default_max_pods_per_node` after provisioning.\nThe default maximum number of pods per node in this cluster. This doesn't work on \"routes-based\" clusters, clusters that don't have IP Aliasing enabled."]
+    pub fn default_max_pods_per_node(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_max_pods_per_node", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the instance. Defaults to true. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the cluster will fail."]
-    pub fn deletion_protection(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the instance. Defaults to true. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the cluster will fail."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n Description of the cluster."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n Description of the cluster."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_autopilot` after provisioning.\nEnable Autopilot for this cluster."]
-    pub fn enable_autopilot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_autopilot", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_autopilot` after provisioning.\nEnable Autopilot for this cluster."]
+    pub fn enable_autopilot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_autopilot", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_intranode_visibility` after provisioning.\nWhether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible for VPC network."]
-    pub fn enable_intranode_visibility(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_intranode_visibility", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_intranode_visibility` after provisioning.\nWhether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible for VPC network."]
+    pub fn enable_intranode_visibility(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_intranode_visibility", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_kubernetes_alpha` after provisioning.\nWhether to enable Kubernetes Alpha features for this cluster. Note that when this option is enabled, the cluster cannot be upgraded and will be automatically deleted after 30 days."]
-    pub fn enable_kubernetes_alpha(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_kubernetes_alpha", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_kubernetes_alpha` after provisioning.\nWhether to enable Kubernetes Alpha features for this cluster. Note that when this option is enabled, the cluster cannot be upgraded and will be automatically deleted after 30 days."]
+    pub fn enable_kubernetes_alpha(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_kubernetes_alpha", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_l4_ilb_subsetting` after provisioning.\nWhether L4ILB Subsetting is enabled for this cluster."]
-    pub fn enable_l4_ilb_subsetting(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_l4_ilb_subsetting", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_l4_ilb_subsetting` after provisioning.\nWhether L4ILB Subsetting is enabled for this cluster."]
+    pub fn enable_l4_ilb_subsetting(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_l4_ilb_subsetting", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_legacy_abac` after provisioning.\nWhether the ABAC authorizer is enabled for this cluster. When enabled, identities in the system, including service accounts, nodes, and controllers, will have statically granted permissions beyond those provided by the RBAC configuration or IAM. Defaults to false."]
-    pub fn enable_legacy_abac(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_legacy_abac", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_legacy_abac` after provisioning.\nWhether the ABAC authorizer is enabled for this cluster. When enabled, identities in the system, including service accounts, nodes, and controllers, will have statically granted permissions beyond those provided by the RBAC configuration or IAM. Defaults to false."]
+    pub fn enable_legacy_abac(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_legacy_abac", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_shielded_nodes` after provisioning.\nEnable Shielded Nodes features on all nodes in this cluster. Defaults to true."]
-    pub fn enable_shielded_nodes(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_shielded_nodes", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_shielded_nodes` after provisioning.\nEnable Shielded Nodes features on all nodes in this cluster. Defaults to true."]
+    pub fn enable_shielded_nodes(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_shielded_nodes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_tpu` after provisioning.\nWhether to enable Cloud TPU resources in this cluster."]
-    pub fn enable_tpu(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_tpu", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_tpu` after provisioning.\nWhether to enable Cloud TPU resources in this cluster."]
+    pub fn enable_tpu(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_tpu", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\nThe IP address of this cluster's Kubernetes master."]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `endpoint` after provisioning.\nThe IP address of this cluster's Kubernetes master."]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `initial_node_count` after provisioning.\nThe number of nodes to create in this cluster's default node pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Must be set if node_pool is not set. If you're using google_container_node_pool objects with no default node pool, you'll need to set this to a value of at least 1, alongside setting remove_default_node_pool to true."]
-    pub fn initial_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_node_count", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `initial_node_count` after provisioning.\nThe number of nodes to create in this cluster's default node pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Must be set if node_pool is not set. If you're using google_container_node_pool objects with no default node pool, you'll need to set this to a value of at least 1, alongside setting remove_default_node_pool to true."]
+    pub fn initial_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_node_count", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `label_fingerprint` after provisioning.\nThe fingerprint of the set of labels for this cluster."]
-    pub fn label_fingerprint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.label_fingerprint", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `label_fingerprint` after provisioning.\nThe fingerprint of the set of labels for this cluster."]
+    pub fn label_fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label_fingerprint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location (region or zone) in which the cluster master will be created, as well as the default node location. If you specify a zone (such as us-central1-a), the cluster will be a zonal cluster with a single cluster master. If you specify a region (such as us-west1), the cluster will be a regional cluster with multiple masters spread across zones in the region, and with default node locations in those zones as well."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location (region or zone) in which the cluster master will be created, as well as the default node location. If you specify a zone (such as us-central1-a), the cluster will be a zonal cluster with a single cluster master. If you specify a region (such as us-west1), the cluster will be a regional cluster with multiple masters spread across zones in the region, and with default node locations in those zones as well."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `logging_service` after provisioning.\nThe logging service that the cluster should write logs to. Available options include logging.googleapis.com(Legacy Stackdriver), logging.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Logging), and none. Defaults to logging.googleapis.com/kubernetes."]
-    pub fn logging_service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.logging_service", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `logging_service` after provisioning.\nThe logging service that the cluster should write logs to. Available options include logging.googleapis.com(Legacy Stackdriver), logging.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Logging), and none. Defaults to logging.googleapis.com/kubernetes."]
+    pub fn logging_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `master_version` after provisioning.\nThe current version of the master in the cluster. This may be different than the min_master_version set in the config if the master has been updated by GKE."]
-    pub fn master_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_version", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `master_version` after provisioning.\nThe current version of the master in the cluster. This may be different than the min_master_version set in the config if the master has been updated by GKE."]
+    pub fn master_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `min_master_version` after provisioning.\nThe minimum version of the master. GKE will auto-update the master to new versions, so this does not guarantee the current master version--use the read-only master_version field to obtain that. If unset, the cluster's version will be set by GKE to the version of the most recent official release (which is not necessarily the latest version)."]
-    pub fn min_master_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_master_version", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `min_master_version` after provisioning.\nThe minimum version of the master. GKE will auto-update the master to new versions, so this does not guarantee the current master version--use the read-only master_version field to obtain that. If unset, the cluster's version will be set by GKE to the version of the most recent official release (which is not necessarily the latest version)."]
+    pub fn min_master_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_master_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `monitoring_service` after provisioning.\nThe monitoring service that the cluster should write metrics to. Automatically send metrics from pods in the cluster to the Google Cloud Monitoring API. VM metrics will be collected by Google Compute Engine regardless of this setting Available options include monitoring.googleapis.com(Legacy Stackdriver), monitoring.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Monitoring), and none. Defaults to monitoring.googleapis.com/kubernetes."]
-    pub fn monitoring_service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.monitoring_service", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `monitoring_service` after provisioning.\nThe monitoring service that the cluster should write metrics to. Automatically send metrics from pods in the cluster to the Google Cloud Monitoring API. VM metrics will be collected by Google Compute Engine regardless of this setting Available options include monitoring.googleapis.com(Legacy Stackdriver), monitoring.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Monitoring), and none. Defaults to monitoring.googleapis.com/kubernetes."]
+    pub fn monitoring_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of the cluster, unique within the project and location."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name of the cluster, unique within the project and location."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network` after provisioning.\nThe name or self_link of the Google Compute Engine network to which the cluster is connected. For Shared VPC, set this to the self link of the shared network."]
-    pub fn network(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `network` after provisioning.\nThe name or self_link of the Google Compute Engine network to which the cluster is connected. For Shared VPC, set this to the self link of the shared network."]
+    pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `networking_mode` after provisioning.\nDetermines whether alias IPs or routes will be used for pod IPs in the cluster. Defaults to VPC_NATIVE for new clusters."]
-    pub fn networking_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.networking_mode", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `networking_mode` after provisioning.\nDetermines whether alias IPs or routes will be used for pod IPs in the cluster. Defaults to VPC_NATIVE for new clusters."]
+    pub fn networking_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.networking_mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_locations` after provisioning.\nThe list of zones in which the cluster's nodes are located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If this is specified for a zonal cluster, omit the cluster's zone."]
-    pub fn node_locations(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.node_locations", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `node_locations` after provisioning.\nThe list of zones in which the cluster's nodes are located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If this is specified for a zonal cluster, omit the cluster's zone."]
+    pub fn node_locations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.node_locations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_version` after provisioning.\nThe Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create. Defaults to the default version set by GKE which is not necessarily the latest version. This only affects nodes in the default node pool. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way. To update nodes in other node pools, use the version attribute on the node pool."]
-    pub fn node_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_version", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `node_version` after provisioning.\nThe Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create. Defaults to the default version set by GKE which is not necessarily the latest version. This only affects nodes in the default node pool. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way. To update nodes in other node pools, use the version attribute on the node pool."]
+    pub fn node_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `operation` after provisioning.\n"]
-    pub fn operation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operation", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `operation` after provisioning.\n"]
+    pub fn operation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operation", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_ipv6_google_access` after provisioning.\nThe desired state of IPv6 connectivity to Google Services. By default, no private IPv6 access to or from Google Services (all access will be via IPv4)."]
-    pub fn private_ipv6_google_access(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_ipv6_google_access", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `private_ipv6_google_access` after provisioning.\nThe desired state of IPv6 connectivity to Google Services. By default, no private IPv6 access to or from Google Services (all access will be via IPv4)."]
+    pub fn private_ipv6_google_access(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ipv6_google_access", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remove_default_node_pool` after provisioning.\nIf true, deletes the default node pool upon cluster creation. If you're using google_container_node_pool resources with no default node pool, this should be set to true, alongside setting initial_node_count to at least 1."]
-    pub fn remove_default_node_pool(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.remove_default_node_pool", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `remove_default_node_pool` after provisioning.\nIf true, deletes the default node pool upon cluster creation. If you're using google_container_node_pool resources with no default node pool, this should be set to true, alongside setting initial_node_count to at least 1."]
+    pub fn remove_default_node_pool(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.remove_default_node_pool", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the cluster."]
-    pub fn resource_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the cluster."]
+    pub fn resource_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\nServer-defined URL for the resource."]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `self_link` after provisioning.\nServer-defined URL for the resource."]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `services_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes services in this cluster, in CIDR notation (e.g. 1.2.3.4/29). Service addresses are typically put in the last /16 from the container CIDR."]
-    pub fn services_ipv4_cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.services_ipv4_cidr", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `services_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes services in this cluster, in CIDR notation (e.g. 1.2.3.4/29). Service addresses are typically put in the last /16 from the container CIDR."]
+    pub fn services_ipv4_cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.services_ipv4_cidr", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnetwork` after provisioning.\nThe name or self_link of the Google Compute Engine subnetwork in which the cluster's instances are launched."]
-    pub fn subnetwork(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `subnetwork` after provisioning.\nThe name or self_link of the Google Compute Engine subnetwork in which the cluster's instances are launched."]
+    pub fn subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tpu_ipv4_cidr_block` after provisioning.\nThe IP address range of the Cloud TPUs in this cluster, in CIDR notation (e.g. 1.2.3.4/29)."]
-    pub fn tpu_ipv4_cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tpu_ipv4_cidr_block", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `tpu_ipv4_cidr_block` after provisioning.\nThe IP address range of the Cloud TPUs in this cluster, in CIDR notation (e.g. 1.2.3.4/29)."]
+    pub fn tpu_ipv4_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tpu_ipv4_cidr_block", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `addons_config` after provisioning.\n"]
-    pub fn addons_config(&self) -> ListRef<ContainerClusterAddonsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.addons_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `addons_config` after provisioning.\n"]
+    pub fn addons_config(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.addons_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authenticator_groups_config` after provisioning.\n"]
-    pub fn authenticator_groups_config(&self) -> ListRef<ContainerClusterAuthenticatorGroupsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.authenticator_groups_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authenticator_groups_config` after provisioning.\n"]
+    pub fn authenticator_groups_config(&self) -> terrars::ListRef<ContainerClusterAuthenticatorGroupsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authenticator_groups_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> ListRef<ContainerClusterBinaryAuthorizationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
+    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerClusterBinaryAuthorizationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_autoscaling` after provisioning.\n"]
-    pub fn cluster_autoscaling(&self) -> ListRef<ContainerClusterClusterAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cluster_autoscaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_autoscaling` after provisioning.\n"]
+    pub fn cluster_autoscaling(&self) -> terrars::ListRef<ContainerClusterClusterAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_autoscaling", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
-    pub fn confidential_nodes(&self) -> ListRef<ContainerClusterConfidentialNodesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
+    pub fn confidential_nodes(&self) -> terrars::ListRef<ContainerClusterConfidentialNodesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cost_management_config` after provisioning.\n"]
-    pub fn cost_management_config(&self) -> ListRef<ContainerClusterCostManagementConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cost_management_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cost_management_config` after provisioning.\n"]
+    pub fn cost_management_config(&self) -> terrars::ListRef<ContainerClusterCostManagementConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_management_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `database_encryption` after provisioning.\n"]
-    pub fn database_encryption(&self) -> ListRef<ContainerClusterDatabaseEncryptionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.database_encryption", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database_encryption` after provisioning.\n"]
+    pub fn database_encryption(&self) -> terrars::ListRef<ContainerClusterDatabaseEncryptionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.database_encryption", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_snat_status` after provisioning.\n"]
-    pub fn default_snat_status(&self) -> ListRef<ContainerClusterDefaultSnatStatusElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_snat_status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_snat_status` after provisioning.\n"]
+    pub fn default_snat_status(&self) -> terrars::ListRef<ContainerClusterDefaultSnatStatusElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_snat_status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `dns_config` after provisioning.\n"]
-    pub fn dns_config(&self) -> ListRef<ContainerClusterDnsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dns_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `dns_config` after provisioning.\n"]
+    pub fn dns_config(&self) -> terrars::ListRef<ContainerClusterDnsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_k8s_beta_apis` after provisioning.\n"]
-    pub fn enable_k8s_beta_apis(&self) -> ListRef<ContainerClusterEnableK8sBetaApisElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.enable_k8s_beta_apis", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enable_k8s_beta_apis` after provisioning.\n"]
+    pub fn enable_k8s_beta_apis(&self) -> terrars::ListRef<ContainerClusterEnableK8sBetaApisElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.enable_k8s_beta_apis", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> ListRef<ContainerClusterFleetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
+    pub fn fleet(&self) -> terrars::ListRef<ContainerClusterFleetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gateway_api_config` after provisioning.\n"]
-    pub fn gateway_api_config(&self) -> ListRef<ContainerClusterGatewayApiConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gateway_api_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `gateway_api_config` after provisioning.\n"]
+    pub fn gateway_api_config(&self) -> terrars::ListRef<ContainerClusterGatewayApiConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gateway_api_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_service_config` after provisioning.\n"]
-    pub fn identity_service_config(&self) -> ListRef<ContainerClusterIdentityServiceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.identity_service_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_service_config` after provisioning.\n"]
+    pub fn identity_service_config(&self) -> terrars::ListRef<ContainerClusterIdentityServiceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.identity_service_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ip_allocation_policy` after provisioning.\n"]
-    pub fn ip_allocation_policy(&self) -> ListRef<ContainerClusterIpAllocationPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ip_allocation_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ip_allocation_policy` after provisioning.\n"]
+    pub fn ip_allocation_policy(&self) -> terrars::ListRef<ContainerClusterIpAllocationPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ip_allocation_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> ListRef<ContainerClusterLoggingConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
+    pub fn logging_config(&self) -> terrars::ListRef<ContainerClusterLoggingConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
-    pub fn maintenance_policy(&self) -> ListRef<ContainerClusterMaintenancePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
+    pub fn maintenance_policy(&self) -> terrars::ListRef<ContainerClusterMaintenancePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `master_auth` after provisioning.\n"]
-    pub fn master_auth(&self) -> ListRef<ContainerClusterMasterAuthElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.master_auth", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `master_auth` after provisioning.\n"]
+    pub fn master_auth(&self) -> terrars::ListRef<ContainerClusterMasterAuthElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_auth", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `master_authorized_networks_config` after provisioning.\n"]
-    pub fn master_authorized_networks_config(&self) -> ListRef<ContainerClusterMasterAuthorizedNetworksConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.master_authorized_networks_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `master_authorized_networks_config` after provisioning.\n"]
+    pub fn master_authorized_networks_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterMasterAuthorizedNetworksConfigElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.master_authorized_networks_config", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `mesh_certificates` after provisioning.\n"]
-    pub fn mesh_certificates(&self) -> ListRef<ContainerClusterMeshCertificatesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mesh_certificates", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mesh_certificates` after provisioning.\n"]
+    pub fn mesh_certificates(&self) -> terrars::ListRef<ContainerClusterMeshCertificatesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mesh_certificates", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
-    pub fn monitoring_config(&self) -> ListRef<ContainerClusterMonitoringConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
+    pub fn monitoring_config(&self) -> terrars::ListRef<ContainerClusterMonitoringConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network_policy` after provisioning.\n"]
-    pub fn network_policy(&self) -> ListRef<ContainerClusterNetworkPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.network_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `network_policy` after provisioning.\n"]
+    pub fn network_policy(&self) -> terrars::ListRef<ContainerClusterNetworkPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> ListRef<ContainerClusterNodeConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
+    pub fn node_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool` after provisioning.\n"]
-    pub fn node_pool(&self) -> ListRef<ContainerClusterNodePoolElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_pool` after provisioning.\n"]
+    pub fn node_pool(&self) -> terrars::ListRef<ContainerClusterNodePoolElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_auto_config` after provisioning.\n"]
-    pub fn node_pool_auto_config(&self) -> ListRef<ContainerClusterNodePoolAutoConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool_auto_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_pool_auto_config` after provisioning.\n"]
+    pub fn node_pool_auto_config(&self) -> terrars::ListRef<ContainerClusterNodePoolAutoConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_auto_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_defaults` after provisioning.\n"]
-    pub fn node_pool_defaults(&self) -> ListRef<ContainerClusterNodePoolDefaultsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool_defaults", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_pool_defaults` after provisioning.\n"]
+    pub fn node_pool_defaults(&self) -> terrars::ListRef<ContainerClusterNodePoolDefaultsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_defaults", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> ListRef<ContainerClusterNotificationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
+    pub fn notification_config(&self) -> terrars::ListRef<ContainerClusterNotificationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_cluster_config` after provisioning.\n"]
-    pub fn private_cluster_config(&self) -> ListRef<ContainerClusterPrivateClusterConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.private_cluster_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `private_cluster_config` after provisioning.\n"]
+    pub fn private_cluster_config(&self) -> terrars::ListRef<ContainerClusterPrivateClusterConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_cluster_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `release_channel` after provisioning.\n"]
-    pub fn release_channel(&self) -> ListRef<ContainerClusterReleaseChannelElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.release_channel", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `release_channel` after provisioning.\n"]
+    pub fn release_channel(&self) -> terrars::ListRef<ContainerClusterReleaseChannelElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.release_channel", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_usage_export_config` after provisioning.\n"]
-    pub fn resource_usage_export_config(&self) -> ListRef<ContainerClusterResourceUsageExportConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.resource_usage_export_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_usage_export_config` after provisioning.\n"]
+    pub fn resource_usage_export_config(&self) -> terrars::ListRef<ContainerClusterResourceUsageExportConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_usage_export_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_posture_config` after provisioning.\n"]
-    pub fn security_posture_config(&self) -> ListRef<ContainerClusterSecurityPostureConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.security_posture_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_posture_config` after provisioning.\n"]
+    pub fn security_posture_config(&self) -> terrars::ListRef<ContainerClusterSecurityPostureConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_posture_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_external_ips_config` after provisioning.\n"]
-    pub fn service_external_ips_config(&self) -> ListRef<ContainerClusterServiceExternalIpsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.service_external_ips_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_external_ips_config` after provisioning.\n"]
+    pub fn service_external_ips_config(&self) -> terrars::ListRef<ContainerClusterServiceExternalIpsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_external_ips_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ContainerClusterTimeoutsElRef {
         ContainerClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vertical_pod_autoscaling` after provisioning.\n"]
-    pub fn vertical_pod_autoscaling(&self) -> ListRef<ContainerClusterVerticalPodAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vertical_pod_autoscaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vertical_pod_autoscaling` after provisioning.\n"]
+    pub fn vertical_pod_autoscaling(&self) -> terrars::ListRef<ContainerClusterVerticalPodAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vertical_pod_autoscaling", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `workload_identity_config` after provisioning.\n"]
-    pub fn workload_identity_config(&self) -> ListRef<ContainerClusterWorkloadIdentityConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `workload_identity_config` after provisioning.\n"]
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerClusterWorkloadIdentityConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 }
 
-impl Referable for ContainerCluster {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ContainerCluster {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ContainerCluster { }
+impl terrars::Resource for ContainerCluster { }
 
-impl ToListMappable for ContainerCluster {
-    type O = ListRef<ContainerClusterRef>;
+impl terrars::ToListMappable for ContainerCluster {
+    type O = terrars::ListRef<ContainerClusterRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ContainerCluster_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ContainerCluster_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_container_cluster".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -1228,21 +1402,22 @@ impl Resource_ for ContainerCluster_ {
 }
 
 pub struct BuildContainerCluster {
-    pub tf_id: String,
-    #[doc= "The name of the cluster, unique within the project and location."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The name of the cluster, unique within the project and location."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerCluster {
-    pub fn build(self, stack: &mut Stack) -> ContainerCluster {
-        let out = ContainerCluster(Rc::new(ContainerCluster_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ContainerCluster {
+        let out = ContainerCluster(std::rc::Rc::new(ContainerCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ContainerClusterData {
+            data: std::cell::RefCell::new(ContainerClusterData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 allow_net_admin: core::default::Default::default(),
                 cluster_ipv4_cidr: core::default::Default::default(),
                 datapath_provider: core::default::Default::default(),
@@ -1306,7 +1481,7 @@ impl BuildContainerCluster {
                 timeouts: core::default::Default::default(),
                 vertical_pod_autoscaling: core::default::Default::default(),
                 workload_identity_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -1315,12 +1490,12 @@ impl BuildContainerCluster {
 }
 
 pub struct ContainerClusterRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ContainerClusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -1329,385 +1504,426 @@ impl Ref for ContainerClusterRef {
 }
 
 impl ContainerClusterRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `allow_net_admin` after provisioning.\nEnable NET_ADMIN for this cluster."]
-    pub fn allow_net_admin(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.allow_net_admin", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `allow_net_admin` after provisioning.\nEnable NET_ADMIN for this cluster."]
+    pub fn allow_net_admin(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_net_admin", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes pods in this cluster in CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8. This field will only work for routes-based clusters, where ip_allocation_policy is not defined."]
-    pub fn cluster_ipv4_cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_ipv4_cidr", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `cluster_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes pods in this cluster in CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8. This field will only work for routes-based clusters, where ip_allocation_policy is not defined."]
+    pub fn cluster_ipv4_cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_ipv4_cidr", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `datapath_provider` after provisioning.\nThe desired datapath provider for this cluster. By default, uses the IPTables-based kube-proxy implementation."]
-    pub fn datapath_provider(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.datapath_provider", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `datapath_provider` after provisioning.\nThe desired datapath provider for this cluster. By default, uses the IPTables-based kube-proxy implementation."]
+    pub fn datapath_provider(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.datapath_provider", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_max_pods_per_node` after provisioning.\nThe default maximum number of pods per node in this cluster. This doesn't work on \"routes-based\" clusters, clusters that don't have IP Aliasing enabled."]
-    pub fn default_max_pods_per_node(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.default_max_pods_per_node", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `default_max_pods_per_node` after provisioning.\nThe default maximum number of pods per node in this cluster. This doesn't work on \"routes-based\" clusters, clusters that don't have IP Aliasing enabled."]
+    pub fn default_max_pods_per_node(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_max_pods_per_node", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the instance. Defaults to true. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the cluster will fail."]
-    pub fn deletion_protection(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the instance. Defaults to true. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the cluster will fail."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n Description of the cluster."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n Description of the cluster."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_autopilot` after provisioning.\nEnable Autopilot for this cluster."]
-    pub fn enable_autopilot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_autopilot", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_autopilot` after provisioning.\nEnable Autopilot for this cluster."]
+    pub fn enable_autopilot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_autopilot", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_intranode_visibility` after provisioning.\nWhether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible for VPC network."]
-    pub fn enable_intranode_visibility(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_intranode_visibility", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_intranode_visibility` after provisioning.\nWhether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible for VPC network."]
+    pub fn enable_intranode_visibility(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_intranode_visibility", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_kubernetes_alpha` after provisioning.\nWhether to enable Kubernetes Alpha features for this cluster. Note that when this option is enabled, the cluster cannot be upgraded and will be automatically deleted after 30 days."]
-    pub fn enable_kubernetes_alpha(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_kubernetes_alpha", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_kubernetes_alpha` after provisioning.\nWhether to enable Kubernetes Alpha features for this cluster. Note that when this option is enabled, the cluster cannot be upgraded and will be automatically deleted after 30 days."]
+    pub fn enable_kubernetes_alpha(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_kubernetes_alpha", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_l4_ilb_subsetting` after provisioning.\nWhether L4ILB Subsetting is enabled for this cluster."]
-    pub fn enable_l4_ilb_subsetting(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_l4_ilb_subsetting", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_l4_ilb_subsetting` after provisioning.\nWhether L4ILB Subsetting is enabled for this cluster."]
+    pub fn enable_l4_ilb_subsetting(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_l4_ilb_subsetting", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_legacy_abac` after provisioning.\nWhether the ABAC authorizer is enabled for this cluster. When enabled, identities in the system, including service accounts, nodes, and controllers, will have statically granted permissions beyond those provided by the RBAC configuration or IAM. Defaults to false."]
-    pub fn enable_legacy_abac(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_legacy_abac", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_legacy_abac` after provisioning.\nWhether the ABAC authorizer is enabled for this cluster. When enabled, identities in the system, including service accounts, nodes, and controllers, will have statically granted permissions beyond those provided by the RBAC configuration or IAM. Defaults to false."]
+    pub fn enable_legacy_abac(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_legacy_abac", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_shielded_nodes` after provisioning.\nEnable Shielded Nodes features on all nodes in this cluster. Defaults to true."]
-    pub fn enable_shielded_nodes(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_shielded_nodes", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_shielded_nodes` after provisioning.\nEnable Shielded Nodes features on all nodes in this cluster. Defaults to true."]
+    pub fn enable_shielded_nodes(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_shielded_nodes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_tpu` after provisioning.\nWhether to enable Cloud TPU resources in this cluster."]
-    pub fn enable_tpu(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_tpu", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_tpu` after provisioning.\nWhether to enable Cloud TPU resources in this cluster."]
+    pub fn enable_tpu(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_tpu", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\nThe IP address of this cluster's Kubernetes master."]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `endpoint` after provisioning.\nThe IP address of this cluster's Kubernetes master."]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `initial_node_count` after provisioning.\nThe number of nodes to create in this cluster's default node pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Must be set if node_pool is not set. If you're using google_container_node_pool objects with no default node pool, you'll need to set this to a value of at least 1, alongside setting remove_default_node_pool to true."]
-    pub fn initial_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_node_count", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `initial_node_count` after provisioning.\nThe number of nodes to create in this cluster's default node pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Must be set if node_pool is not set. If you're using google_container_node_pool objects with no default node pool, you'll need to set this to a value of at least 1, alongside setting remove_default_node_pool to true."]
+    pub fn initial_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_node_count", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `label_fingerprint` after provisioning.\nThe fingerprint of the set of labels for this cluster."]
-    pub fn label_fingerprint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.label_fingerprint", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `label_fingerprint` after provisioning.\nThe fingerprint of the set of labels for this cluster."]
+    pub fn label_fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label_fingerprint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location (region or zone) in which the cluster master will be created, as well as the default node location. If you specify a zone (such as us-central1-a), the cluster will be a zonal cluster with a single cluster master. If you specify a region (such as us-west1), the cluster will be a regional cluster with multiple masters spread across zones in the region, and with default node locations in those zones as well."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location (region or zone) in which the cluster master will be created, as well as the default node location. If you specify a zone (such as us-central1-a), the cluster will be a zonal cluster with a single cluster master. If you specify a region (such as us-west1), the cluster will be a regional cluster with multiple masters spread across zones in the region, and with default node locations in those zones as well."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `logging_service` after provisioning.\nThe logging service that the cluster should write logs to. Available options include logging.googleapis.com(Legacy Stackdriver), logging.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Logging), and none. Defaults to logging.googleapis.com/kubernetes."]
-    pub fn logging_service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.logging_service", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `logging_service` after provisioning.\nThe logging service that the cluster should write logs to. Available options include logging.googleapis.com(Legacy Stackdriver), logging.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Logging), and none. Defaults to logging.googleapis.com/kubernetes."]
+    pub fn logging_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `master_version` after provisioning.\nThe current version of the master in the cluster. This may be different than the min_master_version set in the config if the master has been updated by GKE."]
-    pub fn master_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_version", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `master_version` after provisioning.\nThe current version of the master in the cluster. This may be different than the min_master_version set in the config if the master has been updated by GKE."]
+    pub fn master_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `min_master_version` after provisioning.\nThe minimum version of the master. GKE will auto-update the master to new versions, so this does not guarantee the current master version--use the read-only master_version field to obtain that. If unset, the cluster's version will be set by GKE to the version of the most recent official release (which is not necessarily the latest version)."]
-    pub fn min_master_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_master_version", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `min_master_version` after provisioning.\nThe minimum version of the master. GKE will auto-update the master to new versions, so this does not guarantee the current master version--use the read-only master_version field to obtain that. If unset, the cluster's version will be set by GKE to the version of the most recent official release (which is not necessarily the latest version)."]
+    pub fn min_master_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_master_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `monitoring_service` after provisioning.\nThe monitoring service that the cluster should write metrics to. Automatically send metrics from pods in the cluster to the Google Cloud Monitoring API. VM metrics will be collected by Google Compute Engine regardless of this setting Available options include monitoring.googleapis.com(Legacy Stackdriver), monitoring.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Monitoring), and none. Defaults to monitoring.googleapis.com/kubernetes."]
-    pub fn monitoring_service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.monitoring_service", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `monitoring_service` after provisioning.\nThe monitoring service that the cluster should write metrics to. Automatically send metrics from pods in the cluster to the Google Cloud Monitoring API. VM metrics will be collected by Google Compute Engine regardless of this setting Available options include monitoring.googleapis.com(Legacy Stackdriver), monitoring.googleapis.com/kubernetes(Stackdriver Kubernetes Engine Monitoring), and none. Defaults to monitoring.googleapis.com/kubernetes."]
+    pub fn monitoring_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of the cluster, unique within the project and location."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name of the cluster, unique within the project and location."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network` after provisioning.\nThe name or self_link of the Google Compute Engine network to which the cluster is connected. For Shared VPC, set this to the self link of the shared network."]
-    pub fn network(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `network` after provisioning.\nThe name or self_link of the Google Compute Engine network to which the cluster is connected. For Shared VPC, set this to the self link of the shared network."]
+    pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `networking_mode` after provisioning.\nDetermines whether alias IPs or routes will be used for pod IPs in the cluster. Defaults to VPC_NATIVE for new clusters."]
-    pub fn networking_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.networking_mode", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `networking_mode` after provisioning.\nDetermines whether alias IPs or routes will be used for pod IPs in the cluster. Defaults to VPC_NATIVE for new clusters."]
+    pub fn networking_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.networking_mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_locations` after provisioning.\nThe list of zones in which the cluster's nodes are located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If this is specified for a zonal cluster, omit the cluster's zone."]
-    pub fn node_locations(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.node_locations", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `node_locations` after provisioning.\nThe list of zones in which the cluster's nodes are located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If this is specified for a zonal cluster, omit the cluster's zone."]
+    pub fn node_locations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.node_locations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_version` after provisioning.\nThe Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create. Defaults to the default version set by GKE which is not necessarily the latest version. This only affects nodes in the default node pool. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way. To update nodes in other node pools, use the version attribute on the node pool."]
-    pub fn node_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_version", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `node_version` after provisioning.\nThe Kubernetes version on the nodes. Must either be unset or set to the same value as min_master_version on create. Defaults to the default version set by GKE which is not necessarily the latest version. This only affects nodes in the default node pool. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way. To update nodes in other node pools, use the version attribute on the node pool."]
+    pub fn node_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `operation` after provisioning.\n"]
-    pub fn operation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operation", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `operation` after provisioning.\n"]
+    pub fn operation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operation", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_ipv6_google_access` after provisioning.\nThe desired state of IPv6 connectivity to Google Services. By default, no private IPv6 access to or from Google Services (all access will be via IPv4)."]
-    pub fn private_ipv6_google_access(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_ipv6_google_access", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `private_ipv6_google_access` after provisioning.\nThe desired state of IPv6 connectivity to Google Services. By default, no private IPv6 access to or from Google Services (all access will be via IPv4)."]
+    pub fn private_ipv6_google_access(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ipv6_google_access", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided, the provider project is used."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remove_default_node_pool` after provisioning.\nIf true, deletes the default node pool upon cluster creation. If you're using google_container_node_pool resources with no default node pool, this should be set to true, alongside setting initial_node_count to at least 1."]
-    pub fn remove_default_node_pool(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.remove_default_node_pool", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `remove_default_node_pool` after provisioning.\nIf true, deletes the default node pool upon cluster creation. If you're using google_container_node_pool resources with no default node pool, this should be set to true, alongside setting initial_node_count to at least 1."]
+    pub fn remove_default_node_pool(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.remove_default_node_pool", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the cluster."]
-    pub fn resource_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the cluster."]
+    pub fn resource_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\nServer-defined URL for the resource."]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `self_link` after provisioning.\nServer-defined URL for the resource."]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `services_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes services in this cluster, in CIDR notation (e.g. 1.2.3.4/29). Service addresses are typically put in the last /16 from the container CIDR."]
-    pub fn services_ipv4_cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.services_ipv4_cidr", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `services_ipv4_cidr` after provisioning.\nThe IP address range of the Kubernetes services in this cluster, in CIDR notation (e.g. 1.2.3.4/29). Service addresses are typically put in the last /16 from the container CIDR."]
+    pub fn services_ipv4_cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.services_ipv4_cidr", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnetwork` after provisioning.\nThe name or self_link of the Google Compute Engine subnetwork in which the cluster's instances are launched."]
-    pub fn subnetwork(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `subnetwork` after provisioning.\nThe name or self_link of the Google Compute Engine subnetwork in which the cluster's instances are launched."]
+    pub fn subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tpu_ipv4_cidr_block` after provisioning.\nThe IP address range of the Cloud TPUs in this cluster, in CIDR notation (e.g. 1.2.3.4/29)."]
-    pub fn tpu_ipv4_cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tpu_ipv4_cidr_block", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `tpu_ipv4_cidr_block` after provisioning.\nThe IP address range of the Cloud TPUs in this cluster, in CIDR notation (e.g. 1.2.3.4/29)."]
+    pub fn tpu_ipv4_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tpu_ipv4_cidr_block", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `addons_config` after provisioning.\n"]
-    pub fn addons_config(&self) -> ListRef<ContainerClusterAddonsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.addons_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `addons_config` after provisioning.\n"]
+    pub fn addons_config(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.addons_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authenticator_groups_config` after provisioning.\n"]
-    pub fn authenticator_groups_config(&self) -> ListRef<ContainerClusterAuthenticatorGroupsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.authenticator_groups_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authenticator_groups_config` after provisioning.\n"]
+    pub fn authenticator_groups_config(&self) -> terrars::ListRef<ContainerClusterAuthenticatorGroupsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authenticator_groups_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> ListRef<ContainerClusterBinaryAuthorizationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
+    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerClusterBinaryAuthorizationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_autoscaling` after provisioning.\n"]
-    pub fn cluster_autoscaling(&self) -> ListRef<ContainerClusterClusterAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cluster_autoscaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_autoscaling` after provisioning.\n"]
+    pub fn cluster_autoscaling(&self) -> terrars::ListRef<ContainerClusterClusterAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_autoscaling", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
-    pub fn confidential_nodes(&self) -> ListRef<ContainerClusterConfidentialNodesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
+    pub fn confidential_nodes(&self) -> terrars::ListRef<ContainerClusterConfidentialNodesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cost_management_config` after provisioning.\n"]
-    pub fn cost_management_config(&self) -> ListRef<ContainerClusterCostManagementConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cost_management_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cost_management_config` after provisioning.\n"]
+    pub fn cost_management_config(&self) -> terrars::ListRef<ContainerClusterCostManagementConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_management_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `database_encryption` after provisioning.\n"]
-    pub fn database_encryption(&self) -> ListRef<ContainerClusterDatabaseEncryptionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.database_encryption", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database_encryption` after provisioning.\n"]
+    pub fn database_encryption(&self) -> terrars::ListRef<ContainerClusterDatabaseEncryptionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.database_encryption", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_snat_status` after provisioning.\n"]
-    pub fn default_snat_status(&self) -> ListRef<ContainerClusterDefaultSnatStatusElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_snat_status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_snat_status` after provisioning.\n"]
+    pub fn default_snat_status(&self) -> terrars::ListRef<ContainerClusterDefaultSnatStatusElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_snat_status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `dns_config` after provisioning.\n"]
-    pub fn dns_config(&self) -> ListRef<ContainerClusterDnsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dns_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `dns_config` after provisioning.\n"]
+    pub fn dns_config(&self) -> terrars::ListRef<ContainerClusterDnsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_k8s_beta_apis` after provisioning.\n"]
-    pub fn enable_k8s_beta_apis(&self) -> ListRef<ContainerClusterEnableK8sBetaApisElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.enable_k8s_beta_apis", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enable_k8s_beta_apis` after provisioning.\n"]
+    pub fn enable_k8s_beta_apis(&self) -> terrars::ListRef<ContainerClusterEnableK8sBetaApisElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.enable_k8s_beta_apis", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> ListRef<ContainerClusterFleetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
+    pub fn fleet(&self) -> terrars::ListRef<ContainerClusterFleetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gateway_api_config` after provisioning.\n"]
-    pub fn gateway_api_config(&self) -> ListRef<ContainerClusterGatewayApiConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gateway_api_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `gateway_api_config` after provisioning.\n"]
+    pub fn gateway_api_config(&self) -> terrars::ListRef<ContainerClusterGatewayApiConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gateway_api_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_service_config` after provisioning.\n"]
-    pub fn identity_service_config(&self) -> ListRef<ContainerClusterIdentityServiceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.identity_service_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_service_config` after provisioning.\n"]
+    pub fn identity_service_config(&self) -> terrars::ListRef<ContainerClusterIdentityServiceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.identity_service_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ip_allocation_policy` after provisioning.\n"]
-    pub fn ip_allocation_policy(&self) -> ListRef<ContainerClusterIpAllocationPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ip_allocation_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ip_allocation_policy` after provisioning.\n"]
+    pub fn ip_allocation_policy(&self) -> terrars::ListRef<ContainerClusterIpAllocationPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ip_allocation_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> ListRef<ContainerClusterLoggingConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
+    pub fn logging_config(&self) -> terrars::ListRef<ContainerClusterLoggingConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
-    pub fn maintenance_policy(&self) -> ListRef<ContainerClusterMaintenancePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
+    pub fn maintenance_policy(&self) -> terrars::ListRef<ContainerClusterMaintenancePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `master_auth` after provisioning.\n"]
-    pub fn master_auth(&self) -> ListRef<ContainerClusterMasterAuthElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.master_auth", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `master_auth` after provisioning.\n"]
+    pub fn master_auth(&self) -> terrars::ListRef<ContainerClusterMasterAuthElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_auth", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `master_authorized_networks_config` after provisioning.\n"]
-    pub fn master_authorized_networks_config(&self) -> ListRef<ContainerClusterMasterAuthorizedNetworksConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.master_authorized_networks_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `master_authorized_networks_config` after provisioning.\n"]
+    pub fn master_authorized_networks_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterMasterAuthorizedNetworksConfigElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.master_authorized_networks_config", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `mesh_certificates` after provisioning.\n"]
-    pub fn mesh_certificates(&self) -> ListRef<ContainerClusterMeshCertificatesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mesh_certificates", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mesh_certificates` after provisioning.\n"]
+    pub fn mesh_certificates(&self) -> terrars::ListRef<ContainerClusterMeshCertificatesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mesh_certificates", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
-    pub fn monitoring_config(&self) -> ListRef<ContainerClusterMonitoringConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
+    pub fn monitoring_config(&self) -> terrars::ListRef<ContainerClusterMonitoringConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network_policy` after provisioning.\n"]
-    pub fn network_policy(&self) -> ListRef<ContainerClusterNetworkPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.network_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `network_policy` after provisioning.\n"]
+    pub fn network_policy(&self) -> terrars::ListRef<ContainerClusterNetworkPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> ListRef<ContainerClusterNodeConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
+    pub fn node_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool` after provisioning.\n"]
-    pub fn node_pool(&self) -> ListRef<ContainerClusterNodePoolElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_pool` after provisioning.\n"]
+    pub fn node_pool(&self) -> terrars::ListRef<ContainerClusterNodePoolElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_auto_config` after provisioning.\n"]
-    pub fn node_pool_auto_config(&self) -> ListRef<ContainerClusterNodePoolAutoConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool_auto_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_pool_auto_config` after provisioning.\n"]
+    pub fn node_pool_auto_config(&self) -> terrars::ListRef<ContainerClusterNodePoolAutoConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_auto_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_defaults` after provisioning.\n"]
-    pub fn node_pool_defaults(&self) -> ListRef<ContainerClusterNodePoolDefaultsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool_defaults", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_pool_defaults` after provisioning.\n"]
+    pub fn node_pool_defaults(&self) -> terrars::ListRef<ContainerClusterNodePoolDefaultsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_defaults", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> ListRef<ContainerClusterNotificationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
+    pub fn notification_config(&self) -> terrars::ListRef<ContainerClusterNotificationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `private_cluster_config` after provisioning.\n"]
-    pub fn private_cluster_config(&self) -> ListRef<ContainerClusterPrivateClusterConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.private_cluster_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `private_cluster_config` after provisioning.\n"]
+    pub fn private_cluster_config(&self) -> terrars::ListRef<ContainerClusterPrivateClusterConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_cluster_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `release_channel` after provisioning.\n"]
-    pub fn release_channel(&self) -> ListRef<ContainerClusterReleaseChannelElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.release_channel", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `release_channel` after provisioning.\n"]
+    pub fn release_channel(&self) -> terrars::ListRef<ContainerClusterReleaseChannelElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.release_channel", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_usage_export_config` after provisioning.\n"]
-    pub fn resource_usage_export_config(&self) -> ListRef<ContainerClusterResourceUsageExportConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.resource_usage_export_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_usage_export_config` after provisioning.\n"]
+    pub fn resource_usage_export_config(&self) -> terrars::ListRef<ContainerClusterResourceUsageExportConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_usage_export_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_posture_config` after provisioning.\n"]
-    pub fn security_posture_config(&self) -> ListRef<ContainerClusterSecurityPostureConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.security_posture_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_posture_config` after provisioning.\n"]
+    pub fn security_posture_config(&self) -> terrars::ListRef<ContainerClusterSecurityPostureConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_posture_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_external_ips_config` after provisioning.\n"]
-    pub fn service_external_ips_config(&self) -> ListRef<ContainerClusterServiceExternalIpsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.service_external_ips_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_external_ips_config` after provisioning.\n"]
+    pub fn service_external_ips_config(&self) -> terrars::ListRef<ContainerClusterServiceExternalIpsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_external_ips_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ContainerClusterTimeoutsElRef {
         ContainerClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vertical_pod_autoscaling` after provisioning.\n"]
-    pub fn vertical_pod_autoscaling(&self) -> ListRef<ContainerClusterVerticalPodAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vertical_pod_autoscaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vertical_pod_autoscaling` after provisioning.\n"]
+    pub fn vertical_pod_autoscaling(&self) -> terrars::ListRef<ContainerClusterVerticalPodAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vertical_pod_autoscaling", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `workload_identity_config` after provisioning.\n"]
-    pub fn workload_identity_config(&self) -> ListRef<ContainerClusterWorkloadIdentityConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `workload_identity_config` after provisioning.\n"]
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerClusterWorkloadIdentityConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElCloudrunConfigEl {
-    disabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    load_balancer_type: Option<PrimField<String>>,
+    disabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancer_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterAddonsConfigElCloudrunConfigEl {
-    #[doc= "Set the field `load_balancer_type`.\n"]
-    pub fn set_load_balancer_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.load_balancer_type = Some(v.into());
+    #[doc = "Set the field `load_balancer_type`.\n"]
+    pub fn set_load_balancer_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.load_balancer_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterAddonsConfigElCloudrunConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElCloudrunConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElCloudrunConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElCloudrunConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1716,8 +1932,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElCloudrunConfigEl {
 }
 
 pub struct BuildContainerClusterAddonsConfigElCloudrunConfigEl {
-    #[doc= ""]
-    pub disabled: PrimField<bool>,
+    #[doc = ""]
+    pub disabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElCloudrunConfigEl {
@@ -1730,12 +1946,15 @@ impl BuildContainerClusterAddonsConfigElCloudrunConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElCloudrunConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElCloudrunConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElCloudrunConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElCloudrunConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElCloudrunConfigElRef {
         ContainerClusterAddonsConfigElCloudrunConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1744,33 +1963,33 @@ impl Ref for ContainerClusterAddonsConfigElCloudrunConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElCloudrunConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disabled` after provisioning.\n"]
-    pub fn disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
+    #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `load_balancer_type` after provisioning.\n"]
-    pub fn load_balancer_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
+    #[doc = "Get a reference to the value of field `load_balancer_type` after provisioning.\n"]
+    pub fn load_balancer_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElConfigConnectorConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElConfigConnectorConfigEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElConfigConnectorConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElConfigConnectorConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElConfigConnectorConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElConfigConnectorConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1779,8 +1998,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElConfigConnectorConfigEl {
 }
 
 pub struct BuildContainerClusterAddonsConfigElConfigConnectorConfigEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElConfigConnectorConfigEl {
@@ -1790,12 +2009,15 @@ impl BuildContainerClusterAddonsConfigElConfigConnectorConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
         ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1804,28 +2026,28 @@ impl Ref for ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElConfigConnectorConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElDnsCacheConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElDnsCacheConfigEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElDnsCacheConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElDnsCacheConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElDnsCacheConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElDnsCacheConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1834,8 +2056,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElDnsCacheConfigEl {
 }
 
 pub struct BuildContainerClusterAddonsConfigElDnsCacheConfigEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElDnsCacheConfigEl {
@@ -1845,12 +2067,15 @@ impl BuildContainerClusterAddonsConfigElDnsCacheConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElDnsCacheConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElDnsCacheConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElDnsCacheConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElDnsCacheConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElDnsCacheConfigElRef {
         ContainerClusterAddonsConfigElDnsCacheConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1859,28 +2084,28 @@ impl Ref for ContainerClusterAddonsConfigElDnsCacheConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElDnsCacheConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1889,8 +2114,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElGcePersistentDiskCsiDriver
 }
 
 pub struct BuildContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl {
@@ -1900,12 +2125,15 @@ impl BuildContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef {
         ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1914,28 +2142,28 @@ impl Ref for ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef
 }
 
 impl ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1944,8 +2172,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfi
 }
 
 pub struct BuildContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl {
@@ -1955,12 +2183,15 @@ impl BuildContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
         ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1969,28 +2200,28 @@ impl Ref for ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1999,8 +2230,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl {
 }
 
 pub struct BuildContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl {
@@ -2010,12 +2241,15 @@ impl BuildContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
         ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2024,28 +2258,28 @@ impl Ref for ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElGkeBackupAgentConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElGkeBackupAgentConfigEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElGkeBackupAgentConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElGkeBackupAgentConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2054,8 +2288,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElGkeBackupAgentConfigEl {
 }
 
 pub struct BuildContainerClusterAddonsConfigElGkeBackupAgentConfigEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElGkeBackupAgentConfigEl {
@@ -2065,12 +2299,15 @@ impl BuildContainerClusterAddonsConfigElGkeBackupAgentConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
         ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2079,28 +2316,28 @@ impl Ref for ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl {
-    disabled: PrimField<bool>,
+    disabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2109,8 +2346,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl
 }
 
 pub struct BuildContainerClusterAddonsConfigElHorizontalPodAutoscalingEl {
-    #[doc= ""]
-    pub disabled: PrimField<bool>,
+    #[doc = ""]
+    pub disabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElHorizontalPodAutoscalingEl {
@@ -2120,12 +2357,15 @@ impl BuildContainerClusterAddonsConfigElHorizontalPodAutoscalingEl {
 }
 
 pub struct ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
         ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -2134,28 +2374,28 @@ impl Ref for ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
 }
 
 impl ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disabled` after provisioning.\n"]
-    pub fn disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
+    #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElHttpLoadBalancingEl {
-    disabled: PrimField<bool>,
+    disabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElHttpLoadBalancingEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElHttpLoadBalancingEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElHttpLoadBalancingEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElHttpLoadBalancingEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElHttpLoadBalancingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2164,8 +2404,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElHttpLoadBalancingEl {
 }
 
 pub struct BuildContainerClusterAddonsConfigElHttpLoadBalancingEl {
-    #[doc= ""]
-    pub disabled: PrimField<bool>,
+    #[doc = ""]
+    pub disabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElHttpLoadBalancingEl {
@@ -2175,12 +2415,15 @@ impl BuildContainerClusterAddonsConfigElHttpLoadBalancingEl {
 }
 
 pub struct ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
         ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
             shared: shared,
             base: base.to_string(),
@@ -2189,28 +2432,28 @@ impl Ref for ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
 }
 
 impl ContainerClusterAddonsConfigElHttpLoadBalancingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disabled` after provisioning.\n"]
-    pub fn disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
+    #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigElNetworkPolicyConfigEl {
-    disabled: PrimField<bool>,
+    disabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterAddonsConfigElNetworkPolicyConfigEl { }
 
-impl ToListMappable for ContainerClusterAddonsConfigElNetworkPolicyConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigElNetworkPolicyConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2219,8 +2462,8 @@ impl ToListMappable for ContainerClusterAddonsConfigElNetworkPolicyConfigEl {
 }
 
 pub struct BuildContainerClusterAddonsConfigElNetworkPolicyConfigEl {
-    #[doc= ""]
-    pub disabled: PrimField<bool>,
+    #[doc = ""]
+    pub disabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterAddonsConfigElNetworkPolicyConfigEl {
@@ -2230,12 +2473,15 @@ impl BuildContainerClusterAddonsConfigElNetworkPolicyConfigEl {
 }
 
 pub struct ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
         ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2244,226 +2490,263 @@ impl Ref for ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElNetworkPolicyConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disabled` after provisioning.\n"]
-    pub fn disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
+    #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterAddonsConfigElDynamic {
-    cloudrun_config: Option<DynamicBlock<ContainerClusterAddonsConfigElCloudrunConfigEl>>,
-    config_connector_config: Option<DynamicBlock<ContainerClusterAddonsConfigElConfigConnectorConfigEl>>,
-    dns_cache_config: Option<DynamicBlock<ContainerClusterAddonsConfigElDnsCacheConfigEl>>,
-    gce_persistent_disk_csi_driver_config: Option<
-        DynamicBlock<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>,
-    >,
-    gcp_filestore_csi_driver_config: Option<
-        DynamicBlock<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>,
-    >,
-    gcs_fuse_csi_driver_config: Option<DynamicBlock<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>>,
-    gke_backup_agent_config: Option<DynamicBlock<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>>,
-    horizontal_pod_autoscaling: Option<DynamicBlock<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>>,
-    http_load_balancing: Option<DynamicBlock<ContainerClusterAddonsConfigElHttpLoadBalancingEl>>,
-    network_policy_config: Option<DynamicBlock<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>>,
+    cloudrun_config: std::option::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElCloudrunConfigEl>>,
+    config_connector_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElConfigConnectorConfigEl>>,
+    dns_cache_config: std::option::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElDnsCacheConfigEl>>,
+    gce_persistent_disk_csi_driver_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>>,
+    gcp_filestore_csi_driver_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>>,
+    gcs_fuse_csi_driver_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>>,
+    gke_backup_agent_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>>,
+    horizontal_pod_autoscaling: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>>,
+    http_load_balancing: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElHttpLoadBalancingEl>>,
+    network_policy_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAddonsConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudrun_config: Option<Vec<ContainerClusterAddonsConfigElCloudrunConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    config_connector_config: Option<Vec<ContainerClusterAddonsConfigElConfigConnectorConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dns_cache_config: Option<Vec<ContainerClusterAddonsConfigElDnsCacheConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gce_persistent_disk_csi_driver_config: Option<Vec<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gcp_filestore_csi_driver_config: Option<Vec<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gcs_fuse_csi_driver_config: Option<Vec<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gke_backup_agent_config: Option<Vec<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    horizontal_pod_autoscaling: Option<Vec<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_load_balancing: Option<Vec<ContainerClusterAddonsConfigElHttpLoadBalancingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_policy_config: Option<Vec<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudrun_config: std::option::Option<std::vec::Vec<ContainerClusterAddonsConfigElCloudrunConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    config_connector_config: std::option::Option<std::vec::Vec<ContainerClusterAddonsConfigElConfigConnectorConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_cache_config: std::option::Option<std::vec::Vec<ContainerClusterAddonsConfigElDnsCacheConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gce_persistent_disk_csi_driver_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gcp_filestore_csi_driver_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gcs_fuse_csi_driver_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gke_backup_agent_config: std::option::Option<std::vec::Vec<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    horizontal_pod_autoscaling: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_load_balancing: std::option::Option<std::vec::Vec<ContainerClusterAddonsConfigElHttpLoadBalancingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_policy_config: std::option::Option<std::vec::Vec<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>>,
     dynamic: ContainerClusterAddonsConfigElDynamic,
 }
 
 impl ContainerClusterAddonsConfigEl {
-    #[doc= "Set the field `cloudrun_config`.\n"]
+    #[doc = "Set the field `cloudrun_config`.\n"]
     pub fn set_cloudrun_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElCloudrunConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElCloudrunConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloudrun_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudrun_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudrun_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudrun_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `config_connector_config`.\n"]
+    #[doc = "Set the field `config_connector_config`.\n"]
     pub fn set_config_connector_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElConfigConnectorConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElConfigConnectorConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.config_connector_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.config_connector_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.config_connector_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.config_connector_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dns_cache_config`.\n"]
+    #[doc = "Set the field `dns_cache_config`.\n"]
     pub fn set_dns_cache_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElDnsCacheConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElDnsCacheConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dns_cache_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dns_cache_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dns_cache_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dns_cache_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gce_persistent_disk_csi_driver_config`.\n"]
+    #[doc = "Set the field `gce_persistent_disk_csi_driver_config`.\n"]
     pub fn set_gce_persistent_disk_csi_driver_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gce_persistent_disk_csi_driver_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gce_persistent_disk_csi_driver_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gce_persistent_disk_csi_driver_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gce_persistent_disk_csi_driver_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gcp_filestore_csi_driver_config`.\n"]
+    #[doc = "Set the field `gcp_filestore_csi_driver_config`.\n"]
     pub fn set_gcp_filestore_csi_driver_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gcp_filestore_csi_driver_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gcp_filestore_csi_driver_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcp_filestore_csi_driver_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gcp_filestore_csi_driver_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gcs_fuse_csi_driver_config`.\n"]
+    #[doc = "Set the field `gcs_fuse_csi_driver_config`.\n"]
     pub fn set_gcs_fuse_csi_driver_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gcs_fuse_csi_driver_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gcs_fuse_csi_driver_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcs_fuse_csi_driver_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gcs_fuse_csi_driver_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gke_backup_agent_config`.\n"]
+    #[doc = "Set the field `gke_backup_agent_config`.\n"]
     pub fn set_gke_backup_agent_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElGkeBackupAgentConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gke_backup_agent_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gke_backup_agent_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gke_backup_agent_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gke_backup_agent_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `horizontal_pod_autoscaling`.\n"]
+    #[doc = "Set the field `horizontal_pod_autoscaling`.\n"]
     pub fn set_horizontal_pod_autoscaling(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElHorizontalPodAutoscalingEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.horizontal_pod_autoscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.horizontal_pod_autoscaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.horizontal_pod_autoscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.horizontal_pod_autoscaling = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `http_load_balancing`.\n"]
+    #[doc = "Set the field `http_load_balancing`.\n"]
     pub fn set_http_load_balancing(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElHttpLoadBalancingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElHttpLoadBalancingEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_load_balancing = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_load_balancing = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_load_balancing = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_load_balancing = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_policy_config`.\n"]
+    #[doc = "Set the field `network_policy_config`.\n"]
     pub fn set_network_policy_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterAddonsConfigElNetworkPolicyConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_policy_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_policy_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_policy_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_policy_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterAddonsConfigEl {
-    type O = BlockAssignable<ContainerClusterAddonsConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAddonsConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAddonsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2486,18 +2769,18 @@ impl BuildContainerClusterAddonsConfigEl {
             horizontal_pod_autoscaling: core::default::Default::default(),
             http_load_balancing: core::default::Default::default(),
             network_policy_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterAddonsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAddonsConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAddonsConfigElRef {
+impl terrars::Ref for ContainerClusterAddonsConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterAddonsConfigElRef {
         ContainerClusterAddonsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2506,77 +2789,81 @@ impl Ref for ContainerClusterAddonsConfigElRef {
 }
 
 impl ContainerClusterAddonsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudrun_config` after provisioning.\n"]
-    pub fn cloudrun_config(&self) -> ListRef<ContainerClusterAddonsConfigElCloudrunConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudrun_config", self.base))
+    #[doc = "Get a reference to the value of field `cloudrun_config` after provisioning.\n"]
+    pub fn cloudrun_config(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElCloudrunConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudrun_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `config_connector_config` after provisioning.\n"]
-    pub fn config_connector_config(&self) -> ListRef<ContainerClusterAddonsConfigElConfigConnectorConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.config_connector_config", self.base))
+    #[doc = "Get a reference to the value of field `config_connector_config` after provisioning.\n"]
+    pub fn config_connector_config(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElConfigConnectorConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.config_connector_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dns_cache_config` after provisioning.\n"]
-    pub fn dns_cache_config(&self) -> ListRef<ContainerClusterAddonsConfigElDnsCacheConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dns_cache_config", self.base))
+    #[doc = "Get a reference to the value of field `dns_cache_config` after provisioning.\n"]
+    pub fn dns_cache_config(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElDnsCacheConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_cache_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gce_persistent_disk_csi_driver_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `gce_persistent_disk_csi_driver_config` after provisioning.\n"]
     pub fn gce_persistent_disk_csi_driver_config(
         &self,
-    ) -> ListRef<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gce_persistent_disk_csi_driver_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterAddonsConfigElGcePersistentDiskCsiDriverConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gce_persistent_disk_csi_driver_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gcp_filestore_csi_driver_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `gcp_filestore_csi_driver_config` after provisioning.\n"]
     pub fn gcp_filestore_csi_driver_config(
         &self,
-    ) -> ListRef<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gcp_filestore_csi_driver_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterAddonsConfigElGcpFilestoreCsiDriverConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gcp_filestore_csi_driver_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gcs_fuse_csi_driver_config` after provisioning.\n"]
-    pub fn gcs_fuse_csi_driver_config(&self) -> ListRef<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gcs_fuse_csi_driver_config", self.base))
+    #[doc = "Get a reference to the value of field `gcs_fuse_csi_driver_config` after provisioning.\n"]
+    pub fn gcs_fuse_csi_driver_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterAddonsConfigElGcsFuseCsiDriverConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_fuse_csi_driver_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gke_backup_agent_config` after provisioning.\n"]
-    pub fn gke_backup_agent_config(&self) -> ListRef<ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gke_backup_agent_config", self.base))
+    #[doc = "Get a reference to the value of field `gke_backup_agent_config` after provisioning.\n"]
+    pub fn gke_backup_agent_config(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElGkeBackupAgentConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gke_backup_agent_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `horizontal_pod_autoscaling` after provisioning.\n"]
-    pub fn horizontal_pod_autoscaling(&self) -> ListRef<ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.horizontal_pod_autoscaling", self.base))
+    #[doc = "Get a reference to the value of field `horizontal_pod_autoscaling` after provisioning.\n"]
+    pub fn horizontal_pod_autoscaling(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterAddonsConfigElHorizontalPodAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.horizontal_pod_autoscaling", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_load_balancing` after provisioning.\n"]
-    pub fn http_load_balancing(&self) -> ListRef<ContainerClusterAddonsConfigElHttpLoadBalancingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_load_balancing", self.base))
+    #[doc = "Get a reference to the value of field `http_load_balancing` after provisioning.\n"]
+    pub fn http_load_balancing(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElHttpLoadBalancingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_load_balancing", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_policy_config` after provisioning.\n"]
-    pub fn network_policy_config(&self) -> ListRef<ContainerClusterAddonsConfigElNetworkPolicyConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.network_policy_config", self.base))
+    #[doc = "Get a reference to the value of field `network_policy_config` after provisioning.\n"]
+    pub fn network_policy_config(&self) -> terrars::ListRef<ContainerClusterAddonsConfigElNetworkPolicyConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_policy_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterAuthenticatorGroupsConfigEl {
-    security_group: PrimField<String>,
+    security_group: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterAuthenticatorGroupsConfigEl { }
 
-impl ToListMappable for ContainerClusterAuthenticatorGroupsConfigEl {
-    type O = BlockAssignable<ContainerClusterAuthenticatorGroupsConfigEl>;
+impl terrars::ToListMappable for ContainerClusterAuthenticatorGroupsConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterAuthenticatorGroupsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2585,8 +2872,9 @@ impl ToListMappable for ContainerClusterAuthenticatorGroupsConfigEl {
 }
 
 pub struct BuildContainerClusterAuthenticatorGroupsConfigEl {
-    #[doc= "The name of the RBAC security group for use with Google security groups in Kubernetes RBAC. Group name must be in format gke-security-groups@yourdomain.com."]
-    pub security_group: PrimField<String>,
+    #[doc =
+        "The name of the RBAC security group for use with Google security groups in Kubernetes RBAC. Group name must be in format gke-security-groups@yourdomain.com."]
+    pub security_group: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterAuthenticatorGroupsConfigEl {
@@ -2596,12 +2884,15 @@ impl BuildContainerClusterAuthenticatorGroupsConfigEl {
 }
 
 pub struct ContainerClusterAuthenticatorGroupsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterAuthenticatorGroupsConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterAuthenticatorGroupsConfigElRef {
+impl terrars::Ref for ContainerClusterAuthenticatorGroupsConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterAuthenticatorGroupsConfigElRef {
         ContainerClusterAuthenticatorGroupsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2610,43 +2901,44 @@ impl Ref for ContainerClusterAuthenticatorGroupsConfigElRef {
 }
 
 impl ContainerClusterAuthenticatorGroupsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `security_group` after provisioning.\nThe name of the RBAC security group for use with Google security groups in Kubernetes RBAC. Group name must be in format gke-security-groups@yourdomain.com."]
-    pub fn security_group(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.security_group", self.base))
+    #[doc =
+        "Get a reference to the value of field `security_group` after provisioning.\nThe name of the RBAC security group for use with Google security groups in Kubernetes RBAC. Group name must be in format gke-security-groups@yourdomain.com."]
+    pub fn security_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterBinaryAuthorizationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    evaluation_mode: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    evaluation_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterBinaryAuthorizationEl {
-    #[doc= "Set the field `enabled`.\nEnable Binary Authorization for this cluster."]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\nEnable Binary Authorization for this cluster."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `evaluation_mode`.\nMode of operation for Binary Authorization policy evaluation."]
-    pub fn set_evaluation_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.evaluation_mode = Some(v.into());
+    #[doc = "Set the field `evaluation_mode`.\nMode of operation for Binary Authorization policy evaluation."]
+    pub fn set_evaluation_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.evaluation_mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterBinaryAuthorizationEl {
-    type O = BlockAssignable<ContainerClusterBinaryAuthorizationEl>;
+impl terrars::ToListMappable for ContainerClusterBinaryAuthorizationEl {
+    type O = terrars::BlockAssignable<ContainerClusterBinaryAuthorizationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2666,12 +2958,12 @@ impl BuildContainerClusterBinaryAuthorizationEl {
 }
 
 pub struct ContainerClusterBinaryAuthorizationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterBinaryAuthorizationElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterBinaryAuthorizationElRef {
+impl terrars::Ref for ContainerClusterBinaryAuthorizationElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterBinaryAuthorizationElRef {
         ContainerClusterBinaryAuthorizationElRef {
             shared: shared,
             base: base.to_string(),
@@ -2680,49 +2972,56 @@ impl Ref for ContainerClusterBinaryAuthorizationElRef {
 }
 
 impl ContainerClusterBinaryAuthorizationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nEnable Binary Authorization for this cluster."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nEnable Binary Authorization for this cluster."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `evaluation_mode` after provisioning.\nMode of operation for Binary Authorization policy evaluation."]
-    pub fn evaluation_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.evaluation_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `evaluation_mode` after provisioning.\nMode of operation for Binary Authorization policy evaluation."]
+    pub fn evaluation_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.evaluation_mode", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_upgrade_start_time: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_upgrade_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsEl {
-    #[doc= "Set the field `auto_upgrade_start_time`.\n"]
-    pub fn set_auto_upgrade_start_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.auto_upgrade_start_time = Some(v.into());
+    #[doc = "Set the field `auto_upgrade_start_time`.\n"]
+    pub fn set_auto_upgrade_start_time(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.auto_upgrade_start_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.description = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsEl {
+impl terrars
+::ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsEl {
     type O =
-        BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsEl>;
+        terrars
+        ::BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2742,14 +3041,14 @@ impl BuildContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManageme
 }
 
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef {
+impl terrars::Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef {
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef {
             shared: shared,
@@ -2759,48 +3058,50 @@ impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManag
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `auto_upgrade_start_time` after provisioning.\n"]
-    pub fn auto_upgrade_start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_upgrade_start_time", self.base))
+    #[doc = "Get a reference to the value of field `auto_upgrade_start_time` after provisioning.\n"]
+    pub fn auto_upgrade_start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_upgrade_start_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_repair: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_upgrade: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_repair: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_upgrade: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl {
-    #[doc= "Set the field `auto_repair`.\nSpecifies whether the node auto-repair is enabled for the node pool. If enabled, the nodes in this node pool will be monitored and, if they fail health checks too many times, an automatic repair action will be triggered."]
-    pub fn set_auto_repair(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.auto_repair = Some(v.into());
+    #[doc =
+        "Set the field `auto_repair`.\nSpecifies whether the node auto-repair is enabled for the node pool. If enabled, the nodes in this node pool will be monitored and, if they fail health checks too many times, an automatic repair action will be triggered."]
+    pub fn set_auto_repair(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_repair = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `auto_upgrade`.\nSpecifies whether node auto-upgrade is enabled for the node pool. If enabled, node auto-upgrade helps keep the nodes in your node pool up to date with the latest release version of Kubernetes."]
-    pub fn set_auto_upgrade(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.auto_upgrade = Some(v.into());
+    #[doc =
+        "Set the field `auto_upgrade`.\nSpecifies whether node auto-upgrade is enabled for the node pool. If enabled, node auto-upgrade helps keep the nodes in your node pool up to date with the latest release version of Kubernetes."]
+    pub fn set_auto_upgrade(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_upgrade = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl {
-    type O = BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>;
+impl terrars::ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl {
+    type O = terrars::BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2820,14 +3121,14 @@ impl BuildContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManageme
 }
 
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef {
+impl terrars::Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef {
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef {
             shared: shared,
@@ -2837,55 +3138,63 @@ impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManag
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `auto_repair` after provisioning.\nSpecifies whether the node auto-repair is enabled for the node pool. If enabled, the nodes in this node pool will be monitored and, if they fail health checks too many times, an automatic repair action will be triggered."]
-    pub fn auto_repair(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_repair", self.base))
+    #[doc =
+        "Get a reference to the value of field `auto_repair` after provisioning.\nSpecifies whether the node auto-repair is enabled for the node pool. If enabled, the nodes in this node pool will be monitored and, if they fail health checks too many times, an automatic repair action will be triggered."]
+    pub fn auto_repair(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_repair", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `auto_upgrade` after provisioning.\nSpecifies whether node auto-upgrade is enabled for the node pool. If enabled, node auto-upgrade helps keep the nodes in your node pool up to date with the latest release version of Kubernetes."]
-    pub fn auto_upgrade(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_upgrade", self.base))
+    #[doc =
+        "Get a reference to the value of field `auto_upgrade` after provisioning.\nSpecifies whether node auto-upgrade is enabled for the node pool. If enabled, node auto-upgrade helps keep the nodes in your node pool up to date with the latest release version of Kubernetes."]
+    pub fn auto_upgrade(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_upgrade", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `upgrade_options` after provisioning.\nSpecifies the Auto Upgrade knobs for the node pool."]
+    #[doc =
+        "Get a reference to the value of field `upgrade_options` after provisioning.\nSpecifies the Auto Upgrade knobs for the node pool."]
     pub fn upgrade_options(
         &self,
-    ) -> ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.upgrade_options", self.base))
+    ) -> terrars
+    ::ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElUpgradeOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.upgrade_options", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_integrity_monitoring: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_secure_boot: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_integrity_monitoring: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_secure_boot: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl {
-    #[doc= "Set the field `enable_integrity_monitoring`.\nDefines whether the instance has integrity monitoring enabled."]
-    pub fn set_enable_integrity_monitoring(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_integrity_monitoring = Some(v.into());
+    #[doc =
+        "Set the field `enable_integrity_monitoring`.\nDefines whether the instance has integrity monitoring enabled."]
+    pub fn set_enable_integrity_monitoring(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_integrity_monitoring = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_secure_boot`.\nDefines whether the instance has Secure Boot enabled."]
-    pub fn set_enable_secure_boot(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_secure_boot = Some(v.into());
+    #[doc = "Set the field `enable_secure_boot`.\nDefines whether the instance has Secure Boot enabled."]
+    pub fn set_enable_secure_boot(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_secure_boot = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl {
-    type O = BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl>;
+impl terrars
+::ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl {
+    type O =
+        terrars
+        ::BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2905,14 +3214,14 @@ impl BuildContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShielded
 }
 
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef {
+impl terrars::Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef {
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef {
             shared: shared,
@@ -2922,59 +3231,68 @@ impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShiel
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_integrity_monitoring` after provisioning.\nDefines whether the instance has integrity monitoring enabled."]
-    pub fn enable_integrity_monitoring(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_integrity_monitoring", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_integrity_monitoring` after provisioning.\nDefines whether the instance has integrity monitoring enabled."]
+    pub fn enable_integrity_monitoring(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_integrity_monitoring", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_secure_boot` after provisioning.\nDefines whether the instance has Secure Boot enabled."]
-    pub fn enable_secure_boot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_secure_boot", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_secure_boot` after provisioning.\nDefines whether the instance has Secure Boot enabled."]
+    pub fn enable_secure_boot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_secure_boot", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_percentage: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_soak_duration: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_percentage: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_soak_duration: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
-    #[doc= "Set the field `batch_node_count`.\nNumber of blue nodes to drain in a batch."]
-    pub fn set_batch_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.batch_node_count = Some(v.into());
+    #[doc = "Set the field `batch_node_count`.\nNumber of blue nodes to drain in a batch."]
+    pub fn set_batch_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.batch_node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `batch_percentage`.\nPercentage of the bool pool nodes to drain in a batch. The range of this field should be (0.0, 1.0]."]
-    pub fn set_batch_percentage(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.batch_percentage = Some(v.into());
+    #[doc =
+        "Set the field `batch_percentage`.\nPercentage of the bool pool nodes to drain in a batch. The range of this field should be (0.0, 1.0]."]
+    pub fn set_batch_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.batch_percentage = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `batch_soak_duration`.\nSoak time after each batch gets drained.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
-    pub fn set_batch_soak_duration(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.batch_soak_duration = Some(v.into());
+    #[doc =
+        "Set the field `batch_soak_duration`.\nSoak time after each batch gets drained.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
+    pub fn set_batch_soak_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.batch_soak_duration = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
+impl terrars
+::ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2997,14 +3315,15 @@ impl BuildContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeS
 }
 
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
+impl terrars
+::Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
             shared: shared,
@@ -3014,30 +3333,36 @@ impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgra
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `batch_node_count` after provisioning.\nNumber of blue nodes to drain in a batch."]
-    pub fn batch_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `batch_node_count` after provisioning.\nNumber of blue nodes to drain in a batch."]
+    pub fn batch_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_node_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `batch_percentage` after provisioning.\nPercentage of the bool pool nodes to drain in a batch. The range of this field should be (0.0, 1.0]."]
-    pub fn batch_percentage(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_percentage", self.base))
+    #[doc =
+        "Get a reference to the value of field `batch_percentage` after provisioning.\nPercentage of the bool pool nodes to drain in a batch. The range of this field should be (0.0, 1.0]."]
+    pub fn batch_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_percentage", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `batch_soak_duration` after provisioning.\nSoak time after each batch gets drained.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
-    pub fn batch_soak_duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_soak_duration", self.base))
+    #[doc =
+        "Get a reference to the value of field `batch_soak_duration` after provisioning.\nSoak time after each batch gets drained.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
+    pub fn batch_soak_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_soak_duration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElDynamic {
-    standard_rollout_policy: Option<
-        DynamicBlock<
+    standard_rollout_policy: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl,
         >,
     >,
@@ -3045,11 +3370,15 @@ struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSett
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_pool_soak_duration: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    standard_rollout_policy: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_pool_soak_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    standard_rollout_policy: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl,
         >,
     >,
@@ -3057,44 +3386,53 @@ pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgrade
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl {
-    #[doc= "Set the field `node_pool_soak_duration`.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
-    pub fn set_node_pool_soak_duration(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.node_pool_soak_duration = Some(v.into());
+    #[doc =
+        "Set the field `node_pool_soak_duration`.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
+    pub fn set_node_pool_soak_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.node_pool_soak_duration = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `standard_rollout_policy`.\n"]
+    #[doc = "Set the field `standard_rollout_policy`.\n"]
     pub fn set_standard_rollout_policy(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.standard_rollout_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.standard_rollout_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.standard_rollout_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.standard_rollout_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl {
+impl terrars
+::ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3111,20 +3449,21 @@ impl BuildContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeS
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl {
             node_pool_soak_duration: core::default::Default::default(),
             standard_rollout_policy: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef {
+impl terrars
+::Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef {
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef {
             shared: shared,
@@ -3134,29 +3473,34 @@ impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgra
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_soak_duration` after provisioning.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
-    pub fn node_pool_soak_duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_pool_soak_duration", self.base))
+    #[doc =
+        "Get a reference to the value of field `node_pool_soak_duration` after provisioning.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up.\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\"."]
+    pub fn node_pool_soak_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_pool_soak_duration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `standard_rollout_policy` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `standard_rollout_policy` after provisioning.\n"]
     pub fn standard_rollout_policy(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.standard_rollout_policy", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.standard_rollout_policy", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElDynamic {
-    blue_green_settings: Option<
-        DynamicBlock<
+    blue_green_settings: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl,
         >,
     >,
@@ -3164,67 +3508,77 @@ struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSett
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_surge: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_unavailable: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    strategy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    blue_green_settings: Option<
-        Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_surge: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_unavailable: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    blue_green_settings: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl>,
     >,
     dynamic: ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElDynamic,
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl {
-    #[doc= "Set the field `max_surge`.\nThe maximum number of nodes that can be created beyond the current size of the node pool during the upgrade process."]
-    pub fn set_max_surge(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_surge = Some(v.into());
+    #[doc =
+        "Set the field `max_surge`.\nThe maximum number of nodes that can be created beyond the current size of the node pool during the upgrade process."]
+    pub fn set_max_surge(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_surge = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_unavailable`.\nThe maximum number of nodes that can be simultaneously unavailable during the upgrade process."]
-    pub fn set_max_unavailable(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_unavailable = Some(v.into());
+    #[doc =
+        "Set the field `max_unavailable`.\nThe maximum number of nodes that can be simultaneously unavailable during the upgrade process."]
+    pub fn set_max_unavailable(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_unavailable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `strategy`.\nUpdate strategy of the node pool."]
-    pub fn set_strategy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.strategy = Some(v.into());
+    #[doc = "Set the field `strategy`.\nUpdate strategy of the node pool."]
+    pub fn set_strategy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.strategy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `blue_green_settings`.\n"]
+    #[doc = "Set the field `blue_green_settings`.\n"]
     pub fn set_blue_green_settings(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.blue_green_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.blue_green_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.blue_green_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.blue_green_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl {
-    type O = BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl>;
+impl terrars::ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl {
+    type O =
+        terrars::BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3241,20 +3595,20 @@ impl BuildContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeS
             max_unavailable: core::default::Default::default(),
             strategy: core::default::Default::default(),
             blue_green_settings: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef {
+impl terrars::Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef {
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef {
             shared: shared,
@@ -3264,184 +3618,213 @@ impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgra
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_surge` after provisioning.\nThe maximum number of nodes that can be created beyond the current size of the node pool during the upgrade process."]
-    pub fn max_surge(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_surge", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_surge` after provisioning.\nThe maximum number of nodes that can be created beyond the current size of the node pool during the upgrade process."]
+    pub fn max_surge(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_surge", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_unavailable` after provisioning.\nThe maximum number of nodes that can be simultaneously unavailable during the upgrade process."]
-    pub fn max_unavailable(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_unavailable` after provisioning.\nThe maximum number of nodes that can be simultaneously unavailable during the upgrade process."]
+    pub fn max_unavailable(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `strategy` after provisioning.\nUpdate strategy of the node pool."]
-    pub fn strategy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.strategy", self.base))
+    #[doc = "Get a reference to the value of field `strategy` after provisioning.\nUpdate strategy of the node pool."]
+    pub fn strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.strategy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `blue_green_settings` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `blue_green_settings` after provisioning.\n"]
     pub fn blue_green_settings(
         &self,
-    ) -> ListRef<
-        ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef,
-    > {
-        ListRef::new(self.shared().clone(), format!("{}.blue_green_settings", self.base))
+    ) -> terrars
+    ::ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElBlueGreenSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.blue_green_settings", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElDynamic {
-    management: Option<DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>>,
-    shielded_instance_config: Option<
-        DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl>,
+    management: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>>,
+    shielded_instance_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl>,
     >,
-    upgrade_settings: Option<
-        DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl>,
-    >,
+    upgrade_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    boot_disk_kms_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk_size: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_cpu_platform: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oauth_scopes: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_account: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    management: Option<Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    shielded_instance_config: Option<
-        Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    upgrade_settings: Option<Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_cpu_platform: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth_scopes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    management: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shielded_instance_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    upgrade_settings: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl>>,
     dynamic: ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElDynamic,
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl {
-    #[doc= "Set the field `boot_disk_kms_key`.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
-    pub fn set_boot_disk_kms_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.boot_disk_kms_key = Some(v.into());
+    #[doc =
+        "Set the field `boot_disk_kms_key`.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
+    pub fn set_boot_disk_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.boot_disk_kms_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk_size`.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
-    pub fn set_disk_size(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.disk_size = Some(v.into());
+    #[doc =
+        "Set the field `disk_size`.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
+    pub fn set_disk_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.disk_size = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk_type`.\nType of the disk attached to each node."]
-    pub fn set_disk_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.disk_type = Some(v.into());
+    #[doc = "Set the field `disk_type`.\nType of the disk attached to each node."]
+    pub fn set_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.disk_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `image_type`.\nThe default image type used by NAP once a new node pool is being created."]
-    pub fn set_image_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.image_type = Some(v.into());
+    #[doc = "Set the field `image_type`.\nThe default image type used by NAP once a new node pool is being created."]
+    pub fn set_image_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.image_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_cpu_platform`.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform. Applicable values are the friendly names of CPU platforms, such as Intel Haswell."]
-    pub fn set_min_cpu_platform(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.min_cpu_platform = Some(v.into());
+    #[doc =
+        "Set the field `min_cpu_platform`.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform. Applicable values are the friendly names of CPU platforms, such as Intel Haswell."]
+    pub fn set_min_cpu_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.min_cpu_platform = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `oauth_scopes`.\nScopes that are used by NAP when creating node pools."]
-    pub fn set_oauth_scopes(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.oauth_scopes = Some(v.into());
+    #[doc = "Set the field `oauth_scopes`.\nScopes that are used by NAP when creating node pools."]
+    pub fn set_oauth_scopes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.oauth_scopes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_account`.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
-    pub fn set_service_account(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_account = Some(v.into());
+    #[doc = "Set the field `service_account`.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
+    pub fn set_service_account(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service_account = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `management`.\n"]
+    #[doc = "Set the field `management`.\n"]
     pub fn set_management(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.management = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.management = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.management = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.management = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `shielded_instance_config`.\n"]
+    #[doc = "Set the field `shielded_instance_config`.\n"]
     pub fn set_shielded_instance_config(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.shielded_instance_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.shielded_instance_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.shielded_instance_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.shielded_instance_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `upgrade_settings`.\n"]
+    #[doc = "Set the field `upgrade_settings`.\n"]
     pub fn set_upgrade_settings(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.upgrade_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.upgrade_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.upgrade_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.upgrade_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl {
-    type O = BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>;
+impl terrars::ToListMappable for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl {
+    type O = terrars::BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3464,18 +3847,21 @@ impl BuildContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl {
             management: core::default::Default::default(),
             shielded_instance_config: core::default::Default::default(),
             upgrade_settings: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
+impl terrars::Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
         ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
             shared: shared,
             base: base.to_string(),
@@ -3484,93 +3870,102 @@ impl Ref for ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
 }
 
 impl ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `boot_disk_kms_key` after provisioning.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
-    pub fn boot_disk_kms_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_kms_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `boot_disk_kms_key` after provisioning.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
+    pub fn boot_disk_kms_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_kms_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `disk_size` after provisioning.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
-    pub fn disk_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disk_size", self.base))
+    #[doc =
+        "Get a reference to the value of field `disk_size` after provisioning.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
+    pub fn disk_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_size", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `disk_type` after provisioning.\nType of the disk attached to each node."]
-    pub fn disk_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `disk_type` after provisioning.\nType of the disk attached to each node."]
+    pub fn disk_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_type` after provisioning.\nThe default image type used by NAP once a new node pool is being created."]
-    pub fn image_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `image_type` after provisioning.\nThe default image type used by NAP once a new node pool is being created."]
+    pub fn image_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_cpu_platform` after provisioning.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform. Applicable values are the friendly names of CPU platforms, such as Intel Haswell."]
-    pub fn min_cpu_platform(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
+    #[doc =
+        "Get a reference to the value of field `min_cpu_platform` after provisioning.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform. Applicable values are the friendly names of CPU platforms, such as Intel Haswell."]
+    pub fn min_cpu_platform(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oauth_scopes` after provisioning.\nScopes that are used by NAP when creating node pools."]
-    pub fn oauth_scopes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.oauth_scopes", self.base))
+    #[doc =
+        "Get a reference to the value of field `oauth_scopes` after provisioning.\nScopes that are used by NAP when creating node pools."]
+    pub fn oauth_scopes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_scopes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_account` after provisioning.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
-    pub fn service_account(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
+    #[doc =
+        "Get a reference to the value of field `service_account` after provisioning.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
+    pub fn service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.management", self.base))
+    #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
+    pub fn management(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElManagementElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `shielded_instance_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `shielded_instance_config` after provisioning.\n"]
     pub fn shielded_instance_config(
         &self,
-    ) -> ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElShieldedInstanceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `upgrade_settings` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `upgrade_settings` after provisioning.\n"]
     pub fn upgrade_settings(
         &self,
-    ) -> ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.upgrade_settings", self.base))
+    ) -> terrars::ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElUpgradeSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.upgrade_settings", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingElResourceLimitsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maximum: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    minimum: Option<PrimField<f64>>,
-    resource_type: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum: std::option::Option<terrars::PrimField<f64>>,
+    resource_type: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterClusterAutoscalingElResourceLimitsEl {
-    #[doc= "Set the field `maximum`.\nMaximum amount of the resource in the cluster."]
-    pub fn set_maximum(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.maximum = Some(v.into());
+    #[doc = "Set the field `maximum`.\nMaximum amount of the resource in the cluster."]
+    pub fn set_maximum(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.maximum = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `minimum`.\nMinimum amount of the resource in the cluster."]
-    pub fn set_minimum(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.minimum = Some(v.into());
+    #[doc = "Set the field `minimum`.\nMinimum amount of the resource in the cluster."]
+    pub fn set_minimum(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.minimum = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingElResourceLimitsEl {
-    type O = BlockAssignable<ContainerClusterClusterAutoscalingElResourceLimitsEl>;
+impl terrars::ToListMappable for ContainerClusterClusterAutoscalingElResourceLimitsEl {
+    type O = terrars::BlockAssignable<ContainerClusterClusterAutoscalingElResourceLimitsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3579,8 +3974,9 @@ impl ToListMappable for ContainerClusterClusterAutoscalingElResourceLimitsEl {
 }
 
 pub struct BuildContainerClusterClusterAutoscalingElResourceLimitsEl {
-    #[doc= "The type of the resource. For example, cpu and memory. See the guide to using Node Auto-Provisioning for a list of types."]
-    pub resource_type: PrimField<String>,
+    #[doc =
+        "The type of the resource. For example, cpu and memory. See the guide to using Node Auto-Provisioning for a list of types."]
+    pub resource_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterClusterAutoscalingElResourceLimitsEl {
@@ -3594,12 +3990,15 @@ impl BuildContainerClusterClusterAutoscalingElResourceLimitsEl {
 }
 
 pub struct ContainerClusterClusterAutoscalingElResourceLimitsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElResourceLimitsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterClusterAutoscalingElResourceLimitsElRef {
+impl terrars::Ref for ContainerClusterClusterAutoscalingElResourceLimitsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterClusterAutoscalingElResourceLimitsElRef {
         ContainerClusterClusterAutoscalingElResourceLimitsElRef {
             shared: shared,
             base: base.to_string(),
@@ -3608,96 +4007,115 @@ impl Ref for ContainerClusterClusterAutoscalingElResourceLimitsElRef {
 }
 
 impl ContainerClusterClusterAutoscalingElResourceLimitsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `maximum` after provisioning.\nMaximum amount of the resource in the cluster."]
-    pub fn maximum(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maximum", self.base))
+    #[doc =
+        "Get a reference to the value of field `maximum` after provisioning.\nMaximum amount of the resource in the cluster."]
+    pub fn maximum(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `minimum` after provisioning.\nMinimum amount of the resource in the cluster."]
-    pub fn minimum(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.minimum", self.base))
+    #[doc =
+        "Get a reference to the value of field `minimum` after provisioning.\nMinimum amount of the resource in the cluster."]
+    pub fn minimum(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_type` after provisioning.\nThe type of the resource. For example, cpu and memory. See the guide to using Node Auto-Provisioning for a list of types."]
-    pub fn resource_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `resource_type` after provisioning.\nThe type of the resource. For example, cpu and memory. See the guide to using Node Auto-Provisioning for a list of types."]
+    pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterClusterAutoscalingElDynamic {
-    auto_provisioning_defaults: Option<DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>>,
-    resource_limits: Option<DynamicBlock<ContainerClusterClusterAutoscalingElResourceLimitsEl>>,
+    auto_provisioning_defaults: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>>,
+    resource_limits: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterClusterAutoscalingElResourceLimitsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterClusterAutoscalingEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    autoscaling_profile: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_provisioning_defaults: Option<Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_limits: Option<Vec<ContainerClusterClusterAutoscalingElResourceLimitsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling_profile: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_provisioning_defaults: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_limits: std::option::Option<std::vec::Vec<ContainerClusterClusterAutoscalingElResourceLimitsEl>>,
     dynamic: ContainerClusterClusterAutoscalingElDynamic,
 }
 
 impl ContainerClusterClusterAutoscalingEl {
-    #[doc= "Set the field `autoscaling_profile`.\nConfiguration options for the Autoscaling profile feature, which lets you choose whether the cluster autoscaler should optimize for resource utilization or resource availability when deciding to remove nodes from a cluster. Can be BALANCED or OPTIMIZE_UTILIZATION. Defaults to BALANCED."]
-    pub fn set_autoscaling_profile(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.autoscaling_profile = Some(v.into());
+    #[doc =
+        "Set the field `autoscaling_profile`.\nConfiguration options for the Autoscaling profile feature, which lets you choose whether the cluster autoscaler should optimize for resource utilization or resource availability when deciding to remove nodes from a cluster. Can be BALANCED or OPTIMIZE_UTILIZATION. Defaults to BALANCED."]
+    pub fn set_autoscaling_profile(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.autoscaling_profile = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enabled`.\nWhether node auto-provisioning is enabled. Resource limits for cpu and memory must be defined to enable node auto-provisioning."]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc =
+        "Set the field `enabled`.\nWhether node auto-provisioning is enabled. Resource limits for cpu and memory must be defined to enable node auto-provisioning."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `auto_provisioning_defaults`.\n"]
+    #[doc = "Set the field `auto_provisioning_defaults`.\n"]
     pub fn set_auto_provisioning_defaults(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.auto_provisioning_defaults = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.auto_provisioning_defaults = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.auto_provisioning_defaults = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.auto_provisioning_defaults = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_limits`.\n"]
+    #[doc = "Set the field `resource_limits`.\n"]
     pub fn set_resource_limits(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterClusterAutoscalingElResourceLimitsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterClusterAutoscalingElResourceLimitsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_limits = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_limits = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_limits = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_limits = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterClusterAutoscalingEl {
-    type O = BlockAssignable<ContainerClusterClusterAutoscalingEl>;
+impl terrars::ToListMappable for ContainerClusterClusterAutoscalingEl {
+    type O = terrars::BlockAssignable<ContainerClusterClusterAutoscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3714,18 +4132,18 @@ impl BuildContainerClusterClusterAutoscalingEl {
             enabled: core::default::Default::default(),
             auto_provisioning_defaults: core::default::Default::default(),
             resource_limits: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterClusterAutoscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterClusterAutoscalingElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterClusterAutoscalingElRef {
+impl terrars::Ref for ContainerClusterClusterAutoscalingElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterClusterAutoscalingElRef {
         ContainerClusterClusterAutoscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -3734,45 +4152,47 @@ impl Ref for ContainerClusterClusterAutoscalingElRef {
 }
 
 impl ContainerClusterClusterAutoscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `autoscaling_profile` after provisioning.\nConfiguration options for the Autoscaling profile feature, which lets you choose whether the cluster autoscaler should optimize for resource utilization or resource availability when deciding to remove nodes from a cluster. Can be BALANCED or OPTIMIZE_UTILIZATION. Defaults to BALANCED."]
-    pub fn autoscaling_profile(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.autoscaling_profile", self.base))
+    #[doc =
+        "Get a reference to the value of field `autoscaling_profile` after provisioning.\nConfiguration options for the Autoscaling profile feature, which lets you choose whether the cluster autoscaler should optimize for resource utilization or resource availability when deciding to remove nodes from a cluster. Can be BALANCED or OPTIMIZE_UTILIZATION. Defaults to BALANCED."]
+    pub fn autoscaling_profile(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.autoscaling_profile", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether node auto-provisioning is enabled. Resource limits for cpu and memory must be defined to enable node auto-provisioning."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether node auto-provisioning is enabled. Resource limits for cpu and memory must be defined to enable node auto-provisioning."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `auto_provisioning_defaults` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `auto_provisioning_defaults` after provisioning.\n"]
     pub fn auto_provisioning_defaults(
         &self,
-    ) -> ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.auto_provisioning_defaults", self.base))
+    ) -> terrars::ListRef<ContainerClusterClusterAutoscalingElAutoProvisioningDefaultsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.auto_provisioning_defaults", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_limits` after provisioning.\n"]
-    pub fn resource_limits(&self) -> ListRef<ContainerClusterClusterAutoscalingElResourceLimitsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.resource_limits", self.base))
+    #[doc = "Get a reference to the value of field `resource_limits` after provisioning.\n"]
+    pub fn resource_limits(&self) -> terrars::ListRef<ContainerClusterClusterAutoscalingElResourceLimitsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_limits", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterConfidentialNodesEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterConfidentialNodesEl { }
 
-impl ToListMappable for ContainerClusterConfidentialNodesEl {
-    type O = BlockAssignable<ContainerClusterConfidentialNodesEl>;
+impl terrars::ToListMappable for ContainerClusterConfidentialNodesEl {
+    type O = terrars::BlockAssignable<ContainerClusterConfidentialNodesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3781,8 +4201,8 @@ impl ToListMappable for ContainerClusterConfidentialNodesEl {
 }
 
 pub struct BuildContainerClusterConfidentialNodesEl {
-    #[doc= "Whether Confidential Nodes feature is enabled for all nodes in this cluster."]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether Confidential Nodes feature is enabled for all nodes in this cluster."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterConfidentialNodesEl {
@@ -3792,12 +4212,12 @@ impl BuildContainerClusterConfidentialNodesEl {
 }
 
 pub struct ContainerClusterConfidentialNodesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterConfidentialNodesElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterConfidentialNodesElRef {
+impl terrars::Ref for ContainerClusterConfidentialNodesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterConfidentialNodesElRef {
         ContainerClusterConfidentialNodesElRef {
             shared: shared,
             base: base.to_string(),
@@ -3806,28 +4226,29 @@ impl Ref for ContainerClusterConfidentialNodesElRef {
 }
 
 impl ContainerClusterConfidentialNodesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether Confidential Nodes feature is enabled for all nodes in this cluster."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether Confidential Nodes feature is enabled for all nodes in this cluster."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterCostManagementConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterCostManagementConfigEl { }
 
-impl ToListMappable for ContainerClusterCostManagementConfigEl {
-    type O = BlockAssignable<ContainerClusterCostManagementConfigEl>;
+impl terrars::ToListMappable for ContainerClusterCostManagementConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterCostManagementConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3836,8 +4257,9 @@ impl ToListMappable for ContainerClusterCostManagementConfigEl {
 }
 
 pub struct BuildContainerClusterCostManagementConfigEl {
-    #[doc= "Whether to enable GKE cost allocation. When you enable GKE cost allocation, the cluster name and namespace of your GKE workloads appear in the labels field of the billing export to BigQuery. Defaults to false."]
-    pub enabled: PrimField<bool>,
+    #[doc =
+        "Whether to enable GKE cost allocation. When you enable GKE cost allocation, the cluster name and namespace of your GKE workloads appear in the labels field of the billing export to BigQuery. Defaults to false."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterCostManagementConfigEl {
@@ -3847,12 +4269,12 @@ impl BuildContainerClusterCostManagementConfigEl {
 }
 
 pub struct ContainerClusterCostManagementConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterCostManagementConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterCostManagementConfigElRef {
+impl terrars::Ref for ContainerClusterCostManagementConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterCostManagementConfigElRef {
         ContainerClusterCostManagementConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -3861,36 +4283,37 @@ impl Ref for ContainerClusterCostManagementConfigElRef {
 }
 
 impl ContainerClusterCostManagementConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether to enable GKE cost allocation. When you enable GKE cost allocation, the cluster name and namespace of your GKE workloads appear in the labels field of the billing export to BigQuery. Defaults to false."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether to enable GKE cost allocation. When you enable GKE cost allocation, the cluster name and namespace of your GKE workloads appear in the labels field of the billing export to BigQuery. Defaults to false."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterDatabaseEncryptionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key_name: Option<PrimField<String>>,
-    state: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    state: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterDatabaseEncryptionEl {
-    #[doc= "Set the field `key_name`.\nThe key to use to encrypt/decrypt secrets."]
-    pub fn set_key_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key_name = Some(v.into());
+    #[doc = "Set the field `key_name`.\nThe key to use to encrypt/decrypt secrets."]
+    pub fn set_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterDatabaseEncryptionEl {
-    type O = BlockAssignable<ContainerClusterDatabaseEncryptionEl>;
+impl terrars::ToListMappable for ContainerClusterDatabaseEncryptionEl {
+    type O = terrars::BlockAssignable<ContainerClusterDatabaseEncryptionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3899,8 +4322,8 @@ impl ToListMappable for ContainerClusterDatabaseEncryptionEl {
 }
 
 pub struct BuildContainerClusterDatabaseEncryptionEl {
-    #[doc= "ENCRYPTED or DECRYPTED."]
-    pub state: PrimField<String>,
+    #[doc = "ENCRYPTED or DECRYPTED."]
+    pub state: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterDatabaseEncryptionEl {
@@ -3913,12 +4336,12 @@ impl BuildContainerClusterDatabaseEncryptionEl {
 }
 
 pub struct ContainerClusterDatabaseEncryptionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterDatabaseEncryptionElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterDatabaseEncryptionElRef {
+impl terrars::Ref for ContainerClusterDatabaseEncryptionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterDatabaseEncryptionElRef {
         ContainerClusterDatabaseEncryptionElRef {
             shared: shared,
             base: base.to_string(),
@@ -3927,33 +4350,34 @@ impl Ref for ContainerClusterDatabaseEncryptionElRef {
 }
 
 impl ContainerClusterDatabaseEncryptionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key_name` after provisioning.\nThe key to use to encrypt/decrypt secrets."]
-    pub fn key_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `key_name` after provisioning.\nThe key to use to encrypt/decrypt secrets."]
+    pub fn key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nENCRYPTED or DECRYPTED."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nENCRYPTED or DECRYPTED."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterDefaultSnatStatusEl {
-    disabled: PrimField<bool>,
+    disabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterDefaultSnatStatusEl { }
 
-impl ToListMappable for ContainerClusterDefaultSnatStatusEl {
-    type O = BlockAssignable<ContainerClusterDefaultSnatStatusEl>;
+impl terrars::ToListMappable for ContainerClusterDefaultSnatStatusEl {
+    type O = terrars::BlockAssignable<ContainerClusterDefaultSnatStatusEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3962,8 +4386,9 @@ impl ToListMappable for ContainerClusterDefaultSnatStatusEl {
 }
 
 pub struct BuildContainerClusterDefaultSnatStatusEl {
-    #[doc= "When disabled is set to false, default IP masquerade rules will be applied to the nodes to prevent sNAT on cluster internal traffic."]
-    pub disabled: PrimField<bool>,
+    #[doc =
+        "When disabled is set to false, default IP masquerade rules will be applied to the nodes to prevent sNAT on cluster internal traffic."]
+    pub disabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterDefaultSnatStatusEl {
@@ -3973,12 +4398,12 @@ impl BuildContainerClusterDefaultSnatStatusEl {
 }
 
 pub struct ContainerClusterDefaultSnatStatusElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterDefaultSnatStatusElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterDefaultSnatStatusElRef {
+impl terrars::Ref for ContainerClusterDefaultSnatStatusElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterDefaultSnatStatusElRef {
         ContainerClusterDefaultSnatStatusElRef {
             shared: shared,
             base: base.to_string(),
@@ -3987,51 +4412,55 @@ impl Ref for ContainerClusterDefaultSnatStatusElRef {
 }
 
 impl ContainerClusterDefaultSnatStatusElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disabled` after provisioning.\nWhen disabled is set to false, default IP masquerade rules will be applied to the nodes to prevent sNAT on cluster internal traffic."]
-    pub fn disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `disabled` after provisioning.\nWhen disabled is set to false, default IP masquerade rules will be applied to the nodes to prevent sNAT on cluster internal traffic."]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterDnsConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_dns: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_dns_domain: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_dns_scope: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_dns: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_dns_domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_dns_scope: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterDnsConfigEl {
-    #[doc= "Set the field `cluster_dns`.\nWhich in-cluster DNS provider should be used."]
-    pub fn set_cluster_dns(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cluster_dns = Some(v.into());
+    #[doc = "Set the field `cluster_dns`.\nWhich in-cluster DNS provider should be used."]
+    pub fn set_cluster_dns(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_dns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cluster_dns_domain`.\nThe suffix used for all cluster service records."]
-    pub fn set_cluster_dns_domain(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cluster_dns_domain = Some(v.into());
+    #[doc = "Set the field `cluster_dns_domain`.\nThe suffix used for all cluster service records."]
+    pub fn set_cluster_dns_domain(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cluster_dns_domain = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cluster_dns_scope`.\nThe scope of access to cluster DNS records."]
-    pub fn set_cluster_dns_scope(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cluster_dns_scope = Some(v.into());
+    #[doc = "Set the field `cluster_dns_scope`.\nThe scope of access to cluster DNS records."]
+    pub fn set_cluster_dns_scope(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_dns_scope = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterDnsConfigEl {
-    type O = BlockAssignable<ContainerClusterDnsConfigEl>;
+impl terrars::ToListMappable for ContainerClusterDnsConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterDnsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4052,12 +4481,12 @@ impl BuildContainerClusterDnsConfigEl {
 }
 
 pub struct ContainerClusterDnsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterDnsConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterDnsConfigElRef {
+impl terrars::Ref for ContainerClusterDnsConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterDnsConfigElRef {
         ContainerClusterDnsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -4066,38 +4495,41 @@ impl Ref for ContainerClusterDnsConfigElRef {
 }
 
 impl ContainerClusterDnsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cluster_dns` after provisioning.\nWhich in-cluster DNS provider should be used."]
-    pub fn cluster_dns(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_dns", self.base))
+    #[doc =
+        "Get a reference to the value of field `cluster_dns` after provisioning.\nWhich in-cluster DNS provider should be used."]
+    pub fn cluster_dns(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_dns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_dns_domain` after provisioning.\nThe suffix used for all cluster service records."]
-    pub fn cluster_dns_domain(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_dns_domain", self.base))
+    #[doc =
+        "Get a reference to the value of field `cluster_dns_domain` after provisioning.\nThe suffix used for all cluster service records."]
+    pub fn cluster_dns_domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_dns_domain", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_dns_scope` after provisioning.\nThe scope of access to cluster DNS records."]
-    pub fn cluster_dns_scope(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_dns_scope", self.base))
+    #[doc =
+        "Get a reference to the value of field `cluster_dns_scope` after provisioning.\nThe scope of access to cluster DNS records."]
+    pub fn cluster_dns_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_dns_scope", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterEnableK8sBetaApisEl {
-    enabled_apis: SetField<PrimField<String>>,
+    enabled_apis: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterEnableK8sBetaApisEl { }
 
-impl ToListMappable for ContainerClusterEnableK8sBetaApisEl {
-    type O = BlockAssignable<ContainerClusterEnableK8sBetaApisEl>;
+impl terrars::ToListMappable for ContainerClusterEnableK8sBetaApisEl {
+    type O = terrars::BlockAssignable<ContainerClusterEnableK8sBetaApisEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4106,8 +4538,8 @@ impl ToListMappable for ContainerClusterEnableK8sBetaApisEl {
 }
 
 pub struct BuildContainerClusterEnableK8sBetaApisEl {
-    #[doc= "Enabled Kubernetes Beta APIs."]
-    pub enabled_apis: SetField<PrimField<String>>,
+    #[doc = "Enabled Kubernetes Beta APIs."]
+    pub enabled_apis: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildContainerClusterEnableK8sBetaApisEl {
@@ -4117,12 +4549,12 @@ impl BuildContainerClusterEnableK8sBetaApisEl {
 }
 
 pub struct ContainerClusterEnableK8sBetaApisElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterEnableK8sBetaApisElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterEnableK8sBetaApisElRef {
+impl terrars::Ref for ContainerClusterEnableK8sBetaApisElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterEnableK8sBetaApisElRef {
         ContainerClusterEnableK8sBetaApisElRef {
             shared: shared,
             base: base.to_string(),
@@ -4131,35 +4563,35 @@ impl Ref for ContainerClusterEnableK8sBetaApisElRef {
 }
 
 impl ContainerClusterEnableK8sBetaApisElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled_apis` after provisioning.\nEnabled Kubernetes Beta APIs."]
-    pub fn enabled_apis(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.enabled_apis", self.base))
+    #[doc = "Get a reference to the value of field `enabled_apis` after provisioning.\nEnabled Kubernetes Beta APIs."]
+    pub fn enabled_apis(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.enabled_apis", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterFleetEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterFleetEl {
-    #[doc= "Set the field `project`.\nThe Fleet host project of the cluster."]
-    pub fn set_project(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.project = Some(v.into());
+    #[doc = "Set the field `project`.\nThe Fleet host project of the cluster."]
+    pub fn set_project(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.project = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterFleetEl {
-    type O = BlockAssignable<ContainerClusterFleetEl>;
+impl terrars::ToListMappable for ContainerClusterFleetEl {
+    type O = terrars::BlockAssignable<ContainerClusterFleetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4176,12 +4608,12 @@ impl BuildContainerClusterFleetEl {
 }
 
 pub struct ContainerClusterFleetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterFleetElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterFleetElRef {
+impl terrars::Ref for ContainerClusterFleetElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterFleetElRef {
         ContainerClusterFleetElRef {
             shared: shared,
             base: base.to_string(),
@@ -4190,38 +4622,41 @@ impl Ref for ContainerClusterFleetElRef {
 }
 
 impl ContainerClusterFleetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `membership` after provisioning.\nFull resource name of the registered fleet membership of the cluster."]
-    pub fn membership(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.membership", self.base))
+    #[doc =
+        "Get a reference to the value of field `membership` after provisioning.\nFull resource name of the registered fleet membership of the cluster."]
+    pub fn membership(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.membership", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pre_registered` after provisioning.\nWhether the cluster has been registered via the fleet API."]
-    pub fn pre_registered(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pre_registered", self.base))
+    #[doc =
+        "Get a reference to the value of field `pre_registered` after provisioning.\nWhether the cluster has been registered via the fleet API."]
+    pub fn pre_registered(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pre_registered", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\nThe Fleet host project of the cluster."]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe Fleet host project of the cluster."]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterGatewayApiConfigEl {
-    channel: PrimField<String>,
+    channel: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterGatewayApiConfigEl { }
 
-impl ToListMappable for ContainerClusterGatewayApiConfigEl {
-    type O = BlockAssignable<ContainerClusterGatewayApiConfigEl>;
+impl terrars::ToListMappable for ContainerClusterGatewayApiConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterGatewayApiConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4230,8 +4665,8 @@ impl ToListMappable for ContainerClusterGatewayApiConfigEl {
 }
 
 pub struct BuildContainerClusterGatewayApiConfigEl {
-    #[doc= "The Gateway API release channel to use for Gateway API."]
-    pub channel: PrimField<String>,
+    #[doc = "The Gateway API release channel to use for Gateway API."]
+    pub channel: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterGatewayApiConfigEl {
@@ -4241,12 +4676,12 @@ impl BuildContainerClusterGatewayApiConfigEl {
 }
 
 pub struct ContainerClusterGatewayApiConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterGatewayApiConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterGatewayApiConfigElRef {
+impl terrars::Ref for ContainerClusterGatewayApiConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterGatewayApiConfigElRef {
         ContainerClusterGatewayApiConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -4255,35 +4690,36 @@ impl Ref for ContainerClusterGatewayApiConfigElRef {
 }
 
 impl ContainerClusterGatewayApiConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `channel` after provisioning.\nThe Gateway API release channel to use for Gateway API."]
-    pub fn channel(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    #[doc =
+        "Get a reference to the value of field `channel` after provisioning.\nThe Gateway API release channel to use for Gateway API."]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterIdentityServiceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl ContainerClusterIdentityServiceConfigEl {
-    #[doc= "Set the field `enabled`.\nWhether to enable the Identity Service component."]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\nWhether to enable the Identity Service component."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterIdentityServiceConfigEl {
-    type O = BlockAssignable<ContainerClusterIdentityServiceConfigEl>;
+impl terrars::ToListMappable for ContainerClusterIdentityServiceConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterIdentityServiceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4300,12 +4736,12 @@ impl BuildContainerClusterIdentityServiceConfigEl {
 }
 
 pub struct ContainerClusterIdentityServiceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterIdentityServiceConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterIdentityServiceConfigElRef {
+impl terrars::Ref for ContainerClusterIdentityServiceConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterIdentityServiceConfigElRef {
         ContainerClusterIdentityServiceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -4314,28 +4750,29 @@ impl Ref for ContainerClusterIdentityServiceConfigElRef {
 }
 
 impl ContainerClusterIdentityServiceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether to enable the Identity Service component."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether to enable the Identity Service component."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl {
-    pod_range_names: SetField<PrimField<String>>,
+    pod_range_names: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl { }
 
-impl ToListMappable for ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl {
-    type O = BlockAssignable<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>;
+impl terrars::ToListMappable for ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4344,8 +4781,8 @@ impl ToListMappable for ContainerClusterIpAllocationPolicyElAdditionalPodRangesC
 }
 
 pub struct BuildContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl {
-    #[doc= "Name for pod secondary ipv4 range which has the actual range defined ahead."]
-    pub pod_range_names: SetField<PrimField<String>>,
+    #[doc = "Name for pod secondary ipv4 range which has the actual range defined ahead."]
+    pub pod_range_names: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl {
@@ -4355,12 +4792,15 @@ impl BuildContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl {
 }
 
 pub struct ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef {
+impl terrars::Ref for ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef {
         ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -4369,28 +4809,29 @@ impl Ref for ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef 
 }
 
 impl ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `pod_range_names` after provisioning.\nName for pod secondary ipv4 range which has the actual range defined ahead."]
-    pub fn pod_range_names(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.pod_range_names", self.base))
+    #[doc =
+        "Get a reference to the value of field `pod_range_names` after provisioning.\nName for pod secondary ipv4 range which has the actual range defined ahead."]
+    pub fn pod_range_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.pod_range_names", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl {
-    disabled: PrimField<bool>,
+    disabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl { }
 
-impl ToListMappable for ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl {
-    type O = BlockAssignable<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>;
+impl terrars::ToListMappable for ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4399,8 +4840,8 @@ impl ToListMappable for ContainerClusterIpAllocationPolicyElPodCidrOverprovision
 }
 
 pub struct BuildContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl {
-    #[doc= ""]
-    pub disabled: PrimField<bool>,
+    #[doc = ""]
+    pub disabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl {
@@ -4410,12 +4851,15 @@ impl BuildContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl {
 }
 
 pub struct ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef {
+impl terrars::Ref for ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef {
         ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -4424,114 +4868,147 @@ impl Ref for ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef
 }
 
 impl ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disabled` after provisioning.\n"]
-    pub fn disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
+    #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterIpAllocationPolicyElDynamic {
-    additional_pod_ranges_config: Option<
-        DynamicBlock<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>,
-    >,
-    pod_cidr_overprovision_config: Option<
-        DynamicBlock<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>,
-    >,
+    additional_pod_ranges_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>>,
+    pod_cidr_overprovision_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterIpAllocationPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_ipv4_cidr_block: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_secondary_range_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    services_ipv4_cidr_block: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    services_secondary_range_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stack_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    additional_pod_ranges_config: Option<Vec<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pod_cidr_overprovision_config: Option<Vec<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_ipv4_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_secondary_range_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    services_ipv4_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    services_secondary_range_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stack_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    additional_pod_ranges_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_cidr_overprovision_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>>,
     dynamic: ContainerClusterIpAllocationPolicyElDynamic,
 }
 
 impl ContainerClusterIpAllocationPolicyEl {
-    #[doc= "Set the field `cluster_ipv4_cidr_block`.\nThe IP address range for the cluster pod IPs. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
-    pub fn set_cluster_ipv4_cidr_block(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cluster_ipv4_cidr_block = Some(v.into());
+    #[doc =
+        "Set the field `cluster_ipv4_cidr_block`.\nThe IP address range for the cluster pod IPs. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
+    pub fn set_cluster_ipv4_cidr_block(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cluster_ipv4_cidr_block = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cluster_secondary_range_name`.\nThe name of the existing secondary range in the cluster's subnetwork to use for pod IP addresses. Alternatively, cluster_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
-    pub fn set_cluster_secondary_range_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cluster_secondary_range_name = Some(v.into());
+    #[doc =
+        "Set the field `cluster_secondary_range_name`.\nThe name of the existing secondary range in the cluster's subnetwork to use for pod IP addresses. Alternatively, cluster_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
+    pub fn set_cluster_secondary_range_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cluster_secondary_range_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `services_ipv4_cidr_block`.\nThe IP address range of the services IPs in this cluster. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
-    pub fn set_services_ipv4_cidr_block(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.services_ipv4_cidr_block = Some(v.into());
+    #[doc =
+        "Set the field `services_ipv4_cidr_block`.\nThe IP address range of the services IPs in this cluster. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
+    pub fn set_services_ipv4_cidr_block(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.services_ipv4_cidr_block = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `services_secondary_range_name`.\nThe name of the existing secondary range in the cluster's subnetwork to use for service ClusterIPs. Alternatively, services_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
-    pub fn set_services_secondary_range_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.services_secondary_range_name = Some(v.into());
+    #[doc =
+        "Set the field `services_secondary_range_name`.\nThe name of the existing secondary range in the cluster's subnetwork to use for service ClusterIPs. Alternatively, services_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
+    pub fn set_services_secondary_range_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.services_secondary_range_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stack_type`.\nThe IP Stack type of the cluster. Choose between IPV4 and IPV4_IPV6. Default type is IPV4 Only if not set"]
-    pub fn set_stack_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.stack_type = Some(v.into());
+    #[doc =
+        "Set the field `stack_type`.\nThe IP Stack type of the cluster. Choose between IPV4 and IPV4_IPV6. Default type is IPV4 Only if not set"]
+    pub fn set_stack_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.stack_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `additional_pod_ranges_config`.\n"]
+    #[doc = "Set the field `additional_pod_ranges_config`.\n"]
     pub fn set_additional_pod_ranges_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.additional_pod_ranges_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.additional_pod_ranges_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.additional_pod_ranges_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.additional_pod_ranges_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `pod_cidr_overprovision_config`.\n"]
+    #[doc = "Set the field `pod_cidr_overprovision_config`.\n"]
     pub fn set_pod_cidr_overprovision_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.pod_cidr_overprovision_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.pod_cidr_overprovision_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.pod_cidr_overprovision_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pod_cidr_overprovision_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterIpAllocationPolicyEl {
-    type O = BlockAssignable<ContainerClusterIpAllocationPolicyEl>;
+impl terrars::ToListMappable for ContainerClusterIpAllocationPolicyEl {
+    type O = terrars::BlockAssignable<ContainerClusterIpAllocationPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4551,18 +5028,18 @@ impl BuildContainerClusterIpAllocationPolicyEl {
             stack_type: core::default::Default::default(),
             additional_pod_ranges_config: core::default::Default::default(),
             pod_cidr_overprovision_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterIpAllocationPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterIpAllocationPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterIpAllocationPolicyElRef {
+impl terrars::Ref for ContainerClusterIpAllocationPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterIpAllocationPolicyElRef {
         ContainerClusterIpAllocationPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -4571,62 +5048,67 @@ impl Ref for ContainerClusterIpAllocationPolicyElRef {
 }
 
 impl ContainerClusterIpAllocationPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cluster_ipv4_cidr_block` after provisioning.\nThe IP address range for the cluster pod IPs. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
-    pub fn cluster_ipv4_cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_ipv4_cidr_block", self.base))
+    #[doc =
+        "Get a reference to the value of field `cluster_ipv4_cidr_block` after provisioning.\nThe IP address range for the cluster pod IPs. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
+    pub fn cluster_ipv4_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_ipv4_cidr_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_secondary_range_name` after provisioning.\nThe name of the existing secondary range in the cluster's subnetwork to use for pod IP addresses. Alternatively, cluster_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
-    pub fn cluster_secondary_range_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_secondary_range_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `cluster_secondary_range_name` after provisioning.\nThe name of the existing secondary range in the cluster's subnetwork to use for pod IP addresses. Alternatively, cluster_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
+    pub fn cluster_secondary_range_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_secondary_range_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `services_ipv4_cidr_block` after provisioning.\nThe IP address range of the services IPs in this cluster. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
-    pub fn services_ipv4_cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.services_ipv4_cidr_block", self.base))
+    #[doc =
+        "Get a reference to the value of field `services_ipv4_cidr_block` after provisioning.\nThe IP address range of the services IPs in this cluster. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) from the RFC-1918 private networks (e.g. 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) to pick a specific range to use."]
+    pub fn services_ipv4_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.services_ipv4_cidr_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `services_secondary_range_name` after provisioning.\nThe name of the existing secondary range in the cluster's subnetwork to use for service ClusterIPs. Alternatively, services_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
-    pub fn services_secondary_range_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.services_secondary_range_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `services_secondary_range_name` after provisioning.\nThe name of the existing secondary range in the cluster's subnetwork to use for service ClusterIPs. Alternatively, services_ipv4_cidr_block can be used to automatically create a GKE-managed one."]
+    pub fn services_secondary_range_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.services_secondary_range_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stack_type` after provisioning.\nThe IP Stack type of the cluster. Choose between IPV4 and IPV4_IPV6. Default type is IPV4 Only if not set"]
-    pub fn stack_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stack_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `stack_type` after provisioning.\nThe IP Stack type of the cluster. Choose between IPV4 and IPV4_IPV6. Default type is IPV4 Only if not set"]
+    pub fn stack_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stack_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `additional_pod_ranges_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `additional_pod_ranges_config` after provisioning.\n"]
     pub fn additional_pod_ranges_config(
         &self,
-    ) -> ListRef<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.additional_pod_ranges_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterIpAllocationPolicyElAdditionalPodRangesConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.additional_pod_ranges_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pod_cidr_overprovision_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `pod_cidr_overprovision_config` after provisioning.\n"]
     pub fn pod_cidr_overprovision_config(
         &self,
-    ) -> ListRef<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.pod_cidr_overprovision_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterIpAllocationPolicyElPodCidrOverprovisionConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pod_cidr_overprovision_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterLoggingConfigEl {
-    enable_components: ListField<PrimField<String>>,
+    enable_components: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterLoggingConfigEl { }
 
-impl ToListMappable for ContainerClusterLoggingConfigEl {
-    type O = BlockAssignable<ContainerClusterLoggingConfigEl>;
+impl terrars::ToListMappable for ContainerClusterLoggingConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterLoggingConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4635,8 +5117,9 @@ impl ToListMappable for ContainerClusterLoggingConfigEl {
 }
 
 pub struct BuildContainerClusterLoggingConfigEl {
-    #[doc= "GKE components exposing logs. Valid values include SYSTEM_COMPONENTS, APISERVER, CONTROLLER_MANAGER, SCHEDULER, and WORKLOADS."]
-    pub enable_components: ListField<PrimField<String>>,
+    #[doc =
+        "GKE components exposing logs. Valid values include SYSTEM_COMPONENTS, APISERVER, CONTROLLER_MANAGER, SCHEDULER, and WORKLOADS."]
+    pub enable_components: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildContainerClusterLoggingConfigEl {
@@ -4646,12 +5129,12 @@ impl BuildContainerClusterLoggingConfigEl {
 }
 
 pub struct ContainerClusterLoggingConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterLoggingConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterLoggingConfigElRef {
+impl terrars::Ref for ContainerClusterLoggingConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterLoggingConfigElRef {
         ContainerClusterLoggingConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -4660,28 +5143,29 @@ impl Ref for ContainerClusterLoggingConfigElRef {
 }
 
 impl ContainerClusterLoggingConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_components` after provisioning.\nGKE components exposing logs. Valid values include SYSTEM_COMPONENTS, APISERVER, CONTROLLER_MANAGER, SCHEDULER, and WORKLOADS."]
-    pub fn enable_components(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.enable_components", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_components` after provisioning.\nGKE components exposing logs. Valid values include SYSTEM_COMPONENTS, APISERVER, CONTROLLER_MANAGER, SCHEDULER, and WORKLOADS."]
+    pub fn enable_components(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.enable_components", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl {
-    start_time: PrimField<String>,
+    start_time: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl { }
 
-impl ToListMappable for ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl {
-    type O = BlockAssignable<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>;
+impl terrars::ToListMappable for ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl {
+    type O = terrars::BlockAssignable<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4690,8 +5174,8 @@ impl ToListMappable for ContainerClusterMaintenancePolicyElDailyMaintenanceWindo
 }
 
 pub struct BuildContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl {
-    #[doc= ""]
-    pub start_time: PrimField<String>,
+    #[doc = ""]
+    pub start_time: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl {
@@ -4701,12 +5185,15 @@ impl BuildContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl {
 }
 
 pub struct ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
+impl terrars::Ref for ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
         ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
             shared: shared,
             base: base.to_string(),
@@ -4715,33 +5202,33 @@ impl Ref for ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
 }
 
 impl ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `duration` after provisioning.\n"]
-    pub fn duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.duration", self.base))
+    #[doc = "Get a reference to the value of field `duration` after provisioning.\n"]
+    pub fn duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.duration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl {
-    scope: PrimField<String>,
+    scope: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl { }
 
-impl ToListMappable for ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl {
-    type O = BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>;
+impl terrars::ToListMappable for ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl {
+    type O = terrars::BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4750,8 +5237,8 @@ impl ToListMappable for ContainerClusterMaintenancePolicyElMaintenanceExclusionE
 }
 
 pub struct BuildContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl {
-    #[doc= "The scope of automatic upgrades to restrict in the exclusion window."]
-    pub scope: PrimField<String>,
+    #[doc = "The scope of automatic upgrades to restrict in the exclusion window."]
+    pub scope: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl {
@@ -4761,14 +5248,14 @@ impl BuildContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOpti
 }
 
 pub struct ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef {
+impl terrars::Ref for ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef {
         ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef {
             shared: shared,
@@ -4778,56 +5265,67 @@ impl Ref for ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionO
 }
 
 impl ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `scope` after provisioning.\nThe scope of automatic upgrades to restrict in the exclusion window."]
-    pub fn scope(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scope", self.base))
+    #[doc =
+        "Get a reference to the value of field `scope` after provisioning.\nThe scope of automatic upgrades to restrict in the exclusion window."]
+    pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterMaintenancePolicyElMaintenanceExclusionElDynamic {
-    exclusion_options: Option<
-        DynamicBlock<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>,
-    >,
+    exclusion_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMaintenancePolicyElMaintenanceExclusionEl {
-    end_time: PrimField<String>,
-    exclusion_name: PrimField<String>,
-    start_time: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclusion_options: Option<Vec<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>>,
+    end_time: terrars::PrimField<std::string::String>,
+    exclusion_name: terrars::PrimField<std::string::String>,
+    start_time: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclusion_options: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>>,
     dynamic: ContainerClusterMaintenancePolicyElMaintenanceExclusionElDynamic,
 }
 
 impl ContainerClusterMaintenancePolicyElMaintenanceExclusionEl {
-    #[doc= "Set the field `exclusion_options`.\n"]
+    #[doc = "Set the field `exclusion_options`.\n"]
     pub fn set_exclusion_options(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.exclusion_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclusion_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.exclusion_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclusion_options = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterMaintenancePolicyElMaintenanceExclusionEl {
-    type O = BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>;
+impl terrars::ToListMappable for ContainerClusterMaintenancePolicyElMaintenanceExclusionEl {
+    type O = terrars::BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4836,12 +5334,12 @@ impl ToListMappable for ContainerClusterMaintenancePolicyElMaintenanceExclusionE
 }
 
 pub struct BuildContainerClusterMaintenancePolicyElMaintenanceExclusionEl {
-    #[doc= ""]
-    pub end_time: PrimField<String>,
-    #[doc= ""]
-    pub exclusion_name: PrimField<String>,
-    #[doc= ""]
-    pub start_time: PrimField<String>,
+    #[doc = ""]
+    pub end_time: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub exclusion_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub start_time: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterMaintenancePolicyElMaintenanceExclusionEl {
@@ -4851,18 +5349,21 @@ impl BuildContainerClusterMaintenancePolicyElMaintenanceExclusionEl {
             exclusion_name: self.exclusion_name,
             start_time: self.start_time,
             exclusion_options: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
+impl terrars::Ref for ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
         ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
             shared: shared,
             base: base.to_string(),
@@ -4871,47 +5372,47 @@ impl Ref for ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
 }
 
 impl ContainerClusterMaintenancePolicyElMaintenanceExclusionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end_time` after provisioning.\n"]
-    pub fn end_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end_time", self.base))
+    #[doc = "Get a reference to the value of field `end_time` after provisioning.\n"]
+    pub fn end_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclusion_name` after provisioning.\n"]
-    pub fn exclusion_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.exclusion_name", self.base))
+    #[doc = "Get a reference to the value of field `exclusion_name` after provisioning.\n"]
+    pub fn exclusion_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exclusion_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclusion_options` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `exclusion_options` after provisioning.\n"]
     pub fn exclusion_options(
         &self,
-    ) -> ListRef<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.exclusion_options", self.base))
+    ) -> terrars::ListRef<ContainerClusterMaintenancePolicyElMaintenanceExclusionElExclusionOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclusion_options", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMaintenancePolicyElRecurringWindowEl {
-    end_time: PrimField<String>,
-    recurrence: PrimField<String>,
-    start_time: PrimField<String>,
+    end_time: terrars::PrimField<std::string::String>,
+    recurrence: terrars::PrimField<std::string::String>,
+    start_time: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterMaintenancePolicyElRecurringWindowEl { }
 
-impl ToListMappable for ContainerClusterMaintenancePolicyElRecurringWindowEl {
-    type O = BlockAssignable<ContainerClusterMaintenancePolicyElRecurringWindowEl>;
+impl terrars::ToListMappable for ContainerClusterMaintenancePolicyElRecurringWindowEl {
+    type O = terrars::BlockAssignable<ContainerClusterMaintenancePolicyElRecurringWindowEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4920,12 +5421,12 @@ impl ToListMappable for ContainerClusterMaintenancePolicyElRecurringWindowEl {
 }
 
 pub struct BuildContainerClusterMaintenancePolicyElRecurringWindowEl {
-    #[doc= ""]
-    pub end_time: PrimField<String>,
-    #[doc= ""]
-    pub recurrence: PrimField<String>,
-    #[doc= ""]
-    pub start_time: PrimField<String>,
+    #[doc = ""]
+    pub end_time: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub recurrence: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub start_time: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterMaintenancePolicyElRecurringWindowEl {
@@ -4939,12 +5440,15 @@ impl BuildContainerClusterMaintenancePolicyElRecurringWindowEl {
 }
 
 pub struct ContainerClusterMaintenancePolicyElRecurringWindowElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMaintenancePolicyElRecurringWindowElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMaintenancePolicyElRecurringWindowElRef {
+impl terrars::Ref for ContainerClusterMaintenancePolicyElRecurringWindowElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterMaintenancePolicyElRecurringWindowElRef {
         ContainerClusterMaintenancePolicyElRecurringWindowElRef {
             shared: shared,
             base: base.to_string(),
@@ -4953,99 +5457,117 @@ impl Ref for ContainerClusterMaintenancePolicyElRecurringWindowElRef {
 }
 
 impl ContainerClusterMaintenancePolicyElRecurringWindowElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end_time` after provisioning.\n"]
-    pub fn end_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end_time", self.base))
+    #[doc = "Get a reference to the value of field `end_time` after provisioning.\n"]
+    pub fn end_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `recurrence` after provisioning.\n"]
-    pub fn recurrence(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.recurrence", self.base))
+    #[doc = "Get a reference to the value of field `recurrence` after provisioning.\n"]
+    pub fn recurrence(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.recurrence", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterMaintenancePolicyElDynamic {
-    daily_maintenance_window: Option<DynamicBlock<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>>,
-    maintenance_exclusion: Option<DynamicBlock<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>>,
-    recurring_window: Option<DynamicBlock<ContainerClusterMaintenancePolicyElRecurringWindowEl>>,
+    daily_maintenance_window: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>>,
+    maintenance_exclusion: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>>,
+    recurring_window: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMaintenancePolicyElRecurringWindowEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMaintenancePolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    daily_maintenance_window: Option<Vec<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maintenance_exclusion: Option<Vec<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    recurring_window: Option<Vec<ContainerClusterMaintenancePolicyElRecurringWindowEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    daily_maintenance_window: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance_exclusion: std::option::Option<std::vec::Vec<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    recurring_window: std::option::Option<std::vec::Vec<ContainerClusterMaintenancePolicyElRecurringWindowEl>>,
     dynamic: ContainerClusterMaintenancePolicyElDynamic,
 }
 
 impl ContainerClusterMaintenancePolicyEl {
-    #[doc= "Set the field `daily_maintenance_window`.\n"]
+    #[doc = "Set the field `daily_maintenance_window`.\n"]
     pub fn set_daily_maintenance_window(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.daily_maintenance_window = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.daily_maintenance_window = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.daily_maintenance_window = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.daily_maintenance_window = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `maintenance_exclusion`.\n"]
+    #[doc = "Set the field `maintenance_exclusion`.\n"]
     pub fn set_maintenance_exclusion(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterMaintenancePolicyElMaintenanceExclusionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.maintenance_exclusion = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.maintenance_exclusion = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.maintenance_exclusion = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.maintenance_exclusion = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `recurring_window`.\n"]
+    #[doc = "Set the field `recurring_window`.\n"]
     pub fn set_recurring_window(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMaintenancePolicyElRecurringWindowEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMaintenancePolicyElRecurringWindowEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.recurring_window = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.recurring_window = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.recurring_window = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.recurring_window = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterMaintenancePolicyEl {
-    type O = BlockAssignable<ContainerClusterMaintenancePolicyEl>;
+impl terrars::ToListMappable for ContainerClusterMaintenancePolicyEl {
+    type O = terrars::BlockAssignable<ContainerClusterMaintenancePolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5061,18 +5583,18 @@ impl BuildContainerClusterMaintenancePolicyEl {
             daily_maintenance_window: core::default::Default::default(),
             maintenance_exclusion: core::default::Default::default(),
             recurring_window: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterMaintenancePolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMaintenancePolicyElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMaintenancePolicyElRef {
+impl terrars::Ref for ContainerClusterMaintenancePolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterMaintenancePolicyElRef {
         ContainerClusterMaintenancePolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -5081,33 +5603,35 @@ impl Ref for ContainerClusterMaintenancePolicyElRef {
 }
 
 impl ContainerClusterMaintenancePolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `daily_maintenance_window` after provisioning.\n"]
-    pub fn daily_maintenance_window(&self) -> ListRef<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.daily_maintenance_window", self.base))
+    #[doc = "Get a reference to the value of field `daily_maintenance_window` after provisioning.\n"]
+    pub fn daily_maintenance_window(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterMaintenancePolicyElDailyMaintenanceWindowElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.daily_maintenance_window", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `recurring_window` after provisioning.\n"]
-    pub fn recurring_window(&self) -> ListRef<ContainerClusterMaintenancePolicyElRecurringWindowElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.recurring_window", self.base))
+    #[doc = "Get a reference to the value of field `recurring_window` after provisioning.\n"]
+    pub fn recurring_window(&self) -> terrars::ListRef<ContainerClusterMaintenancePolicyElRecurringWindowElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.recurring_window", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMasterAuthElClientCertificateConfigEl {
-    issue_client_certificate: PrimField<bool>,
+    issue_client_certificate: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterMasterAuthElClientCertificateConfigEl { }
 
-impl ToListMappable for ContainerClusterMasterAuthElClientCertificateConfigEl {
-    type O = BlockAssignable<ContainerClusterMasterAuthElClientCertificateConfigEl>;
+impl terrars::ToListMappable for ContainerClusterMasterAuthElClientCertificateConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterMasterAuthElClientCertificateConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5116,8 +5640,8 @@ impl ToListMappable for ContainerClusterMasterAuthElClientCertificateConfigEl {
 }
 
 pub struct BuildContainerClusterMasterAuthElClientCertificateConfigEl {
-    #[doc= "Whether client certificate authorization is enabled for this cluster."]
-    pub issue_client_certificate: PrimField<bool>,
+    #[doc = "Whether client certificate authorization is enabled for this cluster."]
+    pub issue_client_certificate: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterMasterAuthElClientCertificateConfigEl {
@@ -5129,12 +5653,15 @@ impl BuildContainerClusterMasterAuthElClientCertificateConfigEl {
 }
 
 pub struct ContainerClusterMasterAuthElClientCertificateConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMasterAuthElClientCertificateConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMasterAuthElClientCertificateConfigElRef {
+impl terrars::Ref for ContainerClusterMasterAuthElClientCertificateConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterMasterAuthElClientCertificateConfigElRef {
         ContainerClusterMasterAuthElClientCertificateConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -5143,51 +5670,54 @@ impl Ref for ContainerClusterMasterAuthElClientCertificateConfigElRef {
 }
 
 impl ContainerClusterMasterAuthElClientCertificateConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `issue_client_certificate` after provisioning.\nWhether client certificate authorization is enabled for this cluster."]
-    pub fn issue_client_certificate(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.issue_client_certificate", self.base))
+    #[doc =
+        "Get a reference to the value of field `issue_client_certificate` after provisioning.\nWhether client certificate authorization is enabled for this cluster."]
+    pub fn issue_client_certificate(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issue_client_certificate", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterMasterAuthElDynamic {
-    client_certificate_config: Option<DynamicBlock<ContainerClusterMasterAuthElClientCertificateConfigEl>>,
+    client_certificate_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMasterAuthElClientCertificateConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMasterAuthEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    client_certificate_config: Option<Vec<ContainerClusterMasterAuthElClientCertificateConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_certificate_config: std::option::Option<std::vec::Vec<ContainerClusterMasterAuthElClientCertificateConfigEl>>,
     dynamic: ContainerClusterMasterAuthElDynamic,
 }
 
 impl ContainerClusterMasterAuthEl {
-    #[doc= "Set the field `client_certificate_config`.\n"]
+    #[doc = "Set the field `client_certificate_config`.\n"]
     pub fn set_client_certificate_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMasterAuthElClientCertificateConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMasterAuthElClientCertificateConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.client_certificate_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.client_certificate_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.client_certificate_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.client_certificate_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterMasterAuthEl {
-    type O = BlockAssignable<ContainerClusterMasterAuthEl>;
+impl terrars::ToListMappable for ContainerClusterMasterAuthEl {
+    type O = terrars::BlockAssignable<ContainerClusterMasterAuthEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5201,18 +5731,18 @@ impl BuildContainerClusterMasterAuthEl {
     pub fn build(self) -> ContainerClusterMasterAuthEl {
         ContainerClusterMasterAuthEl {
             client_certificate_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterMasterAuthElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMasterAuthElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMasterAuthElRef {
+impl terrars::Ref for ContainerClusterMasterAuthElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterMasterAuthElRef {
         ContainerClusterMasterAuthElRef {
             shared: shared,
             base: base.to_string(),
@@ -5221,51 +5751,56 @@ impl Ref for ContainerClusterMasterAuthElRef {
 }
 
 impl ContainerClusterMasterAuthElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `client_certificate` after provisioning.\nBase64 encoded public certificate used by clients to authenticate to the cluster endpoint."]
-    pub fn client_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.client_certificate", self.base))
+    #[doc =
+        "Get a reference to the value of field `client_certificate` after provisioning.\nBase64 encoded public certificate used by clients to authenticate to the cluster endpoint."]
+    pub fn client_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_certificate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `client_key` after provisioning.\nBase64 encoded private key used by clients to authenticate to the cluster endpoint."]
-    pub fn client_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.client_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `client_key` after provisioning.\nBase64 encoded private key used by clients to authenticate to the cluster endpoint."]
+    pub fn client_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_ca_certificate` after provisioning.\nBase64 encoded public certificate that is the root of trust for the cluster."]
-    pub fn cluster_ca_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_ca_certificate", self.base))
+    #[doc =
+        "Get a reference to the value of field `cluster_ca_certificate` after provisioning.\nBase64 encoded public certificate that is the root of trust for the cluster."]
+    pub fn cluster_ca_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_ca_certificate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `client_certificate_config` after provisioning.\n"]
-    pub fn client_certificate_config(&self) -> ListRef<ContainerClusterMasterAuthElClientCertificateConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.client_certificate_config", self.base))
+    #[doc = "Get a reference to the value of field `client_certificate_config` after provisioning.\n"]
+    pub fn client_certificate_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterMasterAuthElClientCertificateConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_certificate_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl {
-    cidr_block: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    display_name: Option<PrimField<String>>,
+    cidr_block: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl {
-    #[doc= "Set the field `display_name`.\nField for users to identify CIDR blocks."]
-    pub fn set_display_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.display_name = Some(v.into());
+    #[doc = "Set the field `display_name`.\nField for users to identify CIDR blocks."]
+    pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.display_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl {
-    type O = BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>;
+impl terrars::ToListMappable for ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl {
+    type O = terrars::BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5274,8 +5809,8 @@ impl ToListMappable for ContainerClusterMasterAuthorizedNetworksConfigElCidrBloc
 }
 
 pub struct BuildContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl {
-    #[doc= "External network that can access Kubernetes master through HTTPS. Must be specified in CIDR notation."]
-    pub cidr_block: PrimField<String>,
+    #[doc = "External network that can access Kubernetes master through HTTPS. Must be specified in CIDR notation."]
+    pub cidr_block: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl {
@@ -5288,12 +5823,15 @@ impl BuildContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl {
 }
 
 pub struct ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
+impl terrars::Ref for ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
         ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
             shared: shared,
             base: base.to_string(),
@@ -5302,64 +5840,74 @@ impl Ref for ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
 }
 
 impl ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cidr_block` after provisioning.\nExternal network that can access Kubernetes master through HTTPS. Must be specified in CIDR notation."]
-    pub fn cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
+    #[doc =
+        "Get a reference to the value of field `cidr_block` after provisioning.\nExternal network that can access Kubernetes master through HTTPS. Must be specified in CIDR notation."]
+    pub fn cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nField for users to identify CIDR blocks."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `display_name` after provisioning.\nField for users to identify CIDR blocks."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterMasterAuthorizedNetworksConfigElDynamic {
-    cidr_blocks: Option<DynamicBlock<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>>,
+    cidr_blocks: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMasterAuthorizedNetworksConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gcp_public_cidrs_access_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cidr_blocks: Option<Vec<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gcp_public_cidrs_access_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cidr_blocks: std::option::Option<std::vec::Vec<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>>,
     dynamic: ContainerClusterMasterAuthorizedNetworksConfigElDynamic,
 }
 
 impl ContainerClusterMasterAuthorizedNetworksConfigEl {
-    #[doc= "Set the field `gcp_public_cidrs_access_enabled`.\nWhether master is accessbile via Google Compute Engine Public IP addresses."]
-    pub fn set_gcp_public_cidrs_access_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.gcp_public_cidrs_access_enabled = Some(v.into());
+    #[doc =
+        "Set the field `gcp_public_cidrs_access_enabled`.\nWhether master is accessbile via Google Compute Engine Public IP addresses."]
+    pub fn set_gcp_public_cidrs_access_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.gcp_public_cidrs_access_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cidr_blocks`.\n"]
+    #[doc = "Set the field `cidr_blocks`.\n"]
     pub fn set_cidr_blocks(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigElCidrBlocksEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cidr_blocks = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cidr_blocks = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cidr_blocks = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cidr_blocks = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterMasterAuthorizedNetworksConfigEl {
-    type O = BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigEl>;
+impl terrars::ToListMappable for ContainerClusterMasterAuthorizedNetworksConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterMasterAuthorizedNetworksConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5374,18 +5922,21 @@ impl BuildContainerClusterMasterAuthorizedNetworksConfigEl {
         ContainerClusterMasterAuthorizedNetworksConfigEl {
             gcp_public_cidrs_access_enabled: core::default::Default::default(),
             cidr_blocks: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterMasterAuthorizedNetworksConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMasterAuthorizedNetworksConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMasterAuthorizedNetworksConfigElRef {
+impl terrars::Ref for ContainerClusterMasterAuthorizedNetworksConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterMasterAuthorizedNetworksConfigElRef {
         ContainerClusterMasterAuthorizedNetworksConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -5394,28 +5945,29 @@ impl Ref for ContainerClusterMasterAuthorizedNetworksConfigElRef {
 }
 
 impl ContainerClusterMasterAuthorizedNetworksConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gcp_public_cidrs_access_enabled` after provisioning.\nWhether master is accessbile via Google Compute Engine Public IP addresses."]
-    pub fn gcp_public_cidrs_access_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gcp_public_cidrs_access_enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `gcp_public_cidrs_access_enabled` after provisioning.\nWhether master is accessbile via Google Compute Engine Public IP addresses."]
+    pub fn gcp_public_cidrs_access_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gcp_public_cidrs_access_enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMeshCertificatesEl {
-    enable_certificates: PrimField<bool>,
+    enable_certificates: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterMeshCertificatesEl { }
 
-impl ToListMappable for ContainerClusterMeshCertificatesEl {
-    type O = BlockAssignable<ContainerClusterMeshCertificatesEl>;
+impl terrars::ToListMappable for ContainerClusterMeshCertificatesEl {
+    type O = terrars::BlockAssignable<ContainerClusterMeshCertificatesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5424,8 +5976,9 @@ impl ToListMappable for ContainerClusterMeshCertificatesEl {
 }
 
 pub struct BuildContainerClusterMeshCertificatesEl {
-    #[doc= "When enabled the GKE Workload Identity Certificates controller and node agent will be deployed in the cluster."]
-    pub enable_certificates: PrimField<bool>,
+    #[doc =
+        "When enabled the GKE Workload Identity Certificates controller and node agent will be deployed in the cluster."]
+    pub enable_certificates: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterMeshCertificatesEl {
@@ -5435,12 +5988,12 @@ impl BuildContainerClusterMeshCertificatesEl {
 }
 
 pub struct ContainerClusterMeshCertificatesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMeshCertificatesElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMeshCertificatesElRef {
+impl terrars::Ref for ContainerClusterMeshCertificatesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterMeshCertificatesElRef {
         ContainerClusterMeshCertificatesElRef {
             shared: shared,
             base: base.to_string(),
@@ -5449,36 +6002,37 @@ impl Ref for ContainerClusterMeshCertificatesElRef {
 }
 
 impl ContainerClusterMeshCertificatesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_certificates` after provisioning.\nWhen enabled the GKE Workload Identity Certificates controller and node agent will be deployed in the cluster."]
-    pub fn enable_certificates(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_certificates", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_certificates` after provisioning.\nWhen enabled the GKE Workload Identity Certificates controller and node agent will be deployed in the cluster."]
+    pub fn enable_certificates(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_certificates", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl {
-    enable_metrics: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    relay_mode: Option<PrimField<String>>,
+    enable_metrics: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    relay_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl {
-    #[doc= "Set the field `relay_mode`.\nMode used to make Relay available."]
-    pub fn set_relay_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.relay_mode = Some(v.into());
+    #[doc = "Set the field `relay_mode`.\nMode used to make Relay available."]
+    pub fn set_relay_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.relay_mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl {
-    type O = BlockAssignable<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>;
+impl terrars::ToListMappable for ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5487,8 +6041,8 @@ impl ToListMappable for ContainerClusterMonitoringConfigElAdvancedDatapathObserv
 }
 
 pub struct BuildContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl {
-    #[doc= "Whether or not the advanced datapath metrics are enabled."]
-    pub enable_metrics: PrimField<bool>,
+    #[doc = "Whether or not the advanced datapath metrics are enabled."]
+    pub enable_metrics: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl {
@@ -5501,14 +6055,14 @@ impl BuildContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigE
 }
 
 pub struct ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef {
+impl terrars::Ref for ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef {
         ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef {
             shared: shared,
@@ -5518,33 +6072,35 @@ impl Ref for ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConf
 }
 
 impl ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_metrics` after provisioning.\nWhether or not the advanced datapath metrics are enabled."]
-    pub fn enable_metrics(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_metrics", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_metrics` after provisioning.\nWhether or not the advanced datapath metrics are enabled."]
+    pub fn enable_metrics(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_metrics", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `relay_mode` after provisioning.\nMode used to make Relay available."]
-    pub fn relay_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.relay_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `relay_mode` after provisioning.\nMode used to make Relay available."]
+    pub fn relay_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.relay_mode", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMonitoringConfigElManagedPrometheusEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterMonitoringConfigElManagedPrometheusEl { }
 
-impl ToListMappable for ContainerClusterMonitoringConfigElManagedPrometheusEl {
-    type O = BlockAssignable<ContainerClusterMonitoringConfigElManagedPrometheusEl>;
+impl terrars::ToListMappable for ContainerClusterMonitoringConfigElManagedPrometheusEl {
+    type O = terrars::BlockAssignable<ContainerClusterMonitoringConfigElManagedPrometheusEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5553,8 +6109,8 @@ impl ToListMappable for ContainerClusterMonitoringConfigElManagedPrometheusEl {
 }
 
 pub struct BuildContainerClusterMonitoringConfigElManagedPrometheusEl {
-    #[doc= "Whether or not the managed collection is enabled."]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not the managed collection is enabled."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterMonitoringConfigElManagedPrometheusEl {
@@ -5564,12 +6120,15 @@ impl BuildContainerClusterMonitoringConfigElManagedPrometheusEl {
 }
 
 pub struct ContainerClusterMonitoringConfigElManagedPrometheusElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMonitoringConfigElManagedPrometheusElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMonitoringConfigElManagedPrometheusElRef {
+impl terrars::Ref for ContainerClusterMonitoringConfigElManagedPrometheusElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterMonitoringConfigElManagedPrometheusElRef {
         ContainerClusterMonitoringConfigElManagedPrometheusElRef {
             shared: shared,
             base: base.to_string(),
@@ -5578,82 +6137,97 @@ impl Ref for ContainerClusterMonitoringConfigElManagedPrometheusElRef {
 }
 
 impl ContainerClusterMonitoringConfigElManagedPrometheusElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not the managed collection is enabled."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether or not the managed collection is enabled."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterMonitoringConfigElDynamic {
-    advanced_datapath_observability_config: Option<
-        DynamicBlock<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>,
-    >,
-    managed_prometheus: Option<DynamicBlock<ContainerClusterMonitoringConfigElManagedPrometheusEl>>,
+    advanced_datapath_observability_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>>,
+    managed_prometheus: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMonitoringConfigElManagedPrometheusEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterMonitoringConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_components: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    advanced_datapath_observability_config: Option<
-        Vec<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    managed_prometheus: Option<Vec<ContainerClusterMonitoringConfigElManagedPrometheusEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_components: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_datapath_observability_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    managed_prometheus: std::option::Option<std::vec::Vec<ContainerClusterMonitoringConfigElManagedPrometheusEl>>,
     dynamic: ContainerClusterMonitoringConfigElDynamic,
 }
 
 impl ContainerClusterMonitoringConfigEl {
-    #[doc= "Set the field `enable_components`.\nGKE components exposing metrics. Valid values include SYSTEM_COMPONENTS, APISERVER, SCHEDULER, CONTROLLER_MANAGER, STORAGE, HPA, POD, DAEMONSET, DEPLOYMENT and STATEFULSET."]
-    pub fn set_enable_components(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.enable_components = Some(v.into());
+    #[doc =
+        "Set the field `enable_components`.\nGKE components exposing metrics. Valid values include SYSTEM_COMPONENTS, APISERVER, SCHEDULER, CONTROLLER_MANAGER, STORAGE, HPA, POD, DAEMONSET, DEPLOYMENT and STATEFULSET."]
+    pub fn set_enable_components(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.enable_components = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `advanced_datapath_observability_config`.\n"]
+    #[doc = "Set the field `advanced_datapath_observability_config`.\n"]
     pub fn set_advanced_datapath_observability_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.advanced_datapath_observability_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.advanced_datapath_observability_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.advanced_datapath_observability_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.advanced_datapath_observability_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `managed_prometheus`.\n"]
+    #[doc = "Set the field `managed_prometheus`.\n"]
     pub fn set_managed_prometheus(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterMonitoringConfigElManagedPrometheusEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterMonitoringConfigElManagedPrometheusEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.managed_prometheus = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.managed_prometheus = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.managed_prometheus = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.managed_prometheus = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterMonitoringConfigEl {
-    type O = BlockAssignable<ContainerClusterMonitoringConfigEl>;
+impl terrars::ToListMappable for ContainerClusterMonitoringConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterMonitoringConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5669,18 +6243,18 @@ impl BuildContainerClusterMonitoringConfigEl {
             enable_components: core::default::Default::default(),
             advanced_datapath_observability_config: core::default::Default::default(),
             managed_prometheus: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterMonitoringConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterMonitoringConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterMonitoringConfigElRef {
+impl terrars::Ref for ContainerClusterMonitoringConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterMonitoringConfigElRef {
         ContainerClusterMonitoringConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -5689,48 +6263,49 @@ impl Ref for ContainerClusterMonitoringConfigElRef {
 }
 
 impl ContainerClusterMonitoringConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_components` after provisioning.\nGKE components exposing metrics. Valid values include SYSTEM_COMPONENTS, APISERVER, SCHEDULER, CONTROLLER_MANAGER, STORAGE, HPA, POD, DAEMONSET, DEPLOYMENT and STATEFULSET."]
-    pub fn enable_components(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.enable_components", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_components` after provisioning.\nGKE components exposing metrics. Valid values include SYSTEM_COMPONENTS, APISERVER, SCHEDULER, CONTROLLER_MANAGER, STORAGE, HPA, POD, DAEMONSET, DEPLOYMENT and STATEFULSET."]
+    pub fn enable_components(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.enable_components", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `advanced_datapath_observability_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `advanced_datapath_observability_config` after provisioning.\n"]
     pub fn advanced_datapath_observability_config(
         &self,
-    ) -> ListRef<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.advanced_datapath_observability_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterMonitoringConfigElAdvancedDatapathObservabilityConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_datapath_observability_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `managed_prometheus` after provisioning.\n"]
-    pub fn managed_prometheus(&self) -> ListRef<ContainerClusterMonitoringConfigElManagedPrometheusElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.managed_prometheus", self.base))
+    #[doc = "Get a reference to the value of field `managed_prometheus` after provisioning.\n"]
+    pub fn managed_prometheus(&self) -> terrars::ListRef<ContainerClusterMonitoringConfigElManagedPrometheusElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.managed_prometheus", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNetworkPolicyEl {
-    enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<PrimField<String>>,
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNetworkPolicyEl {
-    #[doc= "Set the field `provider`.\nThe selected network policy provider."]
-    pub fn set_provider(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.provider = Some(v.into());
+    #[doc = "Set the field `provider`.\nThe selected network policy provider."]
+    pub fn set_provider(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.provider = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNetworkPolicyEl {
-    type O = BlockAssignable<ContainerClusterNetworkPolicyEl>;
+impl terrars::ToListMappable for ContainerClusterNetworkPolicyEl {
+    type O = terrars::BlockAssignable<ContainerClusterNetworkPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5739,8 +6314,8 @@ impl ToListMappable for ContainerClusterNetworkPolicyEl {
 }
 
 pub struct BuildContainerClusterNetworkPolicyEl {
-    #[doc= "Whether network policy is enabled on the cluster."]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether network policy is enabled on the cluster."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNetworkPolicyEl {
@@ -5753,12 +6328,12 @@ impl BuildContainerClusterNetworkPolicyEl {
 }
 
 pub struct ContainerClusterNetworkPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNetworkPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNetworkPolicyElRef {
+impl terrars::Ref for ContainerClusterNetworkPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNetworkPolicyElRef {
         ContainerClusterNetworkPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -5767,56 +6342,58 @@ impl Ref for ContainerClusterNetworkPolicyElRef {
 }
 
 impl ContainerClusterNetworkPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether network policy is enabled on the cluster."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether network policy is enabled on the cluster."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `provider` after provisioning.\nThe selected network policy provider."]
-    pub fn provider(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.provider", self.base))
+    #[doc =
+        "Get a reference to the value of field `provider` after provisioning.\nThe selected network policy provider."]
+    pub fn provider(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElEffectiveTaintsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    effect: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    effect: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodeConfigElEffectiveTaintsEl {
-    #[doc= "Set the field `effect`.\n"]
-    pub fn set_effect(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.effect = Some(v.into());
+    #[doc = "Set the field `effect`.\n"]
+    pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.effect = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElEffectiveTaintsEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElEffectiveTaintsEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElEffectiveTaintsEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElEffectiveTaintsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5837,12 +6414,15 @@ impl BuildContainerClusterNodeConfigElEffectiveTaintsEl {
 }
 
 pub struct ContainerClusterNodeConfigElEffectiveTaintsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElEffectiveTaintsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElEffectiveTaintsElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElEffectiveTaintsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElEffectiveTaintsElRef {
         ContainerClusterNodeConfigElEffectiveTaintsElRef {
             shared: shared,
             base: base.to_string(),
@@ -5851,45 +6431,48 @@ impl Ref for ContainerClusterNodeConfigElEffectiveTaintsElRef {
 }
 
 impl ContainerClusterNodeConfigElEffectiveTaintsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `effect` after provisioning.\n"]
-    pub fn effect(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
+    #[doc = "Get a reference to the value of field `effect` after provisioning.\n"]
+    pub fn effect(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_driver_version: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_driver_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
-    #[doc= "Set the field `gpu_driver_version`.\n"]
-    pub fn set_gpu_driver_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gpu_driver_version = Some(v.into());
+    #[doc = "Set the field `gpu_driver_version`.\n"]
+    pub fn set_gpu_driver_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.gpu_driver_version = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5908,14 +6491,14 @@ impl BuildContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationCon
 }
 
 pub struct ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
         ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
             shared: shared,
@@ -5925,43 +6508,46 @@ impl Ref for ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallation
 }
 
 impl ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gpu_driver_version` after provisioning.\n"]
-    pub fn gpu_driver_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gpu_driver_version", self.base))
+    #[doc = "Get a reference to the value of field `gpu_driver_version` after provisioning.\n"]
+    pub fn gpu_driver_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_driver_version", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_sharing_strategy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_shared_clients_per_gpu: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_sharing_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_shared_clients_per_gpu: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
-    #[doc= "Set the field `gpu_sharing_strategy`.\n"]
-    pub fn set_gpu_sharing_strategy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gpu_sharing_strategy = Some(v.into());
+    #[doc = "Set the field `gpu_sharing_strategy`.\n"]
+    pub fn set_gpu_sharing_strategy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.gpu_sharing_strategy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_shared_clients_per_gpu`.\n"]
-    pub fn set_max_shared_clients_per_gpu(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_shared_clients_per_gpu = Some(v.into());
+    #[doc = "Set the field `max_shared_clients_per_gpu`.\n"]
+    pub fn set_max_shared_clients_per_gpu(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_shared_clients_per_gpu = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5981,12 +6567,15 @@ impl BuildContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
         ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -5995,80 +6584,98 @@ impl Ref for ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef
 }
 
 impl ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gpu_sharing_strategy` after provisioning.\n"]
-    pub fn gpu_sharing_strategy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gpu_sharing_strategy", self.base))
+    #[doc = "Get a reference to the value of field `gpu_sharing_strategy` after provisioning.\n"]
+    pub fn gpu_sharing_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_sharing_strategy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_shared_clients_per_gpu` after provisioning.\n"]
-    pub fn max_shared_clients_per_gpu(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_shared_clients_per_gpu", self.base))
+    #[doc = "Get a reference to the value of field `max_shared_clients_per_gpu` after provisioning.\n"]
+    pub fn max_shared_clients_per_gpu(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_shared_clients_per_gpu", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElGuestAcceleratorEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_driver_installation_config: Option<
-        ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_partition_size: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_sharing_config: Option<ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_driver_installation_config: std
+    ::option
+    ::Option<terrars::ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_partition_size: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_sharing_config: std
+    ::option
+    ::Option<terrars::ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodeConfigElGuestAcceleratorEl {
-    #[doc= "Set the field `count`.\n"]
-    pub fn set_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.count = Some(v.into());
+    #[doc = "Set the field `count`.\n"]
+    pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gpu_driver_installation_config`.\n"]
+    #[doc = "Set the field `gpu_driver_installation_config`.\n"]
     pub fn set_gpu_driver_installation_config(
         mut self,
-        v: impl Into<ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>,
+                    >,
     ) -> Self {
-        self.gpu_driver_installation_config = Some(v.into());
+        self.gpu_driver_installation_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gpu_partition_size`.\n"]
-    pub fn set_gpu_partition_size(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gpu_partition_size = Some(v.into());
+    #[doc = "Set the field `gpu_partition_size`.\n"]
+    pub fn set_gpu_partition_size(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.gpu_partition_size = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gpu_sharing_config`.\n"]
+    #[doc = "Set the field `gpu_sharing_config`.\n"]
     pub fn set_gpu_sharing_config(
         mut self,
-        v: impl Into<ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigEl>>,
     ) -> Self {
-        self.gpu_sharing_config = Some(v.into());
+        self.gpu_sharing_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElGuestAcceleratorEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElGuestAcceleratorEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElGuestAcceleratorEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElGuestAcceleratorEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6091,12 +6698,15 @@ impl BuildContainerClusterNodeConfigElGuestAcceleratorEl {
 }
 
 pub struct ContainerClusterNodeConfigElGuestAcceleratorElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElGuestAcceleratorElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElGuestAcceleratorElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElGuestAcceleratorElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElGuestAcceleratorElRef {
         ContainerClusterNodeConfigElGuestAcceleratorElRef {
             shared: shared,
             base: base.to_string(),
@@ -6105,50 +6715,52 @@ impl Ref for ContainerClusterNodeConfigElGuestAcceleratorElRef {
 }
 
 impl ContainerClusterNodeConfigElGuestAcceleratorElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `count` after provisioning.\n"]
-    pub fn count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
+    #[doc = "Get a reference to the value of field `count` after provisioning.\n"]
+    pub fn count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gpu_driver_installation_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `gpu_driver_installation_config` after provisioning.\n"]
     pub fn gpu_driver_installation_config(
         &self,
-    ) -> ListRef<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gpu_driver_installation_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gpu_driver_installation_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gpu_partition_size` after provisioning.\n"]
-    pub fn gpu_partition_size(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_size", self.base))
+    #[doc = "Get a reference to the value of field `gpu_partition_size` after provisioning.\n"]
+    pub fn gpu_partition_size(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_size", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gpu_sharing_config` after provisioning.\n"]
-    pub fn gpu_sharing_config(&self) -> ListRef<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gpu_sharing_config", self.base))
+    #[doc = "Get a reference to the value of field `gpu_sharing_config` after provisioning.\n"]
+    pub fn gpu_sharing_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodeConfigElGuestAcceleratorElGpuSharingConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gpu_sharing_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElAdvancedMachineFeaturesEl {
-    threads_per_core: PrimField<f64>,
+    threads_per_core: terrars::PrimField<f64>,
 }
 
 impl ContainerClusterNodeConfigElAdvancedMachineFeaturesEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElAdvancedMachineFeaturesEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElAdvancedMachineFeaturesEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6157,8 +6769,9 @@ impl ToListMappable for ContainerClusterNodeConfigElAdvancedMachineFeaturesEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElAdvancedMachineFeaturesEl {
-    #[doc= "The number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
-    pub threads_per_core: PrimField<f64>,
+    #[doc =
+        "The number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
+    pub threads_per_core: terrars::PrimField<f64>,
 }
 
 impl BuildContainerClusterNodeConfigElAdvancedMachineFeaturesEl {
@@ -6168,12 +6781,15 @@ impl BuildContainerClusterNodeConfigElAdvancedMachineFeaturesEl {
 }
 
 pub struct ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
         ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
             shared: shared,
             base: base.to_string(),
@@ -6182,28 +6798,29 @@ impl Ref for ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
 }
 
 impl ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `threads_per_core` after provisioning.\nThe number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
-    pub fn threads_per_core(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.threads_per_core", self.base))
+    #[doc =
+        "Get a reference to the value of field `threads_per_core` after provisioning.\nThe number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
+    pub fn threads_per_core(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threads_per_core", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElConfidentialNodesEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodeConfigElConfidentialNodesEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElConfidentialNodesEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElConfidentialNodesEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElConfidentialNodesEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElConfidentialNodesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6212,8 +6829,8 @@ impl ToListMappable for ContainerClusterNodeConfigElConfidentialNodesEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElConfidentialNodesEl {
-    #[doc= "Whether Confidential Nodes feature is enabled for all nodes in this pool."]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether Confidential Nodes feature is enabled for all nodes in this pool."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodeConfigElConfidentialNodesEl {
@@ -6223,12 +6840,15 @@ impl BuildContainerClusterNodeConfigElConfidentialNodesEl {
 }
 
 pub struct ContainerClusterNodeConfigElConfidentialNodesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElConfidentialNodesElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElConfidentialNodesElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElConfidentialNodesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElConfidentialNodesElRef {
         ContainerClusterNodeConfigElConfidentialNodesElRef {
             shared: shared,
             base: base.to_string(),
@@ -6237,28 +6857,29 @@ impl Ref for ContainerClusterNodeConfigElConfidentialNodesElRef {
 }
 
 impl ContainerClusterNodeConfigElConfidentialNodesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether Confidential Nodes feature is enabled for all nodes in this pool."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether Confidential Nodes feature is enabled for all nodes in this pool."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl {
-    local_ssd_count: PrimField<f64>,
+    local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6267,8 +6888,9 @@ impl ToListMappable for ContainerClusterNodeConfigElEphemeralStorageLocalSsdConf
 }
 
 pub struct BuildContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl {
-    #[doc= "Number of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
-    pub local_ssd_count: PrimField<f64>,
+    #[doc =
+        "Number of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
+    pub local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl BuildContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl {
@@ -6278,12 +6900,15 @@ impl BuildContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
         ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -6292,28 +6917,29 @@ impl Ref for ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
-    pub fn local_ssd_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
+    pub fn local_ssd_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElFastSocketEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodeConfigElFastSocketEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElFastSocketEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElFastSocketEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElFastSocketEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElFastSocketEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6322,8 +6948,8 @@ impl ToListMappable for ContainerClusterNodeConfigElFastSocketEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElFastSocketEl {
-    #[doc= "Whether or not NCCL Fast Socket is enabled"]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not NCCL Fast Socket is enabled"]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodeConfigElFastSocketEl {
@@ -6333,12 +6959,12 @@ impl BuildContainerClusterNodeConfigElFastSocketEl {
 }
 
 pub struct ContainerClusterNodeConfigElFastSocketElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElFastSocketElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElFastSocketElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElFastSocketElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodeConfigElFastSocketElRef {
         ContainerClusterNodeConfigElFastSocketElRef {
             shared: shared,
             base: base.to_string(),
@@ -6347,28 +6973,29 @@ impl Ref for ContainerClusterNodeConfigElFastSocketElRef {
 }
 
 impl ContainerClusterNodeConfigElFastSocketElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not NCCL Fast Socket is enabled"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether or not NCCL Fast Socket is enabled"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElGcfsConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodeConfigElGcfsConfigEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElGcfsConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElGcfsConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElGcfsConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElGcfsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6377,8 +7004,8 @@ impl ToListMappable for ContainerClusterNodeConfigElGcfsConfigEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElGcfsConfigEl {
-    #[doc= "Whether or not GCFS is enabled"]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not GCFS is enabled"]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodeConfigElGcfsConfigEl {
@@ -6388,12 +7015,12 @@ impl BuildContainerClusterNodeConfigElGcfsConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElGcfsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElGcfsConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElGcfsConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElGcfsConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodeConfigElGcfsConfigElRef {
         ContainerClusterNodeConfigElGcfsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -6402,28 +7029,28 @@ impl Ref for ContainerClusterNodeConfigElGcfsConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElGcfsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not GCFS is enabled"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\nWhether or not GCFS is enabled"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElGvnicEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodeConfigElGvnicEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElGvnicEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElGvnicEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElGvnicEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElGvnicEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6432,8 +7059,8 @@ impl ToListMappable for ContainerClusterNodeConfigElGvnicEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElGvnicEl {
-    #[doc= "Whether or not gvnic is enabled"]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not gvnic is enabled"]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodeConfigElGvnicEl {
@@ -6443,12 +7070,12 @@ impl BuildContainerClusterNodeConfigElGvnicEl {
 }
 
 pub struct ContainerClusterNodeConfigElGvnicElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElGvnicElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElGvnicElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElGvnicElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodeConfigElGvnicElRef {
         ContainerClusterNodeConfigElGvnicElRef {
             shared: shared,
             base: base.to_string(),
@@ -6457,28 +7084,28 @@ impl Ref for ContainerClusterNodeConfigElGvnicElRef {
 }
 
 impl ContainerClusterNodeConfigElGvnicElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not gvnic is enabled"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\nWhether or not gvnic is enabled"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElHostMaintenancePolicyEl {
-    maintenance_interval: PrimField<String>,
+    maintenance_interval: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodeConfigElHostMaintenancePolicyEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElHostMaintenancePolicyEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElHostMaintenancePolicyEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElHostMaintenancePolicyEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElHostMaintenancePolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6487,8 +7114,8 @@ impl ToListMappable for ContainerClusterNodeConfigElHostMaintenancePolicyEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElHostMaintenancePolicyEl {
-    #[doc= "."]
-    pub maintenance_interval: PrimField<String>,
+    #[doc = "."]
+    pub maintenance_interval: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodeConfigElHostMaintenancePolicyEl {
@@ -6498,12 +7125,15 @@ impl BuildContainerClusterNodeConfigElHostMaintenancePolicyEl {
 }
 
 pub struct ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
         ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -6512,52 +7142,55 @@ impl Ref for ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
 }
 
 impl ContainerClusterNodeConfigElHostMaintenancePolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `maintenance_interval` after provisioning.\n."]
-    pub fn maintenance_interval(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maintenance_interval", self.base))
+    #[doc = "Get a reference to the value of field `maintenance_interval` after provisioning.\n."]
+    pub fn maintenance_interval(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_interval", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElKubeletConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_cfs_quota: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_cfs_quota_period: Option<PrimField<String>>,
-    cpu_manager_policy: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pod_pids_limit: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_cfs_quota: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_cfs_quota_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    cpu_manager_policy: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_pids_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ContainerClusterNodeConfigElKubeletConfigEl {
-    #[doc= "Set the field `cpu_cfs_quota`.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
-    pub fn set_cpu_cfs_quota(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.cpu_cfs_quota = Some(v.into());
+    #[doc = "Set the field `cpu_cfs_quota`.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
+    pub fn set_cpu_cfs_quota(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.cpu_cfs_quota = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cpu_cfs_quota_period`.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
-    pub fn set_cpu_cfs_quota_period(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cpu_cfs_quota_period = Some(v.into());
+    #[doc = "Set the field `cpu_cfs_quota_period`.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
+    pub fn set_cpu_cfs_quota_period(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cpu_cfs_quota_period = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `pod_pids_limit`.\nControls the maximum number of processes allowed to run in a pod."]
-    pub fn set_pod_pids_limit(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.pod_pids_limit = Some(v.into());
+    #[doc = "Set the field `pod_pids_limit`.\nControls the maximum number of processes allowed to run in a pod."]
+    pub fn set_pod_pids_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.pod_pids_limit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElKubeletConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElKubeletConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElKubeletConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElKubeletConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6566,8 +7199,8 @@ impl ToListMappable for ContainerClusterNodeConfigElKubeletConfigEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElKubeletConfigEl {
-    #[doc= "Control the CPU management policy on the node."]
-    pub cpu_manager_policy: PrimField<String>,
+    #[doc = "Control the CPU management policy on the node."]
+    pub cpu_manager_policy: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodeConfigElKubeletConfigEl {
@@ -6582,12 +7215,15 @@ impl BuildContainerClusterNodeConfigElKubeletConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElKubeletConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElKubeletConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElKubeletConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElKubeletConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElKubeletConfigElRef {
         ContainerClusterNodeConfigElKubeletConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -6596,58 +7232,66 @@ impl Ref for ContainerClusterNodeConfigElKubeletConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElKubeletConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cpu_cfs_quota` after provisioning.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
-    pub fn cpu_cfs_quota(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota", self.base))
+    #[doc =
+        "Get a reference to the value of field `cpu_cfs_quota` after provisioning.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
+    pub fn cpu_cfs_quota(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cpu_cfs_quota_period` after provisioning.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
-    pub fn cpu_cfs_quota_period(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota_period", self.base))
+    #[doc =
+        "Get a reference to the value of field `cpu_cfs_quota_period` after provisioning.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
+    pub fn cpu_cfs_quota_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota_period", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cpu_manager_policy` after provisioning.\nControl the CPU management policy on the node."]
-    pub fn cpu_manager_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_manager_policy", self.base))
+    #[doc =
+        "Get a reference to the value of field `cpu_manager_policy` after provisioning.\nControl the CPU management policy on the node."]
+    pub fn cpu_manager_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_manager_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pod_pids_limit` after provisioning.\nControls the maximum number of processes allowed to run in a pod."]
-    pub fn pod_pids_limit(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pod_pids_limit", self.base))
+    #[doc =
+        "Get a reference to the value of field `pod_pids_limit` after provisioning.\nControls the maximum number of processes allowed to run in a pod."]
+    pub fn pod_pids_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_pids_limit", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElLinuxNodeConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cgroup_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sysctls: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cgroup_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sysctls: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 impl ContainerClusterNodeConfigElLinuxNodeConfigEl {
-    #[doc= "Set the field `cgroup_mode`.\ncgroupMode specifies the cgroup mode to be used on the node."]
-    pub fn set_cgroup_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cgroup_mode = Some(v.into());
+    #[doc = "Set the field `cgroup_mode`.\ncgroupMode specifies the cgroup mode to be used on the node."]
+    pub fn set_cgroup_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cgroup_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sysctls`.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
-    pub fn set_sysctls(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.sysctls = Some(v.into());
+    #[doc =
+        "Set the field `sysctls`.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
+    pub fn set_sysctls(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.sysctls = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElLinuxNodeConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElLinuxNodeConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElLinuxNodeConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElLinuxNodeConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6667,12 +7311,15 @@ impl BuildContainerClusterNodeConfigElLinuxNodeConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElLinuxNodeConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElLinuxNodeConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElLinuxNodeConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElLinuxNodeConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElLinuxNodeConfigElRef {
         ContainerClusterNodeConfigElLinuxNodeConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -6681,33 +7328,35 @@ impl Ref for ContainerClusterNodeConfigElLinuxNodeConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElLinuxNodeConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cgroup_mode` after provisioning.\ncgroupMode specifies the cgroup mode to be used on the node."]
-    pub fn cgroup_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cgroup_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `cgroup_mode` after provisioning.\ncgroupMode specifies the cgroup mode to be used on the node."]
+    pub fn cgroup_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cgroup_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sysctls` after provisioning.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
-    pub fn sysctls(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.sysctls", self.base))
+    #[doc =
+        "Get a reference to the value of field `sysctls` after provisioning.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
+    pub fn sysctls(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.sysctls", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl {
-    local_ssd_count: PrimField<f64>,
+    local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6716,8 +7365,8 @@ impl ToListMappable for ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl {
-    #[doc= "Number of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
-    pub local_ssd_count: PrimField<f64>,
+    #[doc = "Number of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
+    pub local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl BuildContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl {
@@ -6727,12 +7376,15 @@ impl BuildContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
         ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -6741,44 +7393,48 @@ impl Ref for ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
-    pub fn local_ssd_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
+    pub fn local_ssd_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElReservationAffinityEl {
-    consume_reservation_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    consume_reservation_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl ContainerClusterNodeConfigElReservationAffinityEl {
-    #[doc= "Set the field `key`.\nThe label key of a reservation resource."]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\nThe label key of a reservation resource."]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\nThe label values of the reservation resource."]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\nThe label values of the reservation resource."]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElReservationAffinityEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElReservationAffinityEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElReservationAffinityEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElReservationAffinityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6787,8 +7443,8 @@ impl ToListMappable for ContainerClusterNodeConfigElReservationAffinityEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElReservationAffinityEl {
-    #[doc= "Corresponds to the type of reservation consumption."]
-    pub consume_reservation_type: PrimField<String>,
+    #[doc = "Corresponds to the type of reservation consumption."]
+    pub consume_reservation_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodeConfigElReservationAffinityEl {
@@ -6802,12 +7458,15 @@ impl BuildContainerClusterNodeConfigElReservationAffinityEl {
 }
 
 pub struct ContainerClusterNodeConfigElReservationAffinityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElReservationAffinityElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElReservationAffinityElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElReservationAffinityElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElReservationAffinityElRef {
         ContainerClusterNodeConfigElReservationAffinityElRef {
             shared: shared,
             base: base.to_string(),
@@ -6816,53 +7475,56 @@ impl Ref for ContainerClusterNodeConfigElReservationAffinityElRef {
 }
 
 impl ContainerClusterNodeConfigElReservationAffinityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `consume_reservation_type` after provisioning.\nCorresponds to the type of reservation consumption."]
-    pub fn consume_reservation_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.consume_reservation_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `consume_reservation_type` after provisioning.\nCorresponds to the type of reservation consumption."]
+    pub fn consume_reservation_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consume_reservation_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nThe label key of a reservation resource."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nThe label key of a reservation resource."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\nThe label values of the reservation resource."]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc =
+        "Get a reference to the value of field `values` after provisioning.\nThe label values of the reservation resource."]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElShieldedInstanceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_integrity_monitoring: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_secure_boot: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_integrity_monitoring: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_secure_boot: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl ContainerClusterNodeConfigElShieldedInstanceConfigEl {
-    #[doc= "Set the field `enable_integrity_monitoring`.\nDefines whether the instance has integrity monitoring enabled."]
-    pub fn set_enable_integrity_monitoring(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_integrity_monitoring = Some(v.into());
+    #[doc =
+        "Set the field `enable_integrity_monitoring`.\nDefines whether the instance has integrity monitoring enabled."]
+    pub fn set_enable_integrity_monitoring(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_integrity_monitoring = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_secure_boot`.\nDefines whether the instance has Secure Boot enabled."]
-    pub fn set_enable_secure_boot(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_secure_boot = Some(v.into());
+    #[doc = "Set the field `enable_secure_boot`.\nDefines whether the instance has Secure Boot enabled."]
+    pub fn set_enable_secure_boot(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_secure_boot = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElShieldedInstanceConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElShieldedInstanceConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElShieldedInstanceConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElShieldedInstanceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6882,12 +7544,15 @@ impl BuildContainerClusterNodeConfigElShieldedInstanceConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
         ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -6896,35 +7561,37 @@ impl Ref for ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElShieldedInstanceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_integrity_monitoring` after provisioning.\nDefines whether the instance has integrity monitoring enabled."]
-    pub fn enable_integrity_monitoring(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_integrity_monitoring", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_integrity_monitoring` after provisioning.\nDefines whether the instance has integrity monitoring enabled."]
+    pub fn enable_integrity_monitoring(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_integrity_monitoring", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_secure_boot` after provisioning.\nDefines whether the instance has Secure Boot enabled."]
-    pub fn enable_secure_boot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_secure_boot", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_secure_boot` after provisioning.\nDefines whether the instance has Secure Boot enabled."]
+    pub fn enable_secure_boot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_secure_boot", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl {
-    key: PrimField<String>,
-    operator: PrimField<String>,
-    values: ListField<PrimField<String>>,
+    key: terrars::PrimField<std::string::String>,
+    operator: terrars::PrimField<std::string::String>,
+    values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6933,12 +7600,12 @@ impl ToListMappable for ContainerClusterNodeConfigElSoleTenantConfigElNodeAffini
 }
 
 pub struct BuildContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl {
-    #[doc= "."]
-    pub key: PrimField<String>,
-    #[doc= "."]
-    pub operator: PrimField<String>,
-    #[doc= "."]
-    pub values: ListField<PrimField<String>>,
+    #[doc = "."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = "."]
+    pub operator: terrars::PrimField<std::string::String>,
+    #[doc = "."]
+    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl {
@@ -6952,12 +7619,15 @@ impl BuildContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl {
 }
 
 pub struct ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
         ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
             shared: shared,
             base: base.to_string(),
@@ -6966,61 +7636,68 @@ impl Ref for ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
 }
 
 impl ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operator` after provisioning.\n."]
-    pub fn operator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
+    #[doc = "Get a reference to the value of field `operator` after provisioning.\n."]
+    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n."]
-    pub fn values(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n."]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodeConfigElSoleTenantConfigElDynamic {
-    node_affinity: Option<DynamicBlock<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
+    node_affinity: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElSoleTenantConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_affinity: Option<Vec<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_affinity: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
     dynamic: ContainerClusterNodeConfigElSoleTenantConfigElDynamic,
 }
 
 impl ContainerClusterNodeConfigElSoleTenantConfigEl {
-    #[doc= "Set the field `node_affinity`.\n"]
+    #[doc = "Set the field `node_affinity`.\n"]
     pub fn set_node_affinity(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.node_affinity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.node_affinity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.node_affinity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.node_affinity = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigElSoleTenantConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElSoleTenantConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7034,18 +7711,21 @@ impl BuildContainerClusterNodeConfigElSoleTenantConfigEl {
     pub fn build(self) -> ContainerClusterNodeConfigElSoleTenantConfigEl {
         ContainerClusterNodeConfigElSoleTenantConfigEl {
             node_affinity: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodeConfigElSoleTenantConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElSoleTenantConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElSoleTenantConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElSoleTenantConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElSoleTenantConfigElRef {
         ContainerClusterNodeConfigElSoleTenantConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -7054,25 +7734,25 @@ impl Ref for ContainerClusterNodeConfigElSoleTenantConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElSoleTenantConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElTaintEl {
-    effect: PrimField<String>,
-    key: PrimField<String>,
-    value: PrimField<String>,
+    effect: terrars::PrimField<std::string::String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodeConfigElTaintEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElTaintEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElTaintEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElTaintEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElTaintEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7081,12 +7761,12 @@ impl ToListMappable for ContainerClusterNodeConfigElTaintEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElTaintEl {
-    #[doc= "Effect for taint."]
-    pub effect: PrimField<String>,
-    #[doc= "Key for taint."]
-    pub key: PrimField<String>,
-    #[doc= "Value for taint."]
-    pub value: PrimField<String>,
+    #[doc = "Effect for taint."]
+    pub effect: terrars::PrimField<std::string::String>,
+    #[doc = "Key for taint."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = "Value for taint."]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodeConfigElTaintEl {
@@ -7100,12 +7780,12 @@ impl BuildContainerClusterNodeConfigElTaintEl {
 }
 
 pub struct ContainerClusterNodeConfigElTaintElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElTaintElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElTaintElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElTaintElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodeConfigElTaintElRef {
         ContainerClusterNodeConfigElTaintElRef {
             shared: shared,
             base: base.to_string(),
@@ -7114,38 +7794,38 @@ impl Ref for ContainerClusterNodeConfigElTaintElRef {
 }
 
 impl ContainerClusterNodeConfigElTaintElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `effect` after provisioning.\nEffect for taint."]
-    pub fn effect(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
+    #[doc = "Get a reference to the value of field `effect` after provisioning.\nEffect for taint."]
+    pub fn effect(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nKey for taint."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nKey for taint."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\nValue for taint."]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nValue for taint."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigElWorkloadMetadataConfigEl {
-    mode: PrimField<String>,
+    mode: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodeConfigElWorkloadMetadataConfigEl { }
 
-impl ToListMappable for ContainerClusterNodeConfigElWorkloadMetadataConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigElWorkloadMetadataConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7154,8 +7834,8 @@ impl ToListMappable for ContainerClusterNodeConfigElWorkloadMetadataConfigEl {
 }
 
 pub struct BuildContainerClusterNodeConfigElWorkloadMetadataConfigEl {
-    #[doc= "Mode is the configuration for how to expose metadata to workloads running on the node."]
-    pub mode: PrimField<String>,
+    #[doc = "Mode is the configuration for how to expose metadata to workloads running on the node."]
+    pub mode: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodeConfigElWorkloadMetadataConfigEl {
@@ -7165,12 +7845,15 @@ impl BuildContainerClusterNodeConfigElWorkloadMetadataConfigEl {
 }
 
 pub struct ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
         ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -7179,454 +7862,513 @@ impl Ref for ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElWorkloadMetadataConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\nMode is the configuration for how to expose metadata to workloads running on the node."]
-    pub fn mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `mode` after provisioning.\nMode is the configuration for how to expose metadata to workloads running on the node."]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodeConfigElDynamic {
-    advanced_machine_features: Option<DynamicBlock<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>>,
-    confidential_nodes: Option<DynamicBlock<ContainerClusterNodeConfigElConfidentialNodesEl>>,
-    ephemeral_storage_local_ssd_config: Option<
-        DynamicBlock<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>,
-    >,
-    fast_socket: Option<DynamicBlock<ContainerClusterNodeConfigElFastSocketEl>>,
-    gcfs_config: Option<DynamicBlock<ContainerClusterNodeConfigElGcfsConfigEl>>,
-    gvnic: Option<DynamicBlock<ContainerClusterNodeConfigElGvnicEl>>,
-    host_maintenance_policy: Option<DynamicBlock<ContainerClusterNodeConfigElHostMaintenancePolicyEl>>,
-    kubelet_config: Option<DynamicBlock<ContainerClusterNodeConfigElKubeletConfigEl>>,
-    linux_node_config: Option<DynamicBlock<ContainerClusterNodeConfigElLinuxNodeConfigEl>>,
-    local_nvme_ssd_block_config: Option<DynamicBlock<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>>,
-    reservation_affinity: Option<DynamicBlock<ContainerClusterNodeConfigElReservationAffinityEl>>,
-    shielded_instance_config: Option<DynamicBlock<ContainerClusterNodeConfigElShieldedInstanceConfigEl>>,
-    sole_tenant_config: Option<DynamicBlock<ContainerClusterNodeConfigElSoleTenantConfigEl>>,
-    taint: Option<DynamicBlock<ContainerClusterNodeConfigElTaintEl>>,
-    workload_metadata_config: Option<DynamicBlock<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>>,
+    advanced_machine_features: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>>,
+    confidential_nodes: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElConfidentialNodesEl>>,
+    ephemeral_storage_local_ssd_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
+    fast_socket: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElFastSocketEl>>,
+    gcfs_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElGcfsConfigEl>>,
+    gvnic: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElGvnicEl>>,
+    host_maintenance_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElHostMaintenancePolicyEl>>,
+    kubelet_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElKubeletConfigEl>>,
+    linux_node_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElLinuxNodeConfigEl>>,
+    local_nvme_ssd_block_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>>,
+    reservation_affinity: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElReservationAffinityEl>>,
+    shielded_instance_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElShieldedInstanceConfigEl>>,
+    sole_tenant_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElSoleTenantConfigEl>>,
+    taint: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElTaintEl>>,
+    workload_metadata_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodeConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    boot_disk_kms_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk_size_gb: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    guest_accelerator: Option<ListField<ContainerClusterNodeConfigElGuestAcceleratorEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_ssd_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    logging_variant: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    machine_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metadata: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_cpu_platform: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_group: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oauth_scopes: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    preemptible: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_account: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    spot: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    advanced_machine_features: Option<Vec<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    confidential_nodes: Option<Vec<ContainerClusterNodeConfigElConfidentialNodesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ephemeral_storage_local_ssd_config: Option<Vec<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    fast_socket: Option<Vec<ContainerClusterNodeConfigElFastSocketEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gcfs_config: Option<Vec<ContainerClusterNodeConfigElGcfsConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gvnic: Option<Vec<ContainerClusterNodeConfigElGvnicEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    host_maintenance_policy: Option<Vec<ContainerClusterNodeConfigElHostMaintenancePolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kubelet_config: Option<Vec<ContainerClusterNodeConfigElKubeletConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    linux_node_config: Option<Vec<ContainerClusterNodeConfigElLinuxNodeConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_nvme_ssd_block_config: Option<Vec<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    reservation_affinity: Option<Vec<ContainerClusterNodeConfigElReservationAffinityEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    shielded_instance_config: Option<Vec<ContainerClusterNodeConfigElShieldedInstanceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sole_tenant_config: Option<Vec<ContainerClusterNodeConfigElSoleTenantConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    taint: Option<Vec<ContainerClusterNodeConfigElTaintEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    workload_metadata_config: Option<Vec<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    guest_accelerator: std::option::Option<terrars::ListField<ContainerClusterNodeConfigElGuestAcceleratorEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_ssd_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logging_variant: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_cpu_platform: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth_scopes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preemptible: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    spot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_machine_features: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confidential_nodes: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElConfidentialNodesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ephemeral_storage_local_ssd_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fast_socket: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElFastSocketEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gcfs_config: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElGcfsConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gvnic: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElGvnicEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_maintenance_policy: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElHostMaintenancePolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kubelet_config: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElKubeletConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    linux_node_config: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElLinuxNodeConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_nvme_ssd_block_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reservation_affinity: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElReservationAffinityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shielded_instance_config: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElShieldedInstanceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sole_tenant_config: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElSoleTenantConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    taint: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElTaintEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workload_metadata_config: std::option::Option<std::vec::Vec<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>>,
     dynamic: ContainerClusterNodeConfigElDynamic,
 }
 
 impl ContainerClusterNodeConfigEl {
-    #[doc= "Set the field `boot_disk_kms_key`.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
-    pub fn set_boot_disk_kms_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.boot_disk_kms_key = Some(v.into());
+    #[doc =
+        "Set the field `boot_disk_kms_key`.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
+    pub fn set_boot_disk_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.boot_disk_kms_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk_size_gb`.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
-    pub fn set_disk_size_gb(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.disk_size_gb = Some(v.into());
+    #[doc =
+        "Set the field `disk_size_gb`.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
+    pub fn set_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.disk_size_gb = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk_type`.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
-    pub fn set_disk_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.disk_type = Some(v.into());
+    #[doc =
+        "Set the field `disk_type`.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
+    pub fn set_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.disk_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `guest_accelerator`.\nList of the type and count of accelerator cards attached to the instance."]
+    #[doc =
+        "Set the field `guest_accelerator`.\nList of the type and count of accelerator cards attached to the instance."]
     pub fn set_guest_accelerator(
         mut self,
-        v: impl Into<ListField<ContainerClusterNodeConfigElGuestAcceleratorEl>>,
+        v: impl std::convert::Into<terrars::ListField<ContainerClusterNodeConfigElGuestAcceleratorEl>>,
     ) -> Self {
-        self.guest_accelerator = Some(v.into());
+        self.guest_accelerator = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `image_type`.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
-    pub fn set_image_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.image_type = Some(v.into());
+    #[doc =
+        "Set the field `image_type`.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
+    pub fn set_image_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.image_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
-    pub fn set_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.labels = Some(v.into());
+    #[doc =
+        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `local_ssd_count`.\nThe number of local SSD disks to be attached to the node."]
-    pub fn set_local_ssd_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.local_ssd_count = Some(v.into());
+    #[doc = "Set the field `local_ssd_count`.\nThe number of local SSD disks to be attached to the node."]
+    pub fn set_local_ssd_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.local_ssd_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `logging_variant`.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
-    pub fn set_logging_variant(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.logging_variant = Some(v.into());
+    #[doc =
+        "Set the field `logging_variant`.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
+    pub fn set_logging_variant(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.logging_variant = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `machine_type`.\nThe name of a Google Compute Engine machine type."]
-    pub fn set_machine_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.machine_type = Some(v.into());
+    #[doc = "Set the field `machine_type`.\nThe name of a Google Compute Engine machine type."]
+    pub fn set_machine_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.machine_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metadata`.\nThe metadata key/value pairs assigned to instances in the cluster."]
-    pub fn set_metadata(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.metadata = Some(v.into());
+    #[doc = "Set the field `metadata`.\nThe metadata key/value pairs assigned to instances in the cluster."]
+    pub fn set_metadata(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.metadata = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_cpu_platform`.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
-    pub fn set_min_cpu_platform(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.min_cpu_platform = Some(v.into());
+    #[doc =
+        "Set the field `min_cpu_platform`.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
+    pub fn set_min_cpu_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.min_cpu_platform = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `node_group`.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
-    pub fn set_node_group(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.node_group = Some(v.into());
+    #[doc =
+        "Set the field `node_group`.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
+    pub fn set_node_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.node_group = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `oauth_scopes`.\nThe set of Google API scopes to be made available on all of the node VMs."]
-    pub fn set_oauth_scopes(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.oauth_scopes = Some(v.into());
+    #[doc = "Set the field `oauth_scopes`.\nThe set of Google API scopes to be made available on all of the node VMs."]
+    pub fn set_oauth_scopes(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.oauth_scopes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `preemptible`.\nWhether the nodes are created as preemptible VM instances."]
-    pub fn set_preemptible(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.preemptible = Some(v.into());
+    #[doc = "Set the field `preemptible`.\nWhether the nodes are created as preemptible VM instances."]
+    pub fn set_preemptible(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.preemptible = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_labels`.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
-    pub fn set_resource_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.resource_labels = Some(v.into());
+    #[doc =
+        "Set the field `resource_labels`.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
+    pub fn set_resource_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_account`.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
-    pub fn set_service_account(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_account = Some(v.into());
+    #[doc = "Set the field `service_account`.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
+    pub fn set_service_account(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service_account = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `spot`.\nWhether the nodes are created as spot VM instances."]
-    pub fn set_spot(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.spot = Some(v.into());
+    #[doc = "Set the field `spot`.\nWhether the nodes are created as spot VM instances."]
+    pub fn set_spot(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.spot = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\nThe list of instance tags applied to all nodes."]
-    pub fn set_tags(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.tags = Some(v.into());
+    #[doc = "Set the field `tags`.\nThe list of instance tags applied to all nodes."]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `advanced_machine_features`.\n"]
+    #[doc = "Set the field `advanced_machine_features`.\n"]
     pub fn set_advanced_machine_features(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElAdvancedMachineFeaturesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.advanced_machine_features = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.advanced_machine_features = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.advanced_machine_features = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.advanced_machine_features = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `confidential_nodes`.\n"]
+    #[doc = "Set the field `confidential_nodes`.\n"]
     pub fn set_confidential_nodes(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElConfidentialNodesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElConfidentialNodesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.confidential_nodes = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.confidential_nodes = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.confidential_nodes = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.confidential_nodes = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `ephemeral_storage_local_ssd_config`.\n"]
+    #[doc = "Set the field `ephemeral_storage_local_ssd_config`.\n"]
     pub fn set_ephemeral_storage_local_ssd_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.ephemeral_storage_local_ssd_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.ephemeral_storage_local_ssd_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.ephemeral_storage_local_ssd_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ephemeral_storage_local_ssd_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `fast_socket`.\n"]
-    pub fn set_fast_socket(mut self, v: impl Into<BlockAssignable<ContainerClusterNodeConfigElFastSocketEl>>) -> Self {
+    #[doc = "Set the field `fast_socket`.\n"]
+    pub fn set_fast_socket(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElFastSocketEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.fast_socket = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.fast_socket = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.fast_socket = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.fast_socket = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gcfs_config`.\n"]
-    pub fn set_gcfs_config(mut self, v: impl Into<BlockAssignable<ContainerClusterNodeConfigElGcfsConfigEl>>) -> Self {
+    #[doc = "Set the field `gcfs_config`.\n"]
+    pub fn set_gcfs_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElGcfsConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gcfs_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gcfs_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcfs_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gcfs_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gvnic`.\n"]
-    pub fn set_gvnic(mut self, v: impl Into<BlockAssignable<ContainerClusterNodeConfigElGvnicEl>>) -> Self {
+    #[doc = "Set the field `gvnic`.\n"]
+    pub fn set_gvnic(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElGvnicEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gvnic = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gvnic = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gvnic = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gvnic = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `host_maintenance_policy`.\n"]
+    #[doc = "Set the field `host_maintenance_policy`.\n"]
     pub fn set_host_maintenance_policy(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElHostMaintenancePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElHostMaintenancePolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.host_maintenance_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.host_maintenance_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.host_maintenance_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.host_maintenance_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kubelet_config`.\n"]
+    #[doc = "Set the field `kubelet_config`.\n"]
     pub fn set_kubelet_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElKubeletConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElKubeletConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kubelet_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kubelet_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kubelet_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kubelet_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `linux_node_config`.\n"]
+    #[doc = "Set the field `linux_node_config`.\n"]
     pub fn set_linux_node_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElLinuxNodeConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElLinuxNodeConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.linux_node_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.linux_node_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.linux_node_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.linux_node_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `local_nvme_ssd_block_config`.\n"]
+    #[doc = "Set the field `local_nvme_ssd_block_config`.\n"]
     pub fn set_local_nvme_ssd_block_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.local_nvme_ssd_block_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.local_nvme_ssd_block_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.local_nvme_ssd_block_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.local_nvme_ssd_block_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `reservation_affinity`.\n"]
+    #[doc = "Set the field `reservation_affinity`.\n"]
     pub fn set_reservation_affinity(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElReservationAffinityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElReservationAffinityEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.reservation_affinity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.reservation_affinity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.reservation_affinity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.reservation_affinity = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `shielded_instance_config`.\n"]
+    #[doc = "Set the field `shielded_instance_config`.\n"]
     pub fn set_shielded_instance_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElShieldedInstanceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElShieldedInstanceConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.shielded_instance_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.shielded_instance_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.shielded_instance_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.shielded_instance_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sole_tenant_config`.\n"]
+    #[doc = "Set the field `sole_tenant_config`.\n"]
     pub fn set_sole_tenant_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElSoleTenantConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sole_tenant_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sole_tenant_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sole_tenant_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sole_tenant_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `taint`.\n"]
-    pub fn set_taint(mut self, v: impl Into<BlockAssignable<ContainerClusterNodeConfigElTaintEl>>) -> Self {
+    #[doc = "Set the field `taint`.\n"]
+    pub fn set_taint(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElTaintEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.taint = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.taint = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.taint = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.taint = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `workload_metadata_config`.\n"]
+    #[doc = "Set the field `workload_metadata_config`.\n"]
     pub fn set_workload_metadata_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodeConfigElWorkloadMetadataConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.workload_metadata_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.workload_metadata_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.workload_metadata_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.workload_metadata_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodeConfigEl {
-    type O = BlockAssignable<ContainerClusterNodeConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodeConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodeConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7672,18 +8414,18 @@ impl BuildContainerClusterNodeConfigEl {
             sole_tenant_config: core::default::Default::default(),
             taint: core::default::Default::default(),
             workload_metadata_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodeConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodeConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodeConfigElRef {
+impl terrars::Ref for ContainerClusterNodeConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodeConfigElRef {
         ContainerClusterNodeConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -7692,234 +8434,262 @@ impl Ref for ContainerClusterNodeConfigElRef {
 }
 
 impl ContainerClusterNodeConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `boot_disk_kms_key` after provisioning.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
-    pub fn boot_disk_kms_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_kms_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `boot_disk_kms_key` after provisioning.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
+    pub fn boot_disk_kms_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_kms_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `disk_size_gb` after provisioning.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
-    pub fn disk_size_gb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disk_size_gb", self.base))
+    #[doc =
+        "Get a reference to the value of field `disk_size_gb` after provisioning.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
+    pub fn disk_size_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_size_gb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `disk_type` after provisioning.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
-    pub fn disk_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `disk_type` after provisioning.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
+    pub fn disk_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `effective_taints` after provisioning.\nList of kubernetes taints applied to each node."]
-    pub fn effective_taints(&self) -> ListRef<ContainerClusterNodeConfigElEffectiveTaintsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.effective_taints", self.base))
+    #[doc =
+        "Get a reference to the value of field `effective_taints` after provisioning.\nList of kubernetes taints applied to each node."]
+    pub fn effective_taints(&self) -> terrars::ListRef<ContainerClusterNodeConfigElEffectiveTaintsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.effective_taints", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `guest_accelerator` after provisioning.\nList of the type and count of accelerator cards attached to the instance."]
-    pub fn guest_accelerator(&self) -> ListRef<ContainerClusterNodeConfigElGuestAcceleratorElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.guest_accelerator", self.base))
+    #[doc =
+        "Get a reference to the value of field `guest_accelerator` after provisioning.\nList of the type and count of accelerator cards attached to the instance."]
+    pub fn guest_accelerator(&self) -> terrars::ListRef<ContainerClusterNodeConfigElGuestAcceleratorElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.guest_accelerator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_type` after provisioning.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
-    pub fn image_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `image_type` after provisioning.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
+    pub fn image_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `local_ssd_count` after provisioning.\nThe number of local SSD disks to be attached to the node."]
-    pub fn local_ssd_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `local_ssd_count` after provisioning.\nThe number of local SSD disks to be attached to the node."]
+    pub fn local_ssd_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `logging_variant` after provisioning.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
-    pub fn logging_variant(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.logging_variant", self.base))
+    #[doc =
+        "Get a reference to the value of field `logging_variant` after provisioning.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
+    pub fn logging_variant(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_variant", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `machine_type` after provisioning.\nThe name of a Google Compute Engine machine type."]
-    pub fn machine_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.machine_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `machine_type` after provisioning.\nThe name of a Google Compute Engine machine type."]
+    pub fn machine_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.machine_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metadata` after provisioning.\nThe metadata key/value pairs assigned to instances in the cluster."]
-    pub fn metadata(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.metadata", self.base))
+    #[doc =
+        "Get a reference to the value of field `metadata` after provisioning.\nThe metadata key/value pairs assigned to instances in the cluster."]
+    pub fn metadata(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.metadata", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_cpu_platform` after provisioning.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
-    pub fn min_cpu_platform(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
+    #[doc =
+        "Get a reference to the value of field `min_cpu_platform` after provisioning.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
+    pub fn min_cpu_platform(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `node_group` after provisioning.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
-    pub fn node_group(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_group", self.base))
+    #[doc =
+        "Get a reference to the value of field `node_group` after provisioning.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
+    pub fn node_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_group", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oauth_scopes` after provisioning.\nThe set of Google API scopes to be made available on all of the node VMs."]
-    pub fn oauth_scopes(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.oauth_scopes", self.base))
+    #[doc =
+        "Get a reference to the value of field `oauth_scopes` after provisioning.\nThe set of Google API scopes to be made available on all of the node VMs."]
+    pub fn oauth_scopes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.oauth_scopes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `preemptible` after provisioning.\nWhether the nodes are created as preemptible VM instances."]
-    pub fn preemptible(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.preemptible", self.base))
+    #[doc =
+        "Get a reference to the value of field `preemptible` after provisioning.\nWhether the nodes are created as preemptible VM instances."]
+    pub fn preemptible(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preemptible", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
-    pub fn resource_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
+    pub fn resource_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_account` after provisioning.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
-    pub fn service_account(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
+    #[doc =
+        "Get a reference to the value of field `service_account` after provisioning.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
+    pub fn service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `spot` after provisioning.\nWhether the nodes are created as spot VM instances."]
-    pub fn spot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.spot", self.base))
+    #[doc =
+        "Get a reference to the value of field `spot` after provisioning.\nWhether the nodes are created as spot VM instances."]
+    pub fn spot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.spot", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\nThe list of instance tags applied to all nodes."]
-    pub fn tags(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nThe list of instance tags applied to all nodes."]
+    pub fn tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `advanced_machine_features` after provisioning.\n"]
-    pub fn advanced_machine_features(&self) -> ListRef<ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.advanced_machine_features", self.base))
+    #[doc = "Get a reference to the value of field `advanced_machine_features` after provisioning.\n"]
+    pub fn advanced_machine_features(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodeConfigElAdvancedMachineFeaturesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_machine_features", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
-    pub fn confidential_nodes(&self) -> ListRef<ContainerClusterNodeConfigElConfidentialNodesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.base))
+    #[doc = "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
+    pub fn confidential_nodes(&self) -> terrars::ListRef<ContainerClusterNodeConfigElConfidentialNodesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ephemeral_storage_local_ssd_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `ephemeral_storage_local_ssd_config` after provisioning.\n"]
     pub fn ephemeral_storage_local_ssd_config(
         &self,
-    ) -> ListRef<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ephemeral_storage_local_ssd_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodeConfigElEphemeralStorageLocalSsdConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ephemeral_storage_local_ssd_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `fast_socket` after provisioning.\n"]
-    pub fn fast_socket(&self) -> ListRef<ContainerClusterNodeConfigElFastSocketElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.fast_socket", self.base))
+    #[doc = "Get a reference to the value of field `fast_socket` after provisioning.\n"]
+    pub fn fast_socket(&self) -> terrars::ListRef<ContainerClusterNodeConfigElFastSocketElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.fast_socket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gcfs_config` after provisioning.\n"]
-    pub fn gcfs_config(&self) -> ListRef<ContainerClusterNodeConfigElGcfsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gcfs_config", self.base))
+    #[doc = "Get a reference to the value of field `gcfs_config` after provisioning.\n"]
+    pub fn gcfs_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElGcfsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gcfs_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gvnic` after provisioning.\n"]
-    pub fn gvnic(&self) -> ListRef<ContainerClusterNodeConfigElGvnicElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gvnic", self.base))
+    #[doc = "Get a reference to the value of field `gvnic` after provisioning.\n"]
+    pub fn gvnic(&self) -> terrars::ListRef<ContainerClusterNodeConfigElGvnicElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gvnic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `host_maintenance_policy` after provisioning.\n"]
-    pub fn host_maintenance_policy(&self) -> ListRef<ContainerClusterNodeConfigElHostMaintenancePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.host_maintenance_policy", self.base))
+    #[doc = "Get a reference to the value of field `host_maintenance_policy` after provisioning.\n"]
+    pub fn host_maintenance_policy(&self) -> terrars::ListRef<ContainerClusterNodeConfigElHostMaintenancePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.host_maintenance_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kubelet_config` after provisioning.\n"]
-    pub fn kubelet_config(&self) -> ListRef<ContainerClusterNodeConfigElKubeletConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kubelet_config", self.base))
+    #[doc = "Get a reference to the value of field `kubelet_config` after provisioning.\n"]
+    pub fn kubelet_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElKubeletConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kubelet_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `linux_node_config` after provisioning.\n"]
-    pub fn linux_node_config(&self) -> ListRef<ContainerClusterNodeConfigElLinuxNodeConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.linux_node_config", self.base))
+    #[doc = "Get a reference to the value of field `linux_node_config` after provisioning.\n"]
+    pub fn linux_node_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElLinuxNodeConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.linux_node_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `local_nvme_ssd_block_config` after provisioning.\n"]
-    pub fn local_nvme_ssd_block_config(&self) -> ListRef<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_nvme_ssd_block_config", self.base))
+    #[doc = "Get a reference to the value of field `local_nvme_ssd_block_config` after provisioning.\n"]
+    pub fn local_nvme_ssd_block_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodeConfigElLocalNvmeSsdBlockConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_nvme_ssd_block_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `reservation_affinity` after provisioning.\n"]
-    pub fn reservation_affinity(&self) -> ListRef<ContainerClusterNodeConfigElReservationAffinityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.base))
+    #[doc = "Get a reference to the value of field `reservation_affinity` after provisioning.\n"]
+    pub fn reservation_affinity(&self) -> terrars::ListRef<ContainerClusterNodeConfigElReservationAffinityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `shielded_instance_config` after provisioning.\n"]
-    pub fn shielded_instance_config(&self) -> ListRef<ContainerClusterNodeConfigElShieldedInstanceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
+    #[doc = "Get a reference to the value of field `shielded_instance_config` after provisioning.\n"]
+    pub fn shielded_instance_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElShieldedInstanceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sole_tenant_config` after provisioning.\n"]
-    pub fn sole_tenant_config(&self) -> ListRef<ContainerClusterNodeConfigElSoleTenantConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sole_tenant_config", self.base))
+    #[doc = "Get a reference to the value of field `sole_tenant_config` after provisioning.\n"]
+    pub fn sole_tenant_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElSoleTenantConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sole_tenant_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `taint` after provisioning.\n"]
-    pub fn taint(&self) -> ListRef<ContainerClusterNodeConfigElTaintElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.taint", self.base))
+    #[doc = "Get a reference to the value of field `taint` after provisioning.\n"]
+    pub fn taint(&self) -> terrars::ListRef<ContainerClusterNodeConfigElTaintElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.taint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `workload_metadata_config` after provisioning.\n"]
-    pub fn workload_metadata_config(&self) -> ListRef<ContainerClusterNodeConfigElWorkloadMetadataConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.workload_metadata_config", self.base))
+    #[doc = "Get a reference to the value of field `workload_metadata_config` after provisioning.\n"]
+    pub fn workload_metadata_config(&self) -> terrars::ListRef<ContainerClusterNodeConfigElWorkloadMetadataConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_metadata_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElAutoscalingEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location_policy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    total_max_node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    total_min_node_count: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_max_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_min_node_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ContainerClusterNodePoolElAutoscalingEl {
-    #[doc= "Set the field `location_policy`.\nLocation policy specifies the algorithm used when scaling-up the node pool. \"BALANCED\" - Is a best effort policy that aims to balance the sizes of available zones. \"ANY\" - Instructs the cluster autoscaler to prioritize utilization of unused reservations, and reduces preemption risk for Spot VMs."]
-    pub fn set_location_policy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location_policy = Some(v.into());
+    #[doc =
+        "Set the field `location_policy`.\nLocation policy specifies the algorithm used when scaling-up the node pool. \"BALANCED\" - Is a best effort policy that aims to balance the sizes of available zones. \"ANY\" - Instructs the cluster autoscaler to prioritize utilization of unused reservations, and reduces preemption risk for Spot VMs."]
+    pub fn set_location_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location_policy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_node_count`.\nMaximum number of nodes per zone in the node pool. Must be >= min_node_count. Cannot be used with total limits."]
-    pub fn set_max_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_node_count = Some(v.into());
+    #[doc =
+        "Set the field `max_node_count`.\nMaximum number of nodes per zone in the node pool. Must be >= min_node_count. Cannot be used with total limits."]
+    pub fn set_max_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_node_count`.\nMinimum number of nodes per zone in the node pool. Must be >=0 and <= max_node_count. Cannot be used with total limits."]
-    pub fn set_min_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min_node_count = Some(v.into());
+    #[doc =
+        "Set the field `min_node_count`.\nMinimum number of nodes per zone in the node pool. Must be >=0 and <= max_node_count. Cannot be used with total limits."]
+    pub fn set_min_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `total_max_node_count`.\nMaximum number of all nodes in the node pool. Must be >= total_min_node_count. Cannot be used with per zone limits."]
-    pub fn set_total_max_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.total_max_node_count = Some(v.into());
+    #[doc =
+        "Set the field `total_max_node_count`.\nMaximum number of all nodes in the node pool. Must be >= total_min_node_count. Cannot be used with per zone limits."]
+    pub fn set_total_max_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.total_max_node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `total_min_node_count`.\nMinimum number of all nodes in the node pool. Must be >=0 and <= total_max_node_count. Cannot be used with per zone limits."]
-    pub fn set_total_min_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.total_min_node_count = Some(v.into());
+    #[doc =
+        "Set the field `total_min_node_count`.\nMinimum number of all nodes in the node pool. Must be >=0 and <= total_max_node_count. Cannot be used with per zone limits."]
+    pub fn set_total_min_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.total_min_node_count = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElAutoscalingEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElAutoscalingEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElAutoscalingEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElAutoscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7942,12 +8712,12 @@ impl BuildContainerClusterNodePoolElAutoscalingEl {
 }
 
 pub struct ContainerClusterNodePoolElAutoscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElAutoscalingElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElAutoscalingElRef {
+impl terrars::Ref for ContainerClusterNodePoolElAutoscalingElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodePoolElAutoscalingElRef {
         ContainerClusterNodePoolElAutoscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -7956,63 +8726,68 @@ impl Ref for ContainerClusterNodePoolElAutoscalingElRef {
 }
 
 impl ContainerClusterNodePoolElAutoscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `location_policy` after provisioning.\nLocation policy specifies the algorithm used when scaling-up the node pool. \"BALANCED\" - Is a best effort policy that aims to balance the sizes of available zones. \"ANY\" - Instructs the cluster autoscaler to prioritize utilization of unused reservations, and reduces preemption risk for Spot VMs."]
-    pub fn location_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location_policy", self.base))
+    #[doc =
+        "Get a reference to the value of field `location_policy` after provisioning.\nLocation policy specifies the algorithm used when scaling-up the node pool. \"BALANCED\" - Is a best effort policy that aims to balance the sizes of available zones. \"ANY\" - Instructs the cluster autoscaler to prioritize utilization of unused reservations, and reduces preemption risk for Spot VMs."]
+    pub fn location_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_node_count` after provisioning.\nMaximum number of nodes per zone in the node pool. Must be >= min_node_count. Cannot be used with total limits."]
-    pub fn max_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_node_count` after provisioning.\nMaximum number of nodes per zone in the node pool. Must be >= min_node_count. Cannot be used with total limits."]
+    pub fn max_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_node_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_node_count` after provisioning.\nMinimum number of nodes per zone in the node pool. Must be >=0 and <= max_node_count. Cannot be used with total limits."]
-    pub fn min_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `min_node_count` after provisioning.\nMinimum number of nodes per zone in the node pool. Must be >=0 and <= max_node_count. Cannot be used with total limits."]
+    pub fn min_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_node_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `total_max_node_count` after provisioning.\nMaximum number of all nodes in the node pool. Must be >= total_min_node_count. Cannot be used with per zone limits."]
-    pub fn total_max_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.total_max_node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `total_max_node_count` after provisioning.\nMaximum number of all nodes in the node pool. Must be >= total_min_node_count. Cannot be used with per zone limits."]
+    pub fn total_max_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_max_node_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `total_min_node_count` after provisioning.\nMinimum number of all nodes in the node pool. Must be >=0 and <= total_max_node_count. Cannot be used with per zone limits."]
-    pub fn total_min_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.total_min_node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `total_min_node_count` after provisioning.\nMinimum number of all nodes in the node pool. Must be >=0 and <= total_max_node_count. Cannot be used with per zone limits."]
+    pub fn total_min_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_min_node_count", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElManagementEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_repair: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_upgrade: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_repair: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_upgrade: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl ContainerClusterNodePoolElManagementEl {
-    #[doc= "Set the field `auto_repair`.\nWhether the nodes will be automatically repaired. Enabled by default."]
-    pub fn set_auto_repair(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.auto_repair = Some(v.into());
+    #[doc = "Set the field `auto_repair`.\nWhether the nodes will be automatically repaired. Enabled by default."]
+    pub fn set_auto_repair(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_repair = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `auto_upgrade`.\nWhether the nodes will be automatically upgraded. Enabled by default."]
-    pub fn set_auto_upgrade(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.auto_upgrade = Some(v.into());
+    #[doc = "Set the field `auto_upgrade`.\nWhether the nodes will be automatically upgraded. Enabled by default."]
+    pub fn set_auto_upgrade(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_upgrade = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElManagementEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElManagementEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElManagementEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElManagementEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8032,12 +8807,12 @@ impl BuildContainerClusterNodePoolElManagementEl {
 }
 
 pub struct ContainerClusterNodePoolElManagementElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElManagementElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElManagementElRef {
+impl terrars::Ref for ContainerClusterNodePoolElManagementElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodePoolElManagementElRef {
         ContainerClusterNodePoolElManagementElRef {
             shared: shared,
             base: base.to_string(),
@@ -8046,33 +8821,35 @@ impl Ref for ContainerClusterNodePoolElManagementElRef {
 }
 
 impl ContainerClusterNodePoolElManagementElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `auto_repair` after provisioning.\nWhether the nodes will be automatically repaired. Enabled by default."]
-    pub fn auto_repair(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_repair", self.base))
+    #[doc =
+        "Get a reference to the value of field `auto_repair` after provisioning.\nWhether the nodes will be automatically repaired. Enabled by default."]
+    pub fn auto_repair(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_repair", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `auto_upgrade` after provisioning.\nWhether the nodes will be automatically upgraded. Enabled by default."]
-    pub fn auto_upgrade(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_upgrade", self.base))
+    #[doc =
+        "Get a reference to the value of field `auto_upgrade` after provisioning.\nWhether the nodes will be automatically upgraded. Enabled by default."]
+    pub fn auto_upgrade(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_upgrade", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl {
-    total_egress_bandwidth_tier: PrimField<String>,
+    total_egress_bandwidth_tier: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8081,8 +8858,8 @@ impl ToListMappable for ContainerClusterNodePoolElNetworkConfigElNetworkPerforma
 }
 
 pub struct BuildContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl {
-    #[doc= "Specifies the total network bandwidth tier for the NodePool."]
-    pub total_egress_bandwidth_tier: PrimField<String>,
+    #[doc = "Specifies the total network bandwidth tier for the NodePool."]
+    pub total_egress_bandwidth_tier: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl {
@@ -8094,14 +8871,14 @@ impl BuildContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl {
 }
 
 pub struct ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef {
         ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef {
             shared: shared,
@@ -8111,28 +8888,29 @@ impl Ref for ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl
 }
 
 impl ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `total_egress_bandwidth_tier` after provisioning.\nSpecifies the total network bandwidth tier for the NodePool."]
-    pub fn total_egress_bandwidth_tier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.total_egress_bandwidth_tier", self.base))
+    #[doc =
+        "Get a reference to the value of field `total_egress_bandwidth_tier` after provisioning.\nSpecifies the total network bandwidth tier for the NodePool."]
+    pub fn total_egress_bandwidth_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_egress_bandwidth_tier", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl {
-    disabled: PrimField<bool>,
+    disabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8141,8 +8919,8 @@ impl ToListMappable for ContainerClusterNodePoolElNetworkConfigElPodCidrOverprov
 }
 
 pub struct BuildContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl {
-    #[doc= ""]
-    pub disabled: PrimField<bool>,
+    #[doc = ""]
+    pub disabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl {
@@ -8152,14 +8930,14 @@ impl BuildContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl 
 }
 
 pub struct ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef {
         ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef {
             shared: shared,
@@ -8169,106 +8947,131 @@ impl Ref for ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfig
 }
 
 impl ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disabled` after provisioning.\n"]
-    pub fn disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
+    #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolElNetworkConfigElDynamic {
-    network_performance_config: Option<
-        DynamicBlock<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>,
-    >,
-    pod_cidr_overprovision_config: Option<
-        DynamicBlock<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>,
-    >,
+    network_performance_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>>,
+    pod_cidr_overprovision_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNetworkConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create_pod_range: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_private_nodes: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pod_ipv4_cidr_block: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pod_range: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_performance_config: Option<Vec<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pod_cidr_overprovision_config: Option<Vec<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_pod_range: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_private_nodes: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_ipv4_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_range: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_performance_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_cidr_overprovision_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>>,
     dynamic: ContainerClusterNodePoolElNetworkConfigElDynamic,
 }
 
 impl ContainerClusterNodePoolElNetworkConfigEl {
-    #[doc= "Set the field `create_pod_range`.\nWhether to create a new range for pod IPs in this node pool. Defaults are provided for pod_range and pod_ipv4_cidr_block if they are not specified."]
-    pub fn set_create_pod_range(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.create_pod_range = Some(v.into());
+    #[doc =
+        "Set the field `create_pod_range`.\nWhether to create a new range for pod IPs in this node pool. Defaults are provided for pod_range and pod_ipv4_cidr_block if they are not specified."]
+    pub fn set_create_pod_range(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.create_pod_range = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_private_nodes`.\nWhether nodes have internal IP addresses only."]
-    pub fn set_enable_private_nodes(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_private_nodes = Some(v.into());
+    #[doc = "Set the field `enable_private_nodes`.\nWhether nodes have internal IP addresses only."]
+    pub fn set_enable_private_nodes(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_private_nodes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `pod_ipv4_cidr_block`.\nThe IP address range for pod IPs in this node pool. Only applicable if create_pod_range is true. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) to pick a specific range to use."]
-    pub fn set_pod_ipv4_cidr_block(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.pod_ipv4_cidr_block = Some(v.into());
+    #[doc =
+        "Set the field `pod_ipv4_cidr_block`.\nThe IP address range for pod IPs in this node pool. Only applicable if create_pod_range is true. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) to pick a specific range to use."]
+    pub fn set_pod_ipv4_cidr_block(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.pod_ipv4_cidr_block = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `pod_range`.\nThe ID of the secondary range for pod IPs. If create_pod_range is true, this ID is used for the new range. If create_pod_range is false, uses an existing secondary range with this ID."]
-    pub fn set_pod_range(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.pod_range = Some(v.into());
+    #[doc =
+        "Set the field `pod_range`.\nThe ID of the secondary range for pod IPs. If create_pod_range is true, this ID is used for the new range. If create_pod_range is false, uses an existing secondary range with this ID."]
+    pub fn set_pod_range(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pod_range = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `network_performance_config`.\n"]
+    #[doc = "Set the field `network_performance_config`.\n"]
     pub fn set_network_performance_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_performance_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_performance_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_performance_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_performance_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `pod_cidr_overprovision_config`.\n"]
+    #[doc = "Set the field `pod_cidr_overprovision_config`.\n"]
     pub fn set_pod_cidr_overprovision_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.pod_cidr_overprovision_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.pod_cidr_overprovision_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.pod_cidr_overprovision_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pod_cidr_overprovision_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNetworkConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNetworkConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNetworkConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNetworkConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8287,18 +9090,18 @@ impl BuildContainerClusterNodePoolElNetworkConfigEl {
             pod_range: core::default::Default::default(),
             network_performance_config: core::default::Default::default(),
             pod_cidr_overprovision_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolElNetworkConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNetworkConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNetworkConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNetworkConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodePoolElNetworkConfigElRef {
         ContainerClusterNodePoolElNetworkConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -8307,80 +9110,84 @@ impl Ref for ContainerClusterNodePoolElNetworkConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNetworkConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create_pod_range` after provisioning.\nWhether to create a new range for pod IPs in this node pool. Defaults are provided for pod_range and pod_ipv4_cidr_block if they are not specified."]
-    pub fn create_pod_range(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_pod_range", self.base))
+    #[doc =
+        "Get a reference to the value of field `create_pod_range` after provisioning.\nWhether to create a new range for pod IPs in this node pool. Defaults are provided for pod_range and pod_ipv4_cidr_block if they are not specified."]
+    pub fn create_pod_range(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_pod_range", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_private_nodes` after provisioning.\nWhether nodes have internal IP addresses only."]
-    pub fn enable_private_nodes(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_private_nodes", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_private_nodes` after provisioning.\nWhether nodes have internal IP addresses only."]
+    pub fn enable_private_nodes(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_private_nodes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pod_ipv4_cidr_block` after provisioning.\nThe IP address range for pod IPs in this node pool. Only applicable if create_pod_range is true. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) to pick a specific range to use."]
-    pub fn pod_ipv4_cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pod_ipv4_cidr_block", self.base))
+    #[doc =
+        "Get a reference to the value of field `pod_ipv4_cidr_block` after provisioning.\nThe IP address range for pod IPs in this node pool. Only applicable if create_pod_range is true. Set to blank to have a range chosen with the default size. Set to /netmask (e.g. /14) to have a range chosen with a specific netmask. Set to a CIDR notation (e.g. 10.96.0.0/14) to pick a specific range to use."]
+    pub fn pod_ipv4_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_ipv4_cidr_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pod_range` after provisioning.\nThe ID of the secondary range for pod IPs. If create_pod_range is true, this ID is used for the new range. If create_pod_range is false, uses an existing secondary range with this ID."]
-    pub fn pod_range(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pod_range", self.base))
+    #[doc =
+        "Get a reference to the value of field `pod_range` after provisioning.\nThe ID of the secondary range for pod IPs. If create_pod_range is true, this ID is used for the new range. If create_pod_range is false, uses an existing secondary range with this ID."]
+    pub fn pod_range(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_range", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_performance_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `network_performance_config` after provisioning.\n"]
     pub fn network_performance_config(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.network_performance_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNetworkConfigElNetworkPerformanceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_performance_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pod_cidr_overprovision_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `pod_cidr_overprovision_config` after provisioning.\n"]
     pub fn pod_cidr_overprovision_config(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.pod_cidr_overprovision_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNetworkConfigElPodCidrOverprovisionConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pod_cidr_overprovision_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElEffectiveTaintsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    effect: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    effect: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElEffectiveTaintsEl {
-    #[doc= "Set the field `effect`.\n"]
-    pub fn set_effect(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.effect = Some(v.into());
+    #[doc = "Set the field `effect`.\n"]
+    pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.effect = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElEffectiveTaintsEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElEffectiveTaintsEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElEffectiveTaintsEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElEffectiveTaintsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8401,12 +9208,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElEffectiveTaintsEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
         ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
             shared: shared,
             base: base.to_string(),
@@ -8415,45 +9225,50 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `effect` after provisioning.\n"]
-    pub fn effect(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
+    #[doc = "Get a reference to the value of field `effect` after provisioning.\n"]
+    pub fn effect(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_driver_version: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_driver_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
-    #[doc= "Set the field `gpu_driver_version`.\n"]
-    pub fn set_gpu_driver_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gpu_driver_version = Some(v.into());
+    #[doc = "Set the field `gpu_driver_version`.\n"]
+    pub fn set_gpu_driver_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.gpu_driver_version = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl {
+    type O =
+        terrars
+        ::BlockAssignable<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8472,14 +9287,14 @@ impl BuildContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInsta
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
         ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
             shared: shared,
@@ -8489,43 +9304,46 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverIn
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gpu_driver_version` after provisioning.\n"]
-    pub fn gpu_driver_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gpu_driver_version", self.base))
+    #[doc = "Get a reference to the value of field `gpu_driver_version` after provisioning.\n"]
+    pub fn gpu_driver_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_driver_version", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_sharing_strategy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_shared_clients_per_gpu: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_sharing_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_shared_clients_per_gpu: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
-    #[doc= "Set the field `gpu_sharing_strategy`.\n"]
-    pub fn set_gpu_sharing_strategy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gpu_sharing_strategy = Some(v.into());
+    #[doc = "Set the field `gpu_sharing_strategy`.\n"]
+    pub fn set_gpu_sharing_strategy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.gpu_sharing_strategy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_shared_clients_per_gpu`.\n"]
-    pub fn set_max_shared_clients_per_gpu(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_shared_clients_per_gpu = Some(v.into());
+    #[doc = "Set the field `max_shared_clients_per_gpu`.\n"]
+    pub fn set_max_shared_clients_per_gpu(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_shared_clients_per_gpu = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8545,14 +9363,14 @@ impl BuildContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConf
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
         ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
             shared: shared,
@@ -8562,87 +9380,104 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingC
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gpu_sharing_strategy` after provisioning.\n"]
-    pub fn gpu_sharing_strategy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gpu_sharing_strategy", self.base))
+    #[doc = "Get a reference to the value of field `gpu_sharing_strategy` after provisioning.\n"]
+    pub fn gpu_sharing_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_sharing_strategy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_shared_clients_per_gpu` after provisioning.\n"]
-    pub fn max_shared_clients_per_gpu(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_shared_clients_per_gpu", self.base))
+    #[doc = "Get a reference to the value of field `max_shared_clients_per_gpu` after provisioning.\n"]
+    pub fn max_shared_clients_per_gpu(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_shared_clients_per_gpu", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_driver_installation_config: Option<
-        ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_driver_installation_config: std
+    ::option
+    ::Option<
+        terrars::ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_partition_size: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gpu_sharing_config: Option<ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_partition_size: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_sharing_config: std
+    ::option
+    ::Option<terrars::ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl {
-    #[doc= "Set the field `count`.\n"]
-    pub fn set_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.count = Some(v.into());
+    #[doc = "Set the field `count`.\n"]
+    pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gpu_driver_installation_config`.\n"]
+    #[doc = "Set the field `gpu_driver_installation_config`.\n"]
     pub fn set_gpu_driver_installation_config(
         mut self,
         v:
             impl
 
-                    Into<
-                        ListField<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
                             ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigEl,
                         >,
                     >,
     ) -> Self {
-        self.gpu_driver_installation_config = Some(v.into());
+        self.gpu_driver_installation_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gpu_partition_size`.\n"]
-    pub fn set_gpu_partition_size(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gpu_partition_size = Some(v.into());
+    #[doc = "Set the field `gpu_partition_size`.\n"]
+    pub fn set_gpu_partition_size(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.gpu_partition_size = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gpu_sharing_config`.\n"]
+    #[doc = "Set the field `gpu_sharing_config`.\n"]
     pub fn set_gpu_sharing_config(
         mut self,
-        v: impl Into<ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigEl>,
+                    >,
     ) -> Self {
-        self.gpu_sharing_config = Some(v.into());
+        self.gpu_sharing_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8665,12 +9500,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
         ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
             shared: shared,
             base: base.to_string(),
@@ -8679,52 +9517,52 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `count` after provisioning.\n"]
-    pub fn count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
+    #[doc = "Get a reference to the value of field `count` after provisioning.\n"]
+    pub fn count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gpu_driver_installation_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `gpu_driver_installation_config` after provisioning.\n"]
     pub fn gpu_driver_installation_config(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gpu_driver_installation_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuDriverInstallationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gpu_driver_installation_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gpu_partition_size` after provisioning.\n"]
-    pub fn gpu_partition_size(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_size", self.base))
+    #[doc = "Get a reference to the value of field `gpu_partition_size` after provisioning.\n"]
+    pub fn gpu_partition_size(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_size", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gpu_sharing_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `gpu_sharing_config` after provisioning.\n"]
     pub fn gpu_sharing_config(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gpu_sharing_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElGpuSharingConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gpu_sharing_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl {
-    threads_per_core: PrimField<f64>,
+    threads_per_core: terrars::PrimField<f64>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8733,8 +9571,9 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElAdvancedMachineFea
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl {
-    #[doc= "The number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
-    pub threads_per_core: PrimField<f64>,
+    #[doc =
+        "The number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
+    pub threads_per_core: terrars::PrimField<f64>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl {
@@ -8744,12 +9583,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef {
         ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef {
             shared: shared,
             base: base.to_string(),
@@ -8758,28 +9600,29 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef 
 }
 
 impl ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `threads_per_core` after provisioning.\nThe number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
-    pub fn threads_per_core(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.threads_per_core", self.base))
+    #[doc =
+        "Get a reference to the value of field `threads_per_core` after provisioning.\nThe number of threads per physical core. To disable simultaneous multithreading (SMT) set this to 1. If unset, the maximum number of threads supported per core by the underlying processor is assumed."]
+    pub fn threads_per_core(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threads_per_core", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8788,8 +9631,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElConfidentialNodesE
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElConfidentialNodesEl {
-    #[doc= "Whether Confidential Nodes feature is enabled for all nodes in this pool."]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether Confidential Nodes feature is enabled for all nodes in this pool."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElConfidentialNodesEl {
@@ -8799,12 +9642,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElConfidentialNodesEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
         ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
             shared: shared,
             base: base.to_string(),
@@ -8813,28 +9659,29 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether Confidential Nodes feature is enabled for all nodes in this pool."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether Confidential Nodes feature is enabled for all nodes in this pool."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl {
-    local_ssd_count: PrimField<f64>,
+    local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8843,8 +9690,9 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElEphemeralStorageLo
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl {
-    #[doc= "Number of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
-    pub local_ssd_count: PrimField<f64>,
+    #[doc =
+        "Number of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
+    pub local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl {
@@ -8856,14 +9704,14 @@ impl BuildContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef {
         ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef {
             shared: shared,
@@ -8873,28 +9721,29 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfi
 }
 
 impl ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
-    pub fn local_ssd_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of local SSDs to use to back ephemeral storage. Uses NVMe interfaces. Each local SSD must be 375 or 3000 GB in size, and all local SSDs must share the same size."]
+    pub fn local_ssd_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElFastSocketEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElFastSocketEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElFastSocketEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElFastSocketEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElFastSocketEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElFastSocketEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8903,8 +9752,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElFastSocketEl {
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElFastSocketEl {
-    #[doc= "Whether or not NCCL Fast Socket is enabled"]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not NCCL Fast Socket is enabled"]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElFastSocketEl {
@@ -8914,12 +9763,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElFastSocketEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
         ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
             shared: shared,
             base: base.to_string(),
@@ -8928,28 +9780,29 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElFastSocketElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not NCCL Fast Socket is enabled"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether or not NCCL Fast Socket is enabled"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElGcfsConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGcfsConfigEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElGcfsConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElGcfsConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -8958,8 +9811,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElGcfsConfigEl {
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElGcfsConfigEl {
-    #[doc= "Whether or not GCFS is enabled"]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not GCFS is enabled"]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElGcfsConfigEl {
@@ -8969,12 +9822,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElGcfsConfigEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
         ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -8983,28 +9839,28 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not GCFS is enabled"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\nWhether or not GCFS is enabled"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElGvnicEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGvnicEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElGvnicEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElGvnicEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElGvnicEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElGvnicEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9013,8 +9869,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElGvnicEl {
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElGvnicEl {
-    #[doc= "Whether or not gvnic is enabled"]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not gvnic is enabled"]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElGvnicEl {
@@ -9024,12 +9880,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElGvnicEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElGvnicElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElGvnicElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElGvnicElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElGvnicElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElGvnicElRef {
         ContainerClusterNodePoolElNodeConfigElGvnicElRef {
             shared: shared,
             base: base.to_string(),
@@ -9038,28 +9897,28 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElGvnicElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElGvnicElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not gvnic is enabled"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\nWhether or not gvnic is enabled"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl {
-    maintenance_interval: PrimField<String>,
+    maintenance_interval: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9068,8 +9927,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElHostMaintenancePol
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl {
-    #[doc= "."]
-    pub maintenance_interval: PrimField<String>,
+    #[doc = "."]
+    pub maintenance_interval: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl {
@@ -9081,12 +9940,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
         ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -9095,52 +9957,55 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `maintenance_interval` after provisioning.\n."]
-    pub fn maintenance_interval(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maintenance_interval", self.base))
+    #[doc = "Get a reference to the value of field `maintenance_interval` after provisioning.\n."]
+    pub fn maintenance_interval(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_interval", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_cfs_quota: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_cfs_quota_period: Option<PrimField<String>>,
-    cpu_manager_policy: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pod_pids_limit: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_cfs_quota: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_cfs_quota_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    cpu_manager_policy: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_pids_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
-    #[doc= "Set the field `cpu_cfs_quota`.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
-    pub fn set_cpu_cfs_quota(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.cpu_cfs_quota = Some(v.into());
+    #[doc = "Set the field `cpu_cfs_quota`.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
+    pub fn set_cpu_cfs_quota(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.cpu_cfs_quota = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cpu_cfs_quota_period`.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
-    pub fn set_cpu_cfs_quota_period(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cpu_cfs_quota_period = Some(v.into());
+    #[doc = "Set the field `cpu_cfs_quota_period`.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
+    pub fn set_cpu_cfs_quota_period(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cpu_cfs_quota_period = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `pod_pids_limit`.\nControls the maximum number of processes allowed to run in a pod."]
-    pub fn set_pod_pids_limit(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.pod_pids_limit = Some(v.into());
+    #[doc = "Set the field `pod_pids_limit`.\nControls the maximum number of processes allowed to run in a pod."]
+    pub fn set_pod_pids_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.pod_pids_limit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9149,8 +10014,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
-    #[doc= "Control the CPU management policy on the node."]
-    pub cpu_manager_policy: PrimField<String>,
+    #[doc = "Control the CPU management policy on the node."]
+    pub cpu_manager_policy: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
@@ -9165,12 +10030,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElKubeletConfigEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
         ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -9179,58 +10047,66 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cpu_cfs_quota` after provisioning.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
-    pub fn cpu_cfs_quota(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota", self.base))
+    #[doc =
+        "Get a reference to the value of field `cpu_cfs_quota` after provisioning.\nEnable CPU CFS quota enforcement for containers that specify CPU limits."]
+    pub fn cpu_cfs_quota(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cpu_cfs_quota_period` after provisioning.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
-    pub fn cpu_cfs_quota_period(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota_period", self.base))
+    #[doc =
+        "Get a reference to the value of field `cpu_cfs_quota_period` after provisioning.\nSet the CPU CFS quota period value 'cpu.cfs_period_us'."]
+    pub fn cpu_cfs_quota_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota_period", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cpu_manager_policy` after provisioning.\nControl the CPU management policy on the node."]
-    pub fn cpu_manager_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_manager_policy", self.base))
+    #[doc =
+        "Get a reference to the value of field `cpu_manager_policy` after provisioning.\nControl the CPU management policy on the node."]
+    pub fn cpu_manager_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_manager_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pod_pids_limit` after provisioning.\nControls the maximum number of processes allowed to run in a pod."]
-    pub fn pod_pids_limit(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pod_pids_limit", self.base))
+    #[doc =
+        "Get a reference to the value of field `pod_pids_limit` after provisioning.\nControls the maximum number of processes allowed to run in a pod."]
+    pub fn pod_pids_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_pids_limit", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cgroup_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sysctls: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cgroup_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sysctls: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl {
-    #[doc= "Set the field `cgroup_mode`.\ncgroupMode specifies the cgroup mode to be used on the node."]
-    pub fn set_cgroup_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cgroup_mode = Some(v.into());
+    #[doc = "Set the field `cgroup_mode`.\ncgroupMode specifies the cgroup mode to be used on the node."]
+    pub fn set_cgroup_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cgroup_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sysctls`.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
-    pub fn set_sysctls(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.sysctls = Some(v.into());
+    #[doc =
+        "Set the field `sysctls`.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
+    pub fn set_sysctls(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.sysctls = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9250,12 +10126,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
         ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -9264,33 +10143,35 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cgroup_mode` after provisioning.\ncgroupMode specifies the cgroup mode to be used on the node."]
-    pub fn cgroup_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cgroup_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `cgroup_mode` after provisioning.\ncgroupMode specifies the cgroup mode to be used on the node."]
+    pub fn cgroup_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cgroup_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sysctls` after provisioning.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
-    pub fn sysctls(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.sysctls", self.base))
+    #[doc =
+        "Get a reference to the value of field `sysctls` after provisioning.\nThe Linux kernel parameters to be applied to the nodes and all pods running on the nodes."]
+    pub fn sysctls(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.sysctls", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl {
-    local_ssd_count: PrimField<f64>,
+    local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9299,8 +10180,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockC
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl {
-    #[doc= "Number of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
-    pub local_ssd_count: PrimField<f64>,
+    #[doc = "Number of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
+    pub local_ssd_count: terrars::PrimField<f64>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl {
@@ -9310,12 +10191,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef {
         ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -9324,44 +10208,48 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef 
 }
 
 impl ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
-    pub fn local_ssd_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `local_ssd_count` after provisioning.\nNumber of raw-block local NVMe SSD disks to be attached to the node. Each local SSD is 375 GB in size."]
+    pub fn local_ssd_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElReservationAffinityEl {
-    consume_reservation_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    consume_reservation_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElReservationAffinityEl {
-    #[doc= "Set the field `key`.\nThe label key of a reservation resource."]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\nThe label key of a reservation resource."]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\nThe label values of the reservation resource."]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\nThe label values of the reservation resource."]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElReservationAffinityEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElReservationAffinityEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9370,8 +10258,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElReservationAffinit
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElReservationAffinityEl {
-    #[doc= "Corresponds to the type of reservation consumption."]
-    pub consume_reservation_type: PrimField<String>,
+    #[doc = "Corresponds to the type of reservation consumption."]
+    pub consume_reservation_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElReservationAffinityEl {
@@ -9385,12 +10273,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElReservationAffinityEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
         ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
             shared: shared,
             base: base.to_string(),
@@ -9399,53 +10290,56 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `consume_reservation_type` after provisioning.\nCorresponds to the type of reservation consumption."]
-    pub fn consume_reservation_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.consume_reservation_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `consume_reservation_type` after provisioning.\nCorresponds to the type of reservation consumption."]
+    pub fn consume_reservation_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consume_reservation_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nThe label key of a reservation resource."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nThe label key of a reservation resource."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\nThe label values of the reservation resource."]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc =
+        "Get a reference to the value of field `values` after provisioning.\nThe label values of the reservation resource."]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_integrity_monitoring: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_secure_boot: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_integrity_monitoring: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_secure_boot: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl {
-    #[doc= "Set the field `enable_integrity_monitoring`.\nDefines whether the instance has integrity monitoring enabled."]
-    pub fn set_enable_integrity_monitoring(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_integrity_monitoring = Some(v.into());
+    #[doc =
+        "Set the field `enable_integrity_monitoring`.\nDefines whether the instance has integrity monitoring enabled."]
+    pub fn set_enable_integrity_monitoring(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_integrity_monitoring = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_secure_boot`.\nDefines whether the instance has Secure Boot enabled."]
-    pub fn set_enable_secure_boot(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_secure_boot = Some(v.into());
+    #[doc = "Set the field `enable_secure_boot`.\nDefines whether the instance has Secure Boot enabled."]
+    pub fn set_enable_secure_boot(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_secure_boot = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9465,12 +10359,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
         ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -9479,35 +10376,37 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_integrity_monitoring` after provisioning.\nDefines whether the instance has integrity monitoring enabled."]
-    pub fn enable_integrity_monitoring(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_integrity_monitoring", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_integrity_monitoring` after provisioning.\nDefines whether the instance has integrity monitoring enabled."]
+    pub fn enable_integrity_monitoring(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_integrity_monitoring", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_secure_boot` after provisioning.\nDefines whether the instance has Secure Boot enabled."]
-    pub fn enable_secure_boot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_secure_boot", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_secure_boot` after provisioning.\nDefines whether the instance has Secure Boot enabled."]
+    pub fn enable_secure_boot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_secure_boot", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl {
-    key: PrimField<String>,
-    operator: PrimField<String>,
-    values: ListField<PrimField<String>>,
+    key: terrars::PrimField<std::string::String>,
+    operator: terrars::PrimField<std::string::String>,
+    values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9516,12 +10415,12 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl {
-    #[doc= "."]
-    pub key: PrimField<String>,
-    #[doc= "."]
-    pub operator: PrimField<String>,
-    #[doc= "."]
-    pub values: ListField<PrimField<String>>,
+    #[doc = "."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = "."]
+    pub operator: terrars::PrimField<std::string::String>,
+    #[doc = "."]
+    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl {
@@ -9535,14 +10434,14 @@ impl BuildContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityElRef {
         ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityElRef {
             shared: shared,
@@ -9552,61 +10451,73 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinit
 }
 
 impl ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operator` after provisioning.\n."]
-    pub fn operator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
+    #[doc = "Get a reference to the value of field `operator` after provisioning.\n."]
+    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n."]
-    pub fn values(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n."]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElDynamic {
-    node_affinity: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
+    node_affinity: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_affinity: Option<Vec<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_affinity: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
     dynamic: ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElDynamic,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl {
-    #[doc= "Set the field `node_affinity`.\n"]
+    #[doc = "Set the field `node_affinity`.\n"]
     pub fn set_node_affinity(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElNodeAffinityEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.node_affinity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.node_affinity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.node_affinity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.node_affinity = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9620,18 +10531,21 @@ impl BuildContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl {
     pub fn build(self) -> ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl {
         ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl {
             node_affinity: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
         ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -9640,25 +10554,25 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElTaintEl {
-    effect: PrimField<String>,
-    key: PrimField<String>,
-    value: PrimField<String>,
+    effect: terrars::PrimField<std::string::String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElTaintEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElTaintEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElTaintEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElTaintEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElTaintEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9667,12 +10581,12 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElTaintEl {
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElTaintEl {
-    #[doc= "Effect for taint."]
-    pub effect: PrimField<String>,
-    #[doc= "Key for taint."]
-    pub key: PrimField<String>,
-    #[doc= "Value for taint."]
-    pub value: PrimField<String>,
+    #[doc = "Effect for taint."]
+    pub effect: terrars::PrimField<std::string::String>,
+    #[doc = "Key for taint."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = "Value for taint."]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElTaintEl {
@@ -9686,12 +10600,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElTaintEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElTaintElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElTaintElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElTaintElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElTaintElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElTaintElRef {
         ContainerClusterNodePoolElNodeConfigElTaintElRef {
             shared: shared,
             base: base.to_string(),
@@ -9700,38 +10617,38 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElTaintElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElTaintElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `effect` after provisioning.\nEffect for taint."]
-    pub fn effect(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
+    #[doc = "Get a reference to the value of field `effect` after provisioning.\nEffect for taint."]
+    pub fn effect(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nKey for taint."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nKey for taint."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\nValue for taint."]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nValue for taint."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl {
-    mode: PrimField<String>,
+    mode: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl { }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9740,8 +10657,8 @@ impl ToListMappable for ContainerClusterNodePoolElNodeConfigElWorkloadMetadataCo
 }
 
 pub struct BuildContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl {
-    #[doc= "Mode is the configuration for how to expose metadata to workloads running on the node."]
-    pub mode: PrimField<String>,
+    #[doc = "Mode is the configuration for how to expose metadata to workloads running on the node."]
+    pub mode: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl {
@@ -9751,12 +10668,15 @@ impl BuildContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl {
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
         ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -9765,464 +10685,577 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\nMode is the configuration for how to expose metadata to workloads running on the node."]
-    pub fn mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `mode` after provisioning.\nMode is the configuration for how to expose metadata to workloads running on the node."]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolElNodeConfigElDynamic {
-    advanced_machine_features: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>>,
-    confidential_nodes: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>>,
-    ephemeral_storage_local_ssd_config: Option<
-        DynamicBlock<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>,
-    >,
-    fast_socket: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElFastSocketEl>>,
-    gcfs_config: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>>,
-    gvnic: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElGvnicEl>>,
-    host_maintenance_policy: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>>,
-    kubelet_config: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>>,
-    linux_node_config: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>>,
-    local_nvme_ssd_block_config: Option<
-        DynamicBlock<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>,
-    >,
-    reservation_affinity: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>>,
-    shielded_instance_config: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>>,
-    sole_tenant_config: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>>,
-    taint: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElTaintEl>>,
-    workload_metadata_config: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>>,
+    advanced_machine_features: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>>,
+    confidential_nodes: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>>,
+    ephemeral_storage_local_ssd_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
+    fast_socket: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElFastSocketEl>>,
+    gcfs_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>>,
+    gvnic: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElGvnicEl>>,
+    host_maintenance_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>>,
+    kubelet_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>>,
+    linux_node_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>>,
+    local_nvme_ssd_block_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>>,
+    reservation_affinity: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>>,
+    shielded_instance_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>>,
+    sole_tenant_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>>,
+    taint: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElTaintEl>>,
+    workload_metadata_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElNodeConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    boot_disk_kms_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk_size_gb: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    guest_accelerator: Option<ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_ssd_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    logging_variant: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    machine_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metadata: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_cpu_platform: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_group: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oauth_scopes: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    preemptible: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_account: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    spot: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    advanced_machine_features: Option<Vec<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    confidential_nodes: Option<Vec<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ephemeral_storage_local_ssd_config: Option<
-        Vec<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    fast_socket: Option<Vec<ContainerClusterNodePoolElNodeConfigElFastSocketEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gcfs_config: Option<Vec<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gvnic: Option<Vec<ContainerClusterNodePoolElNodeConfigElGvnicEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    host_maintenance_policy: Option<Vec<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kubelet_config: Option<Vec<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    linux_node_config: Option<Vec<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_nvme_ssd_block_config: Option<Vec<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    reservation_affinity: Option<Vec<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    shielded_instance_config: Option<Vec<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sole_tenant_config: Option<Vec<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    taint: Option<Vec<ContainerClusterNodePoolElNodeConfigElTaintEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    workload_metadata_config: Option<Vec<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    guest_accelerator: std::option::Option<terrars::ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_ssd_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logging_variant: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_cpu_platform: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth_scopes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preemptible: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    spot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_machine_features: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confidential_nodes: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ephemeral_storage_local_ssd_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fast_socket: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElFastSocketEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gcfs_config: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gvnic: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElGvnicEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_maintenance_policy: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kubelet_config: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    linux_node_config: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_nvme_ssd_block_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reservation_affinity: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shielded_instance_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sole_tenant_config: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    taint: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElTaintEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workload_metadata_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>>,
     dynamic: ContainerClusterNodePoolElNodeConfigElDynamic,
 }
 
 impl ContainerClusterNodePoolElNodeConfigEl {
-    #[doc= "Set the field `boot_disk_kms_key`.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
-    pub fn set_boot_disk_kms_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.boot_disk_kms_key = Some(v.into());
+    #[doc =
+        "Set the field `boot_disk_kms_key`.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
+    pub fn set_boot_disk_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.boot_disk_kms_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk_size_gb`.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
-    pub fn set_disk_size_gb(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.disk_size_gb = Some(v.into());
+    #[doc =
+        "Set the field `disk_size_gb`.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
+    pub fn set_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.disk_size_gb = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk_type`.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
-    pub fn set_disk_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.disk_type = Some(v.into());
+    #[doc =
+        "Set the field `disk_type`.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
+    pub fn set_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.disk_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `guest_accelerator`.\nList of the type and count of accelerator cards attached to the instance."]
+    #[doc =
+        "Set the field `guest_accelerator`.\nList of the type and count of accelerator cards attached to the instance."]
     pub fn set_guest_accelerator(
         mut self,
-        v: impl Into<ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl>>,
+        v: impl std::convert::Into<terrars::ListField<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorEl>>,
     ) -> Self {
-        self.guest_accelerator = Some(v.into());
+        self.guest_accelerator = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `image_type`.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
-    pub fn set_image_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.image_type = Some(v.into());
+    #[doc =
+        "Set the field `image_type`.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
+    pub fn set_image_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.image_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
-    pub fn set_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.labels = Some(v.into());
+    #[doc =
+        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `local_ssd_count`.\nThe number of local SSD disks to be attached to the node."]
-    pub fn set_local_ssd_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.local_ssd_count = Some(v.into());
+    #[doc = "Set the field `local_ssd_count`.\nThe number of local SSD disks to be attached to the node."]
+    pub fn set_local_ssd_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.local_ssd_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `logging_variant`.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
-    pub fn set_logging_variant(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.logging_variant = Some(v.into());
+    #[doc =
+        "Set the field `logging_variant`.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
+    pub fn set_logging_variant(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.logging_variant = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `machine_type`.\nThe name of a Google Compute Engine machine type."]
-    pub fn set_machine_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.machine_type = Some(v.into());
+    #[doc = "Set the field `machine_type`.\nThe name of a Google Compute Engine machine type."]
+    pub fn set_machine_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.machine_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metadata`.\nThe metadata key/value pairs assigned to instances in the cluster."]
-    pub fn set_metadata(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.metadata = Some(v.into());
+    #[doc = "Set the field `metadata`.\nThe metadata key/value pairs assigned to instances in the cluster."]
+    pub fn set_metadata(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.metadata = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_cpu_platform`.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
-    pub fn set_min_cpu_platform(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.min_cpu_platform = Some(v.into());
+    #[doc =
+        "Set the field `min_cpu_platform`.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
+    pub fn set_min_cpu_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.min_cpu_platform = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `node_group`.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
-    pub fn set_node_group(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.node_group = Some(v.into());
+    #[doc =
+        "Set the field `node_group`.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
+    pub fn set_node_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.node_group = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `oauth_scopes`.\nThe set of Google API scopes to be made available on all of the node VMs."]
-    pub fn set_oauth_scopes(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.oauth_scopes = Some(v.into());
+    #[doc = "Set the field `oauth_scopes`.\nThe set of Google API scopes to be made available on all of the node VMs."]
+    pub fn set_oauth_scopes(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.oauth_scopes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `preemptible`.\nWhether the nodes are created as preemptible VM instances."]
-    pub fn set_preemptible(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.preemptible = Some(v.into());
+    #[doc = "Set the field `preemptible`.\nWhether the nodes are created as preemptible VM instances."]
+    pub fn set_preemptible(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.preemptible = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_labels`.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
-    pub fn set_resource_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.resource_labels = Some(v.into());
+    #[doc =
+        "Set the field `resource_labels`.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
+    pub fn set_resource_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_account`.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
-    pub fn set_service_account(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_account = Some(v.into());
+    #[doc = "Set the field `service_account`.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
+    pub fn set_service_account(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service_account = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `spot`.\nWhether the nodes are created as spot VM instances."]
-    pub fn set_spot(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.spot = Some(v.into());
+    #[doc = "Set the field `spot`.\nWhether the nodes are created as spot VM instances."]
+    pub fn set_spot(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.spot = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\nThe list of instance tags applied to all nodes."]
-    pub fn set_tags(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.tags = Some(v.into());
+    #[doc = "Set the field `tags`.\nThe list of instance tags applied to all nodes."]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `advanced_machine_features`.\n"]
+    #[doc = "Set the field `advanced_machine_features`.\n"]
     pub fn set_advanced_machine_features(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.advanced_machine_features = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.advanced_machine_features = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.advanced_machine_features = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.advanced_machine_features = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `confidential_nodes`.\n"]
+    #[doc = "Set the field `confidential_nodes`.\n"]
     pub fn set_confidential_nodes(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElConfidentialNodesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.confidential_nodes = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.confidential_nodes = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.confidential_nodes = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.confidential_nodes = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `ephemeral_storage_local_ssd_config`.\n"]
+    #[doc = "Set the field `ephemeral_storage_local_ssd_config`.\n"]
     pub fn set_ephemeral_storage_local_ssd_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.ephemeral_storage_local_ssd_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.ephemeral_storage_local_ssd_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.ephemeral_storage_local_ssd_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ephemeral_storage_local_ssd_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `fast_socket`.\n"]
+    #[doc = "Set the field `fast_socket`.\n"]
     pub fn set_fast_socket(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElFastSocketEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElFastSocketEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.fast_socket = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.fast_socket = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.fast_socket = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.fast_socket = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gcfs_config`.\n"]
+    #[doc = "Set the field `gcfs_config`.\n"]
     pub fn set_gcfs_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElGcfsConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gcfs_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gcfs_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcfs_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gcfs_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `gvnic`.\n"]
-    pub fn set_gvnic(mut self, v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElGvnicEl>>) -> Self {
+    #[doc = "Set the field `gvnic`.\n"]
+    pub fn set_gvnic(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElGvnicEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.gvnic = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.gvnic = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.gvnic = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gvnic = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `host_maintenance_policy`.\n"]
+    #[doc = "Set the field `host_maintenance_policy`.\n"]
     pub fn set_host_maintenance_policy(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.host_maintenance_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.host_maintenance_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.host_maintenance_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.host_maintenance_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kubelet_config`.\n"]
+    #[doc = "Set the field `kubelet_config`.\n"]
     pub fn set_kubelet_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElKubeletConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kubelet_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kubelet_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kubelet_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kubelet_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `linux_node_config`.\n"]
+    #[doc = "Set the field `linux_node_config`.\n"]
     pub fn set_linux_node_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.linux_node_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.linux_node_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.linux_node_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.linux_node_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `local_nvme_ssd_block_config`.\n"]
+    #[doc = "Set the field `local_nvme_ssd_block_config`.\n"]
     pub fn set_local_nvme_ssd_block_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.local_nvme_ssd_block_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.local_nvme_ssd_block_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.local_nvme_ssd_block_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.local_nvme_ssd_block_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `reservation_affinity`.\n"]
+    #[doc = "Set the field `reservation_affinity`.\n"]
     pub fn set_reservation_affinity(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElReservationAffinityEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.reservation_affinity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.reservation_affinity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.reservation_affinity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.reservation_affinity = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `shielded_instance_config`.\n"]
+    #[doc = "Set the field `shielded_instance_config`.\n"]
     pub fn set_shielded_instance_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.shielded_instance_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.shielded_instance_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.shielded_instance_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.shielded_instance_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sole_tenant_config`.\n"]
+    #[doc = "Set the field `sole_tenant_config`.\n"]
     pub fn set_sole_tenant_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sole_tenant_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sole_tenant_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sole_tenant_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sole_tenant_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `taint`.\n"]
-    pub fn set_taint(mut self, v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElTaintEl>>) -> Self {
+    #[doc = "Set the field `taint`.\n"]
+    pub fn set_taint(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElTaintEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.taint = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.taint = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.taint = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.taint = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `workload_metadata_config`.\n"]
+    #[doc = "Set the field `workload_metadata_config`.\n"]
     pub fn set_workload_metadata_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.workload_metadata_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.workload_metadata_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.workload_metadata_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.workload_metadata_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElNodeConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElNodeConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElNodeConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -10268,18 +11301,18 @@ impl BuildContainerClusterNodePoolElNodeConfigEl {
             sole_tenant_config: core::default::Default::default(),
             taint: core::default::Default::default(),
             workload_metadata_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolElNodeConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElNodeConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElNodeConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolElNodeConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodePoolElNodeConfigElRef {
         ContainerClusterNodePoolElNodeConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -10288,216 +11321,245 @@ impl Ref for ContainerClusterNodePoolElNodeConfigElRef {
 }
 
 impl ContainerClusterNodePoolElNodeConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `boot_disk_kms_key` after provisioning.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
-    pub fn boot_disk_kms_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_kms_key", self.base))
+    #[doc =
+        "Get a reference to the value of field `boot_disk_kms_key` after provisioning.\nThe Customer Managed Encryption Key used to encrypt the boot disk attached to each node in the node pool."]
+    pub fn boot_disk_kms_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_kms_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `disk_size_gb` after provisioning.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
-    pub fn disk_size_gb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disk_size_gb", self.base))
+    #[doc =
+        "Get a reference to the value of field `disk_size_gb` after provisioning.\nSize of the disk attached to each node, specified in GB. The smallest allowed disk size is 10GB."]
+    pub fn disk_size_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_size_gb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `disk_type` after provisioning.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
-    pub fn disk_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `disk_type` after provisioning.\nType of the disk attached to each node. Such as pd-standard, pd-balanced or pd-ssd"]
+    pub fn disk_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `effective_taints` after provisioning.\nList of kubernetes taints applied to each node."]
-    pub fn effective_taints(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.effective_taints", self.base))
+    #[doc =
+        "Get a reference to the value of field `effective_taints` after provisioning.\nList of kubernetes taints applied to each node."]
+    pub fn effective_taints(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElEffectiveTaintsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.effective_taints", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `guest_accelerator` after provisioning.\nList of the type and count of accelerator cards attached to the instance."]
-    pub fn guest_accelerator(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.guest_accelerator", self.base))
+    #[doc =
+        "Get a reference to the value of field `guest_accelerator` after provisioning.\nList of the type and count of accelerator cards attached to the instance."]
+    pub fn guest_accelerator(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElGuestAcceleratorElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.guest_accelerator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_type` after provisioning.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
-    pub fn image_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `image_type` after provisioning.\nThe image type to use for this node. Note that for a given image type, the latest version of it will be used."]
+    pub fn image_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node. These will added in addition to any default label(s) that Kubernetes may apply to the node."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `local_ssd_count` after provisioning.\nThe number of local SSD disks to be attached to the node."]
-    pub fn local_ssd_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `local_ssd_count` after provisioning.\nThe number of local SSD disks to be attached to the node."]
+    pub fn local_ssd_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `logging_variant` after provisioning.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
-    pub fn logging_variant(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.logging_variant", self.base))
+    #[doc =
+        "Get a reference to the value of field `logging_variant` after provisioning.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
+    pub fn logging_variant(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_variant", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `machine_type` after provisioning.\nThe name of a Google Compute Engine machine type."]
-    pub fn machine_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.machine_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `machine_type` after provisioning.\nThe name of a Google Compute Engine machine type."]
+    pub fn machine_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.machine_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metadata` after provisioning.\nThe metadata key/value pairs assigned to instances in the cluster."]
-    pub fn metadata(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.metadata", self.base))
+    #[doc =
+        "Get a reference to the value of field `metadata` after provisioning.\nThe metadata key/value pairs assigned to instances in the cluster."]
+    pub fn metadata(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.metadata", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_cpu_platform` after provisioning.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
-    pub fn min_cpu_platform(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
+    #[doc =
+        "Get a reference to the value of field `min_cpu_platform` after provisioning.\nMinimum CPU platform to be used by this instance. The instance may be scheduled on the specified or newer CPU platform."]
+    pub fn min_cpu_platform(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `node_group` after provisioning.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
-    pub fn node_group(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_group", self.base))
+    #[doc =
+        "Get a reference to the value of field `node_group` after provisioning.\nSetting this field will assign instances of this pool to run on the specified node group. This is useful for running workloads on sole tenant nodes."]
+    pub fn node_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_group", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oauth_scopes` after provisioning.\nThe set of Google API scopes to be made available on all of the node VMs."]
-    pub fn oauth_scopes(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.oauth_scopes", self.base))
+    #[doc =
+        "Get a reference to the value of field `oauth_scopes` after provisioning.\nThe set of Google API scopes to be made available on all of the node VMs."]
+    pub fn oauth_scopes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.oauth_scopes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `preemptible` after provisioning.\nWhether the nodes are created as preemptible VM instances."]
-    pub fn preemptible(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.preemptible", self.base))
+    #[doc =
+        "Get a reference to the value of field `preemptible` after provisioning.\nWhether the nodes are created as preemptible VM instances."]
+    pub fn preemptible(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preemptible", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
-    pub fn resource_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `resource_labels` after provisioning.\nThe GCE resource labels (a map of key/value pairs) to be applied to the node pool."]
+    pub fn resource_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_account` after provisioning.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
-    pub fn service_account(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
+    #[doc =
+        "Get a reference to the value of field `service_account` after provisioning.\nThe Google Cloud Platform Service Account to be used by the node VMs."]
+    pub fn service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `spot` after provisioning.\nWhether the nodes are created as spot VM instances."]
-    pub fn spot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.spot", self.base))
+    #[doc =
+        "Get a reference to the value of field `spot` after provisioning.\nWhether the nodes are created as spot VM instances."]
+    pub fn spot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.spot", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\nThe list of instance tags applied to all nodes."]
-    pub fn tags(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nThe list of instance tags applied to all nodes."]
+    pub fn tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `advanced_machine_features` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `advanced_machine_features` after provisioning.\n"]
     pub fn advanced_machine_features(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.advanced_machine_features", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElAdvancedMachineFeaturesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_machine_features", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
-    pub fn confidential_nodes(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.base))
+    #[doc = "Get a reference to the value of field `confidential_nodes` after provisioning.\n"]
+    pub fn confidential_nodes(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElConfidentialNodesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.confidential_nodes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ephemeral_storage_local_ssd_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `ephemeral_storage_local_ssd_config` after provisioning.\n"]
     pub fn ephemeral_storage_local_ssd_config(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ephemeral_storage_local_ssd_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElEphemeralStorageLocalSsdConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ephemeral_storage_local_ssd_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `fast_socket` after provisioning.\n"]
-    pub fn fast_socket(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElFastSocketElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.fast_socket", self.base))
+    #[doc = "Get a reference to the value of field `fast_socket` after provisioning.\n"]
+    pub fn fast_socket(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElFastSocketElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.fast_socket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gcfs_config` after provisioning.\n"]
-    pub fn gcfs_config(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gcfs_config", self.base))
+    #[doc = "Get a reference to the value of field `gcfs_config` after provisioning.\n"]
+    pub fn gcfs_config(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElGcfsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gcfs_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gvnic` after provisioning.\n"]
-    pub fn gvnic(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElGvnicElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gvnic", self.base))
+    #[doc = "Get a reference to the value of field `gvnic` after provisioning.\n"]
+    pub fn gvnic(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElGvnicElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gvnic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `host_maintenance_policy` after provisioning.\n"]
-    pub fn host_maintenance_policy(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.host_maintenance_policy", self.base))
+    #[doc = "Get a reference to the value of field `host_maintenance_policy` after provisioning.\n"]
+    pub fn host_maintenance_policy(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElHostMaintenancePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.host_maintenance_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kubelet_config` after provisioning.\n"]
-    pub fn kubelet_config(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kubelet_config", self.base))
+    #[doc = "Get a reference to the value of field `kubelet_config` after provisioning.\n"]
+    pub fn kubelet_config(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElKubeletConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kubelet_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `linux_node_config` after provisioning.\n"]
-    pub fn linux_node_config(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.linux_node_config", self.base))
+    #[doc = "Get a reference to the value of field `linux_node_config` after provisioning.\n"]
+    pub fn linux_node_config(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElLinuxNodeConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.linux_node_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `local_nvme_ssd_block_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `local_nvme_ssd_block_config` after provisioning.\n"]
     pub fn local_nvme_ssd_block_config(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_nvme_ssd_block_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElLocalNvmeSsdBlockConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_nvme_ssd_block_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `reservation_affinity` after provisioning.\n"]
-    pub fn reservation_affinity(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.base))
+    #[doc = "Get a reference to the value of field `reservation_affinity` after provisioning.\n"]
+    pub fn reservation_affinity(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElReservationAffinityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `shielded_instance_config` after provisioning.\n"]
-    pub fn shielded_instance_config(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
+    #[doc = "Get a reference to the value of field `shielded_instance_config` after provisioning.\n"]
+    pub fn shielded_instance_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElShieldedInstanceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sole_tenant_config` after provisioning.\n"]
-    pub fn sole_tenant_config(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sole_tenant_config", self.base))
+    #[doc = "Get a reference to the value of field `sole_tenant_config` after provisioning.\n"]
+    pub fn sole_tenant_config(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElSoleTenantConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sole_tenant_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `taint` after provisioning.\n"]
-    pub fn taint(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElTaintElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.taint", self.base))
+    #[doc = "Get a reference to the value of field `taint` after provisioning.\n"]
+    pub fn taint(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElTaintElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.taint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `workload_metadata_config` after provisioning.\n"]
-    pub fn workload_metadata_config(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.workload_metadata_config", self.base))
+    #[doc = "Get a reference to the value of field `workload_metadata_config` after provisioning.\n"]
+    pub fn workload_metadata_config(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElWorkloadMetadataConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_metadata_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElPlacementPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    policy_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tpu_topology: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tpu_topology: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterNodePoolElPlacementPolicyEl {
-    #[doc= "Set the field `policy_name`.\nIf set, refers to the name of a custom resource policy supplied by the user. The resource policy must be in the same project and region as the node pool. If not found, InvalidArgument error is returned."]
-    pub fn set_policy_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.policy_name = Some(v.into());
+    #[doc =
+        "Set the field `policy_name`.\nIf set, refers to the name of a custom resource policy supplied by the user. The resource policy must be in the same project and region as the node pool. If not found, InvalidArgument error is returned."]
+    pub fn set_policy_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.policy_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tpu_topology`.\nTPU placement topology for pod slice node pool. https://cloud.google.com/tpu/docs/types-topologies#tpu_topologies"]
-    pub fn set_tpu_topology(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tpu_topology = Some(v.into());
+    #[doc =
+        "Set the field `tpu_topology`.\nTPU placement topology for pod slice node pool. https://cloud.google.com/tpu/docs/types-topologies#tpu_topologies"]
+    pub fn set_tpu_topology(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tpu_topology = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElPlacementPolicyEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElPlacementPolicyEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElPlacementPolicyEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElPlacementPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -10506,8 +11568,8 @@ impl ToListMappable for ContainerClusterNodePoolElPlacementPolicyEl {
 }
 
 pub struct BuildContainerClusterNodePoolElPlacementPolicyEl {
-    #[doc= "Type defines the type of placement policy"]
-    pub type_: PrimField<String>,
+    #[doc = "Type defines the type of placement policy"]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterNodePoolElPlacementPolicyEl {
@@ -10521,12 +11583,15 @@ impl BuildContainerClusterNodePoolElPlacementPolicyEl {
 }
 
 pub struct ContainerClusterNodePoolElPlacementPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElPlacementPolicyElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElPlacementPolicyElRef {
+impl terrars::Ref for ContainerClusterNodePoolElPlacementPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElPlacementPolicyElRef {
         ContainerClusterNodePoolElPlacementPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -10535,61 +11600,69 @@ impl Ref for ContainerClusterNodePoolElPlacementPolicyElRef {
 }
 
 impl ContainerClusterNodePoolElPlacementPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `policy_name` after provisioning.\nIf set, refers to the name of a custom resource policy supplied by the user. The resource policy must be in the same project and region as the node pool. If not found, InvalidArgument error is returned."]
-    pub fn policy_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `policy_name` after provisioning.\nIf set, refers to the name of a custom resource policy supplied by the user. The resource policy must be in the same project and region as the node pool. If not found, InvalidArgument error is returned."]
+    pub fn policy_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tpu_topology` after provisioning.\nTPU placement topology for pod slice node pool. https://cloud.google.com/tpu/docs/types-topologies#tpu_topologies"]
-    pub fn tpu_topology(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tpu_topology", self.base))
+    #[doc =
+        "Get a reference to the value of field `tpu_topology` after provisioning.\nTPU placement topology for pod slice node pool. https://cloud.google.com/tpu/docs/types-topologies#tpu_topologies"]
+    pub fn tpu_topology(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tpu_topology", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\nType defines the type of placement policy"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\nType defines the type of placement policy"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_percentage: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_soak_duration: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_percentage: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_soak_duration: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
-    #[doc= "Set the field `batch_node_count`.\nNumber of blue nodes to drain in a batch."]
-    pub fn set_batch_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.batch_node_count = Some(v.into());
+    #[doc = "Set the field `batch_node_count`.\nNumber of blue nodes to drain in a batch."]
+    pub fn set_batch_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.batch_node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `batch_percentage`.\nPercentage of the blue pool nodes to drain in a batch."]
-    pub fn set_batch_percentage(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.batch_percentage = Some(v.into());
+    #[doc = "Set the field `batch_percentage`.\nPercentage of the blue pool nodes to drain in a batch."]
+    pub fn set_batch_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.batch_percentage = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `batch_soak_duration`.\nSoak time after each batch gets drained."]
-    pub fn set_batch_soak_duration(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.batch_soak_duration = Some(v.into());
+    #[doc = "Set the field `batch_soak_duration`.\nSoak time after each batch gets drained."]
+    pub fn set_batch_soak_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.batch_soak_duration = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl {
+    type O =
+        terrars
+        ::BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -10610,14 +11683,14 @@ impl BuildContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandard
 }
 
 pub struct ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
+impl terrars::Ref for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
         ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
             shared: shared,
@@ -10627,80 +11700,92 @@ impl Ref for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStand
 }
 
 impl ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `batch_node_count` after provisioning.\nNumber of blue nodes to drain in a batch."]
-    pub fn batch_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `batch_node_count` after provisioning.\nNumber of blue nodes to drain in a batch."]
+    pub fn batch_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_node_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `batch_percentage` after provisioning.\nPercentage of the blue pool nodes to drain in a batch."]
-    pub fn batch_percentage(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_percentage", self.base))
+    #[doc =
+        "Get a reference to the value of field `batch_percentage` after provisioning.\nPercentage of the blue pool nodes to drain in a batch."]
+    pub fn batch_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_percentage", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `batch_soak_duration` after provisioning.\nSoak time after each batch gets drained."]
-    pub fn batch_soak_duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_soak_duration", self.base))
+    #[doc =
+        "Get a reference to the value of field `batch_soak_duration` after provisioning.\nSoak time after each batch gets drained."]
+    pub fn batch_soak_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_soak_duration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElDynamic {
-    standard_rollout_policy: Option<
-        DynamicBlock<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl>,
+    standard_rollout_policy: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_pool_soak_duration: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    standard_rollout_policy: Option<
-        Vec<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_pool_soak_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    standard_rollout_policy: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl>>,
     dynamic: ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElDynamic,
 }
 
 impl ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl {
-    #[doc= "Set the field `node_pool_soak_duration`.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up."]
-    pub fn set_node_pool_soak_duration(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.node_pool_soak_duration = Some(v.into());
+    #[doc =
+        "Set the field `node_pool_soak_duration`.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up."]
+    pub fn set_node_pool_soak_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.node_pool_soak_duration = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `standard_rollout_policy`.\n"]
+    #[doc = "Set the field `standard_rollout_policy`.\n"]
     pub fn set_standard_rollout_policy(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.standard_rollout_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.standard_rollout_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.standard_rollout_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.standard_rollout_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -10715,18 +11800,21 @@ impl BuildContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl {
         ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl {
             node_pool_soak_duration: core::default::Default::default(),
             standard_rollout_policy: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
+impl terrars::Ref for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
         ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -10735,82 +11823,94 @@ impl Ref for ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
 }
 
 impl ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_soak_duration` after provisioning.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up."]
-    pub fn node_pool_soak_duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_pool_soak_duration", self.base))
+    #[doc =
+        "Get a reference to the value of field `node_pool_soak_duration` after provisioning.\nTime needed after draining entire blue pool. After this period, blue pool will be cleaned up."]
+    pub fn node_pool_soak_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_pool_soak_duration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `standard_rollout_policy` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `standard_rollout_policy` after provisioning.\n"]
     pub fn standard_rollout_policy(
         &self,
-    ) -> ListRef<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.standard_rollout_policy", self.base))
+    ) -> terrars::ListRef<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElStandardRolloutPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.standard_rollout_policy", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolElUpgradeSettingsElDynamic {
-    blue_green_settings: Option<DynamicBlock<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>>,
+    blue_green_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolElUpgradeSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_surge: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_unavailable: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    strategy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    blue_green_settings: Option<Vec<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_surge: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_unavailable: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    blue_green_settings: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>>,
     dynamic: ContainerClusterNodePoolElUpgradeSettingsElDynamic,
 }
 
 impl ContainerClusterNodePoolElUpgradeSettingsEl {
-    #[doc= "Set the field `max_surge`.\nThe number of additional nodes that can be added to the node pool during an upgrade. Increasing max_surge raises the number of nodes that can be upgraded simultaneously. Can be set to 0 or greater."]
-    pub fn set_max_surge(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_surge = Some(v.into());
+    #[doc =
+        "Set the field `max_surge`.\nThe number of additional nodes that can be added to the node pool during an upgrade. Increasing max_surge raises the number of nodes that can be upgraded simultaneously. Can be set to 0 or greater."]
+    pub fn set_max_surge(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_surge = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_unavailable`.\nThe number of nodes that can be simultaneously unavailable during an upgrade. Increasing max_unavailable raises the number of nodes that can be upgraded in parallel. Can be set to 0 or greater."]
-    pub fn set_max_unavailable(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_unavailable = Some(v.into());
+    #[doc =
+        "Set the field `max_unavailable`.\nThe number of nodes that can be simultaneously unavailable during an upgrade. Increasing max_unavailable raises the number of nodes that can be upgraded in parallel. Can be set to 0 or greater."]
+    pub fn set_max_unavailable(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_unavailable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `strategy`.\nUpdate strategy for the given nodepool."]
-    pub fn set_strategy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.strategy = Some(v.into());
+    #[doc = "Set the field `strategy`.\nUpdate strategy for the given nodepool."]
+    pub fn set_strategy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.strategy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `blue_green_settings`.\n"]
+    #[doc = "Set the field `blue_green_settings`.\n"]
     pub fn set_blue_green_settings(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.blue_green_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.blue_green_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.blue_green_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.blue_green_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolElUpgradeSettingsEl {
-    type O = BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolElUpgradeSettingsEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -10827,18 +11927,21 @@ impl BuildContainerClusterNodePoolElUpgradeSettingsEl {
             max_unavailable: core::default::Default::default(),
             strategy: core::default::Default::default(),
             blue_green_settings: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolElUpgradeSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElUpgradeSettingsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElUpgradeSettingsElRef {
+impl terrars::Ref for ContainerClusterNodePoolElUpgradeSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolElUpgradeSettingsElRef {
         ContainerClusterNodePoolElUpgradeSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -10847,208 +11950,232 @@ impl Ref for ContainerClusterNodePoolElUpgradeSettingsElRef {
 }
 
 impl ContainerClusterNodePoolElUpgradeSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_surge` after provisioning.\nThe number of additional nodes that can be added to the node pool during an upgrade. Increasing max_surge raises the number of nodes that can be upgraded simultaneously. Can be set to 0 or greater."]
-    pub fn max_surge(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_surge", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_surge` after provisioning.\nThe number of additional nodes that can be added to the node pool during an upgrade. Increasing max_surge raises the number of nodes that can be upgraded simultaneously. Can be set to 0 or greater."]
+    pub fn max_surge(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_surge", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_unavailable` after provisioning.\nThe number of nodes that can be simultaneously unavailable during an upgrade. Increasing max_unavailable raises the number of nodes that can be upgraded in parallel. Can be set to 0 or greater."]
-    pub fn max_unavailable(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_unavailable` after provisioning.\nThe number of nodes that can be simultaneously unavailable during an upgrade. Increasing max_unavailable raises the number of nodes that can be upgraded in parallel. Can be set to 0 or greater."]
+    pub fn max_unavailable(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `strategy` after provisioning.\nUpdate strategy for the given nodepool."]
-    pub fn strategy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.strategy", self.base))
+    #[doc =
+        "Get a reference to the value of field `strategy` after provisioning.\nUpdate strategy for the given nodepool."]
+    pub fn strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.strategy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `blue_green_settings` after provisioning.\n"]
-    pub fn blue_green_settings(&self) -> ListRef<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.blue_green_settings", self.base))
+    #[doc = "Get a reference to the value of field `blue_green_settings` after provisioning.\n"]
+    pub fn blue_green_settings(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterNodePoolElUpgradeSettingsElBlueGreenSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.blue_green_settings", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolElDynamic {
-    autoscaling: Option<DynamicBlock<ContainerClusterNodePoolElAutoscalingEl>>,
-    management: Option<DynamicBlock<ContainerClusterNodePoolElManagementEl>>,
-    network_config: Option<DynamicBlock<ContainerClusterNodePoolElNetworkConfigEl>>,
-    node_config: Option<DynamicBlock<ContainerClusterNodePoolElNodeConfigEl>>,
-    placement_policy: Option<DynamicBlock<ContainerClusterNodePoolElPlacementPolicyEl>>,
-    upgrade_settings: Option<DynamicBlock<ContainerClusterNodePoolElUpgradeSettingsEl>>,
+    autoscaling: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElAutoscalingEl>>,
+    management: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElManagementEl>>,
+    network_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNetworkConfigEl>>,
+    node_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElNodeConfigEl>>,
+    placement_policy: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElPlacementPolicyEl>>,
+    upgrade_settings: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolElUpgradeSettingsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_pods_per_node: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name_prefix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_locations: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    autoscaling: Option<Vec<ContainerClusterNodePoolElAutoscalingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    management: Option<Vec<ContainerClusterNodePoolElManagementEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_config: Option<Vec<ContainerClusterNodePoolElNetworkConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_config: Option<Vec<ContainerClusterNodePoolElNodeConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    placement_policy: Option<Vec<ContainerClusterNodePoolElPlacementPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    upgrade_settings: Option<Vec<ContainerClusterNodePoolElUpgradeSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_pods_per_node: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_locations: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElAutoscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    management: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElManagementEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_config: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNetworkConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_config: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElNodeConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    placement_policy: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElPlacementPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    upgrade_settings: std::option::Option<std::vec::Vec<ContainerClusterNodePoolElUpgradeSettingsEl>>,
     dynamic: ContainerClusterNodePoolElDynamic,
 }
 
 impl ContainerClusterNodePoolEl {
-    #[doc= "Set the field `initial_node_count`.\nThe initial number of nodes for the pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Changing this will force recreation of the resource."]
-    pub fn set_initial_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.initial_node_count = Some(v.into());
+    #[doc =
+        "Set the field `initial_node_count`.\nThe initial number of nodes for the pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Changing this will force recreation of the resource."]
+    pub fn set_initial_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_pods_per_node`.\nThe maximum number of pods per node in this node pool. Note that this does not work on node pools which are \"route-based\" - that is, node pools belonging to clusters that do not have IP Aliasing enabled."]
-    pub fn set_max_pods_per_node(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_pods_per_node = Some(v.into());
+    #[doc =
+        "Set the field `max_pods_per_node`.\nThe maximum number of pods per node in this node pool. Note that this does not work on node pools which are \"route-based\" - that is, node pools belonging to clusters that do not have IP Aliasing enabled."]
+    pub fn set_max_pods_per_node(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_pods_per_node = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\nThe name of the node pool. If left blank, Terraform will auto-generate a unique name."]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc =
+        "Set the field `name`.\nThe name of the node pool. If left blank, Terraform will auto-generate a unique name."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name_prefix`.\nCreates a unique name for the node pool beginning with the specified prefix. Conflicts with name."]
-    pub fn set_name_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name_prefix = Some(v.into());
+    #[doc =
+        "Set the field `name_prefix`.\nCreates a unique name for the node pool beginning with the specified prefix. Conflicts with name."]
+    pub fn set_name_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name_prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `node_count`.\nThe number of nodes per instance group. This field can be used to update the number of nodes per instance group but should not be used alongside autoscaling."]
-    pub fn set_node_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.node_count = Some(v.into());
+    #[doc =
+        "Set the field `node_count`.\nThe number of nodes per instance group. This field can be used to update the number of nodes per instance group but should not be used alongside autoscaling."]
+    pub fn set_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.node_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `node_locations`.\nThe list of zones in which the node pool's nodes should be located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If unspecified, the cluster-level node_locations will be used."]
-    pub fn set_node_locations(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.node_locations = Some(v.into());
+    #[doc =
+        "Set the field `node_locations`.\nThe list of zones in which the node pool's nodes should be located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If unspecified, the cluster-level node_locations will be used."]
+    pub fn set_node_locations(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.node_locations = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `version`.\nThe Kubernetes version for the nodes in this pool. Note that if this field and auto_upgrade are both specified, they will fight each other for what the node version should be, so setting both is highly discouraged. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way."]
-    pub fn set_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.version = Some(v.into());
+    #[doc =
+        "Set the field `version`.\nThe Kubernetes version for the nodes in this pool. Note that if this field and auto_upgrade are both specified, they will fight each other for what the node version should be, so setting both is highly discouraged. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way."]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `autoscaling`.\n"]
-    pub fn set_autoscaling(mut self, v: impl Into<BlockAssignable<ContainerClusterNodePoolElAutoscalingEl>>) -> Self {
+    #[doc = "Set the field `autoscaling`.\n"]
+    pub fn set_autoscaling(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElAutoscalingEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.autoscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.autoscaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.autoscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.autoscaling = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `management`.\n"]
-    pub fn set_management(mut self, v: impl Into<BlockAssignable<ContainerClusterNodePoolElManagementEl>>) -> Self {
+    #[doc = "Set the field `management`.\n"]
+    pub fn set_management(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElManagementEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.management = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.management = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.management = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.management = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_config`.\n"]
+    #[doc = "Set the field `network_config`.\n"]
     pub fn set_network_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElNetworkConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNetworkConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `node_config`.\n"]
-    pub fn set_node_config(mut self, v: impl Into<BlockAssignable<ContainerClusterNodePoolElNodeConfigEl>>) -> Self {
+    #[doc = "Set the field `node_config`.\n"]
+    pub fn set_node_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElNodeConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.node_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.node_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.node_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.node_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `placement_policy`.\n"]
+    #[doc = "Set the field `placement_policy`.\n"]
     pub fn set_placement_policy(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElPlacementPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElPlacementPolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.placement_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.placement_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.placement_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.placement_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `upgrade_settings`.\n"]
+    #[doc = "Set the field `upgrade_settings`.\n"]
     pub fn set_upgrade_settings(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolElUpgradeSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.upgrade_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.upgrade_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.upgrade_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.upgrade_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolEl {
-    type O = BlockAssignable<ContainerClusterNodePoolEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11074,18 +12201,18 @@ impl BuildContainerClusterNodePoolEl {
             node_config: core::default::Default::default(),
             placement_policy: core::default::Default::default(),
             upgrade_settings: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolElRef {
+impl terrars::Ref for ContainerClusterNodePoolElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodePoolElRef {
         ContainerClusterNodePoolElRef {
             shared: shared,
             base: base.to_string(),
@@ -11094,105 +12221,117 @@ impl Ref for ContainerClusterNodePoolElRef {
 }
 
 impl ContainerClusterNodePoolElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `initial_node_count` after provisioning.\nThe initial number of nodes for the pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Changing this will force recreation of the resource."]
-    pub fn initial_node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `initial_node_count` after provisioning.\nThe initial number of nodes for the pool. In regional or multi-zonal clusters, this is the number of nodes per zone. Changing this will force recreation of the resource."]
+    pub fn initial_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_node_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_group_urls` after provisioning.\nThe resource URLs of the managed instance groups associated with this node pool."]
-    pub fn instance_group_urls(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.instance_group_urls", self.base))
+    #[doc =
+        "Get a reference to the value of field `instance_group_urls` after provisioning.\nThe resource URLs of the managed instance groups associated with this node pool."]
+    pub fn instance_group_urls(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_group_urls", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `managed_instance_group_urls` after provisioning.\nList of instance group URLs which have been assigned to this node pool."]
-    pub fn managed_instance_group_urls(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.managed_instance_group_urls", self.base))
+    #[doc =
+        "Get a reference to the value of field `managed_instance_group_urls` after provisioning.\nList of instance group URLs which have been assigned to this node pool."]
+    pub fn managed_instance_group_urls(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.managed_instance_group_urls", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_pods_per_node` after provisioning.\nThe maximum number of pods per node in this node pool. Note that this does not work on node pools which are \"route-based\" - that is, node pools belonging to clusters that do not have IP Aliasing enabled."]
-    pub fn max_pods_per_node(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_pods_per_node", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_pods_per_node` after provisioning.\nThe maximum number of pods per node in this node pool. Note that this does not work on node pools which are \"route-based\" - that is, node pools belonging to clusters that do not have IP Aliasing enabled."]
+    pub fn max_pods_per_node(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_pods_per_node", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of the node pool. If left blank, Terraform will auto-generate a unique name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name of the node pool. If left blank, Terraform will auto-generate a unique name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name_prefix` after provisioning.\nCreates a unique name for the node pool beginning with the specified prefix. Conflicts with name."]
-    pub fn name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.base))
+    #[doc =
+        "Get a reference to the value of field `name_prefix` after provisioning.\nCreates a unique name for the node pool beginning with the specified prefix. Conflicts with name."]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `node_count` after provisioning.\nThe number of nodes per instance group. This field can be used to update the number of nodes per instance group but should not be used alongside autoscaling."]
-    pub fn node_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `node_count` after provisioning.\nThe number of nodes per instance group. This field can be used to update the number of nodes per instance group but should not be used alongside autoscaling."]
+    pub fn node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `node_locations` after provisioning.\nThe list of zones in which the node pool's nodes should be located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If unspecified, the cluster-level node_locations will be used."]
-    pub fn node_locations(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.node_locations", self.base))
+    #[doc =
+        "Get a reference to the value of field `node_locations` after provisioning.\nThe list of zones in which the node pool's nodes should be located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. If unspecified, the cluster-level node_locations will be used."]
+    pub fn node_locations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.node_locations", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nThe Kubernetes version for the nodes in this pool. Note that if this field and auto_upgrade are both specified, they will fight each other for what the node version should be, so setting both is highly discouraged. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nThe Kubernetes version for the nodes in this pool. Note that if this field and auto_upgrade are both specified, they will fight each other for what the node version should be, so setting both is highly discouraged. While a fuzzy version can be specified, it's recommended that you specify explicit versions as Terraform will see spurious diffs when fuzzy versions are used. See the google_container_engine_versions data source's version_prefix field to approximate fuzzy versions in a Terraform-compatible way."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `autoscaling` after provisioning.\n"]
-    pub fn autoscaling(&self) -> ListRef<ContainerClusterNodePoolElAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.base))
+    #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
+    pub fn autoscaling(&self) -> terrars::ListRef<ContainerClusterNodePoolElAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> ListRef<ContainerClusterNodePoolElManagementElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.management", self.base))
+    #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
+    pub fn management(&self) -> terrars::ListRef<ContainerClusterNodePoolElManagementElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> ListRef<ContainerClusterNodePoolElNetworkConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.network_config", self.base))
+    #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
+    pub fn network_config(&self) -> terrars::ListRef<ContainerClusterNodePoolElNetworkConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> ListRef<ContainerClusterNodePoolElNodeConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_config", self.base))
+    #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
+    pub fn node_config(&self) -> terrars::ListRef<ContainerClusterNodePoolElNodeConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `placement_policy` after provisioning.\n"]
-    pub fn placement_policy(&self) -> ListRef<ContainerClusterNodePoolElPlacementPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.placement_policy", self.base))
+    #[doc = "Get a reference to the value of field `placement_policy` after provisioning.\n"]
+    pub fn placement_policy(&self) -> terrars::ListRef<ContainerClusterNodePoolElPlacementPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.placement_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `upgrade_settings` after provisioning.\n"]
-    pub fn upgrade_settings(&self) -> ListRef<ContainerClusterNodePoolElUpgradeSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.upgrade_settings", self.base))
+    #[doc = "Get a reference to the value of field `upgrade_settings` after provisioning.\n"]
+    pub fn upgrade_settings(&self) -> terrars::ListRef<ContainerClusterNodePoolElUpgradeSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.upgrade_settings", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolAutoConfigElNetworkTagsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<ListField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
 impl ContainerClusterNodePoolAutoConfigElNetworkTagsEl {
-    #[doc= "Set the field `tags`.\nList of network tags applied to auto-provisioned node pools."]
-    pub fn set_tags(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.tags = Some(v.into());
+    #[doc = "Set the field `tags`.\nList of network tags applied to auto-provisioned node pools."]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tags = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolAutoConfigElNetworkTagsEl {
-    type O = BlockAssignable<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolAutoConfigElNetworkTagsEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11209,12 +12348,15 @@ impl BuildContainerClusterNodePoolAutoConfigElNetworkTagsEl {
 }
 
 pub struct ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
+impl terrars::Ref for ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
         ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -11223,51 +12365,52 @@ impl Ref for ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
 }
 
 impl ContainerClusterNodePoolAutoConfigElNetworkTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\nList of network tags applied to auto-provisioned node pools."]
-    pub fn tags(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nList of network tags applied to auto-provisioned node pools."]
+    pub fn tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolAutoConfigElDynamic {
-    network_tags: Option<DynamicBlock<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>>,
+    network_tags: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolAutoConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_tags: Option<Vec<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_tags: std::option::Option<std::vec::Vec<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>>,
     dynamic: ContainerClusterNodePoolAutoConfigElDynamic,
 }
 
 impl ContainerClusterNodePoolAutoConfigEl {
-    #[doc= "Set the field `network_tags`.\n"]
+    #[doc = "Set the field `network_tags`.\n"]
     pub fn set_network_tags(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolAutoConfigElNetworkTagsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_tags = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_tags = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolAutoConfigEl {
-    type O = BlockAssignable<ContainerClusterNodePoolAutoConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolAutoConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolAutoConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11281,18 +12424,18 @@ impl BuildContainerClusterNodePoolAutoConfigEl {
     pub fn build(self) -> ContainerClusterNodePoolAutoConfigEl {
         ContainerClusterNodePoolAutoConfigEl {
             network_tags: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolAutoConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolAutoConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolAutoConfigElRef {
+impl terrars::Ref for ContainerClusterNodePoolAutoConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodePoolAutoConfigElRef {
         ContainerClusterNodePoolAutoConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -11301,35 +12444,36 @@ impl Ref for ContainerClusterNodePoolAutoConfigElRef {
 }
 
 impl ContainerClusterNodePoolAutoConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `network_tags` after provisioning.\n"]
-    pub fn network_tags(&self) -> ListRef<ContainerClusterNodePoolAutoConfigElNetworkTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.network_tags", self.base))
+    #[doc = "Get a reference to the value of field `network_tags` after provisioning.\n"]
+    pub fn network_tags(&self) -> terrars::ListRef<ContainerClusterNodePoolAutoConfigElNetworkTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_tags", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    logging_variant: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logging_variant: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl {
-    #[doc= "Set the field `logging_variant`.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
-    pub fn set_logging_variant(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.logging_variant = Some(v.into());
+    #[doc =
+        "Set the field `logging_variant`.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
+    pub fn set_logging_variant(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.logging_variant = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl {
-    type O = BlockAssignable<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11346,12 +12490,15 @@ impl BuildContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl {
 }
 
 pub struct ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
+impl terrars::Ref for ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
         ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
             shared: shared,
             base: base.to_string(),
@@ -11360,51 +12507,54 @@ impl Ref for ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
 }
 
 impl ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `logging_variant` after provisioning.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
-    pub fn logging_variant(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.logging_variant", self.base))
+    #[doc =
+        "Get a reference to the value of field `logging_variant` after provisioning.\nType of logging agent that is used as the default value for node pools in the cluster. Valid values include DEFAULT and MAX_THROUGHPUT."]
+    pub fn logging_variant(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_variant", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNodePoolDefaultsElDynamic {
-    node_config_defaults: Option<DynamicBlock<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>>,
+    node_config_defaults: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNodePoolDefaultsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_config_defaults: Option<Vec<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_config_defaults: std::option::Option<std::vec::Vec<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>>,
     dynamic: ContainerClusterNodePoolDefaultsElDynamic,
 }
 
 impl ContainerClusterNodePoolDefaultsEl {
-    #[doc= "Set the field `node_config_defaults`.\n"]
+    #[doc = "Set the field `node_config_defaults`.\n"]
     pub fn set_node_config_defaults(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.node_config_defaults = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.node_config_defaults = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.node_config_defaults = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.node_config_defaults = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNodePoolDefaultsEl {
-    type O = BlockAssignable<ContainerClusterNodePoolDefaultsEl>;
+impl terrars::ToListMappable for ContainerClusterNodePoolDefaultsEl {
+    type O = terrars::BlockAssignable<ContainerClusterNodePoolDefaultsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11418,18 +12568,18 @@ impl BuildContainerClusterNodePoolDefaultsEl {
     pub fn build(self) -> ContainerClusterNodePoolDefaultsEl {
         ContainerClusterNodePoolDefaultsEl {
             node_config_defaults: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNodePoolDefaultsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNodePoolDefaultsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNodePoolDefaultsElRef {
+impl terrars::Ref for ContainerClusterNodePoolDefaultsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNodePoolDefaultsElRef {
         ContainerClusterNodePoolDefaultsElRef {
             shared: shared,
             base: base.to_string(),
@@ -11438,28 +12588,28 @@ impl Ref for ContainerClusterNodePoolDefaultsElRef {
 }
 
 impl ContainerClusterNodePoolDefaultsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `node_config_defaults` after provisioning.\n"]
-    pub fn node_config_defaults(&self) -> ListRef<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_config_defaults", self.base))
+    #[doc = "Get a reference to the value of field `node_config_defaults` after provisioning.\n"]
+    pub fn node_config_defaults(&self) -> terrars::ListRef<ContainerClusterNodePoolDefaultsElNodeConfigDefaultsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_config_defaults", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNotificationConfigElPubsubElFilterEl {
-    event_type: ListField<PrimField<String>>,
+    event_type: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterNotificationConfigElPubsubElFilterEl { }
 
-impl ToListMappable for ContainerClusterNotificationConfigElPubsubElFilterEl {
-    type O = BlockAssignable<ContainerClusterNotificationConfigElPubsubElFilterEl>;
+impl terrars::ToListMappable for ContainerClusterNotificationConfigElPubsubElFilterEl {
+    type O = terrars::BlockAssignable<ContainerClusterNotificationConfigElPubsubElFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11468,8 +12618,9 @@ impl ToListMappable for ContainerClusterNotificationConfigElPubsubElFilterEl {
 }
 
 pub struct BuildContainerClusterNotificationConfigElPubsubElFilterEl {
-    #[doc= "Can be used to filter what notifications are sent. Valid values include include UPGRADE_AVAILABLE_EVENT, UPGRADE_EVENT and SECURITY_BULLETIN_EVENT"]
-    pub event_type: ListField<PrimField<String>>,
+    #[doc =
+        "Can be used to filter what notifications are sent. Valid values include include UPGRADE_AVAILABLE_EVENT, UPGRADE_EVENT and SECURITY_BULLETIN_EVENT"]
+    pub event_type: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildContainerClusterNotificationConfigElPubsubElFilterEl {
@@ -11479,12 +12630,15 @@ impl BuildContainerClusterNotificationConfigElPubsubElFilterEl {
 }
 
 pub struct ContainerClusterNotificationConfigElPubsubElFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNotificationConfigElPubsubElFilterElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNotificationConfigElPubsubElFilterElRef {
+impl terrars::Ref for ContainerClusterNotificationConfigElPubsubElFilterElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNotificationConfigElPubsubElFilterElRef {
         ContainerClusterNotificationConfigElPubsubElFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -11493,60 +12647,62 @@ impl Ref for ContainerClusterNotificationConfigElPubsubElFilterElRef {
 }
 
 impl ContainerClusterNotificationConfigElPubsubElFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `event_type` after provisioning.\nCan be used to filter what notifications are sent. Valid values include include UPGRADE_AVAILABLE_EVENT, UPGRADE_EVENT and SECURITY_BULLETIN_EVENT"]
-    pub fn event_type(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.event_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `event_type` after provisioning.\nCan be used to filter what notifications are sent. Valid values include include UPGRADE_AVAILABLE_EVENT, UPGRADE_EVENT and SECURITY_BULLETIN_EVENT"]
+    pub fn event_type(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.event_type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNotificationConfigElPubsubElDynamic {
-    filter: Option<DynamicBlock<ContainerClusterNotificationConfigElPubsubElFilterEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<ContainerClusterNotificationConfigElPubsubElFilterEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNotificationConfigElPubsubEl {
-    enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    topic: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<ContainerClusterNotificationConfigElPubsubElFilterEl>>,
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    topic: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<ContainerClusterNotificationConfigElPubsubElFilterEl>>,
     dynamic: ContainerClusterNotificationConfigElPubsubElDynamic,
 }
 
 impl ContainerClusterNotificationConfigElPubsubEl {
-    #[doc= "Set the field `topic`.\nThe pubsub topic to push upgrade notifications to. Must be in the same project as the cluster. Must be in the format: projects/{project}/topics/{topic}."]
-    pub fn set_topic(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.topic = Some(v.into());
+    #[doc =
+        "Set the field `topic`.\nThe pubsub topic to push upgrade notifications to. Must be in the same project as the cluster. Must be in the format: projects/{project}/topics/{topic}."]
+    pub fn set_topic(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.topic = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
+    #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterNotificationConfigElPubsubElFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNotificationConfigElPubsubElFilterEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNotificationConfigElPubsubEl {
-    type O = BlockAssignable<ContainerClusterNotificationConfigElPubsubEl>;
+impl terrars::ToListMappable for ContainerClusterNotificationConfigElPubsubEl {
+    type O = terrars::BlockAssignable<ContainerClusterNotificationConfigElPubsubEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11555,8 +12711,8 @@ impl ToListMappable for ContainerClusterNotificationConfigElPubsubEl {
 }
 
 pub struct BuildContainerClusterNotificationConfigElPubsubEl {
-    #[doc= "Whether or not the notification config is enabled"]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether or not the notification config is enabled"]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterNotificationConfigElPubsubEl {
@@ -11565,18 +12721,21 @@ impl BuildContainerClusterNotificationConfigElPubsubEl {
             enabled: self.enabled,
             topic: core::default::Default::default(),
             filter: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNotificationConfigElPubsubElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNotificationConfigElPubsubElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNotificationConfigElPubsubElRef {
+impl terrars::Ref for ContainerClusterNotificationConfigElPubsubElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterNotificationConfigElPubsubElRef {
         ContainerClusterNotificationConfigElPubsubElRef {
             shared: shared,
             base: base.to_string(),
@@ -11585,58 +12744,63 @@ impl Ref for ContainerClusterNotificationConfigElPubsubElRef {
 }
 
 impl ContainerClusterNotificationConfigElPubsubElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether or not the notification config is enabled"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether or not the notification config is enabled"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\nThe pubsub topic to push upgrade notifications to. Must be in the same project as the cluster. Must be in the format: projects/{project}/topics/{topic}."]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
+    #[doc =
+        "Get a reference to the value of field `topic` after provisioning.\nThe pubsub topic to push upgrade notifications to. Must be in the same project as the cluster. Must be in the format: projects/{project}/topics/{topic}."]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> ListRef<ContainerClusterNotificationConfigElPubsubElFilterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::ListRef<ContainerClusterNotificationConfigElPubsubElFilterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterNotificationConfigElDynamic {
-    pubsub: Option<DynamicBlock<ContainerClusterNotificationConfigElPubsubEl>>,
+    pubsub: std::option::Option<terrars::DynamicBlock<ContainerClusterNotificationConfigElPubsubEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterNotificationConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pubsub: Option<Vec<ContainerClusterNotificationConfigElPubsubEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pubsub: std::option::Option<std::vec::Vec<ContainerClusterNotificationConfigElPubsubEl>>,
     dynamic: ContainerClusterNotificationConfigElDynamic,
 }
 
 impl ContainerClusterNotificationConfigEl {
-    #[doc= "Set the field `pubsub`.\n"]
-    pub fn set_pubsub(mut self, v: impl Into<BlockAssignable<ContainerClusterNotificationConfigElPubsubEl>>) -> Self {
+    #[doc = "Set the field `pubsub`.\n"]
+    pub fn set_pubsub(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerClusterNotificationConfigElPubsubEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.pubsub = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.pubsub = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.pubsub = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pubsub = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterNotificationConfigEl {
-    type O = BlockAssignable<ContainerClusterNotificationConfigEl>;
+impl terrars::ToListMappable for ContainerClusterNotificationConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterNotificationConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11650,18 +12814,18 @@ impl BuildContainerClusterNotificationConfigEl {
     pub fn build(self) -> ContainerClusterNotificationConfigEl {
         ContainerClusterNotificationConfigEl {
             pubsub: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterNotificationConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterNotificationConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterNotificationConfigElRef {
+impl terrars::Ref for ContainerClusterNotificationConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterNotificationConfigElRef {
         ContainerClusterNotificationConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -11670,28 +12834,28 @@ impl Ref for ContainerClusterNotificationConfigElRef {
 }
 
 impl ContainerClusterNotificationConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `pubsub` after provisioning.\n"]
-    pub fn pubsub(&self) -> ListRef<ContainerClusterNotificationConfigElPubsubElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.pubsub", self.base))
+    #[doc = "Get a reference to the value of field `pubsub` after provisioning.\n"]
+    pub fn pubsub(&self) -> terrars::ListRef<ContainerClusterNotificationConfigElPubsubElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pubsub", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl { }
 
-impl ToListMappable for ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl {
-    type O = BlockAssignable<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>;
+impl terrars::ToListMappable for ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11700,8 +12864,8 @@ impl ToListMappable for ContainerClusterPrivateClusterConfigElMasterGlobalAccess
 }
 
 pub struct BuildContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl {
-    #[doc= "Whether the cluster master is accessible globally or not."]
-    pub enabled: PrimField<bool>,
+    #[doc = "Whether the cluster master is accessible globally or not."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl {
@@ -11711,12 +12875,15 @@ impl BuildContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl {
 }
 
 pub struct ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef {
+impl terrars::Ref for ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef {
         ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -11725,85 +12892,105 @@ impl Ref for ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef
 }
 
 impl ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhether the cluster master is accessible globally or not."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether the cluster master is accessible globally or not."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterPrivateClusterConfigElDynamic {
-    master_global_access_config: Option<
-        DynamicBlock<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>,
-    >,
+    master_global_access_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterPrivateClusterConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_private_endpoint: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_private_nodes: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_ipv4_cidr_block: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    private_endpoint_subnetwork: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_global_access_config: Option<Vec<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_private_endpoint: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_private_nodes: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_ipv4_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_endpoint_subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_global_access_config: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>>,
     dynamic: ContainerClusterPrivateClusterConfigElDynamic,
 }
 
 impl ContainerClusterPrivateClusterConfigEl {
-    #[doc= "Set the field `enable_private_endpoint`.\nWhen true, the cluster's private endpoint is used as the cluster endpoint and access through the public endpoint is disabled. When false, either endpoint can be used."]
-    pub fn set_enable_private_endpoint(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_private_endpoint = Some(v.into());
+    #[doc =
+        "Set the field `enable_private_endpoint`.\nWhen true, the cluster's private endpoint is used as the cluster endpoint and access through the public endpoint is disabled. When false, either endpoint can be used."]
+    pub fn set_enable_private_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_private_endpoint = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_private_nodes`.\nEnables the private cluster feature, creating a private endpoint on the cluster. In a private cluster, nodes only have RFC 1918 private addresses and communicate with the master's private endpoint via private networking."]
-    pub fn set_enable_private_nodes(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_private_nodes = Some(v.into());
+    #[doc =
+        "Set the field `enable_private_nodes`.\nEnables the private cluster feature, creating a private endpoint on the cluster. In a private cluster, nodes only have RFC 1918 private addresses and communicate with the master's private endpoint via private networking."]
+    pub fn set_enable_private_nodes(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_private_nodes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `master_ipv4_cidr_block`.\nThe IP range in CIDR notation to use for the hosted master network. This range will be used for assigning private IP addresses to the cluster master(s) and the ILB VIP. This range must not overlap with any other ranges in use within the cluster's network, and it must be a /28 subnet. See Private Cluster Limitations for more details. This field only applies to private clusters, when enable_private_nodes is true."]
-    pub fn set_master_ipv4_cidr_block(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.master_ipv4_cidr_block = Some(v.into());
+    #[doc =
+        "Set the field `master_ipv4_cidr_block`.\nThe IP range in CIDR notation to use for the hosted master network. This range will be used for assigning private IP addresses to the cluster master(s) and the ILB VIP. This range must not overlap with any other ranges in use within the cluster's network, and it must be a /28 subnet. See Private Cluster Limitations for more details. This field only applies to private clusters, when enable_private_nodes is true."]
+    pub fn set_master_ipv4_cidr_block(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.master_ipv4_cidr_block = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `private_endpoint_subnetwork`.\nSubnetwork in cluster's network where master's endpoint will be provisioned."]
-    pub fn set_private_endpoint_subnetwork(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.private_endpoint_subnetwork = Some(v.into());
+    #[doc =
+        "Set the field `private_endpoint_subnetwork`.\nSubnetwork in cluster's network where master's endpoint will be provisioned."]
+    pub fn set_private_endpoint_subnetwork(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.private_endpoint_subnetwork = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `master_global_access_config`.\n"]
+    #[doc = "Set the field `master_global_access_config`.\n"]
     pub fn set_master_global_access_config(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.master_global_access_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.master_global_access_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.master_global_access_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.master_global_access_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterPrivateClusterConfigEl {
-    type O = BlockAssignable<ContainerClusterPrivateClusterConfigEl>;
+impl terrars::ToListMappable for ContainerClusterPrivateClusterConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterPrivateClusterConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11821,18 +13008,18 @@ impl BuildContainerClusterPrivateClusterConfigEl {
             master_ipv4_cidr_block: core::default::Default::default(),
             private_endpoint_subnetwork: core::default::Default::default(),
             master_global_access_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterPrivateClusterConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterPrivateClusterConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterPrivateClusterConfigElRef {
+impl terrars::Ref for ContainerClusterPrivateClusterConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterPrivateClusterConfigElRef {
         ContainerClusterPrivateClusterConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -11841,65 +13028,72 @@ impl Ref for ContainerClusterPrivateClusterConfigElRef {
 }
 
 impl ContainerClusterPrivateClusterConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_private_endpoint` after provisioning.\nWhen true, the cluster's private endpoint is used as the cluster endpoint and access through the public endpoint is disabled. When false, either endpoint can be used."]
-    pub fn enable_private_endpoint(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_private_endpoint", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_private_endpoint` after provisioning.\nWhen true, the cluster's private endpoint is used as the cluster endpoint and access through the public endpoint is disabled. When false, either endpoint can be used."]
+    pub fn enable_private_endpoint(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_private_endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_private_nodes` after provisioning.\nEnables the private cluster feature, creating a private endpoint on the cluster. In a private cluster, nodes only have RFC 1918 private addresses and communicate with the master's private endpoint via private networking."]
-    pub fn enable_private_nodes(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_private_nodes", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_private_nodes` after provisioning.\nEnables the private cluster feature, creating a private endpoint on the cluster. In a private cluster, nodes only have RFC 1918 private addresses and communicate with the master's private endpoint via private networking."]
+    pub fn enable_private_nodes(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_private_nodes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `master_ipv4_cidr_block` after provisioning.\nThe IP range in CIDR notation to use for the hosted master network. This range will be used for assigning private IP addresses to the cluster master(s) and the ILB VIP. This range must not overlap with any other ranges in use within the cluster's network, and it must be a /28 subnet. See Private Cluster Limitations for more details. This field only applies to private clusters, when enable_private_nodes is true."]
-    pub fn master_ipv4_cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_ipv4_cidr_block", self.base))
+    #[doc =
+        "Get a reference to the value of field `master_ipv4_cidr_block` after provisioning.\nThe IP range in CIDR notation to use for the hosted master network. This range will be used for assigning private IP addresses to the cluster master(s) and the ILB VIP. This range must not overlap with any other ranges in use within the cluster's network, and it must be a /28 subnet. See Private Cluster Limitations for more details. This field only applies to private clusters, when enable_private_nodes is true."]
+    pub fn master_ipv4_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_ipv4_cidr_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `peering_name` after provisioning.\nThe name of the peering between this cluster and the Google owned VPC."]
-    pub fn peering_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.peering_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `peering_name` after provisioning.\nThe name of the peering between this cluster and the Google owned VPC."]
+    pub fn peering_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.peering_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `private_endpoint` after provisioning.\nThe internal IP address of this cluster's master endpoint."]
-    pub fn private_endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_endpoint", self.base))
+    #[doc =
+        "Get a reference to the value of field `private_endpoint` after provisioning.\nThe internal IP address of this cluster's master endpoint."]
+    pub fn private_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `private_endpoint_subnetwork` after provisioning.\nSubnetwork in cluster's network where master's endpoint will be provisioned."]
-    pub fn private_endpoint_subnetwork(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_endpoint_subnetwork", self.base))
+    #[doc =
+        "Get a reference to the value of field `private_endpoint_subnetwork` after provisioning.\nSubnetwork in cluster's network where master's endpoint will be provisioned."]
+    pub fn private_endpoint_subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_endpoint_subnetwork", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `public_endpoint` after provisioning.\nThe external IP address of this cluster's master endpoint."]
-    pub fn public_endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_endpoint", self.base))
+    #[doc =
+        "Get a reference to the value of field `public_endpoint` after provisioning.\nThe external IP address of this cluster's master endpoint."]
+    pub fn public_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `master_global_access_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `master_global_access_config` after provisioning.\n"]
     pub fn master_global_access_config(
         &self,
-    ) -> ListRef<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.master_global_access_config", self.base))
+    ) -> terrars::ListRef<ContainerClusterPrivateClusterConfigElMasterGlobalAccessConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_global_access_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterReleaseChannelEl {
-    channel: PrimField<String>,
+    channel: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterReleaseChannelEl { }
 
-impl ToListMappable for ContainerClusterReleaseChannelEl {
-    type O = BlockAssignable<ContainerClusterReleaseChannelEl>;
+impl terrars::ToListMappable for ContainerClusterReleaseChannelEl {
+    type O = terrars::BlockAssignable<ContainerClusterReleaseChannelEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11908,8 +13102,9 @@ impl ToListMappable for ContainerClusterReleaseChannelEl {
 }
 
 pub struct BuildContainerClusterReleaseChannelEl {
-    #[doc= "The selected release channel. Accepted values are:\n* UNSPECIFIED: Not set.\n* RAPID: Weekly upgrade cadence; Early testers and developers who requires new features.\n* REGULAR: Multiple per month upgrade cadence; Production users who need features not yet offered in the Stable channel.\n* STABLE: Every few months upgrade cadence; Production users who need stability above all else, and for whom frequent upgrades are too risky."]
-    pub channel: PrimField<String>,
+    #[doc =
+        "The selected release channel. Accepted values are:\n* UNSPECIFIED: Not set.\n* RAPID: Weekly upgrade cadence; Early testers and developers who requires new features.\n* REGULAR: Multiple per month upgrade cadence; Production users who need features not yet offered in the Stable channel.\n* STABLE: Every few months upgrade cadence; Production users who need stability above all else, and for whom frequent upgrades are too risky."]
+    pub channel: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterReleaseChannelEl {
@@ -11919,12 +13114,12 @@ impl BuildContainerClusterReleaseChannelEl {
 }
 
 pub struct ContainerClusterReleaseChannelElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterReleaseChannelElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterReleaseChannelElRef {
+impl terrars::Ref for ContainerClusterReleaseChannelElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterReleaseChannelElRef {
         ContainerClusterReleaseChannelElRef {
             shared: shared,
             base: base.to_string(),
@@ -11933,28 +13128,29 @@ impl Ref for ContainerClusterReleaseChannelElRef {
 }
 
 impl ContainerClusterReleaseChannelElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `channel` after provisioning.\nThe selected release channel. Accepted values are:\n* UNSPECIFIED: Not set.\n* RAPID: Weekly upgrade cadence; Early testers and developers who requires new features.\n* REGULAR: Multiple per month upgrade cadence; Production users who need features not yet offered in the Stable channel.\n* STABLE: Every few months upgrade cadence; Production users who need stability above all else, and for whom frequent upgrades are too risky."]
-    pub fn channel(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    #[doc =
+        "Get a reference to the value of field `channel` after provisioning.\nThe selected release channel. Accepted values are:\n* UNSPECIFIED: Not set.\n* RAPID: Weekly upgrade cadence; Early testers and developers who requires new features.\n* REGULAR: Multiple per month upgrade cadence; Production users who need features not yet offered in the Stable channel.\n* STABLE: Every few months upgrade cadence; Production users who need stability above all else, and for whom frequent upgrades are too risky."]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl {
-    dataset_id: PrimField<String>,
+    dataset_id: terrars::PrimField<std::string::String>,
 }
 
 impl ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl { }
 
-impl ToListMappable for ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl {
-    type O = BlockAssignable<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>;
+impl terrars::ToListMappable for ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl {
+    type O = terrars::BlockAssignable<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -11963,8 +13159,8 @@ impl ToListMappable for ContainerClusterResourceUsageExportConfigElBigqueryDesti
 }
 
 pub struct BuildContainerClusterResourceUsageExportConfigElBigqueryDestinationEl {
-    #[doc= "The ID of a BigQuery Dataset."]
-    pub dataset_id: PrimField<String>,
+    #[doc = "The ID of a BigQuery Dataset."]
+    pub dataset_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildContainerClusterResourceUsageExportConfigElBigqueryDestinationEl {
@@ -11974,12 +13170,15 @@ impl BuildContainerClusterResourceUsageExportConfigElBigqueryDestinationEl {
 }
 
 pub struct ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef {
+impl terrars::Ref for ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef {
         ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef {
             shared: shared,
             base: base.to_string(),
@@ -11988,67 +13187,83 @@ impl Ref for ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef
 }
 
 impl ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dataset_id` after provisioning.\nThe ID of a BigQuery Dataset."]
-    pub fn dataset_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
+    #[doc = "Get a reference to the value of field `dataset_id` after provisioning.\nThe ID of a BigQuery Dataset."]
+    pub fn dataset_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterResourceUsageExportConfigElDynamic {
-    bigquery_destination: Option<DynamicBlock<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>>,
+    bigquery_destination: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterResourceUsageExportConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_network_egress_metering: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_resource_consumption_metering: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bigquery_destination: Option<Vec<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_network_egress_metering: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_resource_consumption_metering: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bigquery_destination: std
+    ::option
+    ::Option<std::vec::Vec<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>>,
     dynamic: ContainerClusterResourceUsageExportConfigElDynamic,
 }
 
 impl ContainerClusterResourceUsageExportConfigEl {
-    #[doc= "Set the field `enable_network_egress_metering`.\nWhether to enable network egress metering for this cluster. If enabled, a daemonset will be created in the cluster to meter network egress traffic."]
-    pub fn set_enable_network_egress_metering(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_network_egress_metering = Some(v.into());
+    #[doc =
+        "Set the field `enable_network_egress_metering`.\nWhether to enable network egress metering for this cluster. If enabled, a daemonset will be created in the cluster to meter network egress traffic."]
+    pub fn set_enable_network_egress_metering(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_network_egress_metering = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_resource_consumption_metering`.\nWhether to enable resource consumption metering on this cluster. When enabled, a table will be created in the resource export BigQuery dataset to store resource consumption data. The resulting table can be joined with the resource usage table or with BigQuery billing export. Defaults to true."]
-    pub fn set_enable_resource_consumption_metering(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_resource_consumption_metering = Some(v.into());
+    #[doc =
+        "Set the field `enable_resource_consumption_metering`.\nWhether to enable resource consumption metering on this cluster. When enabled, a table will be created in the resource export BigQuery dataset to store resource consumption data. The resulting table can be joined with the resource usage table or with BigQuery billing export. Defaults to true."]
+    pub fn set_enable_resource_consumption_metering(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.enable_resource_consumption_metering = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `bigquery_destination`.\n"]
+    #[doc = "Set the field `bigquery_destination`.\n"]
     pub fn set_bigquery_destination(
         mut self,
-        v: impl Into<BlockAssignable<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ContainerClusterResourceUsageExportConfigElBigqueryDestinationEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.bigquery_destination = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.bigquery_destination = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.bigquery_destination = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.bigquery_destination = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ContainerClusterResourceUsageExportConfigEl {
-    type O = BlockAssignable<ContainerClusterResourceUsageExportConfigEl>;
+impl terrars::ToListMappable for ContainerClusterResourceUsageExportConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterResourceUsageExportConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -12064,18 +13279,21 @@ impl BuildContainerClusterResourceUsageExportConfigEl {
             enable_network_egress_metering: core::default::Default::default(),
             enable_resource_consumption_metering: core::default::Default::default(),
             bigquery_destination: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ContainerClusterResourceUsageExportConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterResourceUsageExportConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterResourceUsageExportConfigElRef {
+impl terrars::Ref for ContainerClusterResourceUsageExportConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerClusterResourceUsageExportConfigElRef {
         ContainerClusterResourceUsageExportConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -12084,53 +13302,62 @@ impl Ref for ContainerClusterResourceUsageExportConfigElRef {
 }
 
 impl ContainerClusterResourceUsageExportConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_network_egress_metering` after provisioning.\nWhether to enable network egress metering for this cluster. If enabled, a daemonset will be created in the cluster to meter network egress traffic."]
-    pub fn enable_network_egress_metering(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_network_egress_metering", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_network_egress_metering` after provisioning.\nWhether to enable network egress metering for this cluster. If enabled, a daemonset will be created in the cluster to meter network egress traffic."]
+    pub fn enable_network_egress_metering(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_network_egress_metering", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_resource_consumption_metering` after provisioning.\nWhether to enable resource consumption metering on this cluster. When enabled, a table will be created in the resource export BigQuery dataset to store resource consumption data. The resulting table can be joined with the resource usage table or with BigQuery billing export. Defaults to true."]
-    pub fn enable_resource_consumption_metering(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_resource_consumption_metering", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_resource_consumption_metering` after provisioning.\nWhether to enable resource consumption metering on this cluster. When enabled, a table will be created in the resource export BigQuery dataset to store resource consumption data. The resulting table can be joined with the resource usage table or with BigQuery billing export. Defaults to true."]
+    pub fn enable_resource_consumption_metering(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_resource_consumption_metering", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `bigquery_destination` after provisioning.\n"]
-    pub fn bigquery_destination(&self) -> ListRef<ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.bigquery_destination", self.base))
+    #[doc = "Get a reference to the value of field `bigquery_destination` after provisioning.\n"]
+    pub fn bigquery_destination(
+        &self,
+    ) -> terrars::ListRef<ContainerClusterResourceUsageExportConfigElBigqueryDestinationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_destination", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterSecurityPostureConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vulnerability_mode: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vulnerability_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterSecurityPostureConfigEl {
-    #[doc= "Set the field `mode`.\nSets the mode of the Kubernetes security posture API's off-cluster features. Available options include DISABLED and BASIC."]
-    pub fn set_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.mode = Some(v.into());
+    #[doc =
+        "Set the field `mode`.\nSets the mode of the Kubernetes security posture API's off-cluster features. Available options include DISABLED and BASIC."]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vulnerability_mode`.\nSets the mode of the Kubernetes security posture API's workload vulnerability scanning. Available options include VULNERABILITY_DISABLED, VULNERABILITY_BASIC and VULNERABILITY_ENTERPRISE."]
-    pub fn set_vulnerability_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.vulnerability_mode = Some(v.into());
+    #[doc =
+        "Set the field `vulnerability_mode`.\nSets the mode of the Kubernetes security posture API's workload vulnerability scanning. Available options include VULNERABILITY_DISABLED, VULNERABILITY_BASIC and VULNERABILITY_ENTERPRISE."]
+    pub fn set_vulnerability_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.vulnerability_mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterSecurityPostureConfigEl {
-    type O = BlockAssignable<ContainerClusterSecurityPostureConfigEl>;
+impl terrars::ToListMappable for ContainerClusterSecurityPostureConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterSecurityPostureConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -12150,12 +13377,12 @@ impl BuildContainerClusterSecurityPostureConfigEl {
 }
 
 pub struct ContainerClusterSecurityPostureConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterSecurityPostureConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterSecurityPostureConfigElRef {
+impl terrars::Ref for ContainerClusterSecurityPostureConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterSecurityPostureConfigElRef {
         ContainerClusterSecurityPostureConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -12164,33 +13391,35 @@ impl Ref for ContainerClusterSecurityPostureConfigElRef {
 }
 
 impl ContainerClusterSecurityPostureConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\nSets the mode of the Kubernetes security posture API's off-cluster features. Available options include DISABLED and BASIC."]
-    pub fn mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `mode` after provisioning.\nSets the mode of the Kubernetes security posture API's off-cluster features. Available options include DISABLED and BASIC."]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vulnerability_mode` after provisioning.\nSets the mode of the Kubernetes security posture API's workload vulnerability scanning. Available options include VULNERABILITY_DISABLED, VULNERABILITY_BASIC and VULNERABILITY_ENTERPRISE."]
-    pub fn vulnerability_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vulnerability_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `vulnerability_mode` after provisioning.\nSets the mode of the Kubernetes security posture API's workload vulnerability scanning. Available options include VULNERABILITY_DISABLED, VULNERABILITY_BASIC and VULNERABILITY_ENTERPRISE."]
+    pub fn vulnerability_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vulnerability_mode", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterServiceExternalIpsConfigEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterServiceExternalIpsConfigEl { }
 
-impl ToListMappable for ContainerClusterServiceExternalIpsConfigEl {
-    type O = BlockAssignable<ContainerClusterServiceExternalIpsConfigEl>;
+impl terrars::ToListMappable for ContainerClusterServiceExternalIpsConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterServiceExternalIpsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -12199,8 +13428,8 @@ impl ToListMappable for ContainerClusterServiceExternalIpsConfigEl {
 }
 
 pub struct BuildContainerClusterServiceExternalIpsConfigEl {
-    #[doc= "When enabled, services with exterenal ips specified will be allowed."]
-    pub enabled: PrimField<bool>,
+    #[doc = "When enabled, services with exterenal ips specified will be allowed."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterServiceExternalIpsConfigEl {
@@ -12210,12 +13439,12 @@ impl BuildContainerClusterServiceExternalIpsConfigEl {
 }
 
 pub struct ContainerClusterServiceExternalIpsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterServiceExternalIpsConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterServiceExternalIpsConfigElRef {
+impl terrars::Ref for ContainerClusterServiceExternalIpsConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterServiceExternalIpsConfigElRef {
         ContainerClusterServiceExternalIpsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -12224,59 +13453,60 @@ impl Ref for ContainerClusterServiceExternalIpsConfigElRef {
 }
 
 impl ContainerClusterServiceExternalIpsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nWhen enabled, services with exterenal ips specified will be allowed."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhen enabled, services with exterenal ips specified will be allowed."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    read: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.read = Some(v.into());
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterTimeoutsEl {
-    type O = BlockAssignable<ContainerClusterTimeoutsEl>;
+impl terrars::ToListMappable for ContainerClusterTimeoutsEl {
+    type O = terrars::BlockAssignable<ContainerClusterTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -12298,12 +13528,12 @@ impl BuildContainerClusterTimeoutsEl {
 }
 
 pub struct ContainerClusterTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterTimeoutsElRef {
+impl terrars::Ref for ContainerClusterTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterTimeoutsElRef {
         ContainerClusterTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -12312,43 +13542,43 @@ impl Ref for ContainerClusterTimeoutsElRef {
 }
 
 impl ContainerClusterTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `read` after provisioning.\n"]
-    pub fn read(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterVerticalPodAutoscalingEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl ContainerClusterVerticalPodAutoscalingEl { }
 
-impl ToListMappable for ContainerClusterVerticalPodAutoscalingEl {
-    type O = BlockAssignable<ContainerClusterVerticalPodAutoscalingEl>;
+impl terrars::ToListMappable for ContainerClusterVerticalPodAutoscalingEl {
+    type O = terrars::BlockAssignable<ContainerClusterVerticalPodAutoscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -12357,8 +13587,8 @@ impl ToListMappable for ContainerClusterVerticalPodAutoscalingEl {
 }
 
 pub struct BuildContainerClusterVerticalPodAutoscalingEl {
-    #[doc= "Enables vertical pod autoscaling."]
-    pub enabled: PrimField<bool>,
+    #[doc = "Enables vertical pod autoscaling."]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildContainerClusterVerticalPodAutoscalingEl {
@@ -12368,12 +13598,12 @@ impl BuildContainerClusterVerticalPodAutoscalingEl {
 }
 
 pub struct ContainerClusterVerticalPodAutoscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterVerticalPodAutoscalingElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterVerticalPodAutoscalingElRef {
+impl terrars::Ref for ContainerClusterVerticalPodAutoscalingElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterVerticalPodAutoscalingElRef {
         ContainerClusterVerticalPodAutoscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -12382,35 +13612,35 @@ impl Ref for ContainerClusterVerticalPodAutoscalingElRef {
 }
 
 impl ContainerClusterVerticalPodAutoscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\nEnables vertical pod autoscaling."]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\nEnables vertical pod autoscaling."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ContainerClusterWorkloadIdentityConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    workload_pool: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workload_pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ContainerClusterWorkloadIdentityConfigEl {
-    #[doc= "Set the field `workload_pool`.\nThe workload pool to attach all Kubernetes service accounts to."]
-    pub fn set_workload_pool(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.workload_pool = Some(v.into());
+    #[doc = "Set the field `workload_pool`.\nThe workload pool to attach all Kubernetes service accounts to."]
+    pub fn set_workload_pool(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.workload_pool = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ContainerClusterWorkloadIdentityConfigEl {
-    type O = BlockAssignable<ContainerClusterWorkloadIdentityConfigEl>;
+impl terrars::ToListMappable for ContainerClusterWorkloadIdentityConfigEl {
+    type O = terrars::BlockAssignable<ContainerClusterWorkloadIdentityConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -12427,12 +13657,12 @@ impl BuildContainerClusterWorkloadIdentityConfigEl {
 }
 
 pub struct ContainerClusterWorkloadIdentityConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ContainerClusterWorkloadIdentityConfigElRef {
-    fn new(shared: StackShared, base: String) -> ContainerClusterWorkloadIdentityConfigElRef {
+impl terrars::Ref for ContainerClusterWorkloadIdentityConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerClusterWorkloadIdentityConfigElRef {
         ContainerClusterWorkloadIdentityConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -12441,49 +13671,58 @@ impl Ref for ContainerClusterWorkloadIdentityConfigElRef {
 }
 
 impl ContainerClusterWorkloadIdentityConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `workload_pool` after provisioning.\nThe workload pool to attach all Kubernetes service accounts to."]
-    pub fn workload_pool(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.workload_pool", self.base))
+    #[doc =
+        "Get a reference to the value of field `workload_pool` after provisioning.\nThe workload pool to attach all Kubernetes service accounts to."]
+    pub fn workload_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workload_pool", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ContainerClusterDynamic {
-    addons_config: Option<DynamicBlock<ContainerClusterAddonsConfigEl>>,
-    authenticator_groups_config: Option<DynamicBlock<ContainerClusterAuthenticatorGroupsConfigEl>>,
-    binary_authorization: Option<DynamicBlock<ContainerClusterBinaryAuthorizationEl>>,
-    cluster_autoscaling: Option<DynamicBlock<ContainerClusterClusterAutoscalingEl>>,
-    confidential_nodes: Option<DynamicBlock<ContainerClusterConfidentialNodesEl>>,
-    cost_management_config: Option<DynamicBlock<ContainerClusterCostManagementConfigEl>>,
-    database_encryption: Option<DynamicBlock<ContainerClusterDatabaseEncryptionEl>>,
-    default_snat_status: Option<DynamicBlock<ContainerClusterDefaultSnatStatusEl>>,
-    dns_config: Option<DynamicBlock<ContainerClusterDnsConfigEl>>,
-    enable_k8s_beta_apis: Option<DynamicBlock<ContainerClusterEnableK8sBetaApisEl>>,
-    fleet: Option<DynamicBlock<ContainerClusterFleetEl>>,
-    gateway_api_config: Option<DynamicBlock<ContainerClusterGatewayApiConfigEl>>,
-    identity_service_config: Option<DynamicBlock<ContainerClusterIdentityServiceConfigEl>>,
-    ip_allocation_policy: Option<DynamicBlock<ContainerClusterIpAllocationPolicyEl>>,
-    logging_config: Option<DynamicBlock<ContainerClusterLoggingConfigEl>>,
-    maintenance_policy: Option<DynamicBlock<ContainerClusterMaintenancePolicyEl>>,
-    master_auth: Option<DynamicBlock<ContainerClusterMasterAuthEl>>,
-    master_authorized_networks_config: Option<DynamicBlock<ContainerClusterMasterAuthorizedNetworksConfigEl>>,
-    mesh_certificates: Option<DynamicBlock<ContainerClusterMeshCertificatesEl>>,
-    monitoring_config: Option<DynamicBlock<ContainerClusterMonitoringConfigEl>>,
-    network_policy: Option<DynamicBlock<ContainerClusterNetworkPolicyEl>>,
-    node_config: Option<DynamicBlock<ContainerClusterNodeConfigEl>>,
-    node_pool: Option<DynamicBlock<ContainerClusterNodePoolEl>>,
-    node_pool_auto_config: Option<DynamicBlock<ContainerClusterNodePoolAutoConfigEl>>,
-    node_pool_defaults: Option<DynamicBlock<ContainerClusterNodePoolDefaultsEl>>,
-    notification_config: Option<DynamicBlock<ContainerClusterNotificationConfigEl>>,
-    private_cluster_config: Option<DynamicBlock<ContainerClusterPrivateClusterConfigEl>>,
-    release_channel: Option<DynamicBlock<ContainerClusterReleaseChannelEl>>,
-    resource_usage_export_config: Option<DynamicBlock<ContainerClusterResourceUsageExportConfigEl>>,
-    security_posture_config: Option<DynamicBlock<ContainerClusterSecurityPostureConfigEl>>,
-    service_external_ips_config: Option<DynamicBlock<ContainerClusterServiceExternalIpsConfigEl>>,
-    vertical_pod_autoscaling: Option<DynamicBlock<ContainerClusterVerticalPodAutoscalingEl>>,
-    workload_identity_config: Option<DynamicBlock<ContainerClusterWorkloadIdentityConfigEl>>,
+    addons_config: std::option::Option<terrars::DynamicBlock<ContainerClusterAddonsConfigEl>>,
+    authenticator_groups_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterAuthenticatorGroupsConfigEl>>,
+    binary_authorization: std::option::Option<terrars::DynamicBlock<ContainerClusterBinaryAuthorizationEl>>,
+    cluster_autoscaling: std::option::Option<terrars::DynamicBlock<ContainerClusterClusterAutoscalingEl>>,
+    confidential_nodes: std::option::Option<terrars::DynamicBlock<ContainerClusterConfidentialNodesEl>>,
+    cost_management_config: std::option::Option<terrars::DynamicBlock<ContainerClusterCostManagementConfigEl>>,
+    database_encryption: std::option::Option<terrars::DynamicBlock<ContainerClusterDatabaseEncryptionEl>>,
+    default_snat_status: std::option::Option<terrars::DynamicBlock<ContainerClusterDefaultSnatStatusEl>>,
+    dns_config: std::option::Option<terrars::DynamicBlock<ContainerClusterDnsConfigEl>>,
+    enable_k8s_beta_apis: std::option::Option<terrars::DynamicBlock<ContainerClusterEnableK8sBetaApisEl>>,
+    fleet: std::option::Option<terrars::DynamicBlock<ContainerClusterFleetEl>>,
+    gateway_api_config: std::option::Option<terrars::DynamicBlock<ContainerClusterGatewayApiConfigEl>>,
+    identity_service_config: std::option::Option<terrars::DynamicBlock<ContainerClusterIdentityServiceConfigEl>>,
+    ip_allocation_policy: std::option::Option<terrars::DynamicBlock<ContainerClusterIpAllocationPolicyEl>>,
+    logging_config: std::option::Option<terrars::DynamicBlock<ContainerClusterLoggingConfigEl>>,
+    maintenance_policy: std::option::Option<terrars::DynamicBlock<ContainerClusterMaintenancePolicyEl>>,
+    master_auth: std::option::Option<terrars::DynamicBlock<ContainerClusterMasterAuthEl>>,
+    master_authorized_networks_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterMasterAuthorizedNetworksConfigEl>>,
+    mesh_certificates: std::option::Option<terrars::DynamicBlock<ContainerClusterMeshCertificatesEl>>,
+    monitoring_config: std::option::Option<terrars::DynamicBlock<ContainerClusterMonitoringConfigEl>>,
+    network_policy: std::option::Option<terrars::DynamicBlock<ContainerClusterNetworkPolicyEl>>,
+    node_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodeConfigEl>>,
+    node_pool: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolEl>>,
+    node_pool_auto_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolAutoConfigEl>>,
+    node_pool_defaults: std::option::Option<terrars::DynamicBlock<ContainerClusterNodePoolDefaultsEl>>,
+    notification_config: std::option::Option<terrars::DynamicBlock<ContainerClusterNotificationConfigEl>>,
+    private_cluster_config: std::option::Option<terrars::DynamicBlock<ContainerClusterPrivateClusterConfigEl>>,
+    release_channel: std::option::Option<terrars::DynamicBlock<ContainerClusterReleaseChannelEl>>,
+    resource_usage_export_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterResourceUsageExportConfigEl>>,
+    security_posture_config: std::option::Option<terrars::DynamicBlock<ContainerClusterSecurityPostureConfigEl>>,
+    service_external_ips_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerClusterServiceExternalIpsConfigEl>>,
+    vertical_pod_autoscaling: std::option::Option<terrars::DynamicBlock<ContainerClusterVerticalPodAutoscalingEl>>,
+    workload_identity_config: std::option::Option<terrars::DynamicBlock<ContainerClusterWorkloadIdentityConfigEl>>,
 }

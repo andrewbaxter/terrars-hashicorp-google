@@ -1,57 +1,61 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct LoggingLinkedDatasetData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    bucket: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    link_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parent: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bigquery_dataset: Option<Vec<LoggingLinkedDatasetBigqueryDatasetEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<LoggingLinkedDatasetTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    link_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parent: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bigquery_dataset: std::option::Option<std::vec::Vec<LoggingLinkedDatasetBigqueryDatasetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<LoggingLinkedDatasetTimeoutsEl>,
     dynamic: LoggingLinkedDatasetDynamic,
 }
 
 struct LoggingLinkedDataset_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<LoggingLinkedDatasetData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<LoggingLinkedDatasetData>,
 }
 
 #[derive(Clone)]
-pub struct LoggingLinkedDataset(Rc<LoggingLinkedDataset_>);
+pub struct LoggingLinkedDataset(std::rc::Rc<LoggingLinkedDataset_>);
 
 impl LoggingLinkedDataset {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -66,163 +70,205 @@ impl LoggingLinkedDataset {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\nDescribes this link. The maximum length of the description is 8000 characters."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `location`.\nThe location of the linked dataset."]
-    pub fn set_location(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().location = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `parent`.\nThe parent of the linked dataset."]
-    pub fn set_parent(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().parent = Some(v.into());
+    #[doc =
+        "Set the field `description`.\nDescribes this link. The maximum length of the description is 8000 characters."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `bigquery_dataset`.\n"]
-    pub fn set_bigquery_dataset(self, v: impl Into<BlockAssignable<LoggingLinkedDatasetBigqueryDatasetEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `location`.\nThe location of the linked dataset."]
+    pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `parent`.\nThe parent of the linked dataset."]
+    pub fn set_parent(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().parent = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bigquery_dataset`.\n"]
+    pub fn set_bigquery_dataset(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingLinkedDatasetBigqueryDatasetEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().bigquery_dataset = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().bigquery_dataset = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.bigquery_dataset = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.bigquery_dataset = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<LoggingLinkedDatasetTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<LoggingLinkedDatasetTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\nThe bucket to which the linked dataset is attached."]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `bucket` after provisioning.\nThe bucket to which the linked dataset is attached."]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The creation timestamp of the link. A timestamp in RFC3339 UTC \"Zulu\" format,\nwith nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\"\nand \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The creation timestamp of the link. A timestamp in RFC3339 UTC \"Zulu\" format,\nwith nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\"\nand \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nDescribes this link. The maximum length of the description is 8000 characters."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nDescribes this link. The maximum length of the description is 8000 characters."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_state` after provisioning.\nOutput only. The linked dataset lifecycle state."]
-    pub fn lifecycle_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `lifecycle_state` after provisioning.\nOutput only. The linked dataset lifecycle state."]
+    pub fn lifecycle_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `link_id` after provisioning.\nThe id of the linked dataset."]
-    pub fn link_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.link_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `link_id` after provisioning.\nThe id of the linked dataset."]
+    pub fn link_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.link_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of the linked dataset."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location of the linked dataset."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name of the linked dataset. The name can have up to 100 characters. A valid link id\n(at the end of the link name) must only have alphanumeric characters and underscores within it."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe resource name of the linked dataset. The name can have up to 100 characters. A valid link id\n(at the end of the link name) must only have alphanumeric characters and underscores within it."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `parent` after provisioning.\nThe parent of the linked dataset."]
-    pub fn parent(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `parent` after provisioning.\nThe parent of the linked dataset."]
+    pub fn parent(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `bigquery_dataset` after provisioning.\n"]
-    pub fn bigquery_dataset(&self) -> ListRef<LoggingLinkedDatasetBigqueryDatasetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.bigquery_dataset", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bigquery_dataset` after provisioning.\n"]
+    pub fn bigquery_dataset(&self) -> terrars::ListRef<LoggingLinkedDatasetBigqueryDatasetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_dataset", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> LoggingLinkedDatasetTimeoutsElRef {
         LoggingLinkedDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for LoggingLinkedDataset {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for LoggingLinkedDataset {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for LoggingLinkedDataset { }
+impl terrars::Resource for LoggingLinkedDataset { }
 
-impl ToListMappable for LoggingLinkedDataset {
-    type O = ListRef<LoggingLinkedDatasetRef>;
+impl terrars::ToListMappable for LoggingLinkedDataset {
+    type O = terrars::ListRef<LoggingLinkedDatasetRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for LoggingLinkedDataset_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for LoggingLinkedDataset_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_logging_linked_dataset".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -232,23 +278,24 @@ impl Resource_ for LoggingLinkedDataset_ {
 }
 
 pub struct BuildLoggingLinkedDataset {
-    pub tf_id: String,
-    #[doc= "The bucket to which the linked dataset is attached."]
-    pub bucket: PrimField<String>,
-    #[doc= "The id of the linked dataset."]
-    pub link_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The bucket to which the linked dataset is attached."]
+    pub bucket: terrars::PrimField<std::string::String>,
+    #[doc = "The id of the linked dataset."]
+    pub link_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildLoggingLinkedDataset {
-    pub fn build(self, stack: &mut Stack) -> LoggingLinkedDataset {
-        let out = LoggingLinkedDataset(Rc::new(LoggingLinkedDataset_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> LoggingLinkedDataset {
+        let out = LoggingLinkedDataset(std::rc::Rc::new(LoggingLinkedDataset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(LoggingLinkedDatasetData {
+            data: std::cell::RefCell::new(LoggingLinkedDatasetData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 bucket: self.bucket,
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -257,7 +304,7 @@ impl BuildLoggingLinkedDataset {
                 parent: core::default::Default::default(),
                 bigquery_dataset: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -266,12 +313,12 @@ impl BuildLoggingLinkedDataset {
 }
 
 pub struct LoggingLinkedDatasetRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for LoggingLinkedDatasetRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for LoggingLinkedDatasetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -280,65 +327,70 @@ impl Ref for LoggingLinkedDatasetRef {
 }
 
 impl LoggingLinkedDatasetRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\nThe bucket to which the linked dataset is attached."]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `bucket` after provisioning.\nThe bucket to which the linked dataset is attached."]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The creation timestamp of the link. A timestamp in RFC3339 UTC \"Zulu\" format,\nwith nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\"\nand \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The creation timestamp of the link. A timestamp in RFC3339 UTC \"Zulu\" format,\nwith nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\"\nand \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nDescribes this link. The maximum length of the description is 8000 characters."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nDescribes this link. The maximum length of the description is 8000 characters."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_state` after provisioning.\nOutput only. The linked dataset lifecycle state."]
-    pub fn lifecycle_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `lifecycle_state` after provisioning.\nOutput only. The linked dataset lifecycle state."]
+    pub fn lifecycle_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `link_id` after provisioning.\nThe id of the linked dataset."]
-    pub fn link_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.link_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `link_id` after provisioning.\nThe id of the linked dataset."]
+    pub fn link_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.link_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of the linked dataset."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location of the linked dataset."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name of the linked dataset. The name can have up to 100 characters. A valid link id\n(at the end of the link name) must only have alphanumeric characters and underscores within it."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe resource name of the linked dataset. The name can have up to 100 characters. A valid link id\n(at the end of the link name) must only have alphanumeric characters and underscores within it."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `parent` after provisioning.\nThe parent of the linked dataset."]
-    pub fn parent(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `parent` after provisioning.\nThe parent of the linked dataset."]
+    pub fn parent(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `bigquery_dataset` after provisioning.\n"]
-    pub fn bigquery_dataset(&self) -> ListRef<LoggingLinkedDatasetBigqueryDatasetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.bigquery_dataset", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bigquery_dataset` after provisioning.\n"]
+    pub fn bigquery_dataset(&self) -> terrars::ListRef<LoggingLinkedDatasetBigqueryDatasetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_dataset", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> LoggingLinkedDatasetTimeoutsElRef {
         LoggingLinkedDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -349,11 +401,11 @@ pub struct LoggingLinkedDatasetBigqueryDatasetEl {}
 
 impl LoggingLinkedDatasetBigqueryDatasetEl { }
 
-impl ToListMappable for LoggingLinkedDatasetBigqueryDatasetEl {
-    type O = BlockAssignable<LoggingLinkedDatasetBigqueryDatasetEl>;
+impl terrars::ToListMappable for LoggingLinkedDatasetBigqueryDatasetEl {
+    type O = terrars::BlockAssignable<LoggingLinkedDatasetBigqueryDatasetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -370,12 +422,12 @@ impl BuildLoggingLinkedDatasetBigqueryDatasetEl {
 }
 
 pub struct LoggingLinkedDatasetBigqueryDatasetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for LoggingLinkedDatasetBigqueryDatasetElRef {
-    fn new(shared: StackShared, base: String) -> LoggingLinkedDatasetBigqueryDatasetElRef {
+impl terrars::Ref for LoggingLinkedDatasetBigqueryDatasetElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingLinkedDatasetBigqueryDatasetElRef {
         LoggingLinkedDatasetBigqueryDatasetElRef {
             shared: shared,
             base: base.to_string(),
@@ -384,43 +436,44 @@ impl Ref for LoggingLinkedDatasetBigqueryDatasetElRef {
 }
 
 impl LoggingLinkedDatasetBigqueryDatasetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dataset_id` after provisioning.\nOutput only. The full resource name of the BigQuery dataset. The DATASET_ID will match the ID\nof the link, so the link must match the naming restrictions of BigQuery datasets\n(alphanumeric characters and underscores only). The dataset will have a resource path of\n\"bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET_ID]\""]
-    pub fn dataset_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
+    #[doc =
+        "Get a reference to the value of field `dataset_id` after provisioning.\nOutput only. The full resource name of the BigQuery dataset. The DATASET_ID will match the ID\nof the link, so the link must match the naming restrictions of BigQuery datasets\n(alphanumeric characters and underscores only). The dataset will have a resource path of\n\"bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET_ID]\""]
+    pub fn dataset_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct LoggingLinkedDatasetTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl LoggingLinkedDatasetTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for LoggingLinkedDatasetTimeoutsEl {
-    type O = BlockAssignable<LoggingLinkedDatasetTimeoutsEl>;
+impl terrars::ToListMappable for LoggingLinkedDatasetTimeoutsEl {
+    type O = terrars::BlockAssignable<LoggingLinkedDatasetTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -440,12 +493,12 @@ impl BuildLoggingLinkedDatasetTimeoutsEl {
 }
 
 pub struct LoggingLinkedDatasetTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for LoggingLinkedDatasetTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> LoggingLinkedDatasetTimeoutsElRef {
+impl terrars::Ref for LoggingLinkedDatasetTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingLinkedDatasetTimeoutsElRef {
         LoggingLinkedDatasetTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -454,22 +507,22 @@ impl Ref for LoggingLinkedDatasetTimeoutsElRef {
 }
 
 impl LoggingLinkedDatasetTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct LoggingLinkedDatasetDynamic {
-    bigquery_dataset: Option<DynamicBlock<LoggingLinkedDatasetBigqueryDatasetEl>>,
+    bigquery_dataset: std::option::Option<terrars::DynamicBlock<LoggingLinkedDatasetBigqueryDatasetEl>>,
 }

@@ -1,179 +1,222 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataPubsubSubscriptionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataPubsubSubscription_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataPubsubSubscriptionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataPubsubSubscriptionData>,
 }
 
 #[derive(Clone)]
-pub struct DataPubsubSubscription(Rc<DataPubsubSubscription_>);
+pub struct DataPubsubSubscription(std::rc::Rc<DataPubsubSubscription_>);
 
 impl DataPubsubSubscription {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `ack_deadline_seconds` after provisioning.\nThis value is the maximum time after a subscriber receives a message\nbefore the subscriber should acknowledge the message. After message\ndelivery but before the ack deadline expires and before the message is\nacknowledged, it is an outstanding message and will not be delivered\nagain during that time (on a best-effort basis).\n\nFor pull subscriptions, this value is used as the initial value for\nthe ack deadline. To override this value for a given message, call\nsubscriptions.modifyAckDeadline with the corresponding ackId if using\npull. The minimum custom deadline you can specify is 10 seconds. The\nmaximum custom deadline you can specify is 600 seconds (10 minutes).\nIf this parameter is 0, a default value of 10 seconds is used.\n\nFor push delivery, this value is also used to set the request timeout\nfor the call to the push endpoint.\n\nIf the subscriber never acknowledges the message, the Pub/Sub system\nwill eventually redeliver the message."]
-    pub fn ack_deadline_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ack_deadline_seconds", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `bigquery_config` after provisioning.\nIf delivery to BigQuery is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
-    pub fn bigquery_config(&self) -> ListRef<DataPubsubSubscriptionBigqueryConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.bigquery_config", self.extract_ref()))
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `cloud_storage_config` after provisioning.\nIf delivery to Cloud Storage is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
-    pub fn cloud_storage_config(&self) -> ListRef<DataPubsubSubscriptionCloudStorageConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_storage_config", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `ack_deadline_seconds` after provisioning.\nThis value is the maximum time after a subscriber receives a message\nbefore the subscriber should acknowledge the message. After message\ndelivery but before the ack deadline expires and before the message is\nacknowledged, it is an outstanding message and will not be delivered\nagain during that time (on a best-effort basis).\n\nFor pull subscriptions, this value is used as the initial value for\nthe ack deadline. To override this value for a given message, call\nsubscriptions.modifyAckDeadline with the corresponding ackId if using\npull. The minimum custom deadline you can specify is 10 seconds. The\nmaximum custom deadline you can specify is 600 seconds (10 minutes).\nIf this parameter is 0, a default value of 10 seconds is used.\n\nFor push delivery, this value is also used to set the request timeout\nfor the call to the push endpoint.\n\nIf the subscriber never acknowledges the message, the Pub/Sub system\nwill eventually redeliver the message."]
+    pub fn ack_deadline_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ack_deadline_seconds", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `dead_letter_policy` after provisioning.\nA policy that specifies the conditions for dead lettering messages in\nthis subscription. If dead_letter_policy is not set, dead lettering\nis disabled.\n\nThe Cloud Pub/Sub service account associated with this subscription's\nparent project (i.e.,\nservice-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must have\npermission to Acknowledge() messages on this subscription."]
-    pub fn dead_letter_policy(&self) -> ListRef<DataPubsubSubscriptionDeadLetterPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dead_letter_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `bigquery_config` after provisioning.\nIf delivery to BigQuery is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
+    pub fn bigquery_config(&self) -> terrars::ListRef<DataPubsubSubscriptionBigqueryConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `cloud_storage_config` after provisioning.\nIf delivery to Cloud Storage is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
+    pub fn cloud_storage_config(&self) -> terrars::ListRef<DataPubsubSubscriptionCloudStorageConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_exactly_once_delivery` after provisioning.\nIf 'true', Pub/Sub provides the following guarantees for the delivery\nof a message with a given value of messageId on this Subscriptions':\n\n- The message sent to a subscriber is guaranteed not to be resent before the message's acknowledgement deadline expires.\n\n- An acknowledged message will not be resent to a subscriber.\n\nNote that subscribers may still receive multiple copies of a message when 'enable_exactly_once_delivery'\nis true if the message was published multiple times by a publisher client. These copies are considered distinct by Pub/Sub and have distinct messageId values"]
-    pub fn enable_exactly_once_delivery(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_exactly_once_delivery", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `dead_letter_policy` after provisioning.\nA policy that specifies the conditions for dead lettering messages in\nthis subscription. If dead_letter_policy is not set, dead lettering\nis disabled.\n\nThe Cloud Pub/Sub service account associated with this subscription's\nparent project (i.e.,\nservice-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must have\npermission to Acknowledge() messages on this subscription."]
+    pub fn dead_letter_policy(&self) -> terrars::ListRef<DataPubsubSubscriptionDeadLetterPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dead_letter_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_message_ordering` after provisioning.\nIf 'true', messages published with the same orderingKey in PubsubMessage will be delivered to\nthe subscribers in the order in which they are received by the Pub/Sub system. Otherwise, they\nmay be delivered in any order."]
-    pub fn enable_message_ordering(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_message_ordering", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `expiration_policy` after provisioning.\nA policy that specifies the conditions for this subscription's expiration.\nA subscription is considered active as long as any connected subscriber\nis successfully consuming messages from the subscription or is issuing\noperations on the subscription. If expirationPolicy is not set, a default\npolicy with ttl of 31 days will be used.  If it is set but ttl is \"\", the\nresource never expires.  The minimum allowed value for expirationPolicy.ttl\nis 1 day."]
-    pub fn expiration_policy(&self) -> ListRef<DataPubsubSubscriptionExpirationPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.expiration_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_exactly_once_delivery` after provisioning.\nIf 'true', Pub/Sub provides the following guarantees for the delivery\nof a message with a given value of messageId on this Subscriptions':\n\n- The message sent to a subscriber is guaranteed not to be resent before the message's acknowledgement deadline expires.\n\n- An acknowledged message will not be resent to a subscriber.\n\nNote that subscribers may still receive multiple copies of a message when 'enable_exactly_once_delivery'\nis true if the message was published multiple times by a publisher client. These copies are considered distinct by Pub/Sub and have distinct messageId values"]
+    pub fn enable_exactly_once_delivery(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_exactly_once_delivery", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filter` after provisioning.\nThe subscription only delivers the messages that match the filter.\nPub/Sub automatically acknowledges the messages that don't match the filter. You can filter messages\nby their attributes. The maximum length of a filter is 256 bytes. After creating the subscription,\nyou can't modify the filter."]
-    pub fn filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_message_ordering` after provisioning.\nIf 'true', messages published with the same orderingKey in PubsubMessage will be delivered to\nthe subscribers in the order in which they are received by the Pub/Sub system. Otherwise, they\nmay be delivered in any order."]
+    pub fn enable_message_ordering(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_message_ordering", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `expiration_policy` after provisioning.\nA policy that specifies the conditions for this subscription's expiration.\nA subscription is considered active as long as any connected subscriber\nis successfully consuming messages from the subscription or is issuing\noperations on the subscription. If expirationPolicy is not set, a default\npolicy with ttl of 31 days will be used.  If it is set but ttl is \"\", the\nresource never expires.  The minimum allowed value for expirationPolicy.ttl\nis 1 day."]
+    pub fn expiration_policy(&self) -> terrars::ListRef<DataPubsubSubscriptionExpirationPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.expiration_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to this Subscription.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `filter` after provisioning.\nThe subscription only delivers the messages that match the filter.\nPub/Sub automatically acknowledges the messages that don't match the filter. You can filter messages\nby their attributes. The maximum length of a filter is 256 bytes. After creating the subscription,\nyou can't modify the filter."]
+    pub fn filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `message_retention_duration` after provisioning.\nHow long to retain unacknowledged messages in the subscription's\nbacklog, from the moment a message is published. If\nretain_acked_messages is true, then this also configures the retention\nof acknowledged messages, and thus configures how far back in time a\nsubscriptions.seek can be done. Defaults to 7 days. Cannot be more\nthan 7 days ('\"604800s\"') or less than 10 minutes ('\"600s\"').\n\nA duration in seconds with up to nine fractional digits, terminated\nby 's'. Example: '\"600.5s\"'."]
-    pub fn message_retention_duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_retention_duration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the subscription."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to this Subscription.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `message_retention_duration` after provisioning.\nHow long to retain unacknowledged messages in the subscription's\nbacklog, from the moment a message is published. If\nretain_acked_messages is true, then this also configures the retention\nof acknowledged messages, and thus configures how far back in time a\nsubscriptions.seek can be done. Defaults to 7 days. Cannot be more\nthan 7 days ('\"604800s\"') or less than 10 minutes ('\"600s\"').\n\nA duration in seconds with up to nine fractional digits, terminated\nby 's'. Example: '\"600.5s\"'."]
+    pub fn message_retention_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_retention_duration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `push_config` after provisioning.\nIf push delivery is used with this subscription, this field is used to\nconfigure it. An empty pushConfig signifies that the subscriber will\npull and ack messages using API methods."]
-    pub fn push_config(&self) -> ListRef<DataPubsubSubscriptionPushConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.push_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nName of the subscription."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retain_acked_messages` after provisioning.\nIndicates whether to retain acknowledged messages. If 'true', then\nmessages are not expunged from the subscription's backlog, even if\nthey are acknowledged, until they fall out of the\nmessageRetentionDuration window."]
-    pub fn retain_acked_messages(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.retain_acked_messages", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retry_policy` after provisioning.\nA policy that specifies how Pub/Sub retries message delivery for this subscription.\n\nIf not set, the default retry policy is applied. This generally implies that messages will be retried as soon as possible for healthy subscribers.\nRetryPolicy will be triggered on NACKs or acknowledgement deadline exceeded events for a given message"]
-    pub fn retry_policy(&self) -> ListRef<DataPubsubSubscriptionRetryPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `push_config` after provisioning.\nIf push delivery is used with this subscription, this field is used to\nconfigure it. An empty pushConfig signifies that the subscriber will\npull and ack messages using API methods."]
+    pub fn push_config(&self) -> terrars::ListRef<DataPubsubSubscriptionPushConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.push_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `retain_acked_messages` after provisioning.\nIndicates whether to retain acknowledged messages. If 'true', then\nmessages are not expunged from the subscription's backlog, even if\nthey are acknowledged, until they fall out of the\nmessageRetentionDuration window."]
+    pub fn retain_acked_messages(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retain_acked_messages", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\nA reference to a Topic resource."]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `retry_policy` after provisioning.\nA policy that specifies how Pub/Sub retries message delivery for this subscription.\n\nIf not set, the default retry policy is applied. This generally implies that messages will be retried as soon as possible for healthy subscribers.\nRetryPolicy will be triggered on NACKs or acknowledgement deadline exceeded events for a given message"]
+    pub fn retry_policy(&self) -> terrars::ListRef<DataPubsubSubscriptionRetryPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `topic` after provisioning.\nA reference to a Topic resource."]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }
 }
 
-impl Referable for DataPubsubSubscription {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataPubsubSubscription {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataPubsubSubscription { }
+impl terrars::Datasource for DataPubsubSubscription { }
 
-impl ToListMappable for DataPubsubSubscription {
-    type O = ListRef<DataPubsubSubscriptionRef>;
+impl terrars::ToListMappable for DataPubsubSubscription {
+    type O = terrars::ListRef<DataPubsubSubscriptionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataPubsubSubscription_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataPubsubSubscription_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_pubsub_subscription".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -183,20 +226,21 @@ impl Datasource_ for DataPubsubSubscription_ {
 }
 
 pub struct BuildDataPubsubSubscription {
-    pub tf_id: String,
-    #[doc= "Name of the subscription."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "Name of the subscription."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataPubsubSubscription {
-    pub fn build(self, stack: &mut Stack) -> DataPubsubSubscription {
-        let out = DataPubsubSubscription(Rc::new(DataPubsubSubscription_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataPubsubSubscription {
+        let out = DataPubsubSubscription(std::rc::Rc::new(DataPubsubSubscription_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataPubsubSubscriptionData {
+            data: std::cell::RefCell::new(DataPubsubSubscriptionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -208,12 +252,12 @@ impl BuildDataPubsubSubscription {
 }
 
 pub struct DataPubsubSubscriptionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataPubsubSubscriptionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -222,153 +266,168 @@ impl Ref for DataPubsubSubscriptionRef {
 }
 
 impl DataPubsubSubscriptionRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `ack_deadline_seconds` after provisioning.\nThis value is the maximum time after a subscriber receives a message\nbefore the subscriber should acknowledge the message. After message\ndelivery but before the ack deadline expires and before the message is\nacknowledged, it is an outstanding message and will not be delivered\nagain during that time (on a best-effort basis).\n\nFor pull subscriptions, this value is used as the initial value for\nthe ack deadline. To override this value for a given message, call\nsubscriptions.modifyAckDeadline with the corresponding ackId if using\npull. The minimum custom deadline you can specify is 10 seconds. The\nmaximum custom deadline you can specify is 600 seconds (10 minutes).\nIf this parameter is 0, a default value of 10 seconds is used.\n\nFor push delivery, this value is also used to set the request timeout\nfor the call to the push endpoint.\n\nIf the subscriber never acknowledges the message, the Pub/Sub system\nwill eventually redeliver the message."]
-    pub fn ack_deadline_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ack_deadline_seconds", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `ack_deadline_seconds` after provisioning.\nThis value is the maximum time after a subscriber receives a message\nbefore the subscriber should acknowledge the message. After message\ndelivery but before the ack deadline expires and before the message is\nacknowledged, it is an outstanding message and will not be delivered\nagain during that time (on a best-effort basis).\n\nFor pull subscriptions, this value is used as the initial value for\nthe ack deadline. To override this value for a given message, call\nsubscriptions.modifyAckDeadline with the corresponding ackId if using\npull. The minimum custom deadline you can specify is 10 seconds. The\nmaximum custom deadline you can specify is 600 seconds (10 minutes).\nIf this parameter is 0, a default value of 10 seconds is used.\n\nFor push delivery, this value is also used to set the request timeout\nfor the call to the push endpoint.\n\nIf the subscriber never acknowledges the message, the Pub/Sub system\nwill eventually redeliver the message."]
+    pub fn ack_deadline_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ack_deadline_seconds", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `bigquery_config` after provisioning.\nIf delivery to BigQuery is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
-    pub fn bigquery_config(&self) -> ListRef<DataPubsubSubscriptionBigqueryConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.bigquery_config", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `bigquery_config` after provisioning.\nIf delivery to BigQuery is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
+    pub fn bigquery_config(&self) -> terrars::ListRef<DataPubsubSubscriptionBigqueryConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloud_storage_config` after provisioning.\nIf delivery to Cloud Storage is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
-    pub fn cloud_storage_config(&self) -> ListRef<DataPubsubSubscriptionCloudStorageConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_storage_config", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `cloud_storage_config` after provisioning.\nIf delivery to Cloud Storage is used with this subscription, this field is used to configure it.\nEither pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.\nIf all three are empty, then the subscriber will pull and ack messages using API methods."]
+    pub fn cloud_storage_config(&self) -> terrars::ListRef<DataPubsubSubscriptionCloudStorageConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `dead_letter_policy` after provisioning.\nA policy that specifies the conditions for dead lettering messages in\nthis subscription. If dead_letter_policy is not set, dead lettering\nis disabled.\n\nThe Cloud Pub/Sub service account associated with this subscription's\nparent project (i.e.,\nservice-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must have\npermission to Acknowledge() messages on this subscription."]
-    pub fn dead_letter_policy(&self) -> ListRef<DataPubsubSubscriptionDeadLetterPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dead_letter_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `dead_letter_policy` after provisioning.\nA policy that specifies the conditions for dead lettering messages in\nthis subscription. If dead_letter_policy is not set, dead lettering\nis disabled.\n\nThe Cloud Pub/Sub service account associated with this subscription's\nparent project (i.e.,\nservice-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must have\npermission to Acknowledge() messages on this subscription."]
+    pub fn dead_letter_policy(&self) -> terrars::ListRef<DataPubsubSubscriptionDeadLetterPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dead_letter_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_exactly_once_delivery` after provisioning.\nIf 'true', Pub/Sub provides the following guarantees for the delivery\nof a message with a given value of messageId on this Subscriptions':\n\n- The message sent to a subscriber is guaranteed not to be resent before the message's acknowledgement deadline expires.\n\n- An acknowledged message will not be resent to a subscriber.\n\nNote that subscribers may still receive multiple copies of a message when 'enable_exactly_once_delivery'\nis true if the message was published multiple times by a publisher client. These copies are considered distinct by Pub/Sub and have distinct messageId values"]
-    pub fn enable_exactly_once_delivery(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_exactly_once_delivery", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_exactly_once_delivery` after provisioning.\nIf 'true', Pub/Sub provides the following guarantees for the delivery\nof a message with a given value of messageId on this Subscriptions':\n\n- The message sent to a subscriber is guaranteed not to be resent before the message's acknowledgement deadline expires.\n\n- An acknowledged message will not be resent to a subscriber.\n\nNote that subscribers may still receive multiple copies of a message when 'enable_exactly_once_delivery'\nis true if the message was published multiple times by a publisher client. These copies are considered distinct by Pub/Sub and have distinct messageId values"]
+    pub fn enable_exactly_once_delivery(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_exactly_once_delivery", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_message_ordering` after provisioning.\nIf 'true', messages published with the same orderingKey in PubsubMessage will be delivered to\nthe subscribers in the order in which they are received by the Pub/Sub system. Otherwise, they\nmay be delivered in any order."]
-    pub fn enable_message_ordering(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_message_ordering", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `enable_message_ordering` after provisioning.\nIf 'true', messages published with the same orderingKey in PubsubMessage will be delivered to\nthe subscribers in the order in which they are received by the Pub/Sub system. Otherwise, they\nmay be delivered in any order."]
+    pub fn enable_message_ordering(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_message_ordering", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `expiration_policy` after provisioning.\nA policy that specifies the conditions for this subscription's expiration.\nA subscription is considered active as long as any connected subscriber\nis successfully consuming messages from the subscription or is issuing\noperations on the subscription. If expirationPolicy is not set, a default\npolicy with ttl of 31 days will be used.  If it is set but ttl is \"\", the\nresource never expires.  The minimum allowed value for expirationPolicy.ttl\nis 1 day."]
-    pub fn expiration_policy(&self) -> ListRef<DataPubsubSubscriptionExpirationPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.expiration_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `expiration_policy` after provisioning.\nA policy that specifies the conditions for this subscription's expiration.\nA subscription is considered active as long as any connected subscriber\nis successfully consuming messages from the subscription or is issuing\noperations on the subscription. If expirationPolicy is not set, a default\npolicy with ttl of 31 days will be used.  If it is set but ttl is \"\", the\nresource never expires.  The minimum allowed value for expirationPolicy.ttl\nis 1 day."]
+    pub fn expiration_policy(&self) -> terrars::ListRef<DataPubsubSubscriptionExpirationPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.expiration_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filter` after provisioning.\nThe subscription only delivers the messages that match the filter.\nPub/Sub automatically acknowledges the messages that don't match the filter. You can filter messages\nby their attributes. The maximum length of a filter is 256 bytes. After creating the subscription,\nyou can't modify the filter."]
-    pub fn filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `filter` after provisioning.\nThe subscription only delivers the messages that match the filter.\nPub/Sub automatically acknowledges the messages that don't match the filter. You can filter messages\nby their attributes. The maximum length of a filter is 256 bytes. After creating the subscription,\nyou can't modify the filter."]
+    pub fn filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to this Subscription.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to this Subscription.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `message_retention_duration` after provisioning.\nHow long to retain unacknowledged messages in the subscription's\nbacklog, from the moment a message is published. If\nretain_acked_messages is true, then this also configures the retention\nof acknowledged messages, and thus configures how far back in time a\nsubscriptions.seek can be done. Defaults to 7 days. Cannot be more\nthan 7 days ('\"604800s\"') or less than 10 minutes ('\"600s\"').\n\nA duration in seconds with up to nine fractional digits, terminated\nby 's'. Example: '\"600.5s\"'."]
-    pub fn message_retention_duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_retention_duration", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `message_retention_duration` after provisioning.\nHow long to retain unacknowledged messages in the subscription's\nbacklog, from the moment a message is published. If\nretain_acked_messages is true, then this also configures the retention\nof acknowledged messages, and thus configures how far back in time a\nsubscriptions.seek can be done. Defaults to 7 days. Cannot be more\nthan 7 days ('\"604800s\"') or less than 10 minutes ('\"600s\"').\n\nA duration in seconds with up to nine fractional digits, terminated\nby 's'. Example: '\"600.5s\"'."]
+    pub fn message_retention_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_retention_duration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the subscription."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nName of the subscription."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `push_config` after provisioning.\nIf push delivery is used with this subscription, this field is used to\nconfigure it. An empty pushConfig signifies that the subscriber will\npull and ack messages using API methods."]
-    pub fn push_config(&self) -> ListRef<DataPubsubSubscriptionPushConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.push_config", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `push_config` after provisioning.\nIf push delivery is used with this subscription, this field is used to\nconfigure it. An empty pushConfig signifies that the subscriber will\npull and ack messages using API methods."]
+    pub fn push_config(&self) -> terrars::ListRef<DataPubsubSubscriptionPushConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.push_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retain_acked_messages` after provisioning.\nIndicates whether to retain acknowledged messages. If 'true', then\nmessages are not expunged from the subscription's backlog, even if\nthey are acknowledged, until they fall out of the\nmessageRetentionDuration window."]
-    pub fn retain_acked_messages(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.retain_acked_messages", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `retain_acked_messages` after provisioning.\nIndicates whether to retain acknowledged messages. If 'true', then\nmessages are not expunged from the subscription's backlog, even if\nthey are acknowledged, until they fall out of the\nmessageRetentionDuration window."]
+    pub fn retain_acked_messages(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retain_acked_messages", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retry_policy` after provisioning.\nA policy that specifies how Pub/Sub retries message delivery for this subscription.\n\nIf not set, the default retry policy is applied. This generally implies that messages will be retried as soon as possible for healthy subscribers.\nRetryPolicy will be triggered on NACKs or acknowledgement deadline exceeded events for a given message"]
-    pub fn retry_policy(&self) -> ListRef<DataPubsubSubscriptionRetryPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `retry_policy` after provisioning.\nA policy that specifies how Pub/Sub retries message delivery for this subscription.\n\nIf not set, the default retry policy is applied. This generally implies that messages will be retried as soon as possible for healthy subscribers.\nRetryPolicy will be triggered on NACKs or acknowledgement deadline exceeded events for a given message"]
+    pub fn retry_policy(&self) -> terrars::ListRef<DataPubsubSubscriptionRetryPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\nA reference to a Topic resource."]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `topic` after provisioning.\nA reference to a Topic resource."]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionBigqueryConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    drop_unknown_fields: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    table: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    use_topic_schema: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    write_metadata: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    drop_unknown_fields: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    table: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    use_topic_schema: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    write_metadata: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataPubsubSubscriptionBigqueryConfigEl {
-    #[doc= "Set the field `drop_unknown_fields`.\n"]
-    pub fn set_drop_unknown_fields(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.drop_unknown_fields = Some(v.into());
+    #[doc = "Set the field `drop_unknown_fields`.\n"]
+    pub fn set_drop_unknown_fields(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.drop_unknown_fields = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `table`.\n"]
-    pub fn set_table(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.table = Some(v.into());
+    #[doc = "Set the field `table`.\n"]
+    pub fn set_table(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.table = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `use_topic_schema`.\n"]
-    pub fn set_use_topic_schema(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.use_topic_schema = Some(v.into());
+    #[doc = "Set the field `use_topic_schema`.\n"]
+    pub fn set_use_topic_schema(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.use_topic_schema = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `write_metadata`.\n"]
-    pub fn set_write_metadata(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.write_metadata = Some(v.into());
+    #[doc = "Set the field `write_metadata`.\n"]
+    pub fn set_write_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.write_metadata = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionBigqueryConfigEl {
-    type O = BlockAssignable<DataPubsubSubscriptionBigqueryConfigEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionBigqueryConfigEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionBigqueryConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -390,12 +449,12 @@ impl BuildDataPubsubSubscriptionBigqueryConfigEl {
 }
 
 pub struct DataPubsubSubscriptionBigqueryConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionBigqueryConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionBigqueryConfigElRef {
+impl terrars::Ref for DataPubsubSubscriptionBigqueryConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPubsubSubscriptionBigqueryConfigElRef {
         DataPubsubSubscriptionBigqueryConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -404,50 +463,50 @@ impl Ref for DataPubsubSubscriptionBigqueryConfigElRef {
 }
 
 impl DataPubsubSubscriptionBigqueryConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `drop_unknown_fields` after provisioning.\n"]
-    pub fn drop_unknown_fields(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.drop_unknown_fields", self.base))
+    #[doc = "Get a reference to the value of field `drop_unknown_fields` after provisioning.\n"]
+    pub fn drop_unknown_fields(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.drop_unknown_fields", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `table` after provisioning.\n"]
-    pub fn table(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `use_topic_schema` after provisioning.\n"]
-    pub fn use_topic_schema(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.use_topic_schema", self.base))
+    #[doc = "Get a reference to the value of field `use_topic_schema` after provisioning.\n"]
+    pub fn use_topic_schema(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_topic_schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `write_metadata` after provisioning.\n"]
-    pub fn write_metadata(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.write_metadata", self.base))
+    #[doc = "Get a reference to the value of field `write_metadata` after provisioning.\n"]
+    pub fn write_metadata(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.write_metadata", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    write_metadata: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    write_metadata: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl {
-    #[doc= "Set the field `write_metadata`.\n"]
-    pub fn set_write_metadata(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.write_metadata = Some(v.into());
+    #[doc = "Set the field `write_metadata`.\n"]
+    pub fn set_write_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.write_metadata = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl {
-    type O = BlockAssignable<DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -464,12 +523,15 @@ impl BuildDataPubsubSubscriptionCloudStorageConfigElAvroConfigEl {
 }
 
 pub struct DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
+impl terrars::Ref for DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
         DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -478,86 +540,86 @@ impl Ref for DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
 }
 
 impl DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `write_metadata` after provisioning.\n"]
-    pub fn write_metadata(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.write_metadata", self.base))
+    #[doc = "Get a reference to the value of field `write_metadata` after provisioning.\n"]
+    pub fn write_metadata(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.write_metadata", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionCloudStorageConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    avro_config: Option<ListField<DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filename_prefix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filename_suffix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_bytes: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_duration: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    state: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    avro_config: std::option::Option<terrars::ListField<DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filename_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filename_suffix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_bytes: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataPubsubSubscriptionCloudStorageConfigEl {
-    #[doc= "Set the field `avro_config`.\n"]
+    #[doc = "Set the field `avro_config`.\n"]
     pub fn set_avro_config(
         mut self,
-        v: impl Into<ListField<DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataPubsubSubscriptionCloudStorageConfigElAvroConfigEl>>,
     ) -> Self {
-        self.avro_config = Some(v.into());
+        self.avro_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `bucket`.\n"]
-    pub fn set_bucket(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket = Some(v.into());
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `filename_prefix`.\n"]
-    pub fn set_filename_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.filename_prefix = Some(v.into());
+    #[doc = "Set the field `filename_prefix`.\n"]
+    pub fn set_filename_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.filename_prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `filename_suffix`.\n"]
-    pub fn set_filename_suffix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.filename_suffix = Some(v.into());
+    #[doc = "Set the field `filename_suffix`.\n"]
+    pub fn set_filename_suffix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.filename_suffix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_bytes`.\n"]
-    pub fn set_max_bytes(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_bytes = Some(v.into());
+    #[doc = "Set the field `max_bytes`.\n"]
+    pub fn set_max_bytes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_bytes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_duration`.\n"]
-    pub fn set_max_duration(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.max_duration = Some(v.into());
+    #[doc = "Set the field `max_duration`.\n"]
+    pub fn set_max_duration(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.max_duration = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `state`.\n"]
-    pub fn set_state(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.state = Some(v.into());
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionCloudStorageConfigEl {
-    type O = BlockAssignable<DataPubsubSubscriptionCloudStorageConfigEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionCloudStorageConfigEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionCloudStorageConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -582,12 +644,12 @@ impl BuildDataPubsubSubscriptionCloudStorageConfigEl {
 }
 
 pub struct DataPubsubSubscriptionCloudStorageConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionCloudStorageConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionCloudStorageConfigElRef {
+impl terrars::Ref for DataPubsubSubscriptionCloudStorageConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPubsubSubscriptionCloudStorageConfigElRef {
         DataPubsubSubscriptionCloudStorageConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -596,73 +658,73 @@ impl Ref for DataPubsubSubscriptionCloudStorageConfigElRef {
 }
 
 impl DataPubsubSubscriptionCloudStorageConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `avro_config` after provisioning.\n"]
-    pub fn avro_config(&self) -> ListRef<DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.avro_config", self.base))
+    #[doc = "Get a reference to the value of field `avro_config` after provisioning.\n"]
+    pub fn avro_config(&self) -> terrars::ListRef<DataPubsubSubscriptionCloudStorageConfigElAvroConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.avro_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `filename_prefix` after provisioning.\n"]
-    pub fn filename_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filename_prefix", self.base))
+    #[doc = "Get a reference to the value of field `filename_prefix` after provisioning.\n"]
+    pub fn filename_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filename_prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `filename_suffix` after provisioning.\n"]
-    pub fn filename_suffix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filename_suffix", self.base))
+    #[doc = "Get a reference to the value of field `filename_suffix` after provisioning.\n"]
+    pub fn filename_suffix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filename_suffix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_bytes` after provisioning.\n"]
-    pub fn max_bytes(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_bytes", self.base))
+    #[doc = "Get a reference to the value of field `max_bytes` after provisioning.\n"]
+    pub fn max_bytes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_bytes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_duration` after provisioning.\n"]
-    pub fn max_duration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_duration", self.base))
+    #[doc = "Get a reference to the value of field `max_duration` after provisioning.\n"]
+    pub fn max_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_duration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionDeadLetterPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dead_letter_topic: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_delivery_attempts: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dead_letter_topic: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_delivery_attempts: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataPubsubSubscriptionDeadLetterPolicyEl {
-    #[doc= "Set the field `dead_letter_topic`.\n"]
-    pub fn set_dead_letter_topic(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.dead_letter_topic = Some(v.into());
+    #[doc = "Set the field `dead_letter_topic`.\n"]
+    pub fn set_dead_letter_topic(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.dead_letter_topic = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_delivery_attempts`.\n"]
-    pub fn set_max_delivery_attempts(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_delivery_attempts = Some(v.into());
+    #[doc = "Set the field `max_delivery_attempts`.\n"]
+    pub fn set_max_delivery_attempts(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_delivery_attempts = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionDeadLetterPolicyEl {
-    type O = BlockAssignable<DataPubsubSubscriptionDeadLetterPolicyEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionDeadLetterPolicyEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionDeadLetterPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -682,12 +744,12 @@ impl BuildDataPubsubSubscriptionDeadLetterPolicyEl {
 }
 
 pub struct DataPubsubSubscriptionDeadLetterPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionDeadLetterPolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionDeadLetterPolicyElRef {
+impl terrars::Ref for DataPubsubSubscriptionDeadLetterPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPubsubSubscriptionDeadLetterPolicyElRef {
         DataPubsubSubscriptionDeadLetterPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -696,40 +758,40 @@ impl Ref for DataPubsubSubscriptionDeadLetterPolicyElRef {
 }
 
 impl DataPubsubSubscriptionDeadLetterPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dead_letter_topic` after provisioning.\n"]
-    pub fn dead_letter_topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dead_letter_topic", self.base))
+    #[doc = "Get a reference to the value of field `dead_letter_topic` after provisioning.\n"]
+    pub fn dead_letter_topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dead_letter_topic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_delivery_attempts` after provisioning.\n"]
-    pub fn max_delivery_attempts(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_delivery_attempts", self.base))
+    #[doc = "Get a reference to the value of field `max_delivery_attempts` after provisioning.\n"]
+    pub fn max_delivery_attempts(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_delivery_attempts", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionExpirationPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ttl: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataPubsubSubscriptionExpirationPolicyEl {
-    #[doc= "Set the field `ttl`.\n"]
-    pub fn set_ttl(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.ttl = Some(v.into());
+    #[doc = "Set the field `ttl`.\n"]
+    pub fn set_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ttl = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionExpirationPolicyEl {
-    type O = BlockAssignable<DataPubsubSubscriptionExpirationPolicyEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionExpirationPolicyEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionExpirationPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -746,12 +808,12 @@ impl BuildDataPubsubSubscriptionExpirationPolicyEl {
 }
 
 pub struct DataPubsubSubscriptionExpirationPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionExpirationPolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionExpirationPolicyElRef {
+impl terrars::Ref for DataPubsubSubscriptionExpirationPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPubsubSubscriptionExpirationPolicyElRef {
         DataPubsubSubscriptionExpirationPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -760,35 +822,35 @@ impl Ref for DataPubsubSubscriptionExpirationPolicyElRef {
 }
 
 impl DataPubsubSubscriptionExpirationPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\n"]
-    pub fn ttl(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.base))
+    #[doc = "Get a reference to the value of field `ttl` after provisioning.\n"]
+    pub fn ttl(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionPushConfigElNoWrapperEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    write_metadata: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    write_metadata: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataPubsubSubscriptionPushConfigElNoWrapperEl {
-    #[doc= "Set the field `write_metadata`.\n"]
-    pub fn set_write_metadata(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.write_metadata = Some(v.into());
+    #[doc = "Set the field `write_metadata`.\n"]
+    pub fn set_write_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.write_metadata = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionPushConfigElNoWrapperEl {
-    type O = BlockAssignable<DataPubsubSubscriptionPushConfigElNoWrapperEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionPushConfigElNoWrapperEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionPushConfigElNoWrapperEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -805,12 +867,15 @@ impl BuildDataPubsubSubscriptionPushConfigElNoWrapperEl {
 }
 
 pub struct DataPubsubSubscriptionPushConfigElNoWrapperElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionPushConfigElNoWrapperElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionPushConfigElNoWrapperElRef {
+impl terrars::Ref for DataPubsubSubscriptionPushConfigElNoWrapperElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataPubsubSubscriptionPushConfigElNoWrapperElRef {
         DataPubsubSubscriptionPushConfigElNoWrapperElRef {
             shared: shared,
             base: base.to_string(),
@@ -819,43 +884,46 @@ impl Ref for DataPubsubSubscriptionPushConfigElNoWrapperElRef {
 }
 
 impl DataPubsubSubscriptionPushConfigElNoWrapperElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `write_metadata` after provisioning.\n"]
-    pub fn write_metadata(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.write_metadata", self.base))
+    #[doc = "Get a reference to the value of field `write_metadata` after provisioning.\n"]
+    pub fn write_metadata(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.write_metadata", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionPushConfigElOidcTokenEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    audience: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_account_email: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    audience: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataPubsubSubscriptionPushConfigElOidcTokenEl {
-    #[doc= "Set the field `audience`.\n"]
-    pub fn set_audience(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.audience = Some(v.into());
+    #[doc = "Set the field `audience`.\n"]
+    pub fn set_audience(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.audience = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_account_email`.\n"]
-    pub fn set_service_account_email(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_account_email = Some(v.into());
+    #[doc = "Set the field `service_account_email`.\n"]
+    pub fn set_service_account_email(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.service_account_email = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionPushConfigElOidcTokenEl {
-    type O = BlockAssignable<DataPubsubSubscriptionPushConfigElOidcTokenEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionPushConfigElOidcTokenEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionPushConfigElOidcTokenEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -875,12 +943,15 @@ impl BuildDataPubsubSubscriptionPushConfigElOidcTokenEl {
 }
 
 pub struct DataPubsubSubscriptionPushConfigElOidcTokenElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionPushConfigElOidcTokenElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionPushConfigElOidcTokenElRef {
+impl terrars::Ref for DataPubsubSubscriptionPushConfigElOidcTokenElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataPubsubSubscriptionPushConfigElOidcTokenElRef {
         DataPubsubSubscriptionPushConfigElOidcTokenElRef {
             shared: shared,
             base: base.to_string(),
@@ -889,64 +960,73 @@ impl Ref for DataPubsubSubscriptionPushConfigElOidcTokenElRef {
 }
 
 impl DataPubsubSubscriptionPushConfigElOidcTokenElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `audience` after provisioning.\n"]
-    pub fn audience(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.audience", self.base))
+    #[doc = "Get a reference to the value of field `audience` after provisioning.\n"]
+    pub fn audience(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.audience", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_account_email` after provisioning.\n"]
-    pub fn service_account_email(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.base))
+    #[doc = "Get a reference to the value of field `service_account_email` after provisioning.\n"]
+    pub fn service_account_email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionPushConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    attributes: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    no_wrapper: Option<ListField<DataPubsubSubscriptionPushConfigElNoWrapperEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oidc_token: Option<ListField<DataPubsubSubscriptionPushConfigElOidcTokenEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    push_endpoint: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attributes: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    no_wrapper: std::option::Option<terrars::ListField<DataPubsubSubscriptionPushConfigElNoWrapperEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oidc_token: std::option::Option<terrars::ListField<DataPubsubSubscriptionPushConfigElOidcTokenEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    push_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataPubsubSubscriptionPushConfigEl {
-    #[doc= "Set the field `attributes`.\n"]
-    pub fn set_attributes(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.attributes = Some(v.into());
+    #[doc = "Set the field `attributes`.\n"]
+    pub fn set_attributes(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.attributes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `no_wrapper`.\n"]
-    pub fn set_no_wrapper(mut self, v: impl Into<ListField<DataPubsubSubscriptionPushConfigElNoWrapperEl>>) -> Self {
-        self.no_wrapper = Some(v.into());
+    #[doc = "Set the field `no_wrapper`.\n"]
+    pub fn set_no_wrapper(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataPubsubSubscriptionPushConfigElNoWrapperEl>>,
+    ) -> Self {
+        self.no_wrapper = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `oidc_token`.\n"]
-    pub fn set_oidc_token(mut self, v: impl Into<ListField<DataPubsubSubscriptionPushConfigElOidcTokenEl>>) -> Self {
-        self.oidc_token = Some(v.into());
+    #[doc = "Set the field `oidc_token`.\n"]
+    pub fn set_oidc_token(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataPubsubSubscriptionPushConfigElOidcTokenEl>>,
+    ) -> Self {
+        self.oidc_token = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `push_endpoint`.\n"]
-    pub fn set_push_endpoint(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.push_endpoint = Some(v.into());
+    #[doc = "Set the field `push_endpoint`.\n"]
+    pub fn set_push_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.push_endpoint = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionPushConfigEl {
-    type O = BlockAssignable<DataPubsubSubscriptionPushConfigEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionPushConfigEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionPushConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -968,12 +1048,12 @@ impl BuildDataPubsubSubscriptionPushConfigEl {
 }
 
 pub struct DataPubsubSubscriptionPushConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionPushConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionPushConfigElRef {
+impl terrars::Ref for DataPubsubSubscriptionPushConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPubsubSubscriptionPushConfigElRef {
         DataPubsubSubscriptionPushConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -982,58 +1062,58 @@ impl Ref for DataPubsubSubscriptionPushConfigElRef {
 }
 
 impl DataPubsubSubscriptionPushConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `attributes` after provisioning.\n"]
-    pub fn attributes(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.attributes", self.base))
+    #[doc = "Get a reference to the value of field `attributes` after provisioning.\n"]
+    pub fn attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.attributes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `no_wrapper` after provisioning.\n"]
-    pub fn no_wrapper(&self) -> ListRef<DataPubsubSubscriptionPushConfigElNoWrapperElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.no_wrapper", self.base))
+    #[doc = "Get a reference to the value of field `no_wrapper` after provisioning.\n"]
+    pub fn no_wrapper(&self) -> terrars::ListRef<DataPubsubSubscriptionPushConfigElNoWrapperElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.no_wrapper", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oidc_token` after provisioning.\n"]
-    pub fn oidc_token(&self) -> ListRef<DataPubsubSubscriptionPushConfigElOidcTokenElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oidc_token", self.base))
+    #[doc = "Get a reference to the value of field `oidc_token` after provisioning.\n"]
+    pub fn oidc_token(&self) -> terrars::ListRef<DataPubsubSubscriptionPushConfigElOidcTokenElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oidc_token", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `push_endpoint` after provisioning.\n"]
-    pub fn push_endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.push_endpoint", self.base))
+    #[doc = "Get a reference to the value of field `push_endpoint` after provisioning.\n"]
+    pub fn push_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.push_endpoint", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPubsubSubscriptionRetryPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maximum_backoff: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    minimum_backoff: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_backoff: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum_backoff: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataPubsubSubscriptionRetryPolicyEl {
-    #[doc= "Set the field `maximum_backoff`.\n"]
-    pub fn set_maximum_backoff(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.maximum_backoff = Some(v.into());
+    #[doc = "Set the field `maximum_backoff`.\n"]
+    pub fn set_maximum_backoff(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.maximum_backoff = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `minimum_backoff`.\n"]
-    pub fn set_minimum_backoff(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.minimum_backoff = Some(v.into());
+    #[doc = "Set the field `minimum_backoff`.\n"]
+    pub fn set_minimum_backoff(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.minimum_backoff = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataPubsubSubscriptionRetryPolicyEl {
-    type O = BlockAssignable<DataPubsubSubscriptionRetryPolicyEl>;
+impl terrars::ToListMappable for DataPubsubSubscriptionRetryPolicyEl {
+    type O = terrars::BlockAssignable<DataPubsubSubscriptionRetryPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1053,12 +1133,12 @@ impl BuildDataPubsubSubscriptionRetryPolicyEl {
 }
 
 pub struct DataPubsubSubscriptionRetryPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPubsubSubscriptionRetryPolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataPubsubSubscriptionRetryPolicyElRef {
+impl terrars::Ref for DataPubsubSubscriptionRetryPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPubsubSubscriptionRetryPolicyElRef {
         DataPubsubSubscriptionRetryPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -1067,17 +1147,17 @@ impl Ref for DataPubsubSubscriptionRetryPolicyElRef {
 }
 
 impl DataPubsubSubscriptionRetryPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `maximum_backoff` after provisioning.\n"]
-    pub fn maximum_backoff(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maximum_backoff", self.base))
+    #[doc = "Get a reference to the value of field `maximum_backoff` after provisioning.\n"]
+    pub fn maximum_backoff(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_backoff", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `minimum_backoff` after provisioning.\n"]
-    pub fn minimum_backoff(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.minimum_backoff", self.base))
+    #[doc = "Get a reference to the value of field `minimum_backoff` after provisioning.\n"]
+    pub fn minimum_backoff(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_backoff", self.base))
     }
 }

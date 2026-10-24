@@ -1,63 +1,67 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct Cloudfunctions2FunctionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    location: PrimField<String>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    build_config: Option<Vec<Cloudfunctions2FunctionBuildConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    event_trigger: Option<Vec<Cloudfunctions2FunctionEventTriggerEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_config: Option<Vec<Cloudfunctions2FunctionServiceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<Cloudfunctions2FunctionTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    location: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    build_config: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionBuildConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_trigger: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionEventTriggerEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_config: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionServiceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Cloudfunctions2FunctionTimeoutsEl>,
     dynamic: Cloudfunctions2FunctionDynamic,
 }
 
 struct Cloudfunctions2Function_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<Cloudfunctions2FunctionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<Cloudfunctions2FunctionData>,
 }
 
 #[derive(Clone)]
-pub struct Cloudfunctions2Function(Rc<Cloudfunctions2Function_>);
+pub struct Cloudfunctions2Function(std::rc::Rc<Cloudfunctions2Function_>);
 
 impl Cloudfunctions2Function {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -72,225 +76,283 @@ impl Cloudfunctions2Function {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\nUser-provided description of a function."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `kms_key_name`.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt function resources.\nIt must match the pattern projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}."]
-    pub fn set_kms_key_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().kms_key_name = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `labels`.\nA set of key/value label pairs associated with this Cloud Function.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn set_labels(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().labels = Some(v.into());
+    #[doc = "Set the field `description`.\nUser-provided description of a function."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `build_config`.\n"]
-    pub fn set_build_config(self, v: impl Into<BlockAssignable<Cloudfunctions2FunctionBuildConfigEl>>) -> Self {
+    #[doc =
+        "Set the field `kms_key_name`.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt function resources.\nIt must match the pattern projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}."]
+    pub fn set_kms_key_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `labels`.\nA set of key/value label pairs associated with this Cloud Function.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `build_config`.\n"]
+    pub fn set_build_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().build_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().build_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.build_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.build_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `event_trigger`.\n"]
-    pub fn set_event_trigger(self, v: impl Into<BlockAssignable<Cloudfunctions2FunctionEventTriggerEl>>) -> Self {
+    #[doc = "Set the field `event_trigger`.\n"]
+    pub fn set_event_trigger(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudfunctions2FunctionEventTriggerEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().event_trigger = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().event_trigger = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.event_trigger = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.event_trigger = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `service_config`.\n"]
-    pub fn set_service_config(self, v: impl Into<BlockAssignable<Cloudfunctions2FunctionServiceConfigEl>>) -> Self {
+    #[doc = "Set the field `service_config`.\n"]
+    pub fn set_service_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().service_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().service_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.service_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.service_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<Cloudfunctions2FunctionTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Cloudfunctions2FunctionTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nUser-provided description of a function."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nUser-provided description of a function."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `environment` after provisioning.\nThe environment the function is hosted on."]
-    pub fn environment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `environment` after provisioning.\nThe environment the function is hosted on."]
+    pub fn environment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_name` after provisioning.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt function resources.\nIt must match the pattern projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}."]
-    pub fn kms_key_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt function resources.\nIt must match the pattern projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}."]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs associated with this Cloud Function.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs associated with this Cloud Function.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of this cloud function."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location of this cloud function."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the function. Function names must\nbe unique globally and match pattern 'projects/*/locations/*/functions/*'."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the function. Function names must\nbe unique globally and match pattern 'projects/*/locations/*/functions/*'."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nDescribes the current state of the function."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `state` after provisioning.\nDescribes the current state of the function."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a Cloud Function."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a Cloud Function."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\nOutput only. The deployed url for the function."]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `url` after provisioning.\nOutput only. The deployed url for the function."]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `build_config` after provisioning.\n"]
-    pub fn build_config(&self) -> ListRef<Cloudfunctions2FunctionBuildConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.build_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `build_config` after provisioning.\n"]
+    pub fn build_config(&self) -> terrars::ListRef<Cloudfunctions2FunctionBuildConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.build_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `event_trigger` after provisioning.\n"]
-    pub fn event_trigger(&self) -> ListRef<Cloudfunctions2FunctionEventTriggerElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.event_trigger", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `event_trigger` after provisioning.\n"]
+    pub fn event_trigger(&self) -> terrars::ListRef<Cloudfunctions2FunctionEventTriggerElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.event_trigger", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_config` after provisioning.\n"]
-    pub fn service_config(&self) -> ListRef<Cloudfunctions2FunctionServiceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.service_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_config` after provisioning.\n"]
+    pub fn service_config(&self) -> terrars::ListRef<Cloudfunctions2FunctionServiceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> Cloudfunctions2FunctionTimeoutsElRef {
         Cloudfunctions2FunctionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for Cloudfunctions2Function {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for Cloudfunctions2Function {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for Cloudfunctions2Function { }
+impl terrars::Resource for Cloudfunctions2Function { }
 
-impl ToListMappable for Cloudfunctions2Function {
-    type O = ListRef<Cloudfunctions2FunctionRef>;
+impl terrars::ToListMappable for Cloudfunctions2Function {
+    type O = terrars::ListRef<Cloudfunctions2FunctionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for Cloudfunctions2Function_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for Cloudfunctions2Function_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_cloudfunctions2_function".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -300,23 +362,25 @@ impl Resource_ for Cloudfunctions2Function_ {
 }
 
 pub struct BuildCloudfunctions2Function {
-    pub tf_id: String,
-    #[doc= "The location of this cloud function."]
-    pub location: PrimField<String>,
-    #[doc= "A user-defined name of the function. Function names must\nbe unique globally and match pattern 'projects/*/locations/*/functions/*'."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The location of this cloud function."]
+    pub location: terrars::PrimField<std::string::String>,
+    #[doc =
+        "A user-defined name of the function. Function names must\nbe unique globally and match pattern 'projects/*/locations/*/functions/*'."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudfunctions2Function {
-    pub fn build(self, stack: &mut Stack) -> Cloudfunctions2Function {
-        let out = Cloudfunctions2Function(Rc::new(Cloudfunctions2Function_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> Cloudfunctions2Function {
+        let out = Cloudfunctions2Function(std::rc::Rc::new(Cloudfunctions2Function_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(Cloudfunctions2FunctionData {
+            data: std::cell::RefCell::new(Cloudfunctions2FunctionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_name: core::default::Default::default(),
@@ -328,7 +392,7 @@ impl BuildCloudfunctions2Function {
                 event_trigger: core::default::Default::default(),
                 service_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -337,12 +401,12 @@ impl BuildCloudfunctions2Function {
 }
 
 pub struct Cloudfunctions2FunctionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for Cloudfunctions2FunctionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -351,95 +415,106 @@ impl Ref for Cloudfunctions2FunctionRef {
 }
 
 impl Cloudfunctions2FunctionRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nUser-provided description of a function."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nUser-provided description of a function."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `environment` after provisioning.\nThe environment the function is hosted on."]
-    pub fn environment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `environment` after provisioning.\nThe environment the function is hosted on."]
+    pub fn environment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_name` after provisioning.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt function resources.\nIt must match the pattern projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}."]
-    pub fn kms_key_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt function resources.\nIt must match the pattern projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}."]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs associated with this Cloud Function.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs associated with this Cloud Function.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of this cloud function."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location of this cloud function."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the function. Function names must\nbe unique globally and match pattern 'projects/*/locations/*/functions/*'."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the function. Function names must\nbe unique globally and match pattern 'projects/*/locations/*/functions/*'."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nDescribes the current state of the function."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `state` after provisioning.\nDescribes the current state of the function."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a Cloud Function."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nThe last update timestamp of a Cloud Function."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\nOutput only. The deployed url for the function."]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `url` after provisioning.\nOutput only. The deployed url for the function."]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `build_config` after provisioning.\n"]
-    pub fn build_config(&self) -> ListRef<Cloudfunctions2FunctionBuildConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.build_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `build_config` after provisioning.\n"]
+    pub fn build_config(&self) -> terrars::ListRef<Cloudfunctions2FunctionBuildConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.build_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `event_trigger` after provisioning.\n"]
-    pub fn event_trigger(&self) -> ListRef<Cloudfunctions2FunctionEventTriggerElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.event_trigger", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `event_trigger` after provisioning.\n"]
+    pub fn event_trigger(&self) -> terrars::ListRef<Cloudfunctions2FunctionEventTriggerElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.event_trigger", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_config` after provisioning.\n"]
-    pub fn service_config(&self) -> ListRef<Cloudfunctions2FunctionServiceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.service_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_config` after provisioning.\n"]
+    pub fn service_config(&self) -> terrars::ListRef<Cloudfunctions2FunctionServiceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> Cloudfunctions2FunctionTimeoutsElRef {
         Cloudfunctions2FunctionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -447,71 +522,73 @@ impl Cloudfunctions2FunctionRef {
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    branch_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    commit_sha: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dir: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    invert_regex: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    repo_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag_name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    branch_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    commit_sha: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dir: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    invert_regex: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repo_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
-    #[doc= "Set the field `branch_name`.\nRegex matching branches to build."]
-    pub fn set_branch_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.branch_name = Some(v.into());
+    #[doc = "Set the field `branch_name`.\nRegex matching branches to build."]
+    pub fn set_branch_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.branch_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `commit_sha`.\nRegex matching tags to build."]
-    pub fn set_commit_sha(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.commit_sha = Some(v.into());
+    #[doc = "Set the field `commit_sha`.\nRegex matching tags to build."]
+    pub fn set_commit_sha(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.commit_sha = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `dir`.\nDirectory, relative to the source root, in which to run the build."]
-    pub fn set_dir(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.dir = Some(v.into());
+    #[doc = "Set the field `dir`.\nDirectory, relative to the source root, in which to run the build."]
+    pub fn set_dir(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.dir = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `invert_regex`.\nOnly trigger a build if the revision regex does\nNOT match the revision regex."]
-    pub fn set_invert_regex(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.invert_regex = Some(v.into());
+    #[doc =
+        "Set the field `invert_regex`.\nOnly trigger a build if the revision regex does\nNOT match the revision regex."]
+    pub fn set_invert_regex(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.invert_regex = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `project_id`.\nID of the project that owns the Cloud Source Repository. If omitted, the\nproject ID requesting the build is assumed."]
-    pub fn set_project_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.project_id = Some(v.into());
+    #[doc =
+        "Set the field `project_id`.\nID of the project that owns the Cloud Source Repository. If omitted, the\nproject ID requesting the build is assumed."]
+    pub fn set_project_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.project_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `repo_name`.\nName of the Cloud Source Repository."]
-    pub fn set_repo_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.repo_name = Some(v.into());
+    #[doc = "Set the field `repo_name`.\nName of the Cloud Source Repository."]
+    pub fn set_repo_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repo_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tag_name`.\nRegex matching tags to build."]
-    pub fn set_tag_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tag_name = Some(v.into());
+    #[doc = "Set the field `tag_name`.\nRegex matching tags to build."]
+    pub fn set_tag_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -536,12 +613,15 @@ impl BuildCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
 }
 
 pub struct Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
+impl terrars::Ref for Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
         Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -550,81 +630,87 @@ impl Ref for Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
 }
 
 impl Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `branch_name` after provisioning.\nRegex matching branches to build."]
-    pub fn branch_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.branch_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `branch_name` after provisioning.\nRegex matching branches to build."]
+    pub fn branch_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `commit_sha` after provisioning.\nRegex matching tags to build."]
-    pub fn commit_sha(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.commit_sha", self.base))
+    #[doc = "Get a reference to the value of field `commit_sha` after provisioning.\nRegex matching tags to build."]
+    pub fn commit_sha(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.commit_sha", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dir` after provisioning.\nDirectory, relative to the source root, in which to run the build."]
-    pub fn dir(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dir", self.base))
+    #[doc =
+        "Get a reference to the value of field `dir` after provisioning.\nDirectory, relative to the source root, in which to run the build."]
+    pub fn dir(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dir", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `invert_regex` after provisioning.\nOnly trigger a build if the revision regex does\nNOT match the revision regex."]
-    pub fn invert_regex(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.invert_regex", self.base))
+    #[doc =
+        "Get a reference to the value of field `invert_regex` after provisioning.\nOnly trigger a build if the revision regex does\nNOT match the revision regex."]
+    pub fn invert_regex(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invert_regex", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project_id` after provisioning.\nID of the project that owns the Cloud Source Repository. If omitted, the\nproject ID requesting the build is assumed."]
-    pub fn project_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
+    #[doc =
+        "Get a reference to the value of field `project_id` after provisioning.\nID of the project that owns the Cloud Source Repository. If omitted, the\nproject ID requesting the build is assumed."]
+    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `repo_name` after provisioning.\nName of the Cloud Source Repository."]
-    pub fn repo_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.repo_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `repo_name` after provisioning.\nName of the Cloud Source Repository."]
+    pub fn repo_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repo_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag_name` after provisioning.\nRegex matching tags to build."]
-    pub fn tag_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tag_name", self.base))
+    #[doc = "Get a reference to the value of field `tag_name` after provisioning.\nRegex matching tags to build."]
+    pub fn tag_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    generation: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    generation: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
-    #[doc= "Set the field `bucket`.\nGoogle Cloud Storage bucket containing the source"]
-    pub fn set_bucket(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket = Some(v.into());
+    #[doc = "Set the field `bucket`.\nGoogle Cloud Storage bucket containing the source"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `generation`.\nGoogle Cloud Storage generation for the object. If the generation\nis omitted, the latest generation will be used."]
-    pub fn set_generation(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.generation = Some(v.into());
+    #[doc =
+        "Set the field `generation`.\nGoogle Cloud Storage generation for the object. If the generation\nis omitted, the latest generation will be used."]
+    pub fn set_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.generation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `object`.\nGoogle Cloud Storage object containing the source."]
-    pub fn set_object(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.object = Some(v.into());
+    #[doc = "Set the field `object`.\nGoogle Cloud Storage object containing the source."]
+    pub fn set_object(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.object = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -645,12 +731,15 @@ impl BuildCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
 }
 
 pub struct Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
+impl terrars::Ref for Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
         Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -659,80 +748,95 @@ impl Ref for Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
 }
 
 impl Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\nGoogle Cloud Storage bucket containing the source"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc =
+        "Get a reference to the value of field `bucket` after provisioning.\nGoogle Cloud Storage bucket containing the source"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `generation` after provisioning.\nGoogle Cloud Storage generation for the object. If the generation\nis omitted, the latest generation will be used."]
-    pub fn generation(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
+    #[doc =
+        "Get a reference to the value of field `generation` after provisioning.\nGoogle Cloud Storage generation for the object. If the generation\nis omitted, the latest generation will be used."]
+    pub fn generation(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `object` after provisioning.\nGoogle Cloud Storage object containing the source."]
-    pub fn object(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
+    #[doc =
+        "Get a reference to the value of field `object` after provisioning.\nGoogle Cloud Storage object containing the source."]
+    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Cloudfunctions2FunctionBuildConfigElSourceElDynamic {
-    repo_source: Option<DynamicBlock<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
-    storage_source: Option<DynamicBlock<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
+    repo_source: std::option::Option<terrars::DynamicBlock<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
+    storage_source: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionBuildConfigElSourceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    repo_source: Option<Vec<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    storage_source: Option<Vec<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repo_source: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_source: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
     dynamic: Cloudfunctions2FunctionBuildConfigElSourceElDynamic,
 }
 
 impl Cloudfunctions2FunctionBuildConfigElSourceEl {
-    #[doc= "Set the field `repo_source`.\n"]
+    #[doc = "Set the field `repo_source`.\n"]
     pub fn set_repo_source(
         mut self,
-        v: impl Into<BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.repo_source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.repo_source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.repo_source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.repo_source = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `storage_source`.\n"]
+    #[doc = "Set the field `storage_source`.\n"]
     pub fn set_storage_source(
         mut self,
-        v: impl Into<BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.storage_source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.storage_source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.storage_source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.storage_source = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionBuildConfigElSourceEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionBuildConfigElSourceEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -747,18 +851,21 @@ impl BuildCloudfunctions2FunctionBuildConfigElSourceEl {
         Cloudfunctions2FunctionBuildConfigElSourceEl {
             repo_source: core::default::Default::default(),
             storage_source: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Cloudfunctions2FunctionBuildConfigElSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionBuildConfigElSourceElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionBuildConfigElSourceElRef {
+impl terrars::Ref for Cloudfunctions2FunctionBuildConfigElSourceElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudfunctions2FunctionBuildConfigElSourceElRef {
         Cloudfunctions2FunctionBuildConfigElSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -767,93 +874,103 @@ impl Ref for Cloudfunctions2FunctionBuildConfigElSourceElRef {
 }
 
 impl Cloudfunctions2FunctionBuildConfigElSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `repo_source` after provisioning.\n"]
-    pub fn repo_source(&self) -> ListRef<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.repo_source", self.base))
+    #[doc = "Get a reference to the value of field `repo_source` after provisioning.\n"]
+    pub fn repo_source(&self) -> terrars::ListRef<Cloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.repo_source", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `storage_source` after provisioning.\n"]
-    pub fn storage_source(&self) -> ListRef<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.storage_source", self.base))
+    #[doc = "Get a reference to the value of field `storage_source` after provisioning.\n"]
+    pub fn storage_source(&self) -> terrars::ListRef<Cloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_source", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Cloudfunctions2FunctionBuildConfigElDynamic {
-    source: Option<DynamicBlock<Cloudfunctions2FunctionBuildConfigElSourceEl>>,
+    source: std::option::Option<terrars::DynamicBlock<Cloudfunctions2FunctionBuildConfigElSourceEl>>,
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionBuildConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    docker_repository: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    entry_point: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    environment_variables: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    runtime: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    worker_pool: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source: Option<Vec<Cloudfunctions2FunctionBuildConfigElSourceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    docker_repository: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    entry_point: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    environment_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    runtime: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    worker_pool: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionBuildConfigElSourceEl>>,
     dynamic: Cloudfunctions2FunctionBuildConfigElDynamic,
 }
 
 impl Cloudfunctions2FunctionBuildConfigEl {
-    #[doc= "Set the field `docker_repository`.\nUser managed repository created in Artifact Registry optionally with a customer managed encryption key."]
-    pub fn set_docker_repository(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.docker_repository = Some(v.into());
+    #[doc =
+        "Set the field `docker_repository`.\nUser managed repository created in Artifact Registry optionally with a customer managed encryption key."]
+    pub fn set_docker_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.docker_repository = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `entry_point`.\nThe name of the function (as defined in source code) that will be executed.\nDefaults to the resource name suffix, if not specified. For backward\ncompatibility, if function with given name is not found, then the system\nwill try to use function named \"function\". For Node.js this is name of a\nfunction exported by the module specified in source_location."]
-    pub fn set_entry_point(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.entry_point = Some(v.into());
+    #[doc =
+        "Set the field `entry_point`.\nThe name of the function (as defined in source code) that will be executed.\nDefaults to the resource name suffix, if not specified. For backward\ncompatibility, if function with given name is not found, then the system\nwill try to use function named \"function\". For Node.js this is name of a\nfunction exported by the module specified in source_location."]
+    pub fn set_entry_point(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.entry_point = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `environment_variables`.\nUser-provided build-time environment variables for the function."]
-    pub fn set_environment_variables(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.environment_variables = Some(v.into());
+    #[doc = "Set the field `environment_variables`.\nUser-provided build-time environment variables for the function."]
+    pub fn set_environment_variables(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.environment_variables = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `runtime`.\nThe runtime in which to run the function. Required when deploying a new\nfunction, optional when updating an existing function."]
-    pub fn set_runtime(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.runtime = Some(v.into());
+    #[doc =
+        "Set the field `runtime`.\nThe runtime in which to run the function. Required when deploying a new\nfunction, optional when updating an existing function."]
+    pub fn set_runtime(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.runtime = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `worker_pool`.\nName of the Cloud Build Custom Worker Pool that should be used to build the function."]
-    pub fn set_worker_pool(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.worker_pool = Some(v.into());
+    #[doc =
+        "Set the field `worker_pool`.\nName of the Cloud Build Custom Worker Pool that should be used to build the function."]
+    pub fn set_worker_pool(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.worker_pool = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source`.\n"]
-    pub fn set_source(mut self, v: impl Into<BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceEl>>) -> Self {
+    #[doc = "Set the field `source`.\n"]
+    pub fn set_source(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigElSourceEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.source = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionBuildConfigEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionBuildConfigEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionBuildConfigEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionBuildConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -872,18 +989,18 @@ impl BuildCloudfunctions2FunctionBuildConfigEl {
             runtime: core::default::Default::default(),
             worker_pool: core::default::Default::default(),
             source: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Cloudfunctions2FunctionBuildConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionBuildConfigElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionBuildConfigElRef {
+impl terrars::Ref for Cloudfunctions2FunctionBuildConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudfunctions2FunctionBuildConfigElRef {
         Cloudfunctions2FunctionBuildConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -892,67 +1009,74 @@ impl Ref for Cloudfunctions2FunctionBuildConfigElRef {
 }
 
 impl Cloudfunctions2FunctionBuildConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `build` after provisioning.\nThe Cloud Build name of the latest successful\ndeployment of the function."]
-    pub fn build(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.build", self.base))
+    #[doc =
+        "Get a reference to the value of field `build` after provisioning.\nThe Cloud Build name of the latest successful\ndeployment of the function."]
+    pub fn build(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.build", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `docker_repository` after provisioning.\nUser managed repository created in Artifact Registry optionally with a customer managed encryption key."]
-    pub fn docker_repository(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.docker_repository", self.base))
+    #[doc =
+        "Get a reference to the value of field `docker_repository` after provisioning.\nUser managed repository created in Artifact Registry optionally with a customer managed encryption key."]
+    pub fn docker_repository(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.docker_repository", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `entry_point` after provisioning.\nThe name of the function (as defined in source code) that will be executed.\nDefaults to the resource name suffix, if not specified. For backward\ncompatibility, if function with given name is not found, then the system\nwill try to use function named \"function\". For Node.js this is name of a\nfunction exported by the module specified in source_location."]
-    pub fn entry_point(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.entry_point", self.base))
+    #[doc =
+        "Get a reference to the value of field `entry_point` after provisioning.\nThe name of the function (as defined in source code) that will be executed.\nDefaults to the resource name suffix, if not specified. For backward\ncompatibility, if function with given name is not found, then the system\nwill try to use function named \"function\". For Node.js this is name of a\nfunction exported by the module specified in source_location."]
+    pub fn entry_point(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.entry_point", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `environment_variables` after provisioning.\nUser-provided build-time environment variables for the function."]
-    pub fn environment_variables(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.environment_variables", self.base))
+    #[doc =
+        "Get a reference to the value of field `environment_variables` after provisioning.\nUser-provided build-time environment variables for the function."]
+    pub fn environment_variables(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.environment_variables", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `runtime` after provisioning.\nThe runtime in which to run the function. Required when deploying a new\nfunction, optional when updating an existing function."]
-    pub fn runtime(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.runtime", self.base))
+    #[doc =
+        "Get a reference to the value of field `runtime` after provisioning.\nThe runtime in which to run the function. Required when deploying a new\nfunction, optional when updating an existing function."]
+    pub fn runtime(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `worker_pool` after provisioning.\nName of the Cloud Build Custom Worker Pool that should be used to build the function."]
-    pub fn worker_pool(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.worker_pool", self.base))
+    #[doc =
+        "Get a reference to the value of field `worker_pool` after provisioning.\nName of the Cloud Build Custom Worker Pool that should be used to build the function."]
+    pub fn worker_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.worker_pool", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<Cloudfunctions2FunctionBuildConfigElSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.base))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<Cloudfunctions2FunctionBuildConfigElSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionEventTriggerElEventFiltersEl {
-    attribute: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    operator: Option<PrimField<String>>,
-    value: PrimField<String>,
+    attribute: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    operator: std::option::Option<terrars::PrimField<std::string::String>>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl Cloudfunctions2FunctionEventTriggerElEventFiltersEl {
-    #[doc= "Set the field `operator`.\nOptional. The operator used for matching the events with the value of\nthe filter. If not specified, only events that have an exact key-value\npair specified in the filter are matched.\nThe only allowed value is 'match-path-pattern'.\n[See documentation on path patterns here](https://cloud.google.com/eventarc/docs/path-patterns)'"]
-    pub fn set_operator(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.operator = Some(v.into());
+    #[doc =
+        "Set the field `operator`.\nOptional. The operator used for matching the events with the value of\nthe filter. If not specified, only events that have an exact key-value\npair specified in the filter are matched.\nThe only allowed value is 'match-path-pattern'.\n[See documentation on path patterns here](https://cloud.google.com/eventarc/docs/path-patterns)'"]
+    pub fn set_operator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.operator = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionEventTriggerElEventFiltersEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionEventTriggerElEventFiltersEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -961,10 +1085,12 @@ impl ToListMappable for Cloudfunctions2FunctionEventTriggerElEventFiltersEl {
 }
 
 pub struct BuildCloudfunctions2FunctionEventTriggerElEventFiltersEl {
-    #[doc= "'Required. The name of a CloudEvents attribute.\nCurrently, only a subset of attributes are supported for filtering. Use the 'gcloud eventarc providers describe' command to learn more about events and their attributes.\nDo not filter for the 'type' attribute here, as this is already achieved by the resource's 'event_type' attribute."]
-    pub attribute: PrimField<String>,
-    #[doc= "Required. The value for the attribute.\nIf the operator field is set as 'match-path-pattern', this value can be a path pattern instead of an exact value."]
-    pub value: PrimField<String>,
+    #[doc =
+        "'Required. The name of a CloudEvents attribute.\nCurrently, only a subset of attributes are supported for filtering. Use the 'gcloud eventarc providers describe' command to learn more about events and their attributes.\nDo not filter for the 'type' attribute here, as this is already achieved by the resource's 'event_type' attribute."]
+    pub attribute: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Required. The value for the attribute.\nIf the operator field is set as 'match-path-pattern', this value can be a path pattern instead of an exact value."]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudfunctions2FunctionEventTriggerElEventFiltersEl {
@@ -978,12 +1104,15 @@ impl BuildCloudfunctions2FunctionEventTriggerElEventFiltersEl {
 }
 
 pub struct Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
+impl terrars::Ref for Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
         Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
             shared: shared,
             base: base.to_string(),
@@ -992,101 +1121,111 @@ impl Ref for Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
 }
 
 impl Cloudfunctions2FunctionEventTriggerElEventFiltersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `attribute` after provisioning.\n'Required. The name of a CloudEvents attribute.\nCurrently, only a subset of attributes are supported for filtering. Use the 'gcloud eventarc providers describe' command to learn more about events and their attributes.\nDo not filter for the 'type' attribute here, as this is already achieved by the resource's 'event_type' attribute."]
-    pub fn attribute(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.attribute", self.base))
+    #[doc =
+        "Get a reference to the value of field `attribute` after provisioning.\n'Required. The name of a CloudEvents attribute.\nCurrently, only a subset of attributes are supported for filtering. Use the 'gcloud eventarc providers describe' command to learn more about events and their attributes.\nDo not filter for the 'type' attribute here, as this is already achieved by the resource's 'event_type' attribute."]
+    pub fn attribute(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operator` after provisioning.\nOptional. The operator used for matching the events with the value of\nthe filter. If not specified, only events that have an exact key-value\npair specified in the filter are matched.\nThe only allowed value is 'match-path-pattern'.\n[See documentation on path patterns here](https://cloud.google.com/eventarc/docs/path-patterns)'"]
-    pub fn operator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
+    #[doc =
+        "Get a reference to the value of field `operator` after provisioning.\nOptional. The operator used for matching the events with the value of\nthe filter. If not specified, only events that have an exact key-value\npair specified in the filter are matched.\nThe only allowed value is 'match-path-pattern'.\n[See documentation on path patterns here](https://cloud.google.com/eventarc/docs/path-patterns)'"]
+    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\nRequired. The value for the attribute.\nIf the operator field is set as 'match-path-pattern', this value can be a path pattern instead of an exact value."]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc =
+        "Get a reference to the value of field `value` after provisioning.\nRequired. The value for the attribute.\nIf the operator field is set as 'match-path-pattern', this value can be a path pattern instead of an exact value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Cloudfunctions2FunctionEventTriggerElDynamic {
-    event_filters: Option<DynamicBlock<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
+    event_filters: std::option::Option<terrars::DynamicBlock<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionEventTriggerEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    event_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pubsub_topic: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retry_policy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_account_email: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    trigger_region: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    event_filters: Option<Vec<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pubsub_topic: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retry_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trigger_region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_filters: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
     dynamic: Cloudfunctions2FunctionEventTriggerElDynamic,
 }
 
 impl Cloudfunctions2FunctionEventTriggerEl {
-    #[doc= "Set the field `event_type`.\nRequired. The type of event to observe."]
-    pub fn set_event_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.event_type = Some(v.into());
+    #[doc = "Set the field `event_type`.\nRequired. The type of event to observe."]
+    pub fn set_event_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.event_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `pubsub_topic`.\nThe name of a Pub/Sub topic in the same project that will be used\nas the transport topic for the event delivery."]
-    pub fn set_pubsub_topic(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.pubsub_topic = Some(v.into());
+    #[doc =
+        "Set the field `pubsub_topic`.\nThe name of a Pub/Sub topic in the same project that will be used\nas the transport topic for the event delivery."]
+    pub fn set_pubsub_topic(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pubsub_topic = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `retry_policy`.\nDescribes the retry policy in case of function's execution failure.\nRetried execution is charged as any other execution. Possible values: [\"RETRY_POLICY_UNSPECIFIED\", \"RETRY_POLICY_DO_NOT_RETRY\", \"RETRY_POLICY_RETRY\"]"]
-    pub fn set_retry_policy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.retry_policy = Some(v.into());
+    #[doc =
+        "Set the field `retry_policy`.\nDescribes the retry policy in case of function's execution failure.\nRetried execution is charged as any other execution. Possible values: [\"RETRY_POLICY_UNSPECIFIED\", \"RETRY_POLICY_DO_NOT_RETRY\", \"RETRY_POLICY_RETRY\"]"]
+    pub fn set_retry_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.retry_policy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_account_email`.\nOptional. The email of the trigger's service account. The service account\nmust have permission to invoke Cloud Run services. If empty, defaults to the\nCompute Engine default service account: {project_number}-compute@developer.gserviceaccount.com."]
-    pub fn set_service_account_email(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_account_email = Some(v.into());
+    #[doc =
+        "Set the field `service_account_email`.\nOptional. The email of the trigger's service account. The service account\nmust have permission to invoke Cloud Run services. If empty, defaults to the\nCompute Engine default service account: {project_number}-compute@developer.gserviceaccount.com."]
+    pub fn set_service_account_email(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.service_account_email = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `trigger_region`.\nThe region that the trigger will be in. The trigger will only receive\nevents originating in this region. It can be the same\nregion as the function, a different region or multi-region, or the global\nregion. If not provided, defaults to the same region as the function."]
-    pub fn set_trigger_region(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.trigger_region = Some(v.into());
+    #[doc =
+        "Set the field `trigger_region`.\nThe region that the trigger will be in. The trigger will only receive\nevents originating in this region. It can be the same\nregion as the function, a different region or multi-region, or the global\nregion. If not provided, defaults to the same region as the function."]
+    pub fn set_trigger_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.trigger_region = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `event_filters`.\n"]
+    #[doc = "Set the field `event_filters`.\n"]
     pub fn set_event_filters(
         mut self,
-        v: impl Into<BlockAssignable<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.event_filters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.event_filters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.event_filters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.event_filters = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionEventTriggerEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionEventTriggerEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionEventTriggerEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionEventTriggerEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1105,18 +1244,18 @@ impl BuildCloudfunctions2FunctionEventTriggerEl {
             service_account_email: core::default::Default::default(),
             trigger_region: core::default::Default::default(),
             event_filters: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Cloudfunctions2FunctionEventTriggerElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionEventTriggerElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionEventTriggerElRef {
+impl terrars::Ref for Cloudfunctions2FunctionEventTriggerElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudfunctions2FunctionEventTriggerElRef {
         Cloudfunctions2FunctionEventTriggerElRef {
             shared: shared,
             base: base.to_string(),
@@ -1125,56 +1264,62 @@ impl Ref for Cloudfunctions2FunctionEventTriggerElRef {
 }
 
 impl Cloudfunctions2FunctionEventTriggerElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `event_type` after provisioning.\nRequired. The type of event to observe."]
-    pub fn event_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.event_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `event_type` after provisioning.\nRequired. The type of event to observe."]
+    pub fn event_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pubsub_topic` after provisioning.\nThe name of a Pub/Sub topic in the same project that will be used\nas the transport topic for the event delivery."]
-    pub fn pubsub_topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pubsub_topic", self.base))
+    #[doc =
+        "Get a reference to the value of field `pubsub_topic` after provisioning.\nThe name of a Pub/Sub topic in the same project that will be used\nas the transport topic for the event delivery."]
+    pub fn pubsub_topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pubsub_topic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `retry_policy` after provisioning.\nDescribes the retry policy in case of function's execution failure.\nRetried execution is charged as any other execution. Possible values: [\"RETRY_POLICY_UNSPECIFIED\", \"RETRY_POLICY_DO_NOT_RETRY\", \"RETRY_POLICY_RETRY\"]"]
-    pub fn retry_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.retry_policy", self.base))
+    #[doc =
+        "Get a reference to the value of field `retry_policy` after provisioning.\nDescribes the retry policy in case of function's execution failure.\nRetried execution is charged as any other execution. Possible values: [\"RETRY_POLICY_UNSPECIFIED\", \"RETRY_POLICY_DO_NOT_RETRY\", \"RETRY_POLICY_RETRY\"]"]
+    pub fn retry_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_account_email` after provisioning.\nOptional. The email of the trigger's service account. The service account\nmust have permission to invoke Cloud Run services. If empty, defaults to the\nCompute Engine default service account: {project_number}-compute@developer.gserviceaccount.com."]
-    pub fn service_account_email(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.base))
+    #[doc =
+        "Get a reference to the value of field `service_account_email` after provisioning.\nOptional. The email of the trigger's service account. The service account\nmust have permission to invoke Cloud Run services. If empty, defaults to the\nCompute Engine default service account: {project_number}-compute@developer.gserviceaccount.com."]
+    pub fn service_account_email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `trigger` after provisioning.\nOutput only. The resource name of the Eventarc trigger."]
-    pub fn trigger(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.trigger", self.base))
+    #[doc =
+        "Get a reference to the value of field `trigger` after provisioning.\nOutput only. The resource name of the Eventarc trigger."]
+    pub fn trigger(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.trigger", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `trigger_region` after provisioning.\nThe region that the trigger will be in. The trigger will only receive\nevents originating in this region. It can be the same\nregion as the function, a different region or multi-region, or the global\nregion. If not provided, defaults to the same region as the function."]
-    pub fn trigger_region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.trigger_region", self.base))
+    #[doc =
+        "Get a reference to the value of field `trigger_region` after provisioning.\nThe region that the trigger will be in. The trigger will only receive\nevents originating in this region. It can be the same\nregion as the function, a different region or multi-region, or the global\nregion. If not provided, defaults to the same region as the function."]
+    pub fn trigger_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.trigger_region", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
-    key: PrimField<String>,
-    project_id: PrimField<String>,
-    secret: PrimField<String>,
-    version: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    project_id: terrars::PrimField<std::string::String>,
+    secret: terrars::PrimField<std::string::String>,
+    version: terrars::PrimField<std::string::String>,
 }
 
 impl Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl { }
 
-impl ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1183,14 +1328,16 @@ impl ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretEnvironmentV
 }
 
 pub struct BuildCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
-    #[doc= "Name of the environment variable."]
-    pub key: PrimField<String>,
-    #[doc= "Project identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
-    pub project_id: PrimField<String>,
-    #[doc= "Name of the secret in secret manager (not the full resource name)."]
-    pub secret: PrimField<String>,
-    #[doc= "Version of the secret (version number or the string 'latest'). It is recommended to use a numeric version for secret environment variables as any updates to the secret value is not reflected until new instances start."]
-    pub version: PrimField<String>,
+    #[doc = "Name of the environment variable."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Project identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
+    pub project_id: terrars::PrimField<std::string::String>,
+    #[doc = "Name of the secret in secret manager (not the full resource name)."]
+    pub secret: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Version of the secret (version number or the string 'latest'). It is recommended to use a numeric version for secret environment variables as any updates to the secret value is not reflected until new instances start."]
+    pub version: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
@@ -1205,14 +1352,14 @@ impl BuildCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
 }
 
 pub struct Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
+impl terrars::Ref for Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
         Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
             shared: shared,
@@ -1222,44 +1369,47 @@ impl Ref for Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElR
 }
 
 impl Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nName of the environment variable."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nName of the environment variable."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project_id` after provisioning.\nProject identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
-    pub fn project_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
+    #[doc =
+        "Get a reference to the value of field `project_id` after provisioning.\nProject identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
+    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret` after provisioning.\nName of the secret in secret manager (not the full resource name)."]
-    pub fn secret(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.secret", self.base))
+    #[doc =
+        "Get a reference to the value of field `secret` after provisioning.\nName of the secret in secret manager (not the full resource name)."]
+    pub fn secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nVersion of the secret (version number or the string 'latest'). It is recommended to use a numeric version for secret environment variables as any updates to the secret value is not reflected until new instances start."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nVersion of the secret (version number or the string 'latest'). It is recommended to use a numeric version for secret environment variables as any updates to the secret value is not reflected until new instances start."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
-    path: PrimField<String>,
-    version: PrimField<String>,
+    path: terrars::PrimField<std::string::String>,
+    version: terrars::PrimField<std::string::String>,
 }
 
 impl Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl { }
 
-impl ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1268,10 +1418,12 @@ impl ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretVolumesElVer
 }
 
 pub struct BuildCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
-    #[doc= "Relative path of the file under the mount path where the secret value for this version will be fetched and made available. For example, setting the mountPath as '/etc/secrets' and path as secret_foo would mount the secret value file at /etc/secrets/secret_foo."]
-    pub path: PrimField<String>,
-    #[doc= "Version of the secret (version number or the string 'latest'). It is preferable to use latest version with secret volumes as secret value changes are reflected immediately."]
-    pub version: PrimField<String>,
+    #[doc =
+        "Relative path of the file under the mount path where the secret value for this version will be fetched and made available. For example, setting the mountPath as '/etc/secrets' and path as secret_foo would mount the secret value file at /etc/secrets/secret_foo."]
+    pub path: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Version of the secret (version number or the string 'latest'). It is preferable to use latest version with secret volumes as secret value changes are reflected immediately."]
+    pub version: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
@@ -1284,12 +1436,15 @@ impl BuildCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
 }
 
 pub struct Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
+impl terrars::Ref for Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
         Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1298,59 +1453,68 @@ impl Ref for Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef 
 }
 
 impl Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nRelative path of the file under the mount path where the secret value for this version will be fetched and made available. For example, setting the mountPath as '/etc/secrets' and path as secret_foo would mount the secret value file at /etc/secrets/secret_foo."]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nRelative path of the file under the mount path where the secret value for this version will be fetched and made available. For example, setting the mountPath as '/etc/secrets' and path as secret_foo would mount the secret value file at /etc/secrets/secret_foo."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nVersion of the secret (version number or the string 'latest'). It is preferable to use latest version with secret volumes as secret value changes are reflected immediately."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nVersion of the secret (version number or the string 'latest'). It is preferable to use latest version with secret volumes as secret value changes are reflected immediately."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Cloudfunctions2FunctionServiceConfigElSecretVolumesElDynamic {
-    versions: Option<DynamicBlock<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
+    versions: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionServiceConfigElSecretVolumesEl {
-    mount_path: PrimField<String>,
-    project_id: PrimField<String>,
-    secret: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    versions: Option<Vec<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
+    mount_path: terrars::PrimField<std::string::String>,
+    project_id: terrars::PrimField<std::string::String>,
+    secret: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    versions: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
     dynamic: Cloudfunctions2FunctionServiceConfigElSecretVolumesElDynamic,
 }
 
 impl Cloudfunctions2FunctionServiceConfigElSecretVolumesEl {
-    #[doc= "Set the field `versions`.\n"]
+    #[doc = "Set the field `versions`.\n"]
     pub fn set_versions(
         mut self,
-        v: impl Into<BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.versions = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.versions = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.versions = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.versions = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretVolumesEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretVolumesEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1359,12 +1523,14 @@ impl ToListMappable for Cloudfunctions2FunctionServiceConfigElSecretVolumesEl {
 }
 
 pub struct BuildCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
-    #[doc= "The path within the container to mount the secret volume. For example, setting the mountPath as /etc/secrets would mount the secret value files under the /etc/secrets directory. This directory will also be completely shadowed and unavailable to mount any other secrets. Recommended mount path: /etc/secrets"]
-    pub mount_path: PrimField<String>,
-    #[doc= "Project identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
-    pub project_id: PrimField<String>,
-    #[doc= "Name of the secret in secret manager (not the full resource name)."]
-    pub secret: PrimField<String>,
+    #[doc =
+        "The path within the container to mount the secret volume. For example, setting the mountPath as /etc/secrets would mount the secret value files under the /etc/secrets directory. This directory will also be completely shadowed and unavailable to mount any other secrets. Recommended mount path: /etc/secrets"]
+    pub mount_path: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Project identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
+    pub project_id: terrars::PrimField<std::string::String>,
+    #[doc = "Name of the secret in secret manager (not the full resource name)."]
+    pub secret: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
@@ -1374,18 +1540,21 @@ impl BuildCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
             project_id: self.project_id,
             secret: self.secret,
             versions: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
+impl terrars::Ref for Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
         Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
             shared: shared,
             base: base.to_string(),
@@ -1394,191 +1563,225 @@ impl Ref for Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
 }
 
 impl Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mount_path` after provisioning.\nThe path within the container to mount the secret volume. For example, setting the mountPath as /etc/secrets would mount the secret value files under the /etc/secrets directory. This directory will also be completely shadowed and unavailable to mount any other secrets. Recommended mount path: /etc/secrets"]
-    pub fn mount_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mount_path", self.base))
+    #[doc =
+        "Get a reference to the value of field `mount_path` after provisioning.\nThe path within the container to mount the secret volume. For example, setting the mountPath as /etc/secrets would mount the secret value files under the /etc/secrets directory. This directory will also be completely shadowed and unavailable to mount any other secrets. Recommended mount path: /etc/secrets"]
+    pub fn mount_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mount_path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `project_id` after provisioning.\nProject identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
-    pub fn project_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
+    #[doc =
+        "Get a reference to the value of field `project_id` after provisioning.\nProject identifier (preferrably project number but can also be the project ID) of the project that contains the secret. If not set, it will be populated with the function's project assuming that the secret exists in the same project as of the function."]
+    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret` after provisioning.\nName of the secret in secret manager (not the full resource name)."]
-    pub fn secret(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.secret", self.base))
+    #[doc =
+        "Get a reference to the value of field `secret` after provisioning.\nName of the secret in secret manager (not the full resource name)."]
+    pub fn secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `versions` after provisioning.\n"]
-    pub fn versions(&self) -> ListRef<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.versions", self.base))
+    #[doc = "Get a reference to the value of field `versions` after provisioning.\n"]
+    pub fn versions(&self) -> terrars::ListRef<Cloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.versions", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Cloudfunctions2FunctionServiceConfigElDynamic {
-    secret_environment_variables: Option<
-        DynamicBlock<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>,
-    >,
-    secret_volumes: Option<DynamicBlock<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
+    secret_environment_variables: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>>,
+    secret_volumes: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionServiceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    all_traffic_on_latest_revision: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    available_cpu: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    available_memory: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    environment_variables: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ingress_settings: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_instance_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_instance_request_concurrency: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_instance_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_account_email: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_connector: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_connector_egress_settings: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secret_environment_variables: Option<Vec<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secret_volumes: Option<Vec<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    all_traffic_on_latest_revision: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    available_cpu: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    available_memory: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    environment_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ingress_settings: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_instance_request_concurrency: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_connector: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_connector_egress_settings: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_environment_variables: std
+    ::option
+    ::Option<std::vec::Vec<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_volumes: std::option::Option<std::vec::Vec<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
     dynamic: Cloudfunctions2FunctionServiceConfigElDynamic,
 }
 
 impl Cloudfunctions2FunctionServiceConfigEl {
-    #[doc= "Set the field `all_traffic_on_latest_revision`.\nWhether 100% of traffic is routed to the latest revision. Defaults to true."]
-    pub fn set_all_traffic_on_latest_revision(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.all_traffic_on_latest_revision = Some(v.into());
+    #[doc =
+        "Set the field `all_traffic_on_latest_revision`.\nWhether 100% of traffic is routed to the latest revision. Defaults to true."]
+    pub fn set_all_traffic_on_latest_revision(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.all_traffic_on_latest_revision = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `available_cpu`.\nThe number of CPUs used in a single container instance. Default value is calculated from available memory."]
-    pub fn set_available_cpu(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.available_cpu = Some(v.into());
+    #[doc =
+        "Set the field `available_cpu`.\nThe number of CPUs used in a single container instance. Default value is calculated from available memory."]
+    pub fn set_available_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.available_cpu = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `available_memory`.\nThe amount of memory available for a function.\nDefaults to 256M. Supported units are k, M, G, Mi, Gi. If no unit is\nsupplied the value is interpreted as bytes."]
-    pub fn set_available_memory(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.available_memory = Some(v.into());
+    #[doc =
+        "Set the field `available_memory`.\nThe amount of memory available for a function.\nDefaults to 256M. Supported units are k, M, G, Mi, Gi. If no unit is\nsupplied the value is interpreted as bytes."]
+    pub fn set_available_memory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.available_memory = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `environment_variables`.\nEnvironment variables that shall be available during function execution."]
-    pub fn set_environment_variables(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.environment_variables = Some(v.into());
+    #[doc =
+        "Set the field `environment_variables`.\nEnvironment variables that shall be available during function execution."]
+    pub fn set_environment_variables(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.environment_variables = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ingress_settings`.\nAvailable ingress settings. Defaults to \"ALLOW_ALL\" if unspecified. Default value: \"ALLOW_ALL\" Possible values: [\"ALLOW_ALL\", \"ALLOW_INTERNAL_ONLY\", \"ALLOW_INTERNAL_AND_GCLB\"]"]
-    pub fn set_ingress_settings(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.ingress_settings = Some(v.into());
+    #[doc =
+        "Set the field `ingress_settings`.\nAvailable ingress settings. Defaults to \"ALLOW_ALL\" if unspecified. Default value: \"ALLOW_ALL\" Possible values: [\"ALLOW_ALL\", \"ALLOW_INTERNAL_ONLY\", \"ALLOW_INTERNAL_AND_GCLB\"]"]
+    pub fn set_ingress_settings(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ingress_settings = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_instance_count`.\nThe limit on the maximum number of function instances that may coexist at a\ngiven time."]
-    pub fn set_max_instance_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_instance_count = Some(v.into());
+    #[doc =
+        "Set the field `max_instance_count`.\nThe limit on the maximum number of function instances that may coexist at a\ngiven time."]
+    pub fn set_max_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_instance_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_instance_request_concurrency`.\nSets the maximum number of concurrent requests that each instance can receive. Defaults to 1."]
-    pub fn set_max_instance_request_concurrency(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_instance_request_concurrency = Some(v.into());
+    #[doc =
+        "Set the field `max_instance_request_concurrency`.\nSets the maximum number of concurrent requests that each instance can receive. Defaults to 1."]
+    pub fn set_max_instance_request_concurrency(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_instance_request_concurrency = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_instance_count`.\nThe limit on the minimum number of function instances that may coexist at a\ngiven time."]
-    pub fn set_min_instance_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min_instance_count = Some(v.into());
+    #[doc =
+        "Set the field `min_instance_count`.\nThe limit on the minimum number of function instances that may coexist at a\ngiven time."]
+    pub fn set_min_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_instance_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service`.\nName of the service associated with a Function."]
-    pub fn set_service(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service = Some(v.into());
+    #[doc = "Set the field `service`.\nName of the service associated with a Function."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_account_email`.\nThe email of the service account for this function."]
-    pub fn set_service_account_email(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_account_email = Some(v.into());
+    #[doc = "Set the field `service_account_email`.\nThe email of the service account for this function."]
+    pub fn set_service_account_email(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.service_account_email = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeout_seconds`.\nThe function execution timeout. Execution is considered failed and\ncan be terminated if the function is not completed at the end of the\ntimeout period. Defaults to 60 seconds."]
-    pub fn set_timeout_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.timeout_seconds = Some(v.into());
+    #[doc =
+        "Set the field `timeout_seconds`.\nThe function execution timeout. Execution is considered failed and\ncan be terminated if the function is not completed at the end of the\ntimeout period. Defaults to 60 seconds."]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_connector`.\nThe Serverless VPC Access connector that this cloud function can connect to."]
-    pub fn set_vpc_connector(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.vpc_connector = Some(v.into());
+    #[doc =
+        "Set the field `vpc_connector`.\nThe Serverless VPC Access connector that this cloud function can connect to."]
+    pub fn set_vpc_connector(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.vpc_connector = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_connector_egress_settings`.\nAvailable egress settings. Possible values: [\"VPC_CONNECTOR_EGRESS_SETTINGS_UNSPECIFIED\", \"PRIVATE_RANGES_ONLY\", \"ALL_TRAFFIC\"]"]
-    pub fn set_vpc_connector_egress_settings(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.vpc_connector_egress_settings = Some(v.into());
+    #[doc =
+        "Set the field `vpc_connector_egress_settings`.\nAvailable egress settings. Possible values: [\"VPC_CONNECTOR_EGRESS_SETTINGS_UNSPECIFIED\", \"PRIVATE_RANGES_ONLY\", \"ALL_TRAFFIC\"]"]
+    pub fn set_vpc_connector_egress_settings(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.vpc_connector_egress_settings = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `secret_environment_variables`.\n"]
+    #[doc = "Set the field `secret_environment_variables`.\n"]
     pub fn set_secret_environment_variables(
         mut self,
-        v: impl Into<BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.secret_environment_variables = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.secret_environment_variables = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.secret_environment_variables = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secret_environment_variables = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `secret_volumes`.\n"]
+    #[doc = "Set the field `secret_volumes`.\n"]
     pub fn set_secret_volumes(
         mut self,
-        v: impl Into<BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.secret_volumes = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.secret_volumes = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.secret_volumes = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secret_volumes = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionServiceConfigEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionServiceConfigEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionServiceConfigEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionServiceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1606,18 +1809,18 @@ impl BuildCloudfunctions2FunctionServiceConfigEl {
             vpc_connector_egress_settings: core::default::Default::default(),
             secret_environment_variables: core::default::Default::default(),
             secret_volumes: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Cloudfunctions2FunctionServiceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionServiceConfigElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionServiceConfigElRef {
+impl terrars::Ref for Cloudfunctions2FunctionServiceConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudfunctions2FunctionServiceConfigElRef {
         Cloudfunctions2FunctionServiceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1626,133 +1829,146 @@ impl Ref for Cloudfunctions2FunctionServiceConfigElRef {
 }
 
 impl Cloudfunctions2FunctionServiceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `all_traffic_on_latest_revision` after provisioning.\nWhether 100% of traffic is routed to the latest revision. Defaults to true."]
-    pub fn all_traffic_on_latest_revision(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.all_traffic_on_latest_revision", self.base))
+    #[doc =
+        "Get a reference to the value of field `all_traffic_on_latest_revision` after provisioning.\nWhether 100% of traffic is routed to the latest revision. Defaults to true."]
+    pub fn all_traffic_on_latest_revision(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.all_traffic_on_latest_revision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `available_cpu` after provisioning.\nThe number of CPUs used in a single container instance. Default value is calculated from available memory."]
-    pub fn available_cpu(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.available_cpu", self.base))
+    #[doc =
+        "Get a reference to the value of field `available_cpu` after provisioning.\nThe number of CPUs used in a single container instance. Default value is calculated from available memory."]
+    pub fn available_cpu(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.available_cpu", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `available_memory` after provisioning.\nThe amount of memory available for a function.\nDefaults to 256M. Supported units are k, M, G, Mi, Gi. If no unit is\nsupplied the value is interpreted as bytes."]
-    pub fn available_memory(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.available_memory", self.base))
+    #[doc =
+        "Get a reference to the value of field `available_memory` after provisioning.\nThe amount of memory available for a function.\nDefaults to 256M. Supported units are k, M, G, Mi, Gi. If no unit is\nsupplied the value is interpreted as bytes."]
+    pub fn available_memory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.available_memory", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `environment_variables` after provisioning.\nEnvironment variables that shall be available during function execution."]
-    pub fn environment_variables(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.environment_variables", self.base))
+    #[doc =
+        "Get a reference to the value of field `environment_variables` after provisioning.\nEnvironment variables that shall be available during function execution."]
+    pub fn environment_variables(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.environment_variables", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gcf_uri` after provisioning.\nURIs of the Service deployed"]
-    pub fn gcf_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gcf_uri", self.base))
+    #[doc = "Get a reference to the value of field `gcf_uri` after provisioning.\nURIs of the Service deployed"]
+    pub fn gcf_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gcf_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ingress_settings` after provisioning.\nAvailable ingress settings. Defaults to \"ALLOW_ALL\" if unspecified. Default value: \"ALLOW_ALL\" Possible values: [\"ALLOW_ALL\", \"ALLOW_INTERNAL_ONLY\", \"ALLOW_INTERNAL_AND_GCLB\"]"]
-    pub fn ingress_settings(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ingress_settings", self.base))
+    #[doc =
+        "Get a reference to the value of field `ingress_settings` after provisioning.\nAvailable ingress settings. Defaults to \"ALLOW_ALL\" if unspecified. Default value: \"ALLOW_ALL\" Possible values: [\"ALLOW_ALL\", \"ALLOW_INTERNAL_ONLY\", \"ALLOW_INTERNAL_AND_GCLB\"]"]
+    pub fn ingress_settings(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ingress_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_instance_count` after provisioning.\nThe limit on the maximum number of function instances that may coexist at a\ngiven time."]
-    pub fn max_instance_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_instance_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_instance_count` after provisioning.\nThe limit on the maximum number of function instances that may coexist at a\ngiven time."]
+    pub fn max_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_instance_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_instance_request_concurrency` after provisioning.\nSets the maximum number of concurrent requests that each instance can receive. Defaults to 1."]
-    pub fn max_instance_request_concurrency(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_instance_request_concurrency", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_instance_request_concurrency` after provisioning.\nSets the maximum number of concurrent requests that each instance can receive. Defaults to 1."]
+    pub fn max_instance_request_concurrency(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_instance_request_concurrency", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_instance_count` after provisioning.\nThe limit on the minimum number of function instances that may coexist at a\ngiven time."]
-    pub fn min_instance_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_instance_count", self.base))
+    #[doc =
+        "Get a reference to the value of field `min_instance_count` after provisioning.\nThe limit on the minimum number of function instances that may coexist at a\ngiven time."]
+    pub fn min_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_instance_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service` after provisioning.\nName of the service associated with a Function."]
-    pub fn service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nName of the service associated with a Function."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_account_email` after provisioning.\nThe email of the service account for this function."]
-    pub fn service_account_email(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.base))
+    #[doc =
+        "Get a reference to the value of field `service_account_email` after provisioning.\nThe email of the service account for this function."]
+    pub fn service_account_email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_seconds` after provisioning.\nThe function execution timeout. Execution is considered failed and\ncan be terminated if the function is not completed at the end of the\ntimeout period. Defaults to 60 seconds."]
-    pub fn timeout_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `timeout_seconds` after provisioning.\nThe function execution timeout. Execution is considered failed and\ncan be terminated if the function is not completed at the end of the\ntimeout period. Defaults to 60 seconds."]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `uri` after provisioning.\nURI of the Service deployed."]
-    pub fn uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
+    #[doc = "Get a reference to the value of field `uri` after provisioning.\nURI of the Service deployed."]
+    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_connector` after provisioning.\nThe Serverless VPC Access connector that this cloud function can connect to."]
-    pub fn vpc_connector(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_connector", self.base))
+    #[doc =
+        "Get a reference to the value of field `vpc_connector` after provisioning.\nThe Serverless VPC Access connector that this cloud function can connect to."]
+    pub fn vpc_connector(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_connector", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_connector_egress_settings` after provisioning.\nAvailable egress settings. Possible values: [\"VPC_CONNECTOR_EGRESS_SETTINGS_UNSPECIFIED\", \"PRIVATE_RANGES_ONLY\", \"ALL_TRAFFIC\"]"]
-    pub fn vpc_connector_egress_settings(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_connector_egress_settings", self.base))
+    #[doc =
+        "Get a reference to the value of field `vpc_connector_egress_settings` after provisioning.\nAvailable egress settings. Possible values: [\"VPC_CONNECTOR_EGRESS_SETTINGS_UNSPECIFIED\", \"PRIVATE_RANGES_ONLY\", \"ALL_TRAFFIC\"]"]
+    pub fn vpc_connector_egress_settings(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_connector_egress_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret_environment_variables` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `secret_environment_variables` after provisioning.\n"]
     pub fn secret_environment_variables(
         &self,
-    ) -> ListRef<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.secret_environment_variables", self.base))
+    ) -> terrars::ListRef<Cloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secret_environment_variables", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret_volumes` after provisioning.\n"]
-    pub fn secret_volumes(&self) -> ListRef<Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.secret_volumes", self.base))
+    #[doc = "Get a reference to the value of field `secret_volumes` after provisioning.\n"]
+    pub fn secret_volumes(&self) -> terrars::ListRef<Cloudfunctions2FunctionServiceConfigElSecretVolumesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secret_volumes", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Cloudfunctions2FunctionTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Cloudfunctions2FunctionTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Cloudfunctions2FunctionTimeoutsEl {
-    type O = BlockAssignable<Cloudfunctions2FunctionTimeoutsEl>;
+impl terrars::ToListMappable for Cloudfunctions2FunctionTimeoutsEl {
+    type O = terrars::BlockAssignable<Cloudfunctions2FunctionTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1773,12 +1989,12 @@ impl BuildCloudfunctions2FunctionTimeoutsEl {
 }
 
 pub struct Cloudfunctions2FunctionTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Cloudfunctions2FunctionTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> Cloudfunctions2FunctionTimeoutsElRef {
+impl terrars::Ref for Cloudfunctions2FunctionTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudfunctions2FunctionTimeoutsElRef {
         Cloudfunctions2FunctionTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1787,29 +2003,29 @@ impl Ref for Cloudfunctions2FunctionTimeoutsElRef {
 }
 
 impl Cloudfunctions2FunctionTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Cloudfunctions2FunctionDynamic {
-    build_config: Option<DynamicBlock<Cloudfunctions2FunctionBuildConfigEl>>,
-    event_trigger: Option<DynamicBlock<Cloudfunctions2FunctionEventTriggerEl>>,
-    service_config: Option<DynamicBlock<Cloudfunctions2FunctionServiceConfigEl>>,
+    build_config: std::option::Option<terrars::DynamicBlock<Cloudfunctions2FunctionBuildConfigEl>>,
+    event_trigger: std::option::Option<terrars::DynamicBlock<Cloudfunctions2FunctionEventTriggerEl>>,
+    service_config: std::option::Option<terrars::DynamicBlock<Cloudfunctions2FunctionServiceConfigEl>>,
 }

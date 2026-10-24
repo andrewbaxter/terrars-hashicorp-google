@@ -1,134 +1,170 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataCertificateManagerCertificateMapData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataCertificateManagerCertificateMap_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataCertificateManagerCertificateMapData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataCertificateManagerCertificateMapData>,
 }
 
 #[derive(Clone)]
-pub struct DataCertificateManagerCertificateMap(Rc<DataCertificateManagerCertificateMap_>);
+pub struct DataCertificateManagerCertificateMap(std::rc::Rc<DataCertificateManagerCertificateMap_>);
 
 impl DataCertificateManagerCertificateMap {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
-    pub fn gclb_targets(&self) -> ListRef<DataCertificateManagerCertificateMapGclbTargetsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nSet of labels associated with a Certificate Map resource.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
+    pub fn gclb_targets(&self) -> terrars::ListRef<DataCertificateManagerCertificateMapGclbTargetsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the Certificate Map. Certificate Map names must be unique\nglobally and match the pattern 'projects/*/locations/*/certificateMaps/*'."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nSet of labels associated with a Certificate Map resource.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the Certificate Map. Certificate Map names must be unique\nglobally and match the pattern 'projects/*/locations/*/certificateMaps/*'."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nUpdate timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nUpdate timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 }
 
-impl Referable for DataCertificateManagerCertificateMap {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataCertificateManagerCertificateMap {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataCertificateManagerCertificateMap { }
+impl terrars::Datasource for DataCertificateManagerCertificateMap { }
 
-impl ToListMappable for DataCertificateManagerCertificateMap {
-    type O = ListRef<DataCertificateManagerCertificateMapRef>;
+impl terrars::ToListMappable for DataCertificateManagerCertificateMap {
+    type O = terrars::ListRef<DataCertificateManagerCertificateMapRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataCertificateManagerCertificateMap_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataCertificateManagerCertificateMap_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_certificate_manager_certificate_map".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -138,20 +174,22 @@ impl Datasource_ for DataCertificateManagerCertificateMap_ {
 }
 
 pub struct BuildDataCertificateManagerCertificateMap {
-    pub tf_id: String,
-    #[doc= "A user-defined name of the Certificate Map. Certificate Map names must be unique\nglobally and match the pattern 'projects/*/locations/*/certificateMaps/*'."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "A user-defined name of the Certificate Map. Certificate Map names must be unique\nglobally and match the pattern 'projects/*/locations/*/certificateMaps/*'."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataCertificateManagerCertificateMap {
-    pub fn build(self, stack: &mut Stack) -> DataCertificateManagerCertificateMap {
-        let out = DataCertificateManagerCertificateMap(Rc::new(DataCertificateManagerCertificateMap_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataCertificateManagerCertificateMap {
+        let out = DataCertificateManagerCertificateMap(std::rc::Rc::new(DataCertificateManagerCertificateMap_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataCertificateManagerCertificateMapData {
+            data: std::cell::RefCell::new(DataCertificateManagerCertificateMapData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -163,12 +201,12 @@ impl BuildDataCertificateManagerCertificateMap {
 }
 
 pub struct DataCertificateManagerCertificateMapRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCertificateManagerCertificateMapRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataCertificateManagerCertificateMapRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -177,92 +215,100 @@ impl Ref for DataCertificateManagerCertificateMapRef {
 }
 
 impl DataCertificateManagerCertificateMapRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
-    pub fn gclb_targets(&self) -> ListRef<DataCertificateManagerCertificateMapGclbTargetsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
+    pub fn gclb_targets(&self) -> terrars::ListRef<DataCertificateManagerCertificateMapGclbTargetsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nSet of labels associated with a Certificate Map resource.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nSet of labels associated with a Certificate Map resource.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the Certificate Map. Certificate Map names must be unique\nglobally and match the pattern 'projects/*/locations/*/certificateMaps/*'."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nA user-defined name of the Certificate Map. Certificate Map names must be unique\nglobally and match the pattern 'projects/*/locations/*/certificateMaps/*'."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nUpdate timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nUpdate timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ip_address: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ports: Option<ListField<PrimField<f64>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ports: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
 }
 
 impl DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-    #[doc= "Set the field `ip_address`.\n"]
-    pub fn set_ip_address(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.ip_address = Some(v.into());
+    #[doc = "Set the field `ip_address`.\n"]
+    pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ports`.\n"]
-    pub fn set_ports(mut self, v: impl Into<ListField<PrimField<f64>>>) -> Self {
-        self.ports = Some(v.into());
+    #[doc = "Set the field `ports`.\n"]
+    pub fn set_ports(mut self, v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>) -> Self {
+        self.ports = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-    type O = BlockAssignable<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>;
+impl terrars::ToListMappable for DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
+    type O = terrars::BlockAssignable<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -282,12 +328,15 @@ impl BuildDataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
 }
 
 pub struct DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
-    fn new(shared: StackShared, base: String) -> DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+impl terrars::Ref for DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
         DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
             shared: shared,
             base: base.to_string(),
@@ -296,59 +345,62 @@ impl Ref for DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
 }
 
 impl DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip_address` after provisioning.\n"]
-    pub fn ip_address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
+    pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ports` after provisioning.\n"]
-    pub fn ports(&self) -> ListRef<PrimExpr<f64>> {
-        ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
+    #[doc = "Get a reference to the value of field `ports` after provisioning.\n"]
+    pub fn ports(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCertificateManagerCertificateMapGclbTargetsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ip_configs: Option<ListField<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_https_proxy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_ssl_proxy: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_configs: std::option::Option<terrars::ListField<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_https_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_ssl_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataCertificateManagerCertificateMapGclbTargetsEl {
-    #[doc= "Set the field `ip_configs`.\n"]
+    #[doc = "Set the field `ip_configs`.\n"]
     pub fn set_ip_configs(
         mut self,
-        v: impl Into<ListField<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
     ) -> Self {
-        self.ip_configs = Some(v.into());
+        self.ip_configs = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_https_proxy`.\n"]
-    pub fn set_target_https_proxy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.target_https_proxy = Some(v.into());
+    #[doc = "Set the field `target_https_proxy`.\n"]
+    pub fn set_target_https_proxy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.target_https_proxy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_ssl_proxy`.\n"]
-    pub fn set_target_ssl_proxy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.target_ssl_proxy = Some(v.into());
+    #[doc = "Set the field `target_ssl_proxy`.\n"]
+    pub fn set_target_ssl_proxy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target_ssl_proxy = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCertificateManagerCertificateMapGclbTargetsEl {
-    type O = BlockAssignable<DataCertificateManagerCertificateMapGclbTargetsEl>;
+impl terrars::ToListMappable for DataCertificateManagerCertificateMapGclbTargetsEl {
+    type O = terrars::BlockAssignable<DataCertificateManagerCertificateMapGclbTargetsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -369,12 +421,15 @@ impl BuildDataCertificateManagerCertificateMapGclbTargetsEl {
 }
 
 pub struct DataCertificateManagerCertificateMapGclbTargetsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCertificateManagerCertificateMapGclbTargetsElRef {
-    fn new(shared: StackShared, base: String) -> DataCertificateManagerCertificateMapGclbTargetsElRef {
+impl terrars::Ref for DataCertificateManagerCertificateMapGclbTargetsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCertificateManagerCertificateMapGclbTargetsElRef {
         DataCertificateManagerCertificateMapGclbTargetsElRef {
             shared: shared,
             base: base.to_string(),
@@ -383,22 +438,22 @@ impl Ref for DataCertificateManagerCertificateMapGclbTargetsElRef {
 }
 
 impl DataCertificateManagerCertificateMapGclbTargetsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip_configs` after provisioning.\n"]
-    pub fn ip_configs(&self) -> ListRef<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ip_configs", self.base))
+    #[doc = "Get a reference to the value of field `ip_configs` after provisioning.\n"]
+    pub fn ip_configs(&self) -> terrars::ListRef<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ip_configs", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_https_proxy` after provisioning.\n"]
-    pub fn target_https_proxy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_https_proxy", self.base))
+    #[doc = "Get a reference to the value of field `target_https_proxy` after provisioning.\n"]
+    pub fn target_https_proxy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_https_proxy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_ssl_proxy` after provisioning.\n"]
-    pub fn target_ssl_proxy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_ssl_proxy", self.base))
+    #[doc = "Get a reference to the value of field `target_ssl_proxy` after provisioning.\n"]
+    pub fn target_ssl_proxy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_ssl_proxy", self.base))
     }
 }

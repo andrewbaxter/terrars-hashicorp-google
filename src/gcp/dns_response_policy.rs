@@ -1,56 +1,60 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DnsResponsePolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    response_policy_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gke_clusters: Option<Vec<DnsResponsePolicyGkeClustersEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    networks: Option<Vec<DnsResponsePolicyNetworksEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DnsResponsePolicyTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    response_policy_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gke_clusters: std::option::Option<std::vec::Vec<DnsResponsePolicyGkeClustersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    networks: std::option::Option<std::vec::Vec<DnsResponsePolicyNetworksEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DnsResponsePolicyTimeoutsEl>,
     dynamic: DnsResponsePolicyDynamic,
 }
 
 struct DnsResponsePolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DnsResponsePolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DnsResponsePolicyData>,
 }
 
 #[derive(Clone)]
-pub struct DnsResponsePolicy(Rc<DnsResponsePolicy_>);
+pub struct DnsResponsePolicy(std::rc::Rc<DnsResponsePolicy_>);
 
 impl DnsResponsePolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -65,150 +69,191 @@ impl DnsResponsePolicy {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\nThe description of the response policy, such as 'My new response policy'."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `gke_clusters`.\n"]
-    pub fn set_gke_clusters(self, v: impl Into<BlockAssignable<DnsResponsePolicyGkeClustersEl>>) -> Self {
+    #[doc = "Set the field `description`.\nThe description of the response policy, such as 'My new response policy'."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `gke_clusters`.\n"]
+    pub fn set_gke_clusters(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyGkeClustersEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().gke_clusters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().gke_clusters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.gke_clusters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.gke_clusters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `networks`.\n"]
-    pub fn set_networks(self, v: impl Into<BlockAssignable<DnsResponsePolicyNetworksEl>>) -> Self {
+    #[doc = "Set the field `networks`.\n"]
+    pub fn set_networks(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyNetworksEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().networks = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().networks = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.networks = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.networks = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DnsResponsePolicyTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DnsResponsePolicyTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nThe description of the response policy, such as 'My new response policy'."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nThe description of the response policy, such as 'My new response policy'."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `response_policy_name` after provisioning.\nThe user assigned name for this Response Policy, such as 'myresponsepolicy'."]
-    pub fn response_policy_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.response_policy_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `response_policy_name` after provisioning.\nThe user assigned name for this Response Policy, such as 'myresponsepolicy'."]
+    pub fn response_policy_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_policy_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gke_clusters` after provisioning.\n"]
-    pub fn gke_clusters(&self) -> ListRef<DnsResponsePolicyGkeClustersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gke_clusters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `gke_clusters` after provisioning.\n"]
+    pub fn gke_clusters(&self) -> terrars::ListRef<DnsResponsePolicyGkeClustersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gke_clusters", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `networks` after provisioning.\n"]
-    pub fn networks(&self) -> ListRef<DnsResponsePolicyNetworksElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.networks", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `networks` after provisioning.\n"]
+    pub fn networks(&self) -> terrars::ListRef<DnsResponsePolicyNetworksElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.networks", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DnsResponsePolicyTimeoutsElRef {
         DnsResponsePolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for DnsResponsePolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DnsResponsePolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DnsResponsePolicy { }
+impl terrars::Resource for DnsResponsePolicy { }
 
-impl ToListMappable for DnsResponsePolicy {
-    type O = ListRef<DnsResponsePolicyRef>;
+impl terrars::ToListMappable for DnsResponsePolicy {
+    type O = terrars::ListRef<DnsResponsePolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DnsResponsePolicy_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DnsResponsePolicy_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_dns_response_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -218,21 +263,22 @@ impl Resource_ for DnsResponsePolicy_ {
 }
 
 pub struct BuildDnsResponsePolicy {
-    pub tf_id: String,
-    #[doc= "The user assigned name for this Response Policy, such as 'myresponsepolicy'."]
-    pub response_policy_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The user assigned name for this Response Policy, such as 'myresponsepolicy'."]
+    pub response_policy_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsResponsePolicy {
-    pub fn build(self, stack: &mut Stack) -> DnsResponsePolicy {
-        let out = DnsResponsePolicy(Rc::new(DnsResponsePolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DnsResponsePolicy {
+        let out = DnsResponsePolicy(std::rc::Rc::new(DnsResponsePolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DnsResponsePolicyData {
+            data: std::cell::RefCell::new(DnsResponsePolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -240,7 +286,7 @@ impl BuildDnsResponsePolicy {
                 gke_clusters: core::default::Default::default(),
                 networks: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -249,12 +295,12 @@ impl BuildDnsResponsePolicy {
 }
 
 pub struct DnsResponsePolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DnsResponsePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -263,45 +309,47 @@ impl Ref for DnsResponsePolicyRef {
 }
 
 impl DnsResponsePolicyRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nThe description of the response policy, such as 'My new response policy'."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nThe description of the response policy, such as 'My new response policy'."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `response_policy_name` after provisioning.\nThe user assigned name for this Response Policy, such as 'myresponsepolicy'."]
-    pub fn response_policy_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.response_policy_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `response_policy_name` after provisioning.\nThe user assigned name for this Response Policy, such as 'myresponsepolicy'."]
+    pub fn response_policy_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_policy_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gke_clusters` after provisioning.\n"]
-    pub fn gke_clusters(&self) -> ListRef<DnsResponsePolicyGkeClustersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.gke_clusters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `gke_clusters` after provisioning.\n"]
+    pub fn gke_clusters(&self) -> terrars::ListRef<DnsResponsePolicyGkeClustersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gke_clusters", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `networks` after provisioning.\n"]
-    pub fn networks(&self) -> ListRef<DnsResponsePolicyNetworksElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.networks", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `networks` after provisioning.\n"]
+    pub fn networks(&self) -> terrars::ListRef<DnsResponsePolicyNetworksElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.networks", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DnsResponsePolicyTimeoutsElRef {
         DnsResponsePolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -309,16 +357,16 @@ impl DnsResponsePolicyRef {
 
 #[derive(Serialize)]
 pub struct DnsResponsePolicyGkeClustersEl {
-    gke_cluster_name: PrimField<String>,
+    gke_cluster_name: terrars::PrimField<std::string::String>,
 }
 
 impl DnsResponsePolicyGkeClustersEl { }
 
-impl ToListMappable for DnsResponsePolicyGkeClustersEl {
-    type O = BlockAssignable<DnsResponsePolicyGkeClustersEl>;
+impl terrars::ToListMappable for DnsResponsePolicyGkeClustersEl {
+    type O = terrars::BlockAssignable<DnsResponsePolicyGkeClustersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -327,8 +375,9 @@ impl ToListMappable for DnsResponsePolicyGkeClustersEl {
 }
 
 pub struct BuildDnsResponsePolicyGkeClustersEl {
-    #[doc= "The resource name of the cluster to bind this ManagedZone to.\nThis should be specified in the format like\n'projects/*/locations/*/clusters/*'"]
-    pub gke_cluster_name: PrimField<String>,
+    #[doc =
+        "The resource name of the cluster to bind this ManagedZone to.\nThis should be specified in the format like\n'projects/*/locations/*/clusters/*'"]
+    pub gke_cluster_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsResponsePolicyGkeClustersEl {
@@ -338,12 +387,12 @@ impl BuildDnsResponsePolicyGkeClustersEl {
 }
 
 pub struct DnsResponsePolicyGkeClustersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyGkeClustersElRef {
-    fn new(shared: StackShared, base: String) -> DnsResponsePolicyGkeClustersElRef {
+impl terrars::Ref for DnsResponsePolicyGkeClustersElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyGkeClustersElRef {
         DnsResponsePolicyGkeClustersElRef {
             shared: shared,
             base: base.to_string(),
@@ -352,28 +401,29 @@ impl Ref for DnsResponsePolicyGkeClustersElRef {
 }
 
 impl DnsResponsePolicyGkeClustersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gke_cluster_name` after provisioning.\nThe resource name of the cluster to bind this ManagedZone to.\nThis should be specified in the format like\n'projects/*/locations/*/clusters/*'"]
-    pub fn gke_cluster_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gke_cluster_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `gke_cluster_name` after provisioning.\nThe resource name of the cluster to bind this ManagedZone to.\nThis should be specified in the format like\n'projects/*/locations/*/clusters/*'"]
+    pub fn gke_cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gke_cluster_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DnsResponsePolicyNetworksEl {
-    network_url: PrimField<String>,
+    network_url: terrars::PrimField<std::string::String>,
 }
 
 impl DnsResponsePolicyNetworksEl { }
 
-impl ToListMappable for DnsResponsePolicyNetworksEl {
-    type O = BlockAssignable<DnsResponsePolicyNetworksEl>;
+impl terrars::ToListMappable for DnsResponsePolicyNetworksEl {
+    type O = terrars::BlockAssignable<DnsResponsePolicyNetworksEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -382,8 +432,9 @@ impl ToListMappable for DnsResponsePolicyNetworksEl {
 }
 
 pub struct BuildDnsResponsePolicyNetworksEl {
-    #[doc= "The fully qualified URL of the VPC network to bind to.\nThis should be formatted like\n'https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}'"]
-    pub network_url: PrimField<String>,
+    #[doc =
+        "The fully qualified URL of the VPC network to bind to.\nThis should be formatted like\n'https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}'"]
+    pub network_url: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDnsResponsePolicyNetworksEl {
@@ -393,12 +444,12 @@ impl BuildDnsResponsePolicyNetworksEl {
 }
 
 pub struct DnsResponsePolicyNetworksElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyNetworksElRef {
-    fn new(shared: StackShared, base: String) -> DnsResponsePolicyNetworksElRef {
+impl terrars::Ref for DnsResponsePolicyNetworksElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyNetworksElRef {
         DnsResponsePolicyNetworksElRef {
             shared: shared,
             base: base.to_string(),
@@ -407,51 +458,52 @@ impl Ref for DnsResponsePolicyNetworksElRef {
 }
 
 impl DnsResponsePolicyNetworksElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified URL of the VPC network to bind to.\nThis should be formatted like\n'https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}'"]
-    pub fn network_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
+    #[doc =
+        "Get a reference to the value of field `network_url` after provisioning.\nThe fully qualified URL of the VPC network to bind to.\nThis should be formatted like\n'https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}'"]
+    pub fn network_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_url", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DnsResponsePolicyTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DnsResponsePolicyTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DnsResponsePolicyTimeoutsEl {
-    type O = BlockAssignable<DnsResponsePolicyTimeoutsEl>;
+impl terrars::ToListMappable for DnsResponsePolicyTimeoutsEl {
+    type O = terrars::BlockAssignable<DnsResponsePolicyTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -472,12 +524,12 @@ impl BuildDnsResponsePolicyTimeoutsEl {
 }
 
 pub struct DnsResponsePolicyTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DnsResponsePolicyTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DnsResponsePolicyTimeoutsElRef {
+impl terrars::Ref for DnsResponsePolicyTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyTimeoutsElRef {
         DnsResponsePolicyTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -486,28 +538,28 @@ impl Ref for DnsResponsePolicyTimeoutsElRef {
 }
 
 impl DnsResponsePolicyTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DnsResponsePolicyDynamic {
-    gke_clusters: Option<DynamicBlock<DnsResponsePolicyGkeClustersEl>>,
-    networks: Option<DynamicBlock<DnsResponsePolicyNetworksEl>>,
+    gke_clusters: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyGkeClustersEl>>,
+    networks: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyNetworksEl>>,
 }

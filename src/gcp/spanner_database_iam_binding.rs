@@ -1,53 +1,57 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct SpannerDatabaseIamBindingData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    database: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    instance: PrimField<String>,
-    members: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    role: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    condition: Option<Vec<SpannerDatabaseIamBindingConditionEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    database: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    instance: terrars::PrimField<std::string::String>,
+    members: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    role: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    condition: std::option::Option<std::vec::Vec<SpannerDatabaseIamBindingConditionEl>>,
     dynamic: SpannerDatabaseIamBindingDynamic,
 }
 
 struct SpannerDatabaseIamBinding_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SpannerDatabaseIamBindingData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SpannerDatabaseIamBindingData>,
 }
 
 #[derive(Clone)]
-pub struct SpannerDatabaseIamBinding(Rc<SpannerDatabaseIamBinding_>);
+pub struct SpannerDatabaseIamBinding(std::rc::Rc<SpannerDatabaseIamBinding_>);
 
 impl SpannerDatabaseIamBinding {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -62,130 +66,166 @@ impl SpannerDatabaseIamBinding {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `condition`.\n"]
-    pub fn set_condition(self, v: impl Into<BlockAssignable<SpannerDatabaseIamBindingConditionEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `condition`.\n"]
+    pub fn set_condition(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpannerDatabaseIamBindingConditionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().condition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().condition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.condition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.condition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance` after provisioning.\n"]
-    pub fn instance(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance` after provisioning.\n"]
+    pub fn instance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `members` after provisioning.\n"]
-    pub fn members(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.members", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `members` after provisioning.\n"]
+    pub fn members(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.members", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role` after provisioning.\n"]
-    pub fn role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
+    pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> ListRef<SpannerDatabaseIamBindingConditionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
+    pub fn condition(&self) -> terrars::ListRef<SpannerDatabaseIamBindingConditionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
-impl Referable for SpannerDatabaseIamBinding {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SpannerDatabaseIamBinding {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SpannerDatabaseIamBinding { }
+impl terrars::Resource for SpannerDatabaseIamBinding { }
 
-impl ToListMappable for SpannerDatabaseIamBinding {
-    type O = ListRef<SpannerDatabaseIamBindingRef>;
+impl terrars::ToListMappable for SpannerDatabaseIamBinding {
+    type O = terrars::ListRef<SpannerDatabaseIamBindingRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SpannerDatabaseIamBinding_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SpannerDatabaseIamBinding_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_spanner_database_iam_binding".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -195,27 +235,28 @@ impl Resource_ for SpannerDatabaseIamBinding_ {
 }
 
 pub struct BuildSpannerDatabaseIamBinding {
-    pub tf_id: String,
-    #[doc= ""]
-    pub database: PrimField<String>,
-    #[doc= ""]
-    pub instance: PrimField<String>,
-    #[doc= ""]
-    pub members: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub role: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub database: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub instance: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub members: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub role: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSpannerDatabaseIamBinding {
-    pub fn build(self, stack: &mut Stack) -> SpannerDatabaseIamBinding {
-        let out = SpannerDatabaseIamBinding(Rc::new(SpannerDatabaseIamBinding_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SpannerDatabaseIamBinding {
+        let out = SpannerDatabaseIamBinding(std::rc::Rc::new(SpannerDatabaseIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SpannerDatabaseIamBindingData {
+            data: std::cell::RefCell::new(SpannerDatabaseIamBindingData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 database: self.database,
                 id: core::default::Default::default(),
                 instance: self.instance,
@@ -223,7 +264,7 @@ impl BuildSpannerDatabaseIamBinding {
                 project: core::default::Default::default(),
                 role: self.role,
                 condition: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -232,12 +273,12 @@ impl BuildSpannerDatabaseIamBinding {
 }
 
 pub struct SpannerDatabaseIamBindingRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SpannerDatabaseIamBindingRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SpannerDatabaseIamBindingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -246,76 +287,76 @@ impl Ref for SpannerDatabaseIamBindingRef {
 }
 
 impl SpannerDatabaseIamBindingRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance` after provisioning.\n"]
-    pub fn instance(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance` after provisioning.\n"]
+    pub fn instance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `members` after provisioning.\n"]
-    pub fn members(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.members", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `members` after provisioning.\n"]
+    pub fn members(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.members", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role` after provisioning.\n"]
-    pub fn role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
+    pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> ListRef<SpannerDatabaseIamBindingConditionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
+    pub fn condition(&self) -> terrars::ListRef<SpannerDatabaseIamBindingConditionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SpannerDatabaseIamBindingConditionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    expression: PrimField<String>,
-    title: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    expression: terrars::PrimField<std::string::String>,
+    title: terrars::PrimField<std::string::String>,
 }
 
 impl SpannerDatabaseIamBindingConditionEl {
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.description = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SpannerDatabaseIamBindingConditionEl {
-    type O = BlockAssignable<SpannerDatabaseIamBindingConditionEl>;
+impl terrars::ToListMappable for SpannerDatabaseIamBindingConditionEl {
+    type O = terrars::BlockAssignable<SpannerDatabaseIamBindingConditionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -324,10 +365,10 @@ impl ToListMappable for SpannerDatabaseIamBindingConditionEl {
 }
 
 pub struct BuildSpannerDatabaseIamBindingConditionEl {
-    #[doc= ""]
-    pub expression: PrimField<String>,
-    #[doc= ""]
-    pub title: PrimField<String>,
+    #[doc = ""]
+    pub expression: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub title: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSpannerDatabaseIamBindingConditionEl {
@@ -341,12 +382,12 @@ impl BuildSpannerDatabaseIamBindingConditionEl {
 }
 
 pub struct SpannerDatabaseIamBindingConditionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SpannerDatabaseIamBindingConditionElRef {
-    fn new(shared: StackShared, base: String) -> SpannerDatabaseIamBindingConditionElRef {
+impl terrars::Ref for SpannerDatabaseIamBindingConditionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpannerDatabaseIamBindingConditionElRef {
         SpannerDatabaseIamBindingConditionElRef {
             shared: shared,
             base: base.to_string(),
@@ -355,27 +396,27 @@ impl Ref for SpannerDatabaseIamBindingConditionElRef {
 }
 
 impl SpannerDatabaseIamBindingConditionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `expression` after provisioning.\n"]
-    pub fn expression(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `title` after provisioning.\n"]
-    pub fn title(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
+    #[doc = "Get a reference to the value of field `title` after provisioning.\n"]
+    pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SpannerDatabaseIamBindingDynamic {
-    condition: Option<DynamicBlock<SpannerDatabaseIamBindingConditionEl>>,
+    condition: std::option::Option<terrars::DynamicBlock<SpannerDatabaseIamBindingConditionEl>>,
 }

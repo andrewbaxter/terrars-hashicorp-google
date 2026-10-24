@@ -1,124 +1,152 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataKmsCryptoKeyVersionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    crypto_key: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    crypto_key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<f64>>,
 }
 
 struct DataKmsCryptoKeyVersion_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataKmsCryptoKeyVersionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataKmsCryptoKeyVersionData>,
 }
 
 #[derive(Clone)]
-pub struct DataKmsCryptoKeyVersion(Rc<DataKmsCryptoKeyVersion_>);
+pub struct DataKmsCryptoKeyVersion(std::rc::Rc<DataKmsCryptoKeyVersion_>);
 
 impl DataKmsCryptoKeyVersion {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `version`.\n"]
-    pub fn set_version(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().version = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `algorithm` after provisioning.\n"]
-    pub fn algorithm(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.algorithm", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `crypto_key` after provisioning.\n"]
-    pub fn crypto_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.crypto_key", self.extract_ref()))
+    #[doc = "Set the field `version`.\n"]
+    pub fn set_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().version = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `algorithm` after provisioning.\n"]
+    pub fn algorithm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.algorithm", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `crypto_key` after provisioning.\n"]
+    pub fn crypto_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `protection_level` after provisioning.\n"]
-    pub fn protection_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protection_level", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key` after provisioning.\n"]
-    pub fn public_key(&self) -> ListRef<DataKmsCryptoKeyVersionPublicKeyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `protection_level` after provisioning.\n"]
+    pub fn protection_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protection_level", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]
+    pub fn public_key(&self) -> terrars::ListRef<DataKmsCryptoKeyVersionPublicKeyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 }
 
-impl Referable for DataKmsCryptoKeyVersion {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataKmsCryptoKeyVersion {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataKmsCryptoKeyVersion { }
+impl terrars::Datasource for DataKmsCryptoKeyVersion { }
 
-impl ToListMappable for DataKmsCryptoKeyVersion {
-    type O = ListRef<DataKmsCryptoKeyVersionRef>;
+impl terrars::ToListMappable for DataKmsCryptoKeyVersion {
+    type O = terrars::ListRef<DataKmsCryptoKeyVersionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataKmsCryptoKeyVersion_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataKmsCryptoKeyVersion_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_kms_crypto_key_version".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -128,20 +156,21 @@ impl Datasource_ for DataKmsCryptoKeyVersion_ {
 }
 
 pub struct BuildDataKmsCryptoKeyVersion {
-    pub tf_id: String,
-    #[doc= ""]
-    pub crypto_key: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub crypto_key: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataKmsCryptoKeyVersion {
-    pub fn build(self, stack: &mut Stack) -> DataKmsCryptoKeyVersion {
-        let out = DataKmsCryptoKeyVersion(Rc::new(DataKmsCryptoKeyVersion_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataKmsCryptoKeyVersion {
+        let out = DataKmsCryptoKeyVersion(std::rc::Rc::new(DataKmsCryptoKeyVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataKmsCryptoKeyVersionData {
+            data: std::cell::RefCell::new(DataKmsCryptoKeyVersionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 crypto_key: self.crypto_key,
                 id: core::default::Default::default(),
                 version: core::default::Default::default(),
@@ -153,12 +182,12 @@ impl BuildDataKmsCryptoKeyVersion {
 }
 
 pub struct DataKmsCryptoKeyVersionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataKmsCryptoKeyVersionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataKmsCryptoKeyVersionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -167,82 +196,82 @@ impl Ref for DataKmsCryptoKeyVersionRef {
 }
 
 impl DataKmsCryptoKeyVersionRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `algorithm` after provisioning.\n"]
-    pub fn algorithm(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.algorithm", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `algorithm` after provisioning.\n"]
+    pub fn algorithm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.algorithm", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `crypto_key` after provisioning.\n"]
-    pub fn crypto_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.crypto_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `crypto_key` after provisioning.\n"]
+    pub fn crypto_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `protection_level` after provisioning.\n"]
-    pub fn protection_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protection_level", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `protection_level` after provisioning.\n"]
+    pub fn protection_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protection_level", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key` after provisioning.\n"]
-    pub fn public_key(&self) -> ListRef<DataKmsCryptoKeyVersionPublicKeyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]
+    pub fn public_key(&self) -> terrars::ListRef<DataKmsCryptoKeyVersionPublicKeyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataKmsCryptoKeyVersionPublicKeyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    algorithm: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pem: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pem: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataKmsCryptoKeyVersionPublicKeyEl {
-    #[doc= "Set the field `algorithm`.\n"]
-    pub fn set_algorithm(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.algorithm = Some(v.into());
+    #[doc = "Set the field `algorithm`.\n"]
+    pub fn set_algorithm(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.algorithm = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `pem`.\n"]
-    pub fn set_pem(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.pem = Some(v.into());
+    #[doc = "Set the field `pem`.\n"]
+    pub fn set_pem(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pem = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataKmsCryptoKeyVersionPublicKeyEl {
-    type O = BlockAssignable<DataKmsCryptoKeyVersionPublicKeyEl>;
+impl terrars::ToListMappable for DataKmsCryptoKeyVersionPublicKeyEl {
+    type O = terrars::BlockAssignable<DataKmsCryptoKeyVersionPublicKeyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -262,12 +291,12 @@ impl BuildDataKmsCryptoKeyVersionPublicKeyEl {
 }
 
 pub struct DataKmsCryptoKeyVersionPublicKeyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataKmsCryptoKeyVersionPublicKeyElRef {
-    fn new(shared: StackShared, base: String) -> DataKmsCryptoKeyVersionPublicKeyElRef {
+impl terrars::Ref for DataKmsCryptoKeyVersionPublicKeyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsCryptoKeyVersionPublicKeyElRef {
         DataKmsCryptoKeyVersionPublicKeyElRef {
             shared: shared,
             base: base.to_string(),
@@ -276,17 +305,17 @@ impl Ref for DataKmsCryptoKeyVersionPublicKeyElRef {
 }
 
 impl DataKmsCryptoKeyVersionPublicKeyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `algorithm` after provisioning.\n"]
-    pub fn algorithm(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.algorithm", self.base))
+    #[doc = "Get a reference to the value of field `algorithm` after provisioning.\n"]
+    pub fn algorithm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.algorithm", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pem` after provisioning.\n"]
-    pub fn pem(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pem", self.base))
+    #[doc = "Get a reference to the value of field `pem` after provisioning.\n"]
+    pub fn pem(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem", self.base))
     }
 }

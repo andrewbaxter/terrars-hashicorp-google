@@ -1,59 +1,63 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct CloudRunServiceData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    autogenerate_revision_name: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    location: PrimField<String>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metadata: Option<Vec<CloudRunServiceMetadataEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    template: Option<Vec<CloudRunServiceTemplateEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<CloudRunServiceTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    traffic: Option<Vec<CloudRunServiceTrafficEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autogenerate_revision_name: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    location: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata: std::option::Option<std::vec::Vec<CloudRunServiceMetadataEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    template: std::option::Option<std::vec::Vec<CloudRunServiceTemplateEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<CloudRunServiceTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    traffic: std::option::Option<std::vec::Vec<CloudRunServiceTrafficEl>>,
     dynamic: CloudRunServiceDynamic,
 }
 
 struct CloudRunService_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CloudRunServiceData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CloudRunServiceData>,
 }
 
 #[derive(Clone)]
-pub struct CloudRunService(Rc<CloudRunService_>);
+pub struct CloudRunService(std::rc::Rc<CloudRunService_>);
 
 impl CloudRunService {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -68,178 +72,215 @@ impl CloudRunService {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `autogenerate_revision_name`.\nIf set to 'true', the revision name (template.metadata.name) will be omitted and\nautogenerated by Cloud Run. This cannot be set to 'true' while 'template.metadata.name'\nis also set.\n(For legacy support, if 'template.metadata.name' is unset in state while\nthis field is set to false, the revision name will still autogenerate.)"]
-    pub fn set_autogenerate_revision_name(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().autogenerate_revision_name = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `metadata`.\n"]
-    pub fn set_metadata(self, v: impl Into<BlockAssignable<CloudRunServiceMetadataEl>>) -> Self {
+    #[doc =
+        "Set the field `autogenerate_revision_name`.\nIf set to 'true', the revision name (template.metadata.name) will be omitted and\nautogenerated by Cloud Run. This cannot be set to 'true' while 'template.metadata.name'\nis also set.\n(For legacy support, if 'template.metadata.name' is unset in state while\nthis field is set to false, the revision name will still autogenerate.)"]
+    pub fn set_autogenerate_revision_name(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().autogenerate_revision_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metadata`.\n"]
+    pub fn set_metadata(self, v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceMetadataEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().metadata = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().metadata = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.metadata = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.metadata = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `template`.\n"]
-    pub fn set_template(self, v: impl Into<BlockAssignable<CloudRunServiceTemplateEl>>) -> Self {
+    #[doc = "Set the field `template`.\n"]
+    pub fn set_template(self, v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().template = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().template = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.template = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.template = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<CloudRunServiceTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudRunServiceTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `traffic`.\n"]
-    pub fn set_traffic(self, v: impl Into<BlockAssignable<CloudRunServiceTrafficEl>>) -> Self {
+    #[doc = "Set the field `traffic`.\n"]
+    pub fn set_traffic(self, v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTrafficEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().traffic = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().traffic = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.traffic = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.traffic = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `autogenerate_revision_name` after provisioning.\nIf set to 'true', the revision name (template.metadata.name) will be omitted and\nautogenerated by Cloud Run. This cannot be set to 'true' while 'template.metadata.name'\nis also set.\n(For legacy support, if 'template.metadata.name' is unset in state while\nthis field is set to false, the revision name will still autogenerate.)"]
-    pub fn autogenerate_revision_name(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.autogenerate_revision_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `autogenerate_revision_name` after provisioning.\nIf set to 'true', the revision name (template.metadata.name) will be omitted and\nautogenerated by Cloud Run. This cannot be set to 'true' while 'template.metadata.name'\nis also set.\n(For legacy support, if 'template.metadata.name' is unset in state while\nthis field is set to false, the revision name will still autogenerate.)"]
+    pub fn autogenerate_revision_name(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.autogenerate_revision_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of the cloud run instance. eg us-central1"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location of the cloud run instance. eg us-central1"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\nThe current status of the Service."]
-    pub fn status(&self) -> ListRef<CloudRunServiceStatusElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\nThe current status of the Service."]
+    pub fn status(&self) -> terrars::ListRef<CloudRunServiceStatusElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `metadata` after provisioning.\n"]
-    pub fn metadata(&self) -> ListRef<CloudRunServiceMetadataElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `metadata` after provisioning.\n"]
+    pub fn metadata(&self) -> terrars::ListRef<CloudRunServiceMetadataElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `template` after provisioning.\n"]
-    pub fn template(&self) -> ListRef<CloudRunServiceTemplateElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.template", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `template` after provisioning.\n"]
+    pub fn template(&self) -> terrars::ListRef<CloudRunServiceTemplateElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.template", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> CloudRunServiceTimeoutsElRef {
         CloudRunServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `traffic` after provisioning.\n"]
-    pub fn traffic(&self) -> ListRef<CloudRunServiceTrafficElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.traffic", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `traffic` after provisioning.\n"]
+    pub fn traffic(&self) -> terrars::ListRef<CloudRunServiceTrafficElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.traffic", self.extract_ref()))
     }
 }
 
-impl Referable for CloudRunService {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for CloudRunService {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for CloudRunService { }
+impl terrars::Resource for CloudRunService { }
 
-impl ToListMappable for CloudRunService {
-    type O = ListRef<CloudRunServiceRef>;
+impl terrars::ToListMappable for CloudRunService {
+    type O = terrars::ListRef<CloudRunServiceRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for CloudRunService_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for CloudRunService_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_cloud_run_service".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -249,23 +290,25 @@ impl Resource_ for CloudRunService_ {
 }
 
 pub struct BuildCloudRunService {
-    pub tf_id: String,
-    #[doc= "The location of the cloud run instance. eg us-central1"]
-    pub location: PrimField<String>,
-    #[doc= "Name must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names"]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The location of the cloud run instance. eg us-central1"]
+    pub location: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Name must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names"]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunService {
-    pub fn build(self, stack: &mut Stack) -> CloudRunService {
-        let out = CloudRunService(Rc::new(CloudRunService_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> CloudRunService {
+        let out = CloudRunService(std::rc::Rc::new(CloudRunService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CloudRunServiceData {
+            data: std::cell::RefCell::new(CloudRunServiceData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 autogenerate_revision_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
@@ -275,7 +318,7 @@ impl BuildCloudRunService {
                 template: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 traffic: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -284,12 +327,12 @@ impl BuildCloudRunService {
 }
 
 pub struct CloudRunServiceRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CloudRunServiceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -298,108 +341,111 @@ impl Ref for CloudRunServiceRef {
 }
 
 impl CloudRunServiceRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `autogenerate_revision_name` after provisioning.\nIf set to 'true', the revision name (template.metadata.name) will be omitted and\nautogenerated by Cloud Run. This cannot be set to 'true' while 'template.metadata.name'\nis also set.\n(For legacy support, if 'template.metadata.name' is unset in state while\nthis field is set to false, the revision name will still autogenerate.)"]
-    pub fn autogenerate_revision_name(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.autogenerate_revision_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `autogenerate_revision_name` after provisioning.\nIf set to 'true', the revision name (template.metadata.name) will be omitted and\nautogenerated by Cloud Run. This cannot be set to 'true' while 'template.metadata.name'\nis also set.\n(For legacy support, if 'template.metadata.name' is unset in state while\nthis field is set to false, the revision name will still autogenerate.)"]
+    pub fn autogenerate_revision_name(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.autogenerate_revision_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of the cloud run instance. eg us-central1"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe location of the cloud run instance. eg us-central1"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\nThe current status of the Service."]
-    pub fn status(&self) -> ListRef<CloudRunServiceStatusElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\nThe current status of the Service."]
+    pub fn status(&self) -> terrars::ListRef<CloudRunServiceStatusElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `metadata` after provisioning.\n"]
-    pub fn metadata(&self) -> ListRef<CloudRunServiceMetadataElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `metadata` after provisioning.\n"]
+    pub fn metadata(&self) -> terrars::ListRef<CloudRunServiceMetadataElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `template` after provisioning.\n"]
-    pub fn template(&self) -> ListRef<CloudRunServiceTemplateElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.template", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `template` after provisioning.\n"]
+    pub fn template(&self) -> terrars::ListRef<CloudRunServiceTemplateElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.template", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> CloudRunServiceTimeoutsElRef {
         CloudRunServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `traffic` after provisioning.\n"]
-    pub fn traffic(&self) -> ListRef<CloudRunServiceTrafficElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.traffic", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `traffic` after provisioning.\n"]
+    pub fn traffic(&self) -> terrars::ListRef<CloudRunServiceTrafficElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.traffic", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceStatusElConditionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    reason: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    status: Option<PrimField<String>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reason: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceStatusElConditionsEl {
-    #[doc= "Set the field `message`.\n"]
-    pub fn set_message(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message = Some(v.into());
+    #[doc = "Set the field `message`.\n"]
+    pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `reason`.\n"]
-    pub fn set_reason(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.reason = Some(v.into());
+    #[doc = "Set the field `reason`.\n"]
+    pub fn set_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.reason = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `status`.\n"]
-    pub fn set_status(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.status = Some(v.into());
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceStatusElConditionsEl {
-    type O = BlockAssignable<CloudRunServiceStatusElConditionsEl>;
+impl terrars::ToListMappable for CloudRunServiceStatusElConditionsEl {
+    type O = terrars::BlockAssignable<CloudRunServiceStatusElConditionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -421,12 +467,12 @@ impl BuildCloudRunServiceStatusElConditionsEl {
 }
 
 pub struct CloudRunServiceStatusElConditionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceStatusElConditionsElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceStatusElConditionsElRef {
+impl terrars::Ref for CloudRunServiceStatusElConditionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceStatusElConditionsElRef {
         CloudRunServiceStatusElConditionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -435,82 +481,82 @@ impl Ref for CloudRunServiceStatusElConditionsElRef {
 }
 
 impl CloudRunServiceStatusElConditionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `message` after provisioning.\n"]
-    pub fn message(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message", self.base))
+    #[doc = "Get a reference to the value of field `message` after provisioning.\n"]
+    pub fn message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `reason` after provisioning.\n"]
-    pub fn reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reason", self.base))
+    #[doc = "Get a reference to the value of field `reason` after provisioning.\n"]
+    pub fn reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reason", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceStatusElTrafficEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    latest_revision: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    percent: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    revision_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latest_revision: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    percent: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    revision_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceStatusElTrafficEl {
-    #[doc= "Set the field `latest_revision`.\n"]
-    pub fn set_latest_revision(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.latest_revision = Some(v.into());
+    #[doc = "Set the field `latest_revision`.\n"]
+    pub fn set_latest_revision(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.latest_revision = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `percent`.\n"]
-    pub fn set_percent(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.percent = Some(v.into());
+    #[doc = "Set the field `percent`.\n"]
+    pub fn set_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.percent = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `revision_name`.\n"]
-    pub fn set_revision_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.revision_name = Some(v.into());
+    #[doc = "Set the field `revision_name`.\n"]
+    pub fn set_revision_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.revision_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tag`.\n"]
-    pub fn set_tag(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tag = Some(v.into());
+    #[doc = "Set the field `tag`.\n"]
+    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url`.\n"]
-    pub fn set_url(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.url = Some(v.into());
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceStatusElTrafficEl {
-    type O = BlockAssignable<CloudRunServiceStatusElTrafficEl>;
+impl terrars::ToListMappable for CloudRunServiceStatusElTrafficEl {
+    type O = terrars::BlockAssignable<CloudRunServiceStatusElTrafficEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -533,12 +579,12 @@ impl BuildCloudRunServiceStatusElTrafficEl {
 }
 
 pub struct CloudRunServiceStatusElTrafficElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceStatusElTrafficElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceStatusElTrafficElRef {
+impl terrars::Ref for CloudRunServiceStatusElTrafficElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceStatusElTrafficElRef {
         CloudRunServiceStatusElTrafficElRef {
             shared: shared,
             base: base.to_string(),
@@ -547,95 +593,107 @@ impl Ref for CloudRunServiceStatusElTrafficElRef {
 }
 
 impl CloudRunServiceStatusElTrafficElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `latest_revision` after provisioning.\n"]
-    pub fn latest_revision(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.base))
+    #[doc = "Get a reference to the value of field `latest_revision` after provisioning.\n"]
+    pub fn latest_revision(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `percent` after provisioning.\n"]
-    pub fn percent(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.percent", self.base))
+    #[doc = "Get a reference to the value of field `percent` after provisioning.\n"]
+    pub fn percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.percent", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `revision_name` after provisioning.\n"]
-    pub fn revision_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.revision_name", self.base))
+    #[doc = "Get a reference to the value of field `revision_name` after provisioning.\n"]
+    pub fn revision_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
+    #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
+    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceStatusEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    conditions: Option<ListField<CloudRunServiceStatusElConditionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    latest_created_revision_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    latest_ready_revision_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    observed_generation: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    traffic: Option<ListField<CloudRunServiceStatusElTrafficEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    conditions: std::option::Option<terrars::ListField<CloudRunServiceStatusElConditionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latest_created_revision_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latest_ready_revision_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    observed_generation: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    traffic: std::option::Option<terrars::ListField<CloudRunServiceStatusElTrafficEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceStatusEl {
-    #[doc= "Set the field `conditions`.\n"]
-    pub fn set_conditions(mut self, v: impl Into<ListField<CloudRunServiceStatusElConditionsEl>>) -> Self {
-        self.conditions = Some(v.into());
+    #[doc = "Set the field `conditions`.\n"]
+    pub fn set_conditions(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<CloudRunServiceStatusElConditionsEl>>,
+    ) -> Self {
+        self.conditions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `latest_created_revision_name`.\n"]
-    pub fn set_latest_created_revision_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.latest_created_revision_name = Some(v.into());
+    #[doc = "Set the field `latest_created_revision_name`.\n"]
+    pub fn set_latest_created_revision_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.latest_created_revision_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `latest_ready_revision_name`.\n"]
-    pub fn set_latest_ready_revision_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.latest_ready_revision_name = Some(v.into());
+    #[doc = "Set the field `latest_ready_revision_name`.\n"]
+    pub fn set_latest_ready_revision_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.latest_ready_revision_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `observed_generation`.\n"]
-    pub fn set_observed_generation(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.observed_generation = Some(v.into());
+    #[doc = "Set the field `observed_generation`.\n"]
+    pub fn set_observed_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.observed_generation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `traffic`.\n"]
-    pub fn set_traffic(mut self, v: impl Into<ListField<CloudRunServiceStatusElTrafficEl>>) -> Self {
-        self.traffic = Some(v.into());
+    #[doc = "Set the field `traffic`.\n"]
+    pub fn set_traffic(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<CloudRunServiceStatusElTrafficEl>>,
+    ) -> Self {
+        self.traffic = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url`.\n"]
-    pub fn set_url(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.url = Some(v.into());
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceStatusEl {
-    type O = BlockAssignable<CloudRunServiceStatusEl>;
+impl terrars::ToListMappable for CloudRunServiceStatusEl {
+    type O = terrars::BlockAssignable<CloudRunServiceStatusEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -659,12 +717,12 @@ impl BuildCloudRunServiceStatusEl {
 }
 
 pub struct CloudRunServiceStatusElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceStatusElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceStatusElRef {
+impl terrars::Ref for CloudRunServiceStatusElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceStatusElRef {
         CloudRunServiceStatusElRef {
             shared: shared,
             base: base.to_string(),
@@ -673,76 +731,85 @@ impl Ref for CloudRunServiceStatusElRef {
 }
 
 impl CloudRunServiceStatusElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> ListRef<CloudRunServiceStatusElConditionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
+    #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
+    pub fn conditions(&self) -> terrars::ListRef<CloudRunServiceStatusElConditionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `latest_created_revision_name` after provisioning.\n"]
-    pub fn latest_created_revision_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.latest_created_revision_name", self.base))
+    #[doc = "Get a reference to the value of field `latest_created_revision_name` after provisioning.\n"]
+    pub fn latest_created_revision_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_created_revision_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `latest_ready_revision_name` after provisioning.\n"]
-    pub fn latest_ready_revision_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.latest_ready_revision_name", self.base))
+    #[doc = "Get a reference to the value of field `latest_ready_revision_name` after provisioning.\n"]
+    pub fn latest_ready_revision_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_ready_revision_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `observed_generation` after provisioning.\n"]
-    pub fn observed_generation(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.observed_generation", self.base))
+    #[doc = "Get a reference to the value of field `observed_generation` after provisioning.\n"]
+    pub fn observed_generation(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.observed_generation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `traffic` after provisioning.\n"]
-    pub fn traffic(&self) -> ListRef<CloudRunServiceStatusElTrafficElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.traffic", self.base))
+    #[doc = "Get a reference to the value of field `traffic` after provisioning.\n"]
+    pub fn traffic(&self) -> terrars::ListRef<CloudRunServiceStatusElTrafficElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.traffic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceMetadataEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    annotations: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    namespace: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceMetadataEl {
-    #[doc= "Set the field `annotations`.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Service:\n\n- 'run.googleapis.com/binary-authorization-breakglass' sets the [Binary Authorization breakglass](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--breakglass).\n- 'run.googleapis.com/binary-authorization' sets the [Binary Authorization](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--binary-authorization).\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/custom-audiences' sets the [custom audiences](https://cloud.google.com/sdk/gcloud/reference/alpha/run/deploy#--add-custom-audiences)\n  that can be used in the audience field of ID token for authenticated requests.\n- 'run.googleapis.com/description' sets a user defined description for the Service.\n- 'run.googleapis.com/ingress' sets the [ingress settings](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress)\n  for the Service. For example, '\"run.googleapis.com/ingress\" = \"all\"'.\n- 'run.googleapis.com/launch-stage' sets the [launch stage](https://cloud.google.com/run/docs/troubleshooting#launch-stage-validation)\n  when a preview feature is used. For example, '\"run.googleapis.com/launch-stage\": \"BETA\"'\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
-    pub fn set_annotations(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.annotations = Some(v.into());
+    #[doc =
+        "Set the field `annotations`.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Service:\n\n- 'run.googleapis.com/binary-authorization-breakglass' sets the [Binary Authorization breakglass](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--breakglass).\n- 'run.googleapis.com/binary-authorization' sets the [Binary Authorization](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--binary-authorization).\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/custom-audiences' sets the [custom audiences](https://cloud.google.com/sdk/gcloud/reference/alpha/run/deploy#--add-custom-audiences)\n  that can be used in the audience field of ID token for authenticated requests.\n- 'run.googleapis.com/description' sets a user defined description for the Service.\n- 'run.googleapis.com/ingress' sets the [ingress settings](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress)\n  for the Service. For example, '\"run.googleapis.com/ingress\" = \"all\"'.\n- 'run.googleapis.com/launch-stage' sets the [launch stage](https://cloud.google.com/run/docs/troubleshooting#launch-stage-validation)\n  when a preview feature is used. For example, '\"run.googleapis.com/launch-stage\": \"BETA\"'\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
+    pub fn set_annotations(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.annotations = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `labels`.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand routes.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn set_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.labels = Some(v.into());
+    #[doc =
+        "Set the field `labels`.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand routes.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `namespace`.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number."]
-    pub fn set_namespace(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.namespace = Some(v.into());
+    #[doc =
+        "Set the field `namespace`.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number."]
+    pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.namespace = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceMetadataEl {
-    type O = BlockAssignable<CloudRunServiceMetadataEl>;
+impl terrars::ToListMappable for CloudRunServiceMetadataEl {
+    type O = terrars::BlockAssignable<CloudRunServiceMetadataEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -763,12 +830,12 @@ impl BuildCloudRunServiceMetadataEl {
 }
 
 pub struct CloudRunServiceMetadataElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceMetadataElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceMetadataElRef {
+impl terrars::Ref for CloudRunServiceMetadataElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceMetadataElRef {
         CloudRunServiceMetadataElRef {
             shared: shared,
             base: base.to_string(),
@@ -777,104 +844,124 @@ impl Ref for CloudRunServiceMetadataElRef {
 }
 
 impl CloudRunServiceMetadataElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `annotations` after provisioning.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Service:\n\n- 'run.googleapis.com/binary-authorization-breakglass' sets the [Binary Authorization breakglass](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--breakglass).\n- 'run.googleapis.com/binary-authorization' sets the [Binary Authorization](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--binary-authorization).\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/custom-audiences' sets the [custom audiences](https://cloud.google.com/sdk/gcloud/reference/alpha/run/deploy#--add-custom-audiences)\n  that can be used in the audience field of ID token for authenticated requests.\n- 'run.googleapis.com/description' sets a user defined description for the Service.\n- 'run.googleapis.com/ingress' sets the [ingress settings](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress)\n  for the Service. For example, '\"run.googleapis.com/ingress\" = \"all\"'.\n- 'run.googleapis.com/launch-stage' sets the [launch stage](https://cloud.google.com/run/docs/troubleshooting#launch-stage-validation)\n  when a preview feature is used. For example, '\"run.googleapis.com/launch-stage\": \"BETA\"'\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
-    pub fn annotations(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.annotations", self.base))
+    #[doc =
+        "Get a reference to the value of field `annotations` after provisioning.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Service:\n\n- 'run.googleapis.com/binary-authorization-breakglass' sets the [Binary Authorization breakglass](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--breakglass).\n- 'run.googleapis.com/binary-authorization' sets the [Binary Authorization](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--binary-authorization).\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/custom-audiences' sets the [custom audiences](https://cloud.google.com/sdk/gcloud/reference/alpha/run/deploy#--add-custom-audiences)\n  that can be used in the audience field of ID token for authenticated requests.\n- 'run.googleapis.com/description' sets a user defined description for the Service.\n- 'run.googleapis.com/ingress' sets the [ingress settings](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress)\n  for the Service. For example, '\"run.googleapis.com/ingress\" = \"all\"'.\n- 'run.googleapis.com/launch-stage' sets the [launch stage](https://cloud.google.com/run/docs/troubleshooting#launch-stage-validation)\n  when a preview feature is used. For example, '\"run.googleapis.com/launch-stage\": \"BETA\"'\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
+    pub fn annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.annotations", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
-    pub fn effective_annotations(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.base))
+    #[doc =
+        "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
+    pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
-    pub fn effective_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `generation` after provisioning.\nA sequence number representing a specific generation of the desired state."]
-    pub fn generation(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
+    #[doc =
+        "Get a reference to the value of field `generation` after provisioning.\nA sequence number representing a specific generation of the desired state."]
+    pub fn generation(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand routes.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects. May match selectors of replication controllers\nand routes.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace` after provisioning.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number."]
-    pub fn namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    #[doc =
+        "Get a reference to the value of field `namespace` after provisioning.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number."]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_version` after provisioning.\nAn opaque value that represents the internal version of this object that\ncan be used by clients to determine when objects have changed. May be used\nfor optimistic concurrency, change detection, and the watch operation on a\nresource or set of resources. They may only be valid for a\nparticular resource or set of resources."]
-    pub fn resource_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_version", self.base))
+    #[doc =
+        "Get a reference to the value of field `resource_version` after provisioning.\nAn opaque value that represents the internal version of this object that\ncan be used by clients to determine when objects have changed. May be used\nfor optimistic concurrency, change detection, and the watch operation on a\nresource or set of resources. They may only be valid for a\nparticular resource or set of resources."]
+    pub fn resource_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\nSelfLink is a URL representing this object."]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.base))
+    #[doc =
+        "Get a reference to the value of field `self_link` after provisioning.\nSelfLink is a URL representing this object."]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
-    pub fn terraform_labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `uid` after provisioning.\nUID is a unique id generated by the server on successful creation of a resource and is not\nallowed to change on PUT operations."]
-    pub fn uid(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uid", self.base))
+    #[doc =
+        "Get a reference to the value of field `uid` after provisioning.\nUID is a unique id generated by the server on successful creation of a resource and is not\nallowed to change on PUT operations."]
+    pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElMetadataEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    annotations: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    namespace: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTemplateElMetadataEl {
-    #[doc= "Set the field `annotations`.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Revision template:\n\n- 'autoscaling.knative.dev/maxScale' sets the [maximum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--max-instances) of the Revision to run.\n- 'autoscaling.knative.dev/minScale' sets the [minimum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--min-instances) of the Revision to run.\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/cloudsql-instances' sets the [Cloud SQL\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--add-cloudsql-instances) the Revision connects to.\n- 'run.googleapis.com/cpu-throttling' sets whether to throttle the CPU when the container is not actively serving\n  requests. See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-throttling.\n- 'run.googleapis.com/encryption-key-shutdown-hours' sets the number of hours to wait before an automatic shutdown\n  server after CMEK key revocation is detected.\n- 'run.googleapis.com/encryption-key' sets the [CMEK key](https://cloud.google.com/run/docs/securing/using-cmek)\n  reference to encrypt the container with.\n- 'run.googleapis.com/execution-environment' sets the [execution\n  environment](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--execution-environment)\n  where the application will run.\n- 'run.googleapis.com/post-key-revocation-action-type' sets the\n  [action type](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--post-key-revocation-action-type)\n  after CMEK key revocation.\n- 'run.googleapis.com/secrets' sets a list of key-value pairs to set as\n  [secrets](https://cloud.google.com/run/docs/configuring/secrets#yaml).\n- 'run.googleapis.com/sessionAffinity' sets whether to enable\n  [session affinity](https://cloud.google.com/sdk/gcloud/reference/beta/run/deploy#--[no-]session-affinity)\n  for connections to the Revision.\n- 'run.googleapis.com/startup-cpu-boost' sets whether to allocate extra CPU to containers on startup.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-boost.\n- 'run.googleapis.com/vpc-access-connector' sets a [VPC connector](https://cloud.google.com/run/docs/configuring/connecting-vpc#terraform_1)\n  for the Revision.\n- 'run.googleapis.com/vpc-access-egress' sets the outbound traffic to send through the VPC connector for this resource.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--vpc-egress."]
-    pub fn set_annotations(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.annotations = Some(v.into());
+    #[doc =
+        "Set the field `annotations`.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Revision template:\n\n- 'autoscaling.knative.dev/maxScale' sets the [maximum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--max-instances) of the Revision to run.\n- 'autoscaling.knative.dev/minScale' sets the [minimum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--min-instances) of the Revision to run.\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/cloudsql-instances' sets the [Cloud SQL\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--add-cloudsql-instances) the Revision connects to.\n- 'run.googleapis.com/cpu-throttling' sets whether to throttle the CPU when the container is not actively serving\n  requests. See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-throttling.\n- 'run.googleapis.com/encryption-key-shutdown-hours' sets the number of hours to wait before an automatic shutdown\n  server after CMEK key revocation is detected.\n- 'run.googleapis.com/encryption-key' sets the [CMEK key](https://cloud.google.com/run/docs/securing/using-cmek)\n  reference to encrypt the container with.\n- 'run.googleapis.com/execution-environment' sets the [execution\n  environment](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--execution-environment)\n  where the application will run.\n- 'run.googleapis.com/post-key-revocation-action-type' sets the\n  [action type](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--post-key-revocation-action-type)\n  after CMEK key revocation.\n- 'run.googleapis.com/secrets' sets a list of key-value pairs to set as\n  [secrets](https://cloud.google.com/run/docs/configuring/secrets#yaml).\n- 'run.googleapis.com/sessionAffinity' sets whether to enable\n  [session affinity](https://cloud.google.com/sdk/gcloud/reference/beta/run/deploy#--[no-]session-affinity)\n  for connections to the Revision.\n- 'run.googleapis.com/startup-cpu-boost' sets whether to allocate extra CPU to containers on startup.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-boost.\n- 'run.googleapis.com/vpc-access-connector' sets a [VPC connector](https://cloud.google.com/run/docs/configuring/connecting-vpc#terraform_1)\n  for the Revision.\n- 'run.googleapis.com/vpc-access-egress' sets the outbound traffic to send through the VPC connector for this resource.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--vpc-egress."]
+    pub fn set_annotations(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.annotations = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `labels`.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects."]
-    pub fn set_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.labels = Some(v.into());
+    #[doc =
+        "Set the field `labels`.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated."]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc =
+        "Set the field `name`.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `namespace`.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number. It will default to the resource's project."]
-    pub fn set_namespace(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.namespace = Some(v.into());
+    #[doc =
+        "Set the field `namespace`.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number. It will default to the resource's project."]
+    pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.namespace = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElMetadataEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElMetadataEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElMetadataEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElMetadataEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -896,12 +983,12 @@ impl BuildCloudRunServiceTemplateElMetadataEl {
 }
 
 pub struct CloudRunServiceTemplateElMetadataElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElMetadataElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElMetadataElRef {
+impl terrars::Ref for CloudRunServiceTemplateElMetadataElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceTemplateElMetadataElRef {
         CloudRunServiceTemplateElMetadataElRef {
             shared: shared,
             base: base.to_string(),
@@ -910,64 +997,72 @@ impl Ref for CloudRunServiceTemplateElMetadataElRef {
 }
 
 impl CloudRunServiceTemplateElMetadataElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `annotations` after provisioning.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Revision template:\n\n- 'autoscaling.knative.dev/maxScale' sets the [maximum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--max-instances) of the Revision to run.\n- 'autoscaling.knative.dev/minScale' sets the [minimum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--min-instances) of the Revision to run.\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/cloudsql-instances' sets the [Cloud SQL\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--add-cloudsql-instances) the Revision connects to.\n- 'run.googleapis.com/cpu-throttling' sets whether to throttle the CPU when the container is not actively serving\n  requests. See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-throttling.\n- 'run.googleapis.com/encryption-key-shutdown-hours' sets the number of hours to wait before an automatic shutdown\n  server after CMEK key revocation is detected.\n- 'run.googleapis.com/encryption-key' sets the [CMEK key](https://cloud.google.com/run/docs/securing/using-cmek)\n  reference to encrypt the container with.\n- 'run.googleapis.com/execution-environment' sets the [execution\n  environment](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--execution-environment)\n  where the application will run.\n- 'run.googleapis.com/post-key-revocation-action-type' sets the\n  [action type](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--post-key-revocation-action-type)\n  after CMEK key revocation.\n- 'run.googleapis.com/secrets' sets a list of key-value pairs to set as\n  [secrets](https://cloud.google.com/run/docs/configuring/secrets#yaml).\n- 'run.googleapis.com/sessionAffinity' sets whether to enable\n  [session affinity](https://cloud.google.com/sdk/gcloud/reference/beta/run/deploy#--[no-]session-affinity)\n  for connections to the Revision.\n- 'run.googleapis.com/startup-cpu-boost' sets whether to allocate extra CPU to containers on startup.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-boost.\n- 'run.googleapis.com/vpc-access-connector' sets a [VPC connector](https://cloud.google.com/run/docs/configuring/connecting-vpc#terraform_1)\n  for the Revision.\n- 'run.googleapis.com/vpc-access-egress' sets the outbound traffic to send through the VPC connector for this resource.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--vpc-egress."]
-    pub fn annotations(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.annotations", self.base))
+    #[doc =
+        "Get a reference to the value of field `annotations` after provisioning.\nAnnotations is a key value map stored with a resource that\nmay be set by external tools to store and retrieve arbitrary metadata. More\ninfo: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations\n\n**Note**: The Cloud Run API may add additional annotations that were not provided in your config.\nIf terraform plan shows a diff where a server-side annotation is added, you can add it to your config\nor apply the lifecycle.ignore_changes rule to the metadata.0.annotations field.\n\nAnnotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted. Use the following annotation\nkeys to configure features on a Revision template:\n\n- 'autoscaling.knative.dev/maxScale' sets the [maximum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--max-instances) of the Revision to run.\n- 'autoscaling.knative.dev/minScale' sets the [minimum number of container\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--min-instances) of the Revision to run.\n- 'run.googleapis.com/client-name' sets the client name calling the Cloud Run API.\n- 'run.googleapis.com/cloudsql-instances' sets the [Cloud SQL\n  instances](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--add-cloudsql-instances) the Revision connects to.\n- 'run.googleapis.com/cpu-throttling' sets whether to throttle the CPU when the container is not actively serving\n  requests. See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-throttling.\n- 'run.googleapis.com/encryption-key-shutdown-hours' sets the number of hours to wait before an automatic shutdown\n  server after CMEK key revocation is detected.\n- 'run.googleapis.com/encryption-key' sets the [CMEK key](https://cloud.google.com/run/docs/securing/using-cmek)\n  reference to encrypt the container with.\n- 'run.googleapis.com/execution-environment' sets the [execution\n  environment](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--execution-environment)\n  where the application will run.\n- 'run.googleapis.com/post-key-revocation-action-type' sets the\n  [action type](https://cloud.google.com/sdk/gcloud/reference/run/deploy#--post-key-revocation-action-type)\n  after CMEK key revocation.\n- 'run.googleapis.com/secrets' sets a list of key-value pairs to set as\n  [secrets](https://cloud.google.com/run/docs/configuring/secrets#yaml).\n- 'run.googleapis.com/sessionAffinity' sets whether to enable\n  [session affinity](https://cloud.google.com/sdk/gcloud/reference/beta/run/deploy#--[no-]session-affinity)\n  for connections to the Revision.\n- 'run.googleapis.com/startup-cpu-boost' sets whether to allocate extra CPU to containers on startup.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--[no-]cpu-boost.\n- 'run.googleapis.com/vpc-access-connector' sets a [VPC connector](https://cloud.google.com/run/docs/configuring/connecting-vpc#terraform_1)\n  for the Revision.\n- 'run.googleapis.com/vpc-access-egress' sets the outbound traffic to send through the VPC connector for this resource.\n  See https://cloud.google.com/sdk/gcloud/reference/run/deploy#--vpc-egress."]
+    pub fn annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.annotations", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `generation` after provisioning.\nA sequence number representing a specific generation of the desired state."]
-    pub fn generation(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
+    #[doc =
+        "Get a reference to the value of field `generation` after provisioning.\nA sequence number representing a specific generation of the desired state."]
+    pub fn generation(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nMap of string keys and values that can be used to organize and categorize\n(scope and select) objects."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName must be unique within a Google Cloud project and region.\nIs required when creating resources. Name is primarily intended\nfor creation idempotence and configuration definition. Cannot be updated."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace` after provisioning.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number. It will default to the resource's project."]
-    pub fn namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    #[doc =
+        "Get a reference to the value of field `namespace` after provisioning.\nIn Cloud Run the namespace must be equal to either the\nproject ID or project number. It will default to the resource's project."]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_version` after provisioning.\nAn opaque value that represents the internal version of this object that\ncan be used by clients to determine when objects have changed. May be used\nfor optimistic concurrency, change detection, and the watch operation on a\nresource or set of resources. They may only be valid for a\nparticular resource or set of resources."]
-    pub fn resource_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_version", self.base))
+    #[doc =
+        "Get a reference to the value of field `resource_version` after provisioning.\nAn opaque value that represents the internal version of this object that\ncan be used by clients to determine when objects have changed. May be used\nfor optimistic concurrency, change detection, and the watch operation on a\nresource or set of resources. They may only be valid for a\nparticular resource or set of resources."]
+    pub fn resource_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\nSelfLink is a URL representing this object."]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.base))
+    #[doc =
+        "Get a reference to the value of field `self_link` after provisioning.\nSelfLink is a URL representing this object."]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `uid` after provisioning.\nUID is a unique id generated by the server on successful creation of a resource and is not\nallowed to change on PUT operations."]
-    pub fn uid(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uid", self.base))
+    #[doc =
+        "Get a reference to the value of field `uid` after provisioning.\nUID is a unique id generated by the server on successful creation of a resource and is not\nallowed to change on PUT operations."]
+    pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl {
-    key: PrimField<String>,
-    name: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl { }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -976,10 +1071,12 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvElValueFro
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl {
-    #[doc= "A Cloud Secret Manager secret version. Must be 'latest' for the latest\nversion or an integer for a specific version."]
-    pub key: PrimField<String>,
-    #[doc= "The name of the secret in Cloud Secret Manager. By default, the secret is assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form: :projects/{project-id|project-number}/secrets/.\nIf multiple alias definitions are needed, they must be separated by commas.\nThe alias definitions must be set on the run.googleapis.com/secrets annotation."]
-    pub name: PrimField<String>,
+    #[doc =
+        "A Cloud Secret Manager secret version. Must be 'latest' for the latest\nversion or an integer for a specific version."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The name of the secret in Cloud Secret Manager. By default, the secret is assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form: :projects/{project-id|project-number}/secrets/.\nIf multiple alias definitions are needed, they must be separated by commas.\nThe alias definitions must be set on the run.googleapis.com/secrets annotation."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl {
@@ -992,14 +1089,14 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRe
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef {
             shared: shared,
@@ -1009,56 +1106,70 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKe
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nA Cloud Secret Manager secret version. Must be 'latest' for the latest\nversion or an integer for a specific version."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc =
+        "Get a reference to the value of field `key` after provisioning.\nA Cloud Secret Manager secret version. Must be 'latest' for the latest\nversion or an integer for a specific version."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of the secret in Cloud Secret Manager. By default, the secret is assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form: :projects/{project-id|project-number}/secrets/.\nIf multiple alias definitions are needed, they must be separated by commas.\nThe alias definitions must be set on the run.googleapis.com/secrets annotation."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name of the secret in Cloud Secret Manager. By default, the secret is assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form: :projects/{project-id|project-number}/secrets/.\nIf multiple alias definitions are needed, they must be separated by commas.\nThe alias definitions must be set on the run.googleapis.com/secrets annotation."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElDynamic {
-    secret_key_ref: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>>,
+    secret_key_ref: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secret_key_ref: Option<Vec<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_key_ref: std
+    ::option
+    ::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl {
-    #[doc= "Set the field `secret_key_ref`.\n"]
+    #[doc = "Set the field `secret_key_ref`.\n"]
     pub fn set_secret_key_ref(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.secret_key_ref = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.secret_key_ref = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.secret_key_ref = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secret_key_ref = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1072,18 +1183,21 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl {
     pub fn build(self) -> CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl {
         CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl {
             secret_key_ref: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
             shared: shared,
             base: base.to_string(),
@@ -1092,69 +1206,76 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `secret_key_ref` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `secret_key_ref` after provisioning.\n"]
     pub fn secret_key_ref(
         &self,
-    ) -> ListRef<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.secret_key_ref", self.base))
+    ) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElSecretKeyRefElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secret_key_ref", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElEnvElDynamic {
-    value_from: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>>,
+    value_from: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value_from: Option<Vec<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value_from: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElEnvElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvEl {
-    #[doc= "Set the field `name`.\nName of the environment variable."]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\nName of the environment variable."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `value`.\nDefaults to \"\"."]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\nDefaults to \"\"."]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `value_from`.\n"]
+    #[doc = "Set the field `value_from`.\n"]
     pub fn set_value_from(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.value_from = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.value_from = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.value_from = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.value_from = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1170,18 +1291,21 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvEl {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
             value_from: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElEnvElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElEnvElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvElRef {
             shared: shared,
             base: base.to_string(),
@@ -1190,39 +1314,41 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the environment variable."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nName of the environment variable."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\nDefaults to \"\"."]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nDefaults to \"\"."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value_from` after provisioning.\n"]
-    pub fn value_from(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.value_from", self.base))
+    #[doc = "Get a reference to the value of field `value_from` after provisioning.\n"]
+    pub fn value_from(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElEnvElValueFromElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.value_from", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl {
-    name: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl { }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl {
+impl terrars
+::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl {
     type O =
-        BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl>;
+        terrars
+        ::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1231,8 +1357,8 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElConf
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl {
-    #[doc= "Name of the referent."]
-    pub name: PrimField<String>,
+    #[doc = "Name of the referent."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl {
@@ -1242,14 +1368,14 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLoca
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef {
             shared: shared,
@@ -1259,70 +1385,76 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElL
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the referent."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nName of the referent."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElDynamic {
-    local_object_reference: Option<
-        DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl>,
+    local_object_reference: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    optional: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_object_reference: Option<
-        Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    optional: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_object_reference: std
+    ::option
+    ::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl {
-    #[doc= "Set the field `optional`.\nSpecify whether the ConfigMap must be defined"]
-    pub fn set_optional(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.optional = Some(v.into());
+    #[doc = "Set the field `optional`.\nSpecify whether the ConfigMap must be defined"]
+    pub fn set_optional(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.optional = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `local_object_reference`.\n"]
+    #[doc = "Set the field `local_object_reference`.\n"]
     pub fn set_local_object_reference(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.local_object_reference = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.local_object_reference = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.local_object_reference = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.local_object_reference = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1337,20 +1469,20 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl {
         CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl {
             optional: core::default::Default::default(),
             local_object_reference: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef {
             shared: shared,
@@ -1360,35 +1492,39 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElR
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `optional` after provisioning.\nSpecify whether the ConfigMap must be defined"]
-    pub fn optional(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.optional", self.base))
+    #[doc =
+        "Get a reference to the value of field `optional` after provisioning.\nSpecify whether the ConfigMap must be defined"]
+    pub fn optional(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.optional", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `local_object_reference` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `local_object_reference` after provisioning.\n"]
     pub fn local_object_reference(
         &self,
-    ) -> ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_object_reference", self.base))
+    ) -> terrars
+    ::ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElLocalObjectReferenceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_object_reference", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl {
-    name: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl { }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl {
+    type O =
+        terrars
+        ::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1397,8 +1533,8 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecr
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl {
-    #[doc= "Name of the referent."]
-    pub name: PrimField<String>,
+    #[doc = "Name of the referent."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl {
@@ -1408,14 +1544,14 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalOb
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef {
             shared: shared,
@@ -1425,70 +1561,75 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLoca
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the referent."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nName of the referent."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElDynamic {
-    local_object_reference: Option<
-        DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl>,
+    local_object_reference: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    optional: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_object_reference: Option<
-        Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    optional: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_object_reference: std
+    ::option
+    ::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl {
-    #[doc= "Set the field `optional`.\nSpecify whether the Secret must be defined"]
-    pub fn set_optional(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.optional = Some(v.into());
+    #[doc = "Set the field `optional`.\nSpecify whether the Secret must be defined"]
+    pub fn set_optional(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.optional = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `local_object_reference`.\n"]
+    #[doc = "Set the field `local_object_reference`.\n"]
     pub fn set_local_object_reference(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.local_object_reference = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.local_object_reference = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.local_object_reference = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.local_object_reference = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1503,18 +1644,21 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl {
         CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl {
             optional: core::default::Default::default(),
             local_object_reference: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef {
             shared: shared,
             base: base.to_string(),
@@ -1523,85 +1667,104 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef 
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `optional` after provisioning.\nSpecify whether the Secret must be defined"]
-    pub fn optional(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.optional", self.base))
+    #[doc =
+        "Get a reference to the value of field `optional` after provisioning.\nSpecify whether the Secret must be defined"]
+    pub fn optional(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.optional", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `local_object_reference` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `local_object_reference` after provisioning.\n"]
     pub fn local_object_reference(
         &self,
-    ) -> ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_object_reference", self.base))
+    ) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElLocalObjectReferenceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_object_reference", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElEnvFromElDynamic {
-    config_map_ref: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>>,
-    secret_ref: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>>,
+    config_map_ref: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>>,
+    secret_ref: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    prefix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    config_map_ref: Option<Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secret_ref: Option<Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    config_map_ref: std
+    ::option
+    ::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_ref: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElEnvFromElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromEl {
-    #[doc= "Set the field `prefix`.\nAn optional identifier to prepend to each key in the ConfigMap."]
-    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.prefix = Some(v.into());
+    #[doc = "Set the field `prefix`.\nAn optional identifier to prepend to each key in the ConfigMap."]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `config_map_ref`.\n"]
+    #[doc = "Set the field `config_map_ref`.\n"]
     pub fn set_config_map_ref(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.config_map_ref = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.config_map_ref = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.config_map_ref = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.config_map_ref = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `secret_ref`.\n"]
+    #[doc = "Set the field `secret_ref`.\n"]
     pub fn set_secret_ref(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.secret_ref = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.secret_ref = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.secret_ref = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secret_ref = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElEnvFromEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1617,18 +1780,21 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElEnvFromEl {
             prefix: core::default::Default::default(),
             config_map_ref: core::default::Default::default(),
             secret_ref: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
         CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
             shared: shared,
             base: base.to_string(),
@@ -1637,53 +1803,58 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElEnvFromElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\nAn optional identifier to prepend to each key in the ConfigMap."]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc =
+        "Get a reference to the value of field `prefix` after provisioning.\nAn optional identifier to prepend to each key in the ConfigMap."]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `config_map_ref` after provisioning.\n"]
-    pub fn config_map_ref(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.config_map_ref", self.base))
+    #[doc = "Get a reference to the value of field `config_map_ref` after provisioning.\n"]
+    pub fn config_map_ref(
+        &self,
+    ) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElConfigMapRefElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.config_map_ref", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret_ref` after provisioning.\n"]
-    pub fn secret_ref(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.secret_ref", self.base))
+    #[doc = "Get a reference to the value of field `secret_ref` after provisioning.\n"]
+    pub fn secret_ref(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElSecretRefElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secret_ref", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    port: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl {
-    #[doc= "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn set_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.port = Some(v.into());
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service`.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
-    pub fn set_service(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service = Some(v.into());
+    #[doc =
+        "Set the field `service`.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1703,12 +1874,15 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl {
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef {
         CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef {
             shared: shared,
             base: base.to_string(),
@@ -1717,41 +1891,44 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service` after provisioning.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
-    pub fn service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl {
-    #[doc= "Set the field `value`.\nThe header field value."]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\nThe header field value."]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl {
+    type O =
+        terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1760,8 +1937,8 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbe
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl {
-    #[doc= "The header field name."]
-    pub name: PrimField<String>,
+    #[doc = "The header field name."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl {
@@ -1774,14 +1951,14 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHtt
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef {
         CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef {
             shared: shared,
@@ -1791,81 +1968,89 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe header field name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe header field name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\nThe header field value."]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nThe header field value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElDynamic {
-    http_headers: Option<
-        DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl>,
+    http_headers: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    port: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_headers: Option<Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_headers: std
+    ::option
+    ::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl {
-    #[doc= "Set the field `path`.\nPath to access on the HTTP server. If set, it should not be empty string."]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\nPath to access on the HTTP server. If set, it should not be empty string."]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn set_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.port = Some(v.into());
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `http_headers`.\n"]
+    #[doc = "Set the field `http_headers`.\n"]
     pub fn set_http_headers(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_headers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_headers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_headers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_headers = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1881,20 +2066,20 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl {
             path: core::default::Default::default(),
             port: core::default::Default::default(),
             http_headers: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef {
         CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef {
             shared: shared,
@@ -1904,114 +2089,138 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nPath to access on the HTTP server. If set, it should not be empty string."]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nPath to access on the HTTP server. If set, it should not be empty string."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_headers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `http_headers` after provisioning.\n"]
     pub fn http_headers(
         &self,
-    ) -> ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_headers", self.base))
+    ) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElHttpHeadersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_headers", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElDynamic {
-    grpc: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>>,
-    http_get: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>>,
+    grpc: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>>,
+    http_get: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    failure_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_delay_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    period_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    grpc: Option<Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_get: Option<Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    failure_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_delay_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    period_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grpc: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_get: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElLivenessProbeElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl {
-    #[doc= "Set the field `failure_threshold`.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
-    pub fn set_failure_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.failure_threshold = Some(v.into());
+    #[doc =
+        "Set the field `failure_threshold`.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
+    pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.failure_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_delay_seconds`.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 3600."]
-    pub fn set_initial_delay_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.initial_delay_seconds = Some(v.into());
+    #[doc =
+        "Set the field `initial_delay_seconds`.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 3600."]
+    pub fn set_initial_delay_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_delay_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `period_seconds`.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 3600."]
-    pub fn set_period_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.period_seconds = Some(v.into());
+    #[doc =
+        "Set the field `period_seconds`.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 3600."]
+    pub fn set_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.period_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeout_seconds`.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than period_seconds."]
-    pub fn set_timeout_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.timeout_seconds = Some(v.into());
+    #[doc =
+        "Set the field `timeout_seconds`.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than period_seconds."]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `grpc`.\n"]
+    #[doc = "Set the field `grpc`.\n"]
     pub fn set_grpc(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.grpc = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.grpc = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.grpc = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.grpc = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `http_get`.\n"]
+    #[doc = "Set the field `http_get`.\n"]
     pub fn set_http_get(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_get = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_get = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_get = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_get = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2030,18 +2239,21 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElLivenessProbeEl {
             timeout_seconds: core::default::Default::default(),
             grpc: core::default::Default::default(),
             http_get: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
         CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2050,76 +2262,82 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `failure_threshold` after provisioning.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
-    pub fn failure_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.failure_threshold", self.base))
+    #[doc =
+        "Get a reference to the value of field `failure_threshold` after provisioning.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
+    pub fn failure_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.failure_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `initial_delay_seconds` after provisioning.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 3600."]
-    pub fn initial_delay_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `initial_delay_seconds` after provisioning.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 3600."]
+    pub fn initial_delay_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `period_seconds` after provisioning.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 3600."]
-    pub fn period_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `period_seconds` after provisioning.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 3600."]
+    pub fn period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_seconds` after provisioning.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than period_seconds."]
-    pub fn timeout_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `timeout_seconds` after provisioning.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than period_seconds."]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `grpc` after provisioning.\n"]
-    pub fn grpc(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.grpc", self.base))
+    #[doc = "Get a reference to the value of field `grpc` after provisioning.\n"]
+    pub fn grpc(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElGrpcElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_get` after provisioning.\n"]
-    pub fn http_get(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_get", self.base))
+    #[doc = "Get a reference to the value of field `http_get` after provisioning.\n"]
+    pub fn http_get(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElHttpGetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_get", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElPortsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    container_port: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    protocol: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElPortsEl {
-    #[doc= "Set the field `container_port`.\nPort number the container listens on. This must be a valid port number (between 1 and 65535). Defaults to \"8080\"."]
-    pub fn set_container_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.container_port = Some(v.into());
+    #[doc =
+        "Set the field `container_port`.\nPort number the container listens on. This must be a valid port number (between 1 and 65535). Defaults to \"8080\"."]
+    pub fn set_container_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.container_port = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\nIf specified, used to specify which protocol to use. Allowed values are \"http1\" (HTTP/1) and \"h2c\" (HTTP/2 end-to-end). Defaults to \"http1\"."]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc =
+        "Set the field `name`.\nIf specified, used to specify which protocol to use. Allowed values are \"http1\" (HTTP/1) and \"h2c\" (HTTP/2 end-to-end). Defaults to \"http1\"."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `protocol`.\nProtocol for port. Must be \"TCP\". Defaults to \"TCP\"."]
-    pub fn set_protocol(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.protocol = Some(v.into());
+    #[doc = "Set the field `protocol`.\nProtocol for port. Must be \"TCP\". Defaults to \"TCP\"."]
+    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.protocol = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElPortsEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElPortsEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElPortsEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElPortsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2140,12 +2358,15 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElPortsEl {
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElPortsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElPortsElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElPortsElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElPortsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElPortsElRef {
         CloudRunServiceTemplateElSpecElContainersElPortsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2154,53 +2375,64 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElPortsElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElPortsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `container_port` after provisioning.\nPort number the container listens on. This must be a valid port number (between 1 and 65535). Defaults to \"8080\"."]
-    pub fn container_port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.container_port", self.base))
+    #[doc =
+        "Get a reference to the value of field `container_port` after provisioning.\nPort number the container listens on. This must be a valid port number (between 1 and 65535). Defaults to \"8080\"."]
+    pub fn container_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.container_port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nIf specified, used to specify which protocol to use. Allowed values are \"http1\" (HTTP/1) and \"h2c\" (HTTP/2 end-to-end). Defaults to \"http1\"."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nIf specified, used to specify which protocol to use. Allowed values are \"http1\" (HTTP/1) and \"h2c\" (HTTP/2 end-to-end). Defaults to \"http1\"."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `protocol` after provisioning.\nProtocol for port. Must be \"TCP\". Defaults to \"TCP\"."]
-    pub fn protocol(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
+    #[doc =
+        "Get a reference to the value of field `protocol` after provisioning.\nProtocol for port. Must be \"TCP\". Defaults to \"TCP\"."]
+    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElResourcesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    limits: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    requests: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    limits: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    requests: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElResourcesEl {
-    #[doc= "Set the field `limits`.\nLimits describes the maximum amount of compute resources allowed.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
-    pub fn set_limits(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.limits = Some(v.into());
+    #[doc =
+        "Set the field `limits`.\nLimits describes the maximum amount of compute resources allowed.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
+    pub fn set_limits(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.limits = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `requests`.\nRequests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is\nexplicitly specified, otherwise to an implementation-defined value.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
-    pub fn set_requests(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.requests = Some(v.into());
+    #[doc =
+        "Set the field `requests`.\nRequests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is\nexplicitly specified, otherwise to an implementation-defined value.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
+    pub fn set_requests(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.requests = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElResourcesEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElResourcesEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElResourcesEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElResourcesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2220,12 +2452,15 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElResourcesEl {
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
         CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
             shared: shared,
             base: base.to_string(),
@@ -2234,48 +2469,52 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElResourcesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `limits` after provisioning.\nLimits describes the maximum amount of compute resources allowed.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
-    pub fn limits(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.limits", self.base))
+    #[doc =
+        "Get a reference to the value of field `limits` after provisioning.\nLimits describes the maximum amount of compute resources allowed.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
+    pub fn limits(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.limits", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `requests` after provisioning.\nRequests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is\nexplicitly specified, otherwise to an implementation-defined value.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
-    pub fn requests(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.requests", self.base))
+    #[doc =
+        "Get a reference to the value of field `requests` after provisioning.\nRequests describes the minimum amount of compute resources required.\nIf Requests is omitted for a container, it defaults to Limits if that is\nexplicitly specified, otherwise to an implementation-defined value.\nThe values of the map is string form of the 'quantity' k8s type:\nhttps://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
+    pub fn requests(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.requests", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    port: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl {
-    #[doc= "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn set_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.port = Some(v.into());
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service`.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
-    pub fn set_service(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service = Some(v.into());
+    #[doc =
+        "Set the field `service`.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2295,12 +2534,15 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl {
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef {
         CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef {
             shared: shared,
             base: base.to_string(),
@@ -2309,41 +2551,44 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef 
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service` after provisioning.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
-    pub fn service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl {
-    #[doc= "Set the field `value`.\nThe header field value."]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\nThe header field value."]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl {
+    type O =
+        terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2352,8 +2597,8 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeE
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl {
-    #[doc= "The header field name."]
-    pub name: PrimField<String>,
+    #[doc = "The header field name."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl {
@@ -2366,14 +2611,14 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttp
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef {
         CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef {
             shared: shared,
@@ -2383,81 +2628,87 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElH
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe header field name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe header field name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\nThe header field value."]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nThe header field value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElDynamic {
-    http_headers: Option<
-        DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl>,
-    >,
+    http_headers: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    port: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_headers: Option<Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_headers: std
+    ::option
+    ::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl {
-    #[doc= "Set the field `path`.\nPath to access on the HTTP server. If set, it should not be empty string."]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\nPath to access on the HTTP server. If set, it should not be empty string."]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn set_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.port = Some(v.into());
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `http_headers`.\n"]
+    #[doc = "Set the field `http_headers`.\n"]
     pub fn set_http_headers(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_headers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_headers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_headers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_headers = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2473,20 +2724,20 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl {
             path: core::default::Default::default(),
             port: core::default::Default::default(),
             http_headers: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef {
         CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef {
             shared: shared,
@@ -2496,47 +2747,50 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElR
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nPath to access on the HTTP server. If set, it should not be empty string."]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nPath to access on the HTTP server. If set, it should not be empty string."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_headers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `http_headers` after provisioning.\n"]
     pub fn http_headers(
         &self,
-    ) -> ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_headers", self.base))
+    ) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElHttpHeadersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_headers", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    port: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl {
-    #[doc= "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn set_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.port = Some(v.into());
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2555,14 +2809,14 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl {
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef {
         CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef {
             shared: shared,
@@ -2572,121 +2826,149 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketE
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElDynamic {
-    grpc: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>>,
-    http_get: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>>,
-    tcp_socket: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>>,
+    grpc: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>>,
+    http_get: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>>,
+    tcp_socket: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    failure_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_delay_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    period_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    grpc: Option<Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_get: Option<Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tcp_socket: Option<Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    failure_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_delay_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    period_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grpc: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_get: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tcp_socket: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElStartupProbeElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeEl {
-    #[doc= "Set the field `failure_threshold`.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
-    pub fn set_failure_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.failure_threshold = Some(v.into());
+    #[doc =
+        "Set the field `failure_threshold`.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
+    pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.failure_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_delay_seconds`.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 240."]
-    pub fn set_initial_delay_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.initial_delay_seconds = Some(v.into());
+    #[doc =
+        "Set the field `initial_delay_seconds`.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 240."]
+    pub fn set_initial_delay_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_delay_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `period_seconds`.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 240."]
-    pub fn set_period_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.period_seconds = Some(v.into());
+    #[doc =
+        "Set the field `period_seconds`.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 240."]
+    pub fn set_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.period_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeout_seconds`.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than periodSeconds."]
-    pub fn set_timeout_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.timeout_seconds = Some(v.into());
+    #[doc =
+        "Set the field `timeout_seconds`.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than periodSeconds."]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `grpc`.\n"]
+    #[doc = "Set the field `grpc`.\n"]
     pub fn set_grpc(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.grpc = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.grpc = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.grpc = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.grpc = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `http_get`.\n"]
+    #[doc = "Set the field `http_get`.\n"]
     pub fn set_http_get(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_get = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_get = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_get = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_get = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tcp_socket`.\n"]
+    #[doc = "Set the field `tcp_socket`.\n"]
     pub fn set_tcp_socket(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tcp_socket = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tcp_socket = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tcp_socket = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tcp_socket = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElStartupProbeEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2706,18 +2988,21 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElStartupProbeEl {
             grpc: core::default::Default::default(),
             http_get: core::default::Default::default(),
             tcp_socket: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
         CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2726,59 +3011,65 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `failure_threshold` after provisioning.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
-    pub fn failure_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.failure_threshold", self.base))
+    #[doc =
+        "Get a reference to the value of field `failure_threshold` after provisioning.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
+    pub fn failure_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.failure_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `initial_delay_seconds` after provisioning.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 240."]
-    pub fn initial_delay_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `initial_delay_seconds` after provisioning.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 240."]
+    pub fn initial_delay_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `period_seconds` after provisioning.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 240."]
-    pub fn period_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `period_seconds` after provisioning.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 240."]
+    pub fn period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_seconds` after provisioning.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than periodSeconds."]
-    pub fn timeout_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `timeout_seconds` after provisioning.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than periodSeconds."]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `grpc` after provisioning.\n"]
-    pub fn grpc(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.grpc", self.base))
+    #[doc = "Get a reference to the value of field `grpc` after provisioning.\n"]
+    pub fn grpc(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElGrpcElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_get` after provisioning.\n"]
-    pub fn http_get(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_get", self.base))
+    #[doc = "Get a reference to the value of field `http_get` after provisioning.\n"]
+    pub fn http_get(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElHttpGetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_get", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tcp_socket` after provisioning.\n"]
-    pub fn tcp_socket(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tcp_socket", self.base))
+    #[doc = "Get a reference to the value of field `tcp_socket` after provisioning.\n"]
+    pub fn tcp_socket(
+        &self,
+    ) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElTcpSocketElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_socket", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl {
-    mount_path: PrimField<String>,
-    name: PrimField<String>,
+    mount_path: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl { }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2787,10 +3078,10 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElContainersElVolumeMountsE
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElContainersElVolumeMountsEl {
-    #[doc= "Path within the container at which the volume should be mounted.  Must\nnot contain ':'."]
-    pub mount_path: PrimField<String>,
-    #[doc= "This must match the Name of a Volume."]
-    pub name: PrimField<String>,
+    #[doc = "Path within the container at which the volume should be mounted.  Must\nnot contain ':'."]
+    pub mount_path: terrars::PrimField<std::string::String>,
+    #[doc = "This must match the Name of a Volume."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElContainersElVolumeMountsEl {
@@ -2803,12 +3094,15 @@ impl BuildCloudRunServiceTemplateElSpecElContainersElVolumeMountsEl {
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
         CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2817,200 +3111,234 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mount_path` after provisioning.\nPath within the container at which the volume should be mounted.  Must\nnot contain ':'."]
-    pub fn mount_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mount_path", self.base))
+    #[doc =
+        "Get a reference to the value of field `mount_path` after provisioning.\nPath within the container at which the volume should be mounted.  Must\nnot contain ':'."]
+    pub fn mount_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mount_path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThis must match the Name of a Volume."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThis must match the Name of a Volume."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElContainersElDynamic {
-    env: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvEl>>,
-    env_from: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>>,
-    liveness_probe: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>>,
-    ports: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElPortsEl>>,
-    resources: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElResourcesEl>>,
-    startup_probe: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>>,
-    volume_mounts: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>>,
+    env: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvEl>>,
+    env_from: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>>,
+    liveness_probe: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>>,
+    ports: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElPortsEl>>,
+    resources: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElResourcesEl>>,
+    startup_probe: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>>,
+    volume_mounts: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElContainersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    args: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    command: Option<ListField<PrimField<String>>>,
-    image: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    working_dir: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    env: Option<Vec<CloudRunServiceTemplateElSpecElContainersElEnvEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    env_from: Option<Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    liveness_probe: Option<Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ports: Option<Vec<CloudRunServiceTemplateElSpecElContainersElPortsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resources: Option<Vec<CloudRunServiceTemplateElSpecElContainersElResourcesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    startup_probe: Option<Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    volume_mounts: Option<Vec<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    args: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    command: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    image: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    working_dir: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    env: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    env_from: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    liveness_probe: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ports: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElPortsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resources: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElResourcesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    startup_probe: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_mounts: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>>,
     dynamic: CloudRunServiceTemplateElSpecElContainersElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElContainersEl {
-    #[doc= "Set the field `args`.\nArguments to the entrypoint.\nThe docker image's CMD is used if this is not provided."]
-    pub fn set_args(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.args = Some(v.into());
+    #[doc =
+        "Set the field `args`.\nArguments to the entrypoint.\nThe docker image's CMD is used if this is not provided."]
+    pub fn set_args(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.args = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `command`.\nEntrypoint array. Not executed within a shell.\nThe docker image's ENTRYPOINT is used if this is not provided."]
-    pub fn set_command(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.command = Some(v.into());
+    #[doc =
+        "Set the field `command`.\nEntrypoint array. Not executed within a shell.\nThe docker image's ENTRYPOINT is used if this is not provided."]
+    pub fn set_command(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.command = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\nName of the container"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\nName of the container"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `working_dir`.\nContainer's working directory.\nIf not specified, the container runtime's default will be used, which\nmight be configured in the container image."]
-    pub fn set_working_dir(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.working_dir = Some(v.into());
+    #[doc =
+        "Set the field `working_dir`.\nContainer's working directory.\nIf not specified, the container runtime's default will be used, which\nmight be configured in the container image."]
+    pub fn set_working_dir(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.working_dir = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `env`.\n"]
-    pub fn set_env(mut self, v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvEl>>) -> Self {
+    #[doc = "Set the field `env`.\n"]
+    pub fn set_env(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.env = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.env = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.env = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.env = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `env_from`.\n"]
+    #[doc = "Set the field `env_from`.\n"]
     pub fn set_env_from(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElEnvFromEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.env_from = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.env_from = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.env_from = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.env_from = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `liveness_probe`.\n"]
+    #[doc = "Set the field `liveness_probe`.\n"]
     pub fn set_liveness_probe(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElLivenessProbeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.liveness_probe = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.liveness_probe = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.liveness_probe = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.liveness_probe = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `ports`.\n"]
+    #[doc = "Set the field `ports`.\n"]
     pub fn set_ports(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElPortsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElPortsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.ports = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.ports = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.ports = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ports = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resources`.\n"]
+    #[doc = "Set the field `resources`.\n"]
     pub fn set_resources(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElResourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElResourcesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resources = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resources = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resources = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resources = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `startup_probe`.\n"]
+    #[doc = "Set the field `startup_probe`.\n"]
     pub fn set_startup_probe(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElStartupProbeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.startup_probe = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.startup_probe = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.startup_probe = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.startup_probe = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `volume_mounts`.\n"]
+    #[doc = "Set the field `volume_mounts`.\n"]
     pub fn set_volume_mounts(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersElVolumeMountsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.volume_mounts = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.volume_mounts = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.volume_mounts = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.volume_mounts = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElContainersEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElContainersEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElContainersEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3019,8 +3347,9 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElContainersEl {
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElContainersEl {
-    #[doc= "Docker image name. This is most often a reference to a container located\nin the container registry, such as gcr.io/cloudrun/hello"]
-    pub image: PrimField<String>,
+    #[doc =
+        "Docker image name. This is most often a reference to a container located\nin the container registry, such as gcr.io/cloudrun/hello"]
+    pub image: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElContainersEl {
@@ -3038,18 +3367,21 @@ impl BuildCloudRunServiceTemplateElSpecElContainersEl {
             resources: core::default::Default::default(),
             startup_probe: core::default::Default::default(),
             volume_mounts: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElContainersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElContainersElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElContainersElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElContainersElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElContainersElRef {
         CloudRunServiceTemplateElSpecElContainersElRef {
             shared: shared,
             base: base.to_string(),
@@ -3058,87 +3390,92 @@ impl Ref for CloudRunServiceTemplateElSpecElContainersElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElContainersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `args` after provisioning.\nArguments to the entrypoint.\nThe docker image's CMD is used if this is not provided."]
-    pub fn args(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.args", self.base))
+    #[doc =
+        "Get a reference to the value of field `args` after provisioning.\nArguments to the entrypoint.\nThe docker image's CMD is used if this is not provided."]
+    pub fn args(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.args", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `command` after provisioning.\nEntrypoint array. Not executed within a shell.\nThe docker image's ENTRYPOINT is used if this is not provided."]
-    pub fn command(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.command", self.base))
+    #[doc =
+        "Get a reference to the value of field `command` after provisioning.\nEntrypoint array. Not executed within a shell.\nThe docker image's ENTRYPOINT is used if this is not provided."]
+    pub fn command(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.command", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image` after provisioning.\nDocker image name. This is most often a reference to a container located\nin the container registry, such as gcr.io/cloudrun/hello"]
-    pub fn image(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
+    #[doc =
+        "Get a reference to the value of field `image` after provisioning.\nDocker image name. This is most often a reference to a container located\nin the container registry, such as gcr.io/cloudrun/hello"]
+    pub fn image(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the container"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nName of the container"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `working_dir` after provisioning.\nContainer's working directory.\nIf not specified, the container runtime's default will be used, which\nmight be configured in the container image."]
-    pub fn working_dir(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.working_dir", self.base))
+    #[doc =
+        "Get a reference to the value of field `working_dir` after provisioning.\nContainer's working directory.\nIf not specified, the container runtime's default will be used, which\nmight be configured in the container image."]
+    pub fn working_dir(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.working_dir", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `env_from` after provisioning.\n"]
-    pub fn env_from(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.env_from", self.base))
+    #[doc = "Get a reference to the value of field `env_from` after provisioning.\n"]
+    pub fn env_from(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElEnvFromElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.env_from", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `liveness_probe` after provisioning.\n"]
-    pub fn liveness_probe(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.liveness_probe", self.base))
+    #[doc = "Get a reference to the value of field `liveness_probe` after provisioning.\n"]
+    pub fn liveness_probe(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElLivenessProbeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.liveness_probe", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ports` after provisioning.\n"]
-    pub fn ports(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElPortsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
+    #[doc = "Get a reference to the value of field `ports` after provisioning.\n"]
+    pub fn ports(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElPortsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElResourcesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.resources", self.base))
+    #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
+    pub fn resources(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElResourcesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `startup_probe` after provisioning.\n"]
-    pub fn startup_probe(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.startup_probe", self.base))
+    #[doc = "Get a reference to the value of field `startup_probe` after provisioning.\n"]
+    pub fn startup_probe(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElStartupProbeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.startup_probe", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `volume_mounts` after provisioning.\n"]
-    pub fn volume_mounts(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.volume_mounts", self.base))
+    #[doc = "Get a reference to the value of field `volume_mounts` after provisioning.\n"]
+    pub fn volume_mounts(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElVolumeMountsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.volume_mounts", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl {
-    key: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mode: Option<PrimField<f64>>,
-    path: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<f64>>,
+    path: terrars::PrimField<std::string::String>,
 }
 
 impl CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl {
-    #[doc= "Set the field `mode`.\nMode bits to use on this file, must be a value between 0000 and 0777. If\nnot specified, the volume defaultMode will be used. This might be in\nconflict with other options that affect the file mode, like fsGroup, and\nthe result can be other mode bits set."]
-    pub fn set_mode(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.mode = Some(v.into());
+    #[doc =
+        "Set the field `mode`.\nMode bits to use on this file, must be a value between 0000 and 0777. If\nnot specified, the volume defaultMode will be used. This might be in\nconflict with other options that affect the file mode, like fsGroup, and\nthe result can be other mode bits set."]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3147,10 +3484,12 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl 
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl {
-    #[doc= "The Cloud Secret Manager secret version.\nCan be 'latest' for the latest value or an integer for a specific version."]
-    pub key: PrimField<String>,
-    #[doc= "The relative path of the file to map the key to.\nMay not be an absolute path.\nMay not contain the path element '..'.\nMay not start with the string '..'."]
-    pub path: PrimField<String>,
+    #[doc =
+        "The Cloud Secret Manager secret version.\nCan be 'latest' for the latest value or an integer for a specific version."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The relative path of the file to map the key to.\nMay not be an absolute path.\nMay not contain the path element '..'.\nMay not start with the string '..'."]
+    pub path: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl {
@@ -3164,12 +3503,15 @@ impl BuildCloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl {
 }
 
 pub struct CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
         CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
             shared: shared,
             base: base.to_string(),
@@ -3178,70 +3520,79 @@ impl Ref for CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nThe Cloud Secret Manager secret version.\nCan be 'latest' for the latest value or an integer for a specific version."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc =
+        "Get a reference to the value of field `key` after provisioning.\nThe Cloud Secret Manager secret version.\nCan be 'latest' for the latest value or an integer for a specific version."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\nMode bits to use on this file, must be a value between 0000 and 0777. If\nnot specified, the volume defaultMode will be used. This might be in\nconflict with other options that affect the file mode, like fsGroup, and\nthe result can be other mode bits set."]
-    pub fn mode(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `mode` after provisioning.\nMode bits to use on this file, must be a value between 0000 and 0777. If\nnot specified, the volume defaultMode will be used. This might be in\nconflict with other options that affect the file mode, like fsGroup, and\nthe result can be other mode bits set."]
+    pub fn mode(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nThe relative path of the file to map the key to.\nMay not be an absolute path.\nMay not contain the path element '..'.\nMay not start with the string '..'."]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nThe relative path of the file to map the key to.\nMay not be an absolute path.\nMay not contain the path element '..'.\nMay not start with the string '..'."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElVolumesElSecretElDynamic {
-    items: Option<DynamicBlock<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>>,
+    items: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElVolumesElSecretEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_mode: Option<PrimField<f64>>,
-    secret_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    items: Option<Vec<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_mode: std::option::Option<terrars::PrimField<f64>>,
+    secret_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    items: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>>,
     dynamic: CloudRunServiceTemplateElSpecElVolumesElSecretElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElVolumesElSecretEl {
-    #[doc= "Set the field `default_mode`.\nMode bits to use on created files by default. Must be a value between 0000\nand 0777. Defaults to 0644. Directories within the path are not affected by\nthis setting. This might be in conflict with other options that affect the\nfile mode, like fsGroup, and the result can be other mode bits set."]
-    pub fn set_default_mode(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.default_mode = Some(v.into());
+    #[doc =
+        "Set the field `default_mode`.\nMode bits to use on created files by default. Must be a value between 0000\nand 0777. Defaults to 0644. Directories within the path are not affected by\nthis setting. This might be in conflict with other options that affect the\nfile mode, like fsGroup, and the result can be other mode bits set."]
+    pub fn set_default_mode(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.default_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `items`.\n"]
+    #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.items = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.items = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.items = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.items = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElVolumesElSecretEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElVolumesElSecretEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3250,8 +3601,9 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElVolumesElSecretEl {
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElVolumesElSecretEl {
-    #[doc= "The name of the secret in Cloud Secret Manager. By default, the secret\nis assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form:\n{alias}:projects/{project-id|project-number}/secrets/{secret-name}.\nIf multiple alias definitions are needed, they must be separated by\ncommas.\nThe alias definitions must be set on the run.googleapis.com/secrets\nannotation."]
-    pub secret_name: PrimField<String>,
+    #[doc =
+        "The name of the secret in Cloud Secret Manager. By default, the secret\nis assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form:\n{alias}:projects/{project-id|project-number}/secrets/{secret-name}.\nIf multiple alias definitions are needed, they must be separated by\ncommas.\nThe alias definitions must be set on the run.googleapis.com/secrets\nannotation."]
+    pub secret_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElVolumesElSecretEl {
@@ -3260,18 +3612,21 @@ impl BuildCloudRunServiceTemplateElSpecElVolumesElSecretEl {
             default_mode: core::default::Default::default(),
             secret_name: self.secret_name,
             items: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
         CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
             shared: shared,
             base: base.to_string(),
@@ -3280,62 +3635,64 @@ impl Ref for CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElVolumesElSecretElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `default_mode` after provisioning.\nMode bits to use on created files by default. Must be a value between 0000\nand 0777. Defaults to 0644. Directories within the path are not affected by\nthis setting. This might be in conflict with other options that affect the\nfile mode, like fsGroup, and the result can be other mode bits set."]
-    pub fn default_mode(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.default_mode", self.base))
+    #[doc =
+        "Get a reference to the value of field `default_mode` after provisioning.\nMode bits to use on created files by default. Must be a value between 0000\nand 0777. Defaults to 0644. Directories within the path are not affected by\nthis setting. This might be in conflict with other options that affect the\nfile mode, like fsGroup, and the result can be other mode bits set."]
+    pub fn default_mode(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret_name` after provisioning.\nThe name of the secret in Cloud Secret Manager. By default, the secret\nis assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form:\n{alias}:projects/{project-id|project-number}/secrets/{secret-name}.\nIf multiple alias definitions are needed, they must be separated by\ncommas.\nThe alias definitions must be set on the run.googleapis.com/secrets\nannotation."]
-    pub fn secret_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.secret_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `secret_name` after provisioning.\nThe name of the secret in Cloud Secret Manager. By default, the secret\nis assumed to be in the same project.\nIf the secret is in another project, you must define an alias.\nAn alias definition has the form:\n{alias}:projects/{project-id|project-number}/secrets/{secret-name}.\nIf multiple alias definitions are needed, they must be separated by\ncommas.\nThe alias definitions must be set on the run.googleapis.com/secrets\nannotation."]
+    pub fn secret_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> ListRef<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.items", self.base))
+    #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
+    pub fn items(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElVolumesElSecretElItemsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElVolumesElDynamic {
-    secret: Option<DynamicBlock<CloudRunServiceTemplateElSpecElVolumesElSecretEl>>,
+    secret: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElVolumesElSecretEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecElVolumesEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secret: Option<Vec<CloudRunServiceTemplateElSpecElVolumesElSecretEl>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElVolumesElSecretEl>>,
     dynamic: CloudRunServiceTemplateElSpecElVolumesElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecElVolumesEl {
-    #[doc= "Set the field `secret`.\n"]
+    #[doc = "Set the field `secret`.\n"]
     pub fn set_secret(
         mut self,
-        v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElVolumesElSecretEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.secret = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.secret = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.secret = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secret = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecElVolumesEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecElVolumesEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecElVolumesEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecElVolumesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3344,8 +3701,8 @@ impl ToListMappable for CloudRunServiceTemplateElSpecElVolumesEl {
 }
 
 pub struct BuildCloudRunServiceTemplateElSpecElVolumesEl {
-    #[doc= "Volume's name."]
-    pub name: PrimField<String>,
+    #[doc = "Volume's name."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudRunServiceTemplateElSpecElVolumesEl {
@@ -3353,18 +3710,18 @@ impl BuildCloudRunServiceTemplateElSpecElVolumesEl {
         CloudRunServiceTemplateElSpecElVolumesEl {
             name: self.name,
             secret: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElVolumesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElVolumesElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElVolumesElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElVolumesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceTemplateElSpecElVolumesElRef {
         CloudRunServiceTemplateElSpecElVolumesElRef {
             shared: shared,
             base: base.to_string(),
@@ -3373,93 +3730,105 @@ impl Ref for CloudRunServiceTemplateElSpecElVolumesElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElVolumesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nVolume's name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nVolume's name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret` after provisioning.\n"]
-    pub fn secret(&self) -> ListRef<CloudRunServiceTemplateElSpecElVolumesElSecretElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.secret", self.base))
+    #[doc = "Get a reference to the value of field `secret` after provisioning.\n"]
+    pub fn secret(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElVolumesElSecretElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secret", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElSpecElDynamic {
-    containers: Option<DynamicBlock<CloudRunServiceTemplateElSpecElContainersEl>>,
-    volumes: Option<DynamicBlock<CloudRunServiceTemplateElSpecElVolumesEl>>,
+    containers: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElContainersEl>>,
+    volumes: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecElVolumesEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateElSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    container_concurrency: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_account_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    containers: Option<Vec<CloudRunServiceTemplateElSpecElContainersEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    volumes: Option<Vec<CloudRunServiceTemplateElSpecElVolumesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_concurrency: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    containers: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElContainersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volumes: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecElVolumesEl>>,
     dynamic: CloudRunServiceTemplateElSpecElDynamic,
 }
 
 impl CloudRunServiceTemplateElSpecEl {
-    #[doc= "Set the field `container_concurrency`.\nContainerConcurrency specifies the maximum allowed in-flight (concurrent)\nrequests per container of the Revision. Values are:\n- '0' thread-safe, the system should manage the max concurrency. This is\n    the default value.\n- '1' not-thread-safe. Single concurrency\n- '2-N' thread-safe, max concurrency of N"]
-    pub fn set_container_concurrency(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.container_concurrency = Some(v.into());
+    #[doc =
+        "Set the field `container_concurrency`.\nContainerConcurrency specifies the maximum allowed in-flight (concurrent)\nrequests per container of the Revision. Values are:\n- '0' thread-safe, the system should manage the max concurrency. This is\n    the default value.\n- '1' not-thread-safe. Single concurrency\n- '2-N' thread-safe, max concurrency of N"]
+    pub fn set_container_concurrency(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.container_concurrency = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_account_name`.\nEmail address of the IAM service account associated with the revision of the\nservice. The service account represents the identity of the running revision,\nand determines what permissions the revision has. If not provided, the revision\nwill use the project's default service account."]
-    pub fn set_service_account_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_account_name = Some(v.into());
+    #[doc =
+        "Set the field `service_account_name`.\nEmail address of the IAM service account associated with the revision of the\nservice. The service account represents the identity of the running revision,\nand determines what permissions the revision has. If not provided, the revision\nwill use the project's default service account."]
+    pub fn set_service_account_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.service_account_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeout_seconds`.\nTimeoutSeconds holds the max duration the instance is allowed for responding to a request."]
-    pub fn set_timeout_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.timeout_seconds = Some(v.into());
+    #[doc =
+        "Set the field `timeout_seconds`.\nTimeoutSeconds holds the max duration the instance is allowed for responding to a request."]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `containers`.\n"]
-    pub fn set_containers(mut self, v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElContainersEl>>) -> Self {
+    #[doc = "Set the field `containers`.\n"]
+    pub fn set_containers(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElContainersEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.containers = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.containers = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.containers = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.containers = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `volumes`.\n"]
-    pub fn set_volumes(mut self, v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecElVolumesEl>>) -> Self {
+    #[doc = "Set the field `volumes`.\n"]
+    pub fn set_volumes(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecElVolumesEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.volumes = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.volumes = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.volumes = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.volumes = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateElSpecEl {
-    type O = BlockAssignable<CloudRunServiceTemplateElSpecEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateElSpecEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateElSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3477,18 +3846,18 @@ impl BuildCloudRunServiceTemplateElSpecEl {
             timeout_seconds: core::default::Default::default(),
             containers: core::default::Default::default(),
             volumes: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElSpecElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElSpecElRef {
+impl terrars::Ref for CloudRunServiceTemplateElSpecElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceTemplateElSpecElRef {
         CloudRunServiceTemplateElSpecElRef {
             shared: shared,
             base: base.to_string(),
@@ -3497,89 +3866,99 @@ impl Ref for CloudRunServiceTemplateElSpecElRef {
 }
 
 impl CloudRunServiceTemplateElSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `container_concurrency` after provisioning.\nContainerConcurrency specifies the maximum allowed in-flight (concurrent)\nrequests per container of the Revision. Values are:\n- '0' thread-safe, the system should manage the max concurrency. This is\n    the default value.\n- '1' not-thread-safe. Single concurrency\n- '2-N' thread-safe, max concurrency of N"]
-    pub fn container_concurrency(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.container_concurrency", self.base))
+    #[doc =
+        "Get a reference to the value of field `container_concurrency` after provisioning.\nContainerConcurrency specifies the maximum allowed in-flight (concurrent)\nrequests per container of the Revision. Values are:\n- '0' thread-safe, the system should manage the max concurrency. This is\n    the default value.\n- '1' not-thread-safe. Single concurrency\n- '2-N' thread-safe, max concurrency of N"]
+    pub fn container_concurrency(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.container_concurrency", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_account_name` after provisioning.\nEmail address of the IAM service account associated with the revision of the\nservice. The service account represents the identity of the running revision,\nand determines what permissions the revision has. If not provided, the revision\nwill use the project's default service account."]
-    pub fn service_account_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_account_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `service_account_name` after provisioning.\nEmail address of the IAM service account associated with the revision of the\nservice. The service account represents the identity of the running revision,\nand determines what permissions the revision has. If not provided, the revision\nwill use the project's default service account."]
+    pub fn service_account_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `serving_state` after provisioning.\nServingState holds a value describing the state the resources\nare in for this Revision.\nIt is expected\nthat the system will manipulate this based on routability and load."]
-    pub fn serving_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.serving_state", self.base))
+    #[doc =
+        "Get a reference to the value of field `serving_state` after provisioning.\nServingState holds a value describing the state the resources\nare in for this Revision.\nIt is expected\nthat the system will manipulate this based on routability and load."]
+    pub fn serving_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.serving_state", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_seconds` after provisioning.\nTimeoutSeconds holds the max duration the instance is allowed for responding to a request."]
-    pub fn timeout_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    #[doc =
+        "Get a reference to the value of field `timeout_seconds` after provisioning.\nTimeoutSeconds holds the max duration the instance is allowed for responding to a request."]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `containers` after provisioning.\n"]
-    pub fn containers(&self) -> ListRef<CloudRunServiceTemplateElSpecElContainersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.containers", self.base))
+    #[doc = "Get a reference to the value of field `containers` after provisioning.\n"]
+    pub fn containers(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElContainersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.containers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `volumes` after provisioning.\n"]
-    pub fn volumes(&self) -> ListRef<CloudRunServiceTemplateElSpecElVolumesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.volumes", self.base))
+    #[doc = "Get a reference to the value of field `volumes` after provisioning.\n"]
+    pub fn volumes(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElVolumesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.volumes", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceTemplateElDynamic {
-    metadata: Option<DynamicBlock<CloudRunServiceTemplateElMetadataEl>>,
-    spec: Option<DynamicBlock<CloudRunServiceTemplateElSpecEl>>,
+    metadata: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElMetadataEl>>,
+    spec: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateElSpecEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTemplateEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metadata: Option<Vec<CloudRunServiceTemplateElMetadataEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    spec: Option<Vec<CloudRunServiceTemplateElSpecEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElMetadataEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    spec: std::option::Option<std::vec::Vec<CloudRunServiceTemplateElSpecEl>>,
     dynamic: CloudRunServiceTemplateElDynamic,
 }
 
 impl CloudRunServiceTemplateEl {
-    #[doc= "Set the field `metadata`.\n"]
-    pub fn set_metadata(mut self, v: impl Into<BlockAssignable<CloudRunServiceTemplateElMetadataEl>>) -> Self {
+    #[doc = "Set the field `metadata`.\n"]
+    pub fn set_metadata(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElMetadataEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metadata = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metadata = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metadata = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metadata = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `spec`.\n"]
-    pub fn set_spec(mut self, v: impl Into<BlockAssignable<CloudRunServiceTemplateElSpecEl>>) -> Self {
+    #[doc = "Set the field `spec`.\n"]
+    pub fn set_spec(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunServiceTemplateElSpecEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.spec = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.spec = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.spec = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.spec = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTemplateEl {
-    type O = BlockAssignable<CloudRunServiceTemplateEl>;
+impl terrars::ToListMappable for CloudRunServiceTemplateEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTemplateEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3594,18 +3973,18 @@ impl BuildCloudRunServiceTemplateEl {
         CloudRunServiceTemplateEl {
             metadata: core::default::Default::default(),
             spec: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CloudRunServiceTemplateElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTemplateElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTemplateElRef {
+impl terrars::Ref for CloudRunServiceTemplateElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceTemplateElRef {
         CloudRunServiceTemplateElRef {
             shared: shared,
             base: base.to_string(),
@@ -3614,56 +3993,56 @@ impl Ref for CloudRunServiceTemplateElRef {
 }
 
 impl CloudRunServiceTemplateElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metadata` after provisioning.\n"]
-    pub fn metadata(&self) -> ListRef<CloudRunServiceTemplateElMetadataElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.metadata", self.base))
+    #[doc = "Get a reference to the value of field `metadata` after provisioning.\n"]
+    pub fn metadata(&self) -> terrars::ListRef<CloudRunServiceTemplateElMetadataElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> ListRef<CloudRunServiceTemplateElSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.spec", self.base))
+    #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
+    pub fn spec(&self) -> terrars::ListRef<CloudRunServiceTemplateElSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTimeoutsEl {
-    type O = BlockAssignable<CloudRunServiceTimeoutsEl>;
+impl terrars::ToListMappable for CloudRunServiceTimeoutsEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3684,12 +4063,12 @@ impl BuildCloudRunServiceTimeoutsEl {
 }
 
 pub struct CloudRunServiceTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTimeoutsElRef {
+impl terrars::Ref for CloudRunServiceTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceTimeoutsElRef {
         CloudRunServiceTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -3698,62 +4077,65 @@ impl Ref for CloudRunServiceTimeoutsElRef {
 }
 
 impl CloudRunServiceTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CloudRunServiceTrafficEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    latest_revision: Option<PrimField<bool>>,
-    percent: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    revision_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latest_revision: std::option::Option<terrars::PrimField<bool>>,
+    percent: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    revision_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CloudRunServiceTrafficEl {
-    #[doc= "Set the field `latest_revision`.\nLatestRevision may be optionally provided to indicate that the latest ready\nRevision of the Configuration should be used for this traffic target. When\nprovided LatestRevision must be true if RevisionName is empty; it must be\nfalse when RevisionName is non-empty."]
-    pub fn set_latest_revision(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.latest_revision = Some(v.into());
+    #[doc =
+        "Set the field `latest_revision`.\nLatestRevision may be optionally provided to indicate that the latest ready\nRevision of the Configuration should be used for this traffic target. When\nprovided LatestRevision must be true if RevisionName is empty; it must be\nfalse when RevisionName is non-empty."]
+    pub fn set_latest_revision(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.latest_revision = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `revision_name`.\nRevisionName of a specific revision to which to send this portion of traffic."]
-    pub fn set_revision_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.revision_name = Some(v.into());
+    #[doc =
+        "Set the field `revision_name`.\nRevisionName of a specific revision to which to send this portion of traffic."]
+    pub fn set_revision_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.revision_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tag`.\nTag is optionally used to expose a dedicated url for referencing this target exclusively."]
-    pub fn set_tag(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tag = Some(v.into());
+    #[doc =
+        "Set the field `tag`.\nTag is optionally used to expose a dedicated url for referencing this target exclusively."]
+    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CloudRunServiceTrafficEl {
-    type O = BlockAssignable<CloudRunServiceTrafficEl>;
+impl terrars::ToListMappable for CloudRunServiceTrafficEl {
+    type O = terrars::BlockAssignable<CloudRunServiceTrafficEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3762,8 +4144,8 @@ impl ToListMappable for CloudRunServiceTrafficEl {
 }
 
 pub struct BuildCloudRunServiceTrafficEl {
-    #[doc= "Percent specifies percent of the traffic to this Revision or Configuration."]
-    pub percent: PrimField<f64>,
+    #[doc = "Percent specifies percent of the traffic to this Revision or Configuration."]
+    pub percent: terrars::PrimField<f64>,
 }
 
 impl BuildCloudRunServiceTrafficEl {
@@ -3778,12 +4160,12 @@ impl BuildCloudRunServiceTrafficEl {
 }
 
 pub struct CloudRunServiceTrafficElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CloudRunServiceTrafficElRef {
-    fn new(shared: StackShared, base: String) -> CloudRunServiceTrafficElRef {
+impl terrars::Ref for CloudRunServiceTrafficElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunServiceTrafficElRef {
         CloudRunServiceTrafficElRef {
             shared: shared,
             base: base.to_string(),
@@ -3792,39 +4174,44 @@ impl Ref for CloudRunServiceTrafficElRef {
 }
 
 impl CloudRunServiceTrafficElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `latest_revision` after provisioning.\nLatestRevision may be optionally provided to indicate that the latest ready\nRevision of the Configuration should be used for this traffic target. When\nprovided LatestRevision must be true if RevisionName is empty; it must be\nfalse when RevisionName is non-empty."]
-    pub fn latest_revision(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.base))
+    #[doc =
+        "Get a reference to the value of field `latest_revision` after provisioning.\nLatestRevision may be optionally provided to indicate that the latest ready\nRevision of the Configuration should be used for this traffic target. When\nprovided LatestRevision must be true if RevisionName is empty; it must be\nfalse when RevisionName is non-empty."]
+    pub fn latest_revision(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `percent` after provisioning.\nPercent specifies percent of the traffic to this Revision or Configuration."]
-    pub fn percent(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.percent", self.base))
+    #[doc =
+        "Get a reference to the value of field `percent` after provisioning.\nPercent specifies percent of the traffic to this Revision or Configuration."]
+    pub fn percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.percent", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `revision_name` after provisioning.\nRevisionName of a specific revision to which to send this portion of traffic."]
-    pub fn revision_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.revision_name", self.base))
+    #[doc =
+        "Get a reference to the value of field `revision_name` after provisioning.\nRevisionName of a specific revision to which to send this portion of traffic."]
+    pub fn revision_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag` after provisioning.\nTag is optionally used to expose a dedicated url for referencing this target exclusively."]
-    pub fn tag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
+    #[doc =
+        "Get a reference to the value of field `tag` after provisioning.\nTag is optionally used to expose a dedicated url for referencing this target exclusively."]
+    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\nURL displays the URL for accessing tagged traffic targets. URL is displayed in status,\nand is disallowed on spec. URL must contain a scheme (e.g. http://) and a hostname,\nbut may not contain anything else (e.g. basic auth, url path, etc.)"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    #[doc =
+        "Get a reference to the value of field `url` after provisioning.\nURL displays the URL for accessing tagged traffic targets. URL is displayed in status,\nand is disallowed on spec. URL must contain a scheme (e.g. http://) and a hostname,\nbut may not contain anything else (e.g. basic auth, url path, etc.)"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CloudRunServiceDynamic {
-    metadata: Option<DynamicBlock<CloudRunServiceMetadataEl>>,
-    template: Option<DynamicBlock<CloudRunServiceTemplateEl>>,
-    traffic: Option<DynamicBlock<CloudRunServiceTrafficEl>>,
+    metadata: std::option::Option<terrars::DynamicBlock<CloudRunServiceMetadataEl>>,
+    template: std::option::Option<terrars::DynamicBlock<CloudRunServiceTemplateEl>>,
+    traffic: std::option::Option<terrars::DynamicBlock<CloudRunServiceTrafficEl>>,
 }

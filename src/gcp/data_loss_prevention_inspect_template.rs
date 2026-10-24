@@ -1,56 +1,60 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataLossPreventionInspectTemplateData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    display_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    parent: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    template_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    inspect_config: Option<Vec<DataLossPreventionInspectTemplateInspectConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DataLossPreventionInspectTemplateTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    parent: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    template_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    inspect_config: std::option::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataLossPreventionInspectTemplateTimeoutsEl>,
     dynamic: DataLossPreventionInspectTemplateDynamic,
 }
 
 struct DataLossPreventionInspectTemplate_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataLossPreventionInspectTemplateData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataLossPreventionInspectTemplateData>,
 }
 
 #[derive(Clone)]
-pub struct DataLossPreventionInspectTemplate(Rc<DataLossPreventionInspectTemplate_>);
+pub struct DataLossPreventionInspectTemplate(std::rc::Rc<DataLossPreventionInspectTemplate_>);
 
 impl DataLossPreventionInspectTemplate {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -65,123 +69,162 @@ impl DataLossPreventionInspectTemplate {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\nA description of the inspect template."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `display_name`.\nUser set display name of the inspect template."]
-    pub fn set_display_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().display_name = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `template_id`.\nThe template id can contain uppercase and lowercase letters, numbers, and hyphens;\nthat is, it must match the regular expression: [a-zA-Z\\d-_]+. The maximum length is\n100 characters. Can be empty to allow the system to generate one."]
-    pub fn set_template_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().template_id = Some(v.into());
+    #[doc = "Set the field `description`.\nA description of the inspect template."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `inspect_config`.\n"]
+    #[doc = "Set the field `display_name`.\nUser set display name of the inspect template."]
+    pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `template_id`.\nThe template id can contain uppercase and lowercase letters, numbers, and hyphens;\nthat is, it must match the regular expression: [a-zA-Z\\d-_]+. The maximum length is\n100 characters. Can be empty to allow the system to generate one."]
+    pub fn set_template_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().template_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `inspect_config`.\n"]
     pub fn set_inspect_config(
         self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().inspect_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().inspect_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.inspect_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.inspect_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DataLossPreventionInspectTemplateTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataLossPreventionInspectTemplateTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nA description of the inspect template."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nA description of the inspect template."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nUser set display name of the inspect template."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `display_name` after provisioning.\nUser set display name of the inspect template."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name of the inspect template. Set by the server."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe resource name of the inspect template. Set by the server."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `parent` after provisioning.\nThe parent of the inspect template in any of the following formats:\n\n* 'projects/{{project}}'\n* 'projects/{{project}}/locations/{{location}}'\n* 'organizations/{{organization_id}}'\n* 'organizations/{{organization_id}}/locations/{{location}}'"]
-    pub fn parent(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `parent` after provisioning.\nThe parent of the inspect template in any of the following formats:\n\n* 'projects/{{project}}'\n* 'projects/{{project}}/locations/{{location}}'\n* 'organizations/{{organization_id}}'\n* 'organizations/{{organization_id}}/locations/{{location}}'"]
+    pub fn parent(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `template_id` after provisioning.\nThe template id can contain uppercase and lowercase letters, numbers, and hyphens;\nthat is, it must match the regular expression: [a-zA-Z\\d-_]+. The maximum length is\n100 characters. Can be empty to allow the system to generate one."]
-    pub fn template_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.template_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `template_id` after provisioning.\nThe template id can contain uppercase and lowercase letters, numbers, and hyphens;\nthat is, it must match the regular expression: [a-zA-Z\\d-_]+. The maximum length is\n100 characters. Can be empty to allow the system to generate one."]
+    pub fn template_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.template_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `inspect_config` after provisioning.\n"]
-    pub fn inspect_config(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.inspect_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `inspect_config` after provisioning.\n"]
+    pub fn inspect_config(&self) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.inspect_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataLossPreventionInspectTemplateTimeoutsElRef {
         DataLossPreventionInspectTemplateTimeoutsElRef::new(
             self.shared().clone(),
@@ -190,29 +233,29 @@ impl DataLossPreventionInspectTemplate {
     }
 }
 
-impl Referable for DataLossPreventionInspectTemplate {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataLossPreventionInspectTemplate {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DataLossPreventionInspectTemplate { }
+impl terrars::Resource for DataLossPreventionInspectTemplate { }
 
-impl ToListMappable for DataLossPreventionInspectTemplate {
-    type O = ListRef<DataLossPreventionInspectTemplateRef>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplate {
+    type O = terrars::ListRef<DataLossPreventionInspectTemplateRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DataLossPreventionInspectTemplate_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DataLossPreventionInspectTemplate_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_data_loss_prevention_inspect_template".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -222,21 +265,23 @@ impl Resource_ for DataLossPreventionInspectTemplate_ {
 }
 
 pub struct BuildDataLossPreventionInspectTemplate {
-    pub tf_id: String,
-    #[doc= "The parent of the inspect template in any of the following formats:\n\n* 'projects/{{project}}'\n* 'projects/{{project}}/locations/{{location}}'\n* 'organizations/{{organization_id}}'\n* 'organizations/{{organization_id}}/locations/{{location}}'"]
-    pub parent: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "The parent of the inspect template in any of the following formats:\n\n* 'projects/{{project}}'\n* 'projects/{{project}}/locations/{{location}}'\n* 'organizations/{{organization_id}}'\n* 'organizations/{{organization_id}}/locations/{{location}}'"]
+    pub parent: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplate {
-    pub fn build(self, stack: &mut Stack) -> DataLossPreventionInspectTemplate {
-        let out = DataLossPreventionInspectTemplate(Rc::new(DataLossPreventionInspectTemplate_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataLossPreventionInspectTemplate {
+        let out = DataLossPreventionInspectTemplate(std::rc::Rc::new(DataLossPreventionInspectTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataLossPreventionInspectTemplateData {
+            data: std::cell::RefCell::new(DataLossPreventionInspectTemplateData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -244,7 +289,7 @@ impl BuildDataLossPreventionInspectTemplate {
                 template_id: core::default::Default::default(),
                 inspect_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -253,12 +298,12 @@ impl BuildDataLossPreventionInspectTemplate {
 }
 
 pub struct DataLossPreventionInspectTemplateRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataLossPreventionInspectTemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -267,50 +312,55 @@ impl Ref for DataLossPreventionInspectTemplateRef {
 }
 
 impl DataLossPreventionInspectTemplateRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nA description of the inspect template."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nA description of the inspect template."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nUser set display name of the inspect template."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `display_name` after provisioning.\nUser set display name of the inspect template."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe resource name of the inspect template. Set by the server."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe resource name of the inspect template. Set by the server."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `parent` after provisioning.\nThe parent of the inspect template in any of the following formats:\n\n* 'projects/{{project}}'\n* 'projects/{{project}}/locations/{{location}}'\n* 'organizations/{{organization_id}}'\n* 'organizations/{{organization_id}}/locations/{{location}}'"]
-    pub fn parent(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `parent` after provisioning.\nThe parent of the inspect template in any of the following formats:\n\n* 'projects/{{project}}'\n* 'projects/{{project}}/locations/{{location}}'\n* 'organizations/{{organization_id}}'\n* 'organizations/{{organization_id}}/locations/{{location}}'"]
+    pub fn parent(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `template_id` after provisioning.\nThe template id can contain uppercase and lowercase letters, numbers, and hyphens;\nthat is, it must match the regular expression: [a-zA-Z\\d-_]+. The maximum length is\n100 characters. Can be empty to allow the system to generate one."]
-    pub fn template_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.template_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `template_id` after provisioning.\nThe template id can contain uppercase and lowercase letters, numbers, and hyphens;\nthat is, it must match the regular expression: [a-zA-Z\\d-_]+. The maximum length is\n100 characters. Can be empty to allow the system to generate one."]
+    pub fn template_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.template_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `inspect_config` after provisioning.\n"]
-    pub fn inspect_config(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.inspect_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `inspect_config` after provisioning.\n"]
+    pub fn inspect_config(&self) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.inspect_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataLossPreventionInspectTemplateTimeoutsElRef {
         DataLossPreventionInspectTemplateTimeoutsElRef::new(
             self.shared().clone(),
@@ -321,19 +371,21 @@ impl DataLossPreventionInspectTemplateRef {
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
-    path: PrimField<String>,
+    path: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -342,8 +394,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomIn
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
-    #[doc= "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
-    pub path: PrimField<String>,
+    #[doc =
+        "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
+    pub path: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
@@ -357,14 +410,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDicti
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
             shared: shared,
@@ -374,29 +428,32 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDi
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nA url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nA url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
-    words: ListField<PrimField<String>>,
+    words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
     type O =
-        BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl>;
+        terrars
+        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -405,8 +462,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomIn
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
-    #[doc= "Words or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
-    pub words: ListField<PrimField<String>>,
+    #[doc =
+        "Words or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
+    pub words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
@@ -416,14 +474,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDicti
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
             shared: shared,
@@ -433,90 +491,108 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDi
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `words` after provisioning.\nWords or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
-    pub fn words(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.words", self.base))
+    #[doc =
+        "Get a reference to the value of field `words` after provisioning.\nWords or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
+    pub fn words(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.words", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElDynamic {
-    cloud_storage_path: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl>,
+    cloud_storage_path: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl,
+        >,
     >,
-    word_list: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl>,
+    word_list: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloud_storage_path: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_storage_path: std
+    ::option
+    ::Option<
+        std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    word_list: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    word_list: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl {
-    #[doc= "Set the field `cloud_storage_path`.\n"]
+    #[doc = "Set the field `cloud_storage_path`.\n"]
     pub fn set_cloud_storage_path(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloud_storage_path = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloud_storage_path = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloud_storage_path = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloud_storage_path = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `word_list`.\n"]
+    #[doc = "Set the field `word_list`.\n"]
     pub fn set_word_list(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.word_list = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.word_list = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.word_list = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.word_list = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -531,20 +607,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDicti
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl {
             cloud_storage_path: core::default::Default::default(),
             word_list: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef {
             shared: shared,
@@ -554,40 +630,43 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDi
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloud_storage_path` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `cloud_storage_path` after provisioning.\n"]
     pub fn cloud_storage_path(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_storage_path", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `word_list` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `word_list` after provisioning.\n"]
     pub fn word_list(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.word_list", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElWordListElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.word_list", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
-    score: PrimField<String>,
+    score: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -596,8 +675,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomIn
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
-    #[doc= "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: PrimField<String>,
+    #[doc =
+        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub score: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
@@ -611,14 +691,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoT
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
             shared: shared,
@@ -628,71 +708,80 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElIn
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
+    #[doc =
+        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElDynamic {
-    sensitivity_score: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl>,
+    sensitivity_score: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sensitivity_score: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sensitivity_score: std
+    ::option
+    ::Option<
+        std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl>,
     >,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl {
-    #[doc= "Set the field `version`.\nVersion name for this InfoType."]
-    pub fn set_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.version = Some(v.into());
+    #[doc = "Set the field `version`.\nVersion name for this InfoType."]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sensitivity_score`.\n"]
+    #[doc = "Set the field `sensitivity_score`.\n"]
     pub fn set_sensitivity_score(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sensitivity_score = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sensitivity_score = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sensitivity_score = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sensitivity_score = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -701,8 +790,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomIn
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl {
-    #[doc= "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names\nlisted at https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub name: PrimField<String>,
+    #[doc =
+        "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names\nlisted at https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl {
@@ -711,20 +801,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoT
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef {
             shared: shared,
@@ -734,48 +824,54 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElIn
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names\nlisted at https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names\nlisted at https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    group_indexes: Option<ListField<PrimField<f64>>>,
-    pattern: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
+    pattern: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl {
-    #[doc= "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
-    pub fn set_group_indexes(mut self, v: impl Into<ListField<PrimField<f64>>>) -> Self {
-        self.group_indexes = Some(v.into());
+    #[doc =
+        "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
+    pub fn set_group_indexes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
+    ) -> Self {
+        self.group_indexes = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -784,8 +880,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomIn
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl {
-    #[doc= "Pattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub pattern: PrimField<String>,
+    #[doc =
+        "Pattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub pattern: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl {
@@ -798,14 +895,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegex
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef {
             shared: shared,
@@ -815,33 +912,37 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRe
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
-    pub fn group_indexes(&self) -> ListRef<PrimExpr<f64>> {
-        ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
+    #[doc =
+        "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
+    pub fn group_indexes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub fn pattern(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
+    #[doc =
+        "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub fn pattern(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-    score: PrimField<String>,
+    score: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl {
+    type O =
+        terrars
+        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -850,8 +951,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomIn
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-    #[doc= "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: PrimField<String>,
+    #[doc =
+        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub score: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl {
@@ -861,14 +963,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensi
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
             shared: shared,
@@ -878,28 +980,29 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSe
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
+    #[doc =
+        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl {
-    name: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -908,8 +1011,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomIn
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl {
-    #[doc= "Resource name of the requested StoredInfoType, for example 'organizations/433245324/storedInfoTypes/432452342'\nor 'projects/project-id/storedInfoTypes/432452342'."]
-    pub name: PrimField<String>,
+    #[doc =
+        "Resource name of the requested StoredInfoType, for example 'organizations/433245324/storedInfoTypes/432452342'\nor 'projects/project-id/storedInfoTypes/432452342'."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl {
@@ -919,14 +1023,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStore
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef {
             shared: shared,
@@ -936,13 +1040,14 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSt
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nResource name of the requested StoredInfoType, for example 'organizations/433245324/storedInfoTypes/432452342'\nor 'projects/project-id/storedInfoTypes/432452342'."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nResource name of the requested StoredInfoType, for example 'organizations/433245324/storedInfoTypes/432452342'\nor 'projects/project-id/storedInfoTypes/432452342'."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
@@ -951,11 +1056,12 @@ pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurr
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl {
+    type O =
+        terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -972,14 +1078,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurro
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
             shared: shared,
@@ -989,175 +1095,241 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSu
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDynamic {
-    dictionary: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl>>,
-    info_type: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>>,
-    regex: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>>,
-    sensitivity_score: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl>,
+    dictionary: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl>>,
+    info_type: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>>,
+    regex: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>>,
+    sensitivity_score: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl>,
     >,
-    stored_type: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl>>,
-    surrogate_type: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl>,
+    stored_type: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl>>,
+    surrogate_type: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclusion_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    likelihood: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dictionary: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    info_type: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    regex: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sensitivity_score: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stored_type: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    surrogate_type: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclusion_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    likelihood: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dictionary: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    info_type: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex: std::option::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sensitivity_score: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stored_type: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    surrogate_type: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl {
-    #[doc= "Set the field `exclusion_type`.\nIf set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause a finding to be returned. It still can be used for rules matching. Possible values: [\"EXCLUSION_TYPE_EXCLUDE\"]"]
-    pub fn set_exclusion_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.exclusion_type = Some(v.into());
+    #[doc =
+        "Set the field `exclusion_type`.\nIf set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause a finding to be returned. It still can be used for rules matching. Possible values: [\"EXCLUSION_TYPE_EXCLUDE\"]"]
+    pub fn set_exclusion_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.exclusion_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `likelihood`.\nLikelihood to return for this CustomInfoType. This base value can be altered by a detection rule if the finding meets the criteria\nspecified by the rule. Default value: \"VERY_LIKELY\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
-    pub fn set_likelihood(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.likelihood = Some(v.into());
+    #[doc =
+        "Set the field `likelihood`.\nLikelihood to return for this CustomInfoType. This base value can be altered by a detection rule if the finding meets the criteria\nspecified by the rule. Default value: \"VERY_LIKELY\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
+    pub fn set_likelihood(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.likelihood = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `dictionary`.\n"]
+    #[doc = "Set the field `dictionary`.\n"]
     pub fn set_dictionary(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dictionary = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dictionary = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dictionary = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dictionary = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `info_type`.\n"]
+    #[doc = "Set the field `info_type`.\n"]
     pub fn set_info_type(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.info_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.info_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.info_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.info_type = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `regex`.\n"]
+    #[doc = "Set the field `regex`.\n"]
     pub fn set_regex(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.regex = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.regex = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.regex = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.regex = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sensitivity_score`.\n"]
+    #[doc = "Set the field `sensitivity_score`.\n"]
     pub fn set_sensitivity_score(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sensitivity_score = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sensitivity_score = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sensitivity_score = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sensitivity_score = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `stored_type`.\n"]
+    #[doc = "Set the field `stored_type`.\n"]
     pub fn set_stored_type(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.stored_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.stored_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.stored_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.stored_type = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `surrogate_type`.\n"]
+    #[doc = "Set the field `surrogate_type`.\n"]
     pub fn set_surrogate_type(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.surrogate_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.surrogate_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.surrogate_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.surrogate_type = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1178,20 +1350,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl {
             sensitivity_score: core::default::Default::default(),
             stored_type: core::default::Default::default(),
             surrogate_type: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef {
         DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef {
             shared: shared,
@@ -1201,71 +1373,75 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRe
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `exclusion_type` after provisioning.\nIf set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause a finding to be returned. It still can be used for rules matching. Possible values: [\"EXCLUSION_TYPE_EXCLUDE\"]"]
-    pub fn exclusion_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.exclusion_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `exclusion_type` after provisioning.\nIf set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause a finding to be returned. It still can be used for rules matching. Possible values: [\"EXCLUSION_TYPE_EXCLUDE\"]"]
+    pub fn exclusion_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exclusion_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `likelihood` after provisioning.\nLikelihood to return for this CustomInfoType. This base value can be altered by a detection rule if the finding meets the criteria\nspecified by the rule. Default value: \"VERY_LIKELY\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
-    pub fn likelihood(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.likelihood", self.base))
+    #[doc =
+        "Get a reference to the value of field `likelihood` after provisioning.\nLikelihood to return for this CustomInfoType. This base value can be altered by a detection rule if the finding meets the criteria\nspecified by the rule. Default value: \"VERY_LIKELY\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
+    pub fn likelihood(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.likelihood", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dictionary` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `dictionary` after provisioning.\n"]
     pub fn dictionary(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dictionary", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElDictionaryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dictionary", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `info_type` after provisioning.\n"]
-    pub fn info_type(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.info_type", self.base))
+    #[doc = "Get a reference to the value of field `info_type` after provisioning.\n"]
+    pub fn info_type(
+        &self,
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElInfoTypeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.info_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `regex` after provisioning.\n"]
-    pub fn regex(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.regex", self.base))
+    #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
+    pub fn regex(&self) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRegexElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.regex", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSensitivityScoreElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stored_type` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `stored_type` after provisioning.\n"]
     pub fn stored_type(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.stored_type", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElStoredTypeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.stored_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `surrogate_type` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `surrogate_type` after provisioning.\n"]
     pub fn surrogate_type(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.surrogate_type", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElSurrogateTypeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.surrogate_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl {
-    score: PrimField<String>,
+    score: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1274,8 +1450,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElInfoType
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl {
-    #[doc= "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: PrimField<String>,
+    #[doc =
+        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub score: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl {
@@ -1285,14 +1462,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivity
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef {
         DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef {
             shared: shared,
@@ -1302,62 +1479,76 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitiv
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
+    #[doc =
+        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElInfoTypesElDynamic {
-    sensitivity_score: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl>,
-    >,
+    sensitivity_score: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sensitivity_score: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sensitivity_score: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElInfoTypesElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl {
-    #[doc= "Set the field `version`.\nVersion of the information type to use. By default, the version is set to stable"]
-    pub fn set_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.version = Some(v.into());
+    #[doc =
+        "Set the field `version`.\nVersion of the information type to use. By default, the version is set to stable"]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sensitivity_score`.\n"]
+    #[doc = "Set the field `sensitivity_score`.\n"]
     pub fn set_sensitivity_score(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sensitivity_score = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sensitivity_score = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sensitivity_score = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sensitivity_score = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1366,8 +1557,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElInfoType
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElInfoTypesEl {
-    #[doc= "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub name: PrimField<String>,
+    #[doc =
+        "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElInfoTypesEl {
@@ -1376,18 +1568,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElInfoTypesEl {
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
-    fn new(shared: StackShared, base: String) -> DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
         DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
             shared: shared,
             base: base.to_string(),
@@ -1396,43 +1591,47 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nVersion of the information type to use. By default, the version is set to stable"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nVersion of the information type to use. By default, the version is set to stable"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElSensitivityScoreElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-    score: PrimField<String>,
+    score: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1441,8 +1640,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsEl
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-    #[doc= "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: PrimField<String>,
+    #[doc =
+        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub score: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
@@ -1456,14 +1656,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPer
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
         DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
             shared: shared,
@@ -1473,20 +1674,24 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindings
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
+    #[doc =
+        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElDynamic {
-    sensitivity_score: Option<
-        DynamicBlock<
+    sensitivity_score: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
         >,
     >,
@@ -1494,12 +1699,16 @@ struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInf
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sensitivity_score: Option<
-        Vec<
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sensitivity_score: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
         >,
     >,
@@ -1507,42 +1716,47 @@ pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPe
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
-    #[doc= "Set the field `version`.\nVersion name for this InfoType."]
-    pub fn set_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.version = Some(v.into());
+    #[doc = "Set the field `version`.\nVersion name for this InfoType."]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sensitivity_score`.\n"]
+    #[doc = "Set the field `sensitivity_score`.\n"]
     pub fn set_sensitivity_score(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sensitivity_score = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sensitivity_score = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sensitivity_score = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sensitivity_score = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
     type O =
-        BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl>;
+        terrars
+        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1551,8 +1765,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsEl
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
-    #[doc= "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub name: PrimField<String>,
+    #[doc =
+        "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
@@ -1561,20 +1776,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPer
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
         DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
             shared: shared,
@@ -1584,75 +1799,88 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindings
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElDynamic {
-    info_type: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl>,
+    info_type: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
-    max_findings: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    info_type: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl>>,
+    max_findings: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    info_type: std
+    ::option
+    ::Option<
+        std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl>,
+    >,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
-    #[doc= "Set the field `info_type`.\n"]
+    #[doc = "Set the field `info_type`.\n"]
     pub fn set_info_type(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.info_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.info_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.info_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.info_type = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
+    type O =
+        terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1661,8 +1889,8 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsEl
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
-    #[doc= "Max findings limit for the given infoType."]
-    pub max_findings: PrimField<f64>,
+    #[doc = "Max findings limit for the given infoType."]
+    pub max_findings: terrars::PrimField<f64>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
@@ -1670,20 +1898,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPer
         DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
             max_findings: self.max_findings,
             info_type: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
         DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
             shared: shared,
@@ -1693,71 +1921,78 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindings
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_findings` after provisioning.\nMax findings limit for the given infoType."]
-    pub fn max_findings(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_findings", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_findings` after provisioning.\nMax findings limit for the given infoType."]
+    pub fn max_findings(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_findings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `info_type` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `info_type` after provisioning.\n"]
     pub fn info_type(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.info_type", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.info_type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElLimitsElDynamic {
-    max_findings_per_info_type: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>,
+    max_findings_per_info_type: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsEl {
-    max_findings_per_item: PrimField<f64>,
-    max_findings_per_request: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_findings_per_info_type: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>,
-    >,
+    max_findings_per_item: terrars::PrimField<f64>,
+    max_findings_per_request: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_findings_per_info_type: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElLimitsElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsEl {
-    #[doc= "Set the field `max_findings_per_info_type`.\n"]
+    #[doc = "Set the field `max_findings_per_info_type`.\n"]
     pub fn set_max_findings_per_info_type(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.max_findings_per_info_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.max_findings_per_info_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.max_findings_per_info_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.max_findings_per_info_type = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1766,10 +2001,10 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElLimitsEl
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElLimitsEl {
-    #[doc= "Max number of findings that will be returned for each item scanned. The maximum returned is 2000."]
-    pub max_findings_per_item: PrimField<f64>,
-    #[doc= "Max number of findings that will be returned per request/job. The maximum returned is 2000."]
-    pub max_findings_per_request: PrimField<f64>,
+    #[doc = "Max number of findings that will be returned for each item scanned. The maximum returned is 2000."]
+    pub max_findings_per_item: terrars::PrimField<f64>,
+    #[doc = "Max number of findings that will be returned per request/job. The maximum returned is 2000."]
+    pub max_findings_per_request: terrars::PrimField<f64>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsEl {
@@ -1778,18 +2013,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElLimitsEl {
             max_findings_per_item: self.max_findings_per_item,
             max_findings_per_request: self.max_findings_per_request,
             max_findings_per_info_type: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
-    fn new(shared: StackShared, base: String) -> DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
         DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1798,40 +2036,45 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElLimitsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_findings_per_item` after provisioning.\nMax number of findings that will be returned for each item scanned. The maximum returned is 2000."]
-    pub fn max_findings_per_item(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_findings_per_item", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_findings_per_item` after provisioning.\nMax number of findings that will be returned for each item scanned. The maximum returned is 2000."]
+    pub fn max_findings_per_item(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_findings_per_item", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_findings_per_request` after provisioning.\nMax number of findings that will be returned per request/job. The maximum returned is 2000."]
-    pub fn max_findings_per_request(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_findings_per_request", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_findings_per_request` after provisioning.\nMax number of findings that will be returned per request/job. The maximum returned is 2000."]
+    pub fn max_findings_per_request(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_findings_per_request", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_findings_per_info_type` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `max_findings_per_info_type` after provisioning.\n"]
     pub fn max_findings_per_info_type(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.max_findings_per_info_type", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.max_findings_per_info_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-    score: PrimField<String>,
+    score: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>;
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
+    type O =
+        terrars
+        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1840,8 +2083,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-    #[doc= "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: PrimField<String>,
+    #[doc =
+        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub score: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
@@ -1851,14 +2095,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSe
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
             shared: shared,
@@ -1868,71 +2112,77 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesE
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
+    #[doc =
+        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElDynamic {
-    sensitivity_score: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>,
+    sensitivity_score: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sensitivity_score: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>,
-    >,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sensitivity_score: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl {
-    #[doc= "Set the field `version`.\nVersion name for this InfoType."]
-    pub fn set_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.version = Some(v.into());
+    #[doc = "Set the field `version`.\nVersion name for this InfoType."]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sensitivity_score`.\n"]
+    #[doc = "Set the field `sensitivity_score`.\n"]
     pub fn set_sensitivity_score(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sensitivity_score = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sensitivity_score = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sensitivity_score = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sensitivity_score = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1941,8 +2191,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl {
-    #[doc= "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub name: PrimField<String>,
+    #[doc =
+        "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl {
@@ -1951,20 +2202,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl {
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef {
             shared: shared,
@@ -1974,43 +2225,46 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesE
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-    path: PrimField<String>,
+    path: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2019,8 +2273,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-    #[doc= "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
-    pub path: PrimField<String>,
+    #[doc =
+        "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
+    pub path: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
@@ -2034,14 +2289,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
             shared: shared,
@@ -2051,31 +2307,34 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\nA url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nA url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-    words: ListField<PrimField<String>>,
+    words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl { }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2084,8 +2343,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-    #[doc= "Words or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
-    pub words: ListField<PrimField<String>>,
+    #[doc =
+        "Words or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
+    pub words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
@@ -2099,14 +2359,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
             shared: shared,
@@ -2116,25 +2377,32 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `words` after provisioning.\nWords or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
-    pub fn words(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.words", self.base))
+    #[doc =
+        "Get a reference to the value of field `words` after provisioning.\nWords or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
+    pub fn words(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.words", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElDynamic {
-    cloud_storage_path: Option<
-        DynamicBlock<
+    cloud_storage_path: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
         >,
     >,
-    word_list: Option<
-        DynamicBlock<
+    word_list: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl,
         >,
     >,
@@ -2142,73 +2410,91 @@ struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusion
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloud_storage_path: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_storage_path: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    word_list: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    word_list: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl>,
     >,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-    #[doc= "Set the field `cloud_storage_path`.\n"]
+    #[doc = "Set the field `cloud_storage_path`.\n"]
     pub fn set_cloud_storage_path(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloud_storage_path = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloud_storage_path = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloud_storage_path = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloud_storage_path = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `word_list`.\n"]
+    #[doc = "Set the field `word_list`.\n"]
     pub fn set_word_list(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.word_list = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.word_list = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.word_list = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.word_list = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
     type O =
-        BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl>;
+        terrars
+        ::BlockAssignable<
+            DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl,
+        >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2225,20 +2511,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
             cloud_storage_path: core::default::Default::default(),
             word_list: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
             shared: shared,
@@ -2248,52 +2534,60 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloud_storage_path` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `cloud_storage_path` after provisioning.\n"]
     pub fn cloud_storage_path(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_storage_path", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `word_list` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `word_list` after provisioning.\n"]
     pub fn word_list(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.word_list", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.word_list", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    group_indexes: Option<ListField<PrimField<f64>>>,
-    pattern: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
+    pattern: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
-    #[doc= "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
-    pub fn set_group_indexes(mut self, v: impl Into<ListField<PrimField<f64>>>) -> Self {
-        self.group_indexes = Some(v.into());
+    #[doc =
+        "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
+    pub fn set_group_indexes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
+    ) -> Self {
+        self.group_indexes = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2302,8 +2596,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
-    #[doc= "Pattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub pattern: PrimField<String>,
+    #[doc =
+        "Pattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub pattern: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
@@ -2318,14 +2613,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
             shared: shared,
@@ -2335,51 +2631,55 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
-    pub fn group_indexes(&self) -> ListRef<PrimExpr<f64>> {
-        ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
+    #[doc =
+        "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
+    pub fn group_indexes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub fn pattern(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
+    #[doc =
+        "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub fn pattern(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    window_after: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    window_before: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window_after: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window_before: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
-    #[doc= "Set the field `window_after`.\nNumber of characters after the finding to consider."]
-    pub fn set_window_after(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.window_after = Some(v.into());
+    #[doc = "Set the field `window_after`.\nNumber of characters after the finding to consider."]
+    pub fn set_window_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.window_after = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `window_before`.\nNumber of characters before the finding to consider."]
-    pub fn set_window_before(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.window_before = Some(v.into());
+    #[doc = "Set the field `window_before`.\nNumber of characters before the finding to consider."]
+    pub fn set_window_before(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.window_before = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2401,14 +2701,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
             shared: shared,
@@ -2418,30 +2719,38 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `window_after` after provisioning.\nNumber of characters after the finding to consider."]
-    pub fn window_after(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.window_after", self.base))
+    #[doc =
+        "Get a reference to the value of field `window_after` after provisioning.\nNumber of characters after the finding to consider."]
+    pub fn window_after(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.window_after", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `window_before` after provisioning.\nNumber of characters before the finding to consider."]
-    pub fn window_before(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.window_before", self.base))
+    #[doc =
+        "Get a reference to the value of field `window_before` after provisioning.\nNumber of characters before the finding to consider."]
+    pub fn window_before(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.window_before", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElDynamic {
-    hotword_regex: Option<
-        DynamicBlock<
+    hotword_regex: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
         >,
     >,
-    proximity: Option<
-        DynamicBlock<
+    proximity: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
         >,
     >,
@@ -2449,15 +2758,23 @@ struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusion
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hotword_regex: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hotword_regex: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    proximity: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    proximity: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
         >,
     >,
@@ -2465,61 +2782,69 @@ pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclu
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
-    #[doc= "Set the field `hotword_regex`.\n"]
+    #[doc = "Set the field `hotword_regex`.\n"]
     pub fn set_hotword_regex(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.hotword_regex = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.hotword_regex = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.hotword_regex = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.hotword_regex = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `proximity`.\n"]
+    #[doc = "Set the field `proximity`.\n"]
     pub fn set_proximity(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.proximity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.proximity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.proximity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.proximity = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2536,20 +2861,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
             hotword_regex: core::default::Default::default(),
             proximity: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
             shared: shared,
@@ -2559,46 +2885,50 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `hotword_regex` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `hotword_regex` after provisioning.\n"]
     pub fn hotword_regex(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.hotword_regex", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hotword_regex", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `proximity` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `proximity` after provisioning.\n"]
     pub fn proximity(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.proximity", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.proximity", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-    score: PrimField<String>,
+    score: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
 
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2607,8 +2937,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-    #[doc= "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: PrimField<String>,
+    #[doc =
+        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub score: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
@@ -2622,14 +2953,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
             shared: shared,
@@ -2639,20 +2971,24 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
+    #[doc =
+        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
+    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElDynamic {
-    sensitivity_score: Option<
-        DynamicBlock<
+    sensitivity_score: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
         >,
     >,
@@ -2660,12 +2996,16 @@ struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusion
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sensitivity_score: Option<
-        Vec<
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sensitivity_score: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
         >,
     >,
@@ -2673,44 +3013,49 @@ pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclu
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    #[doc= "Set the field `version`.\nVersion name for this InfoType."]
-    pub fn set_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.version = Some(v.into());
+    #[doc = "Set the field `version`.\nVersion name for this InfoType."]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sensitivity_score`.\n"]
+    #[doc = "Set the field `sensitivity_score`.\n"]
     pub fn set_sensitivity_score(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sensitivity_score = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sensitivity_score = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sensitivity_score = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sensitivity_score = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2719,8 +3064,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    #[doc= "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub name: PrimField<String>,
+    #[doc =
+        "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
@@ -2731,20 +3077,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
             shared: shared,
@@ -2754,34 +3101,39 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\nVersion name for this InfoType."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElDynamic {
-    info_types: Option<
-        DynamicBlock<
+    info_types: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
         >,
     >,
@@ -2789,9 +3141,13 @@ struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusion
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    info_types: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    info_types: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
         >,
     >,
@@ -2799,38 +3155,43 @@ pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclu
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
-    #[doc= "Set the field `info_types`.\n"]
+    #[doc = "Set the field `info_types`.\n"]
     pub fn set_info_types(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.info_types = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.info_types = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.info_types = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.info_types = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2846,20 +3207,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
             info_types: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
             shared: shared,
@@ -2869,40 +3231,48 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `info_types` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `info_types` after provisioning.\n"]
     pub fn info_types(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    group_indexes: Option<ListField<PrimField<f64>>>,
-    pattern: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
+    pattern: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    #[doc= "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
-    pub fn set_group_indexes(mut self, v: impl Into<ListField<PrimField<f64>>>) -> Self {
-        self.group_indexes = Some(v.into());
+    #[doc =
+        "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
+    pub fn set_group_indexes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
+    ) -> Self {
+        self.group_indexes = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>;
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
+    type O =
+        terrars
+        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2911,8 +3281,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    #[doc= "Pattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub pattern: PrimField<String>,
+    #[doc =
+        "Pattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub pattern: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
@@ -2925,14 +3296,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
             shared: shared,
@@ -2942,158 +3313,198 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
-    pub fn group_indexes(&self) -> ListRef<PrimExpr<f64>> {
-        ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
+    #[doc =
+        "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
+    pub fn group_indexes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub fn pattern(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
+    #[doc =
+        "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub fn pattern(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDynamic {
-    dictionary: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl>,
+    dictionary: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl>,
     >,
-    exclude_by_hotword: Option<
-        DynamicBlock<
+    exclude_by_hotword: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl,
         >,
     >,
-    exclude_info_types: Option<
-        DynamicBlock<
+    exclude_info_types: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl,
         >,
     >,
-    regex: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>,
+    regex: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl {
-    matching_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dictionary: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclude_by_hotword: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl>,
+    matching_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dictionary: std
+    ::option
+    ::Option<
+        std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclude_info_types: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclude_by_hotword: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    regex: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclude_info_types: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl {
-    #[doc= "Set the field `dictionary`.\n"]
+    #[doc = "Set the field `dictionary`.\n"]
     pub fn set_dictionary(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dictionary = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dictionary = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dictionary = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dictionary = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `exclude_by_hotword`.\n"]
+    #[doc = "Set the field `exclude_by_hotword`.\n"]
     pub fn set_exclude_by_hotword(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.exclude_by_hotword = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclude_by_hotword = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.exclude_by_hotword = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclude_by_hotword = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `exclude_info_types`.\n"]
+    #[doc = "Set the field `exclude_info_types`.\n"]
     pub fn set_exclude_info_types(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.exclude_info_types = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclude_info_types = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.exclude_info_types = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclude_info_types = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `regex`.\n"]
+    #[doc = "Set the field `regex`.\n"]
     pub fn set_regex(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.regex = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.regex = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.regex = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.regex = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl {
+    type O =
+        terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3102,8 +3513,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl {
-    #[doc= "How the rule is applied. See the documentation for more information: https://cloud.google.com/dlp/docs/reference/rest/v2/InspectConfig#MatchingType Possible values: [\"MATCHING_TYPE_FULL_MATCH\", \"MATCHING_TYPE_PARTIAL_MATCH\", \"MATCHING_TYPE_INVERSE_MATCH\"]"]
-    pub matching_type: PrimField<String>,
+    #[doc =
+        "How the rule is applied. See the documentation for more information: https://cloud.google.com/dlp/docs/reference/rest/v2/InspectConfig#MatchingType Possible values: [\"MATCHING_TYPE_FULL_MATCH\", \"MATCHING_TYPE_PARTIAL_MATCH\", \"MATCHING_TYPE_INVERSE_MATCH\"]"]
+    pub matching_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl {
@@ -3114,20 +3526,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclus
             exclude_by_hotword: core::default::Default::default(),
             exclude_info_types: core::default::Default::default(),
             regex: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef {
             shared: shared,
@@ -3137,69 +3549,77 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExc
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `matching_type` after provisioning.\nHow the rule is applied. See the documentation for more information: https://cloud.google.com/dlp/docs/reference/rest/v2/InspectConfig#MatchingType Possible values: [\"MATCHING_TYPE_FULL_MATCH\", \"MATCHING_TYPE_PARTIAL_MATCH\", \"MATCHING_TYPE_INVERSE_MATCH\"]"]
-    pub fn matching_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.matching_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `matching_type` after provisioning.\nHow the rule is applied. See the documentation for more information: https://cloud.google.com/dlp/docs/reference/rest/v2/InspectConfig#MatchingType Possible values: [\"MATCHING_TYPE_FULL_MATCH\", \"MATCHING_TYPE_PARTIAL_MATCH\", \"MATCHING_TYPE_INVERSE_MATCH\"]"]
+    pub fn matching_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.matching_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dictionary` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `dictionary` after provisioning.\n"]
     pub fn dictionary(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dictionary", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dictionary", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclude_by_hotword` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `exclude_by_hotword` after provisioning.\n"]
     pub fn exclude_by_hotword(
         &self,
-    ) -> ListRef<
-        DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef,
-    > {
-        ListRef::new(self.shared().clone(), format!("{}.exclude_by_hotword", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclude_by_hotword", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclude_info_types` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `exclude_info_types` after provisioning.\n"]
     pub fn exclude_info_types(
         &self,
-    ) -> ListRef<
-        DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef,
-    > {
-        ListRef::new(self.shared().clone(), format!("{}.exclude_info_types", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclude_info_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `regex` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
     pub fn regex(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.regex", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.regex", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    group_indexes: Option<ListField<PrimField<f64>>>,
-    pattern: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
+    pattern: terrars::PrimField<std::string::String>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-    #[doc= "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
-    pub fn set_group_indexes(mut self, v: impl Into<ListField<PrimField<f64>>>) -> Self {
-        self.group_indexes = Some(v.into());
+    #[doc =
+        "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
+    pub fn set_group_indexes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
+    ) -> Self {
+        self.group_indexes = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
     type O =
-        BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl>;
+        terrars
+        ::BlockAssignable<
+            DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl,
+        >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3208,8 +3628,9 @@ impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetE
 }
 
 pub struct BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-    #[doc= "Pattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub pattern: PrimField<String>,
+    #[doc =
+        "Pattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub pattern: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
@@ -3224,14 +3645,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwor
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
             shared: shared,
@@ -3241,51 +3662,57 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHot
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
-    pub fn group_indexes(&self) -> ListRef<PrimExpr<f64>> {
-        ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
+    #[doc =
+        "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
+    pub fn group_indexes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub fn pattern(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
+    #[doc =
+        "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
+    pub fn pattern(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    fixed_likelihood: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    relative_likelihood: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fixed_likelihood: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    relative_likelihood: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
-    #[doc= "Set the field `fixed_likelihood`.\nSet the likelihood of a finding to a fixed value. Either this or relative_likelihood can be set. Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
-    pub fn set_fixed_likelihood(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.fixed_likelihood = Some(v.into());
+    #[doc =
+        "Set the field `fixed_likelihood`.\nSet the likelihood of a finding to a fixed value. Either this or relative_likelihood can be set. Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
+    pub fn set_fixed_likelihood(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.fixed_likelihood = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `relative_likelihood`.\nIncrease or decrease the likelihood by the specified number of levels. For example,\nif a finding would be POSSIBLE without the detection rule and relativeLikelihood is 1,\nthen it is upgraded to LIKELY, while a value of -1 would downgrade it to UNLIKELY.\nLikelihood may never drop below VERY_UNLIKELY or exceed VERY_LIKELY, so applying an\nadjustment of 1 followed by an adjustment of -1 when base likelihood is VERY_LIKELY\nwill result in a final likelihood of LIKELY. Either this or fixed_likelihood can be set."]
-    pub fn set_relative_likelihood(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.relative_likelihood = Some(v.into());
+    #[doc =
+        "Set the field `relative_likelihood`.\nIncrease or decrease the likelihood by the specified number of levels. For example,\nif a finding would be POSSIBLE without the detection rule and relativeLikelihood is 1,\nthen it is upgraded to LIKELY, while a value of -1 would downgrade it to UNLIKELY.\nLikelihood may never drop below VERY_UNLIKELY or exceed VERY_LIKELY, so applying an\nadjustment of 1 followed by an adjustment of -1 when base likelihood is VERY_LIKELY\nwill result in a final likelihood of LIKELY. Either this or fixed_likelihood can be set."]
+    pub fn set_relative_likelihood(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.relative_likelihood = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3307,14 +3734,15 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwor
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
+impl terrars
+::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
             shared: shared,
@@ -3324,49 +3752,55 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHot
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `fixed_likelihood` after provisioning.\nSet the likelihood of a finding to a fixed value. Either this or relative_likelihood can be set. Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
-    pub fn fixed_likelihood(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.fixed_likelihood", self.base))
+    #[doc =
+        "Get a reference to the value of field `fixed_likelihood` after provisioning.\nSet the likelihood of a finding to a fixed value. Either this or relative_likelihood can be set. Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
+    pub fn fixed_likelihood(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fixed_likelihood", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `relative_likelihood` after provisioning.\nIncrease or decrease the likelihood by the specified number of levels. For example,\nif a finding would be POSSIBLE without the detection rule and relativeLikelihood is 1,\nthen it is upgraded to LIKELY, while a value of -1 would downgrade it to UNLIKELY.\nLikelihood may never drop below VERY_UNLIKELY or exceed VERY_LIKELY, so applying an\nadjustment of 1 followed by an adjustment of -1 when base likelihood is VERY_LIKELY\nwill result in a final likelihood of LIKELY. Either this or fixed_likelihood can be set."]
-    pub fn relative_likelihood(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.relative_likelihood", self.base))
+    #[doc =
+        "Get a reference to the value of field `relative_likelihood` after provisioning.\nIncrease or decrease the likelihood by the specified number of levels. For example,\nif a finding would be POSSIBLE without the detection rule and relativeLikelihood is 1,\nthen it is upgraded to LIKELY, while a value of -1 would downgrade it to UNLIKELY.\nLikelihood may never drop below VERY_UNLIKELY or exceed VERY_LIKELY, so applying an\nadjustment of 1 followed by an adjustment of -1 when base likelihood is VERY_LIKELY\nwill result in a final likelihood of LIKELY. Either this or fixed_likelihood can be set."]
+    pub fn relative_likelihood(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.relative_likelihood", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    window_after: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    window_before: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window_after: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window_before: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-    #[doc= "Set the field `window_after`.\nNumber of characters after the finding to consider. Either this or window_before must be specified"]
-    pub fn set_window_after(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.window_after = Some(v.into());
+    #[doc =
+        "Set the field `window_after`.\nNumber of characters after the finding to consider. Either this or window_before must be specified"]
+    pub fn set_window_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.window_after = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `window_before`.\nNumber of characters before the finding to consider. Either this or window_after must be specified"]
-    pub fn set_window_before(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.window_before = Some(v.into());
+    #[doc =
+        "Set the field `window_before`.\nNumber of characters before the finding to consider. Either this or window_after must be specified"]
+    pub fn set_window_before(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.window_before = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
+impl terrars
+::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
     type O =
-        BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl>;
+        terrars
+        ::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3386,14 +3820,14 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwor
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
             shared: shared,
@@ -3403,127 +3837,155 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHot
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `window_after` after provisioning.\nNumber of characters after the finding to consider. Either this or window_before must be specified"]
-    pub fn window_after(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.window_after", self.base))
+    #[doc =
+        "Get a reference to the value of field `window_after` after provisioning.\nNumber of characters after the finding to consider. Either this or window_before must be specified"]
+    pub fn window_after(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.window_after", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `window_before` after provisioning.\nNumber of characters before the finding to consider. Either this or window_after must be specified"]
-    pub fn window_before(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.window_before", self.base))
+    #[doc =
+        "Get a reference to the value of field `window_before` after provisioning.\nNumber of characters before the finding to consider. Either this or window_after must be specified"]
+    pub fn window_before(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.window_before", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElDynamic {
-    hotword_regex: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl>,
+    hotword_regex: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl>,
     >,
-    likelihood_adjustment: Option<
-        DynamicBlock<
+    likelihood_adjustment: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl,
         >,
     >,
-    proximity: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl>,
+    proximity: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hotword_regex: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hotword_regex: std
+    ::option
+    ::Option<
+        std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    likelihood_adjustment: Option<
-        Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    likelihood_adjustment: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    proximity: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    proximity: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl {
-    #[doc= "Set the field `hotword_regex`.\n"]
+    #[doc = "Set the field `hotword_regex`.\n"]
     pub fn set_hotword_regex(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.hotword_regex = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.hotword_regex = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.hotword_regex = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.hotword_regex = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `likelihood_adjustment`.\n"]
+    #[doc = "Set the field `likelihood_adjustment`.\n"]
     pub fn set_likelihood_adjustment(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.likelihood_adjustment = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.likelihood_adjustment = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.likelihood_adjustment = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.likelihood_adjustment = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `proximity`.\n"]
+    #[doc = "Set the field `proximity`.\n"]
     pub fn set_proximity(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.proximity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.proximity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.proximity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.proximity = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3539,20 +4001,20 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwor
             hotword_regex: core::default::Default::default(),
             likelihood_adjustment: core::default::Default::default(),
             proximity: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef {
             shared: shared,
@@ -3562,99 +4024,117 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHot
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `hotword_regex` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `hotword_regex` after provisioning.\n"]
     pub fn hotword_regex(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.hotword_regex", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hotword_regex", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `likelihood_adjustment` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `likelihood_adjustment` after provisioning.\n"]
     pub fn likelihood_adjustment(
         &self,
-    ) -> ListRef<
-        DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef,
-    > {
-        ListRef::new(self.shared().clone(), format!("{}.likelihood_adjustment", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.likelihood_adjustment", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `proximity` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `proximity` after provisioning.\n"]
     pub fn proximity(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.proximity", self.base))
+    ) -> terrars
+    ::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.proximity", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElDynamic {
-    exclusion_rule: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl>,
-    >,
-    hotword_rule: Option<
-        DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl>,
-    >,
+    exclusion_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl>>,
+    hotword_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclusion_rule: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hotword_rule: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclusion_rule: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hotword_rule: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl {
-    #[doc= "Set the field `exclusion_rule`.\n"]
+    #[doc = "Set the field `exclusion_rule`.\n"]
     pub fn set_exclusion_rule(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.exclusion_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclusion_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.exclusion_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclusion_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `hotword_rule`.\n"]
+    #[doc = "Set the field `hotword_rule`.\n"]
     pub fn set_hotword_rule(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.hotword_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.hotword_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.hotword_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.hotword_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3669,18 +4149,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl {
             exclusion_rule: core::default::Default::default(),
             hotword_rule: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef {
-    fn new(shared: StackShared, base: String) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef {
             shared: shared,
             base: base.to_string(),
@@ -3689,79 +4172,97 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `exclusion_rule` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `exclusion_rule` after provisioning.\n"]
     pub fn exclusion_rule(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.exclusion_rule", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElExclusionRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclusion_rule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `hotword_rule` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `hotword_rule` after provisioning.\n"]
     pub fn hotword_rule(
         &self,
-    ) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.hotword_rule", self.base))
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElHotwordRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hotword_rule", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElDynamic {
-    info_types: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>>,
-    rules: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>>,
+    info_types: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>>,
+    rules: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    info_types: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rules: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    info_types: std::option::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rules: std::option::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElRuleSetElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetEl {
-    #[doc= "Set the field `info_types`.\n"]
+    #[doc = "Set the field `info_types`.\n"]
     pub fn set_info_types(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.info_types = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.info_types = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.info_types = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.info_types = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `rules`.\n"]
+    #[doc = "Set the field `rules`.\n"]
     pub fn set_rules(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.rules = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.rules = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.rules = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.rules = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigElRuleSetEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3776,18 +4277,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigElRuleSetEl {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetEl {
             info_types: core::default::Default::default(),
             rules: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
-    fn new(shared: StackShared, base: String) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
         DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
             shared: shared,
             base: base.to_string(),
@@ -3796,145 +4300,181 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `info_types` after provisioning.\n"]
-    pub fn info_types(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
+    #[doc = "Get a reference to the value of field `info_types` after provisioning.\n"]
+    pub fn info_types(
+        &self,
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElInfoTypesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `rules` after provisioning.\n"]
-    pub fn rules(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.rules", self.base))
+    #[doc = "Get a reference to the value of field `rules` after provisioning.\n"]
+    pub fn rules(&self) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRulesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rules", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateInspectConfigElDynamic {
-    custom_info_types: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>>,
-    info_types: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>>,
-    limits: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>>,
-    rule_set: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>>,
+    custom_info_types: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>>,
+    info_types: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>>,
+    limits: std::option::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>>,
+    rule_set: std::option::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateInspectConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    content_options: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclude_info_types: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_quote: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_likelihood: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_info_types: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    info_types: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    limits: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rule_set: Option<Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    content_options: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclude_info_types: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_quote: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_likelihood: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_info_types: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    info_types: std::option::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    limits: std::option::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule_set: std::option::Option<std::vec::Vec<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>>,
     dynamic: DataLossPreventionInspectTemplateInspectConfigElDynamic,
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigEl {
-    #[doc= "Set the field `content_options`.\nList of options defining data content to scan. If empty, text, images, and other content will be included. Possible values: [\"CONTENT_TEXT\", \"CONTENT_IMAGE\"]"]
-    pub fn set_content_options(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.content_options = Some(v.into());
+    #[doc =
+        "Set the field `content_options`.\nList of options defining data content to scan. If empty, text, images, and other content will be included. Possible values: [\"CONTENT_TEXT\", \"CONTENT_IMAGE\"]"]
+    pub fn set_content_options(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.content_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `exclude_info_types`.\nWhen true, excludes type information of the findings."]
-    pub fn set_exclude_info_types(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.exclude_info_types = Some(v.into());
+    #[doc = "Set the field `exclude_info_types`.\nWhen true, excludes type information of the findings."]
+    pub fn set_exclude_info_types(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.exclude_info_types = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_quote`.\nWhen true, a contextual quote from the data that triggered a finding is included in the response."]
-    pub fn set_include_quote(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.include_quote = Some(v.into());
+    #[doc =
+        "Set the field `include_quote`.\nWhen true, a contextual quote from the data that triggered a finding is included in the response."]
+    pub fn set_include_quote(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_quote = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_likelihood`.\nOnly returns findings equal or above this threshold. See https://cloud.google.com/dlp/docs/likelihood for more info Default value: \"POSSIBLE\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
-    pub fn set_min_likelihood(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.min_likelihood = Some(v.into());
+    #[doc =
+        "Set the field `min_likelihood`.\nOnly returns findings equal or above this threshold. See https://cloud.google.com/dlp/docs/likelihood for more info Default value: \"POSSIBLE\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
+    pub fn set_min_likelihood(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.min_likelihood = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_info_types`.\n"]
+    #[doc = "Set the field `custom_info_types`.\n"]
     pub fn set_custom_info_types(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_info_types = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_info_types = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_info_types = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_info_types = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `info_types`.\n"]
+    #[doc = "Set the field `info_types`.\n"]
     pub fn set_info_types(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElInfoTypesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.info_types = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.info_types = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.info_types = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.info_types = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `limits`.\n"]
+    #[doc = "Set the field `limits`.\n"]
     pub fn set_limits(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElLimitsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.limits = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.limits = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.limits = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.limits = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `rule_set`.\n"]
+    #[doc = "Set the field `rule_set`.\n"]
     pub fn set_rule_set(
         mut self,
-        v: impl Into<BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigElRuleSetEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.rule_set = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.rule_set = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.rule_set = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.rule_set = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateInspectConfigEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateInspectConfigEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateInspectConfigEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateInspectConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3955,18 +4495,21 @@ impl BuildDataLossPreventionInspectTemplateInspectConfigEl {
             info_types: core::default::Default::default(),
             limits: core::default::Default::default(),
             rule_set: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataLossPreventionInspectTemplateInspectConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateInspectConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataLossPreventionInspectTemplateInspectConfigElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateInspectConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionInspectTemplateInspectConfigElRef {
         DataLossPreventionInspectTemplateInspectConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -3975,86 +4518,92 @@ impl Ref for DataLossPreventionInspectTemplateInspectConfigElRef {
 }
 
 impl DataLossPreventionInspectTemplateInspectConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `content_options` after provisioning.\nList of options defining data content to scan. If empty, text, images, and other content will be included. Possible values: [\"CONTENT_TEXT\", \"CONTENT_IMAGE\"]"]
-    pub fn content_options(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.content_options", self.base))
+    #[doc =
+        "Get a reference to the value of field `content_options` after provisioning.\nList of options defining data content to scan. If empty, text, images, and other content will be included. Possible values: [\"CONTENT_TEXT\", \"CONTENT_IMAGE\"]"]
+    pub fn content_options(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.content_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclude_info_types` after provisioning.\nWhen true, excludes type information of the findings."]
-    pub fn exclude_info_types(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.exclude_info_types", self.base))
+    #[doc =
+        "Get a reference to the value of field `exclude_info_types` after provisioning.\nWhen true, excludes type information of the findings."]
+    pub fn exclude_info_types(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exclude_info_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_quote` after provisioning.\nWhen true, a contextual quote from the data that triggered a finding is included in the response."]
-    pub fn include_quote(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_quote", self.base))
+    #[doc =
+        "Get a reference to the value of field `include_quote` after provisioning.\nWhen true, a contextual quote from the data that triggered a finding is included in the response."]
+    pub fn include_quote(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_quote", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_likelihood` after provisioning.\nOnly returns findings equal or above this threshold. See https://cloud.google.com/dlp/docs/likelihood for more info Default value: \"POSSIBLE\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
-    pub fn min_likelihood(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_likelihood", self.base))
+    #[doc =
+        "Get a reference to the value of field `min_likelihood` after provisioning.\nOnly returns findings equal or above this threshold. See https://cloud.google.com/dlp/docs/likelihood for more info Default value: \"POSSIBLE\" Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
+    pub fn min_likelihood(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_likelihood", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_info_types` after provisioning.\n"]
-    pub fn custom_info_types(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_info_types", self.base))
+    #[doc = "Get a reference to the value of field `custom_info_types` after provisioning.\n"]
+    pub fn custom_info_types(
+        &self,
+    ) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElCustomInfoTypesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_info_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `info_types` after provisioning.\n"]
-    pub fn info_types(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
+    #[doc = "Get a reference to the value of field `info_types` after provisioning.\n"]
+    pub fn info_types(&self) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElInfoTypesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `limits` after provisioning.\n"]
-    pub fn limits(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElLimitsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.limits", self.base))
+    #[doc = "Get a reference to the value of field `limits` after provisioning.\n"]
+    pub fn limits(&self) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElLimitsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.limits", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `rule_set` after provisioning.\n"]
-    pub fn rule_set(&self) -> ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.rule_set", self.base))
+    #[doc = "Get a reference to the value of field `rule_set` after provisioning.\n"]
+    pub fn rule_set(&self) -> terrars::ListRef<DataLossPreventionInspectTemplateInspectConfigElRuleSetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rule_set", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLossPreventionInspectTemplateTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataLossPreventionInspectTemplateTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLossPreventionInspectTemplateTimeoutsEl {
-    type O = BlockAssignable<DataLossPreventionInspectTemplateTimeoutsEl>;
+impl terrars::ToListMappable for DataLossPreventionInspectTemplateTimeoutsEl {
+    type O = terrars::BlockAssignable<DataLossPreventionInspectTemplateTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4075,12 +4624,15 @@ impl BuildDataLossPreventionInspectTemplateTimeoutsEl {
 }
 
 pub struct DataLossPreventionInspectTemplateTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLossPreventionInspectTemplateTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DataLossPreventionInspectTemplateTimeoutsElRef {
+impl terrars::Ref for DataLossPreventionInspectTemplateTimeoutsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionInspectTemplateTimeoutsElRef {
         DataLossPreventionInspectTemplateTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -4089,27 +4641,27 @@ impl Ref for DataLossPreventionInspectTemplateTimeoutsElRef {
 }
 
 impl DataLossPreventionInspectTemplateTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataLossPreventionInspectTemplateDynamic {
-    inspect_config: Option<DynamicBlock<DataLossPreventionInspectTemplateInspectConfigEl>>,
+    inspect_config: std::option::Option<terrars::DynamicBlock<DataLossPreventionInspectTemplateInspectConfigEl>>,
 }

@@ -1,142 +1,178 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct DataComputeResourcePolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    region: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataComputeResourcePolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataComputeResourcePolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataComputeResourcePolicyData>,
 }
 
 #[derive(Clone)]
-pub struct DataComputeResourcePolicy(Rc<DataComputeResourcePolicy_>);
+pub struct DataComputeResourcePolicy(std::rc::Rc<DataComputeResourcePolicy_>);
 
 impl DataComputeResourcePolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderGoogle) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `region`.\nRegion where resource policy resides."]
-    pub fn set_region(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().region = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when you create the resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `disk_consistency_group_policy` after provisioning.\nReplication consistency group for asynchronous disk replication."]
-    pub fn disk_consistency_group_policy(&self) -> ListRef<DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.disk_consistency_group_policy", self.extract_ref()))
+    #[doc = "Set the field `region`.\nRegion where resource policy resides."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `group_placement_policy` after provisioning.\nResource policy for instances used for placement configuration."]
-    pub fn group_placement_policy(&self) -> ListRef<DataComputeResourcePolicyGroupPlacementPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.group_placement_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when you create the resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `disk_consistency_group_policy` after provisioning.\nReplication consistency group for asynchronous disk replication."]
+    pub fn disk_consistency_group_policy(
+        &self,
+    ) -> terrars::ListRef<DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.disk_consistency_group_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_schedule_policy` after provisioning.\nResource policy for scheduling instance operations."]
-    pub fn instance_schedule_policy(&self) -> ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.instance_schedule_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `group_placement_policy` after provisioning.\nResource policy for instances used for placement configuration."]
+    pub fn group_placement_policy(&self) -> terrars::ListRef<DataComputeResourcePolicyGroupPlacementPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.group_placement_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of the resource, provided by the client when initially creating\nthe resource. The resource name must be 1-63 characters long, and comply\nwith RFC1035. Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])'? which means the\nfirst character must be a lowercase letter, and all following characters\nmust be a dash, lowercase letter, or digit, except the last character,\nwhich cannot be a dash."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `instance_schedule_policy` after provisioning.\nResource policy for scheduling instance operations."]
+    pub fn instance_schedule_policy(&self) -> terrars::ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_schedule_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nRegion where resource policy resides."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name of the resource, provided by the client when initially creating\nthe resource. The resource name must be 1-63 characters long, and comply\nwith RFC1035. Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])'? which means the\nfirst character must be a lowercase letter, and all following characters\nmust be a dash, lowercase letter, or digit, except the last character,\nwhich cannot be a dash."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\n"]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `snapshot_schedule_policy` after provisioning.\nPolicy for creating snapshots of persistent disks."]
-    pub fn snapshot_schedule_policy(&self) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.snapshot_schedule_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `region` after provisioning.\nRegion where resource policy resides."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `snapshot_schedule_policy` after provisioning.\nPolicy for creating snapshots of persistent disks."]
+    pub fn snapshot_schedule_policy(&self) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_schedule_policy", self.extract_ref()))
     }
 }
 
-impl Referable for DataComputeResourcePolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataComputeResourcePolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataComputeResourcePolicy { }
+impl terrars::Datasource for DataComputeResourcePolicy { }
 
-impl ToListMappable for DataComputeResourcePolicy {
-    type O = ListRef<DataComputeResourcePolicyRef>;
+impl terrars::ToListMappable for DataComputeResourcePolicy {
+    type O = terrars::ListRef<DataComputeResourcePolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataComputeResourcePolicy_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataComputeResourcePolicy_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "google_compute_resource_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -146,20 +182,22 @@ impl Datasource_ for DataComputeResourcePolicy_ {
 }
 
 pub struct BuildDataComputeResourcePolicy {
-    pub tf_id: String,
-    #[doc= "The name of the resource, provided by the client when initially creating\nthe resource. The resource name must be 1-63 characters long, and comply\nwith RFC1035. Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])'? which means the\nfirst character must be a lowercase letter, and all following characters\nmust be a dash, lowercase letter, or digit, except the last character,\nwhich cannot be a dash."]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "The name of the resource, provided by the client when initially creating\nthe resource. The resource name must be 1-63 characters long, and comply\nwith RFC1035. Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])'? which means the\nfirst character must be a lowercase letter, and all following characters\nmust be a dash, lowercase letter, or digit, except the last character,\nwhich cannot be a dash."]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataComputeResourcePolicy {
-    pub fn build(self, stack: &mut Stack) -> DataComputeResourcePolicy {
-        let out = DataComputeResourcePolicy(Rc::new(DataComputeResourcePolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataComputeResourcePolicy {
+        let out = DataComputeResourcePolicy(std::rc::Rc::new(DataComputeResourcePolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataComputeResourcePolicyData {
+            data: std::cell::RefCell::new(DataComputeResourcePolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -172,12 +210,12 @@ impl BuildDataComputeResourcePolicy {
 }
 
 pub struct DataComputeResourcePolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataComputeResourcePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -186,84 +224,92 @@ impl Ref for DataComputeResourcePolicyRef {
 }
 
 impl DataComputeResourcePolicyRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when you create the resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when you create the resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `disk_consistency_group_policy` after provisioning.\nReplication consistency group for asynchronous disk replication."]
-    pub fn disk_consistency_group_policy(&self) -> ListRef<DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.disk_consistency_group_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `disk_consistency_group_policy` after provisioning.\nReplication consistency group for asynchronous disk replication."]
+    pub fn disk_consistency_group_policy(
+        &self,
+    ) -> terrars::ListRef<DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.disk_consistency_group_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `group_placement_policy` after provisioning.\nResource policy for instances used for placement configuration."]
-    pub fn group_placement_policy(&self) -> ListRef<DataComputeResourcePolicyGroupPlacementPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.group_placement_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `group_placement_policy` after provisioning.\nResource policy for instances used for placement configuration."]
+    pub fn group_placement_policy(&self) -> terrars::ListRef<DataComputeResourcePolicyGroupPlacementPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.group_placement_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_schedule_policy` after provisioning.\nResource policy for scheduling instance operations."]
-    pub fn instance_schedule_policy(&self) -> ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.instance_schedule_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `instance_schedule_policy` after provisioning.\nResource policy for scheduling instance operations."]
+    pub fn instance_schedule_policy(&self) -> terrars::ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_schedule_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of the resource, provided by the client when initially creating\nthe resource. The resource name must be 1-63 characters long, and comply\nwith RFC1035. Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])'? which means the\nfirst character must be a lowercase letter, and all following characters\nmust be a dash, lowercase letter, or digit, except the last character,\nwhich cannot be a dash."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nThe name of the resource, provided by the client when initially creating\nthe resource. The resource name must be 1-63 characters long, and comply\nwith RFC1035. Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])'? which means the\nfirst character must be a lowercase letter, and all following characters\nmust be a dash, lowercase letter, or digit, except the last character,\nwhich cannot be a dash."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nRegion where resource policy resides."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `region` after provisioning.\nRegion where resource policy resides."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\n"]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `snapshot_schedule_policy` after provisioning.\nPolicy for creating snapshots of persistent disks."]
-    pub fn snapshot_schedule_policy(&self) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.snapshot_schedule_policy", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `snapshot_schedule_policy` after provisioning.\nPolicy for creating snapshots of persistent disks."]
+    pub fn snapshot_schedule_policy(&self) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_schedule_policy", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicyDiskConsistencyGroupPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataComputeResourcePolicyDiskConsistencyGroupPolicyEl {
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicyDiskConsistencyGroupPolicyEl {
-    type O = BlockAssignable<DataComputeResourcePolicyDiskConsistencyGroupPolicyEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicyDiskConsistencyGroupPolicyEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicyDiskConsistencyGroupPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -280,12 +326,15 @@ impl BuildDataComputeResourcePolicyDiskConsistencyGroupPolicyEl {
 }
 
 pub struct DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
+impl terrars::Ref for DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
         DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -294,51 +343,51 @@ impl Ref for DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
 }
 
 impl DataComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicyGroupPlacementPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    availability_domain_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    collocation: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vm_count: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_domain_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    collocation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vm_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataComputeResourcePolicyGroupPlacementPolicyEl {
-    #[doc= "Set the field `availability_domain_count`.\n"]
-    pub fn set_availability_domain_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.availability_domain_count = Some(v.into());
+    #[doc = "Set the field `availability_domain_count`.\n"]
+    pub fn set_availability_domain_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.availability_domain_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `collocation`.\n"]
-    pub fn set_collocation(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.collocation = Some(v.into());
+    #[doc = "Set the field `collocation`.\n"]
+    pub fn set_collocation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.collocation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vm_count`.\n"]
-    pub fn set_vm_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.vm_count = Some(v.into());
+    #[doc = "Set the field `vm_count`.\n"]
+    pub fn set_vm_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.vm_count = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicyGroupPlacementPolicyEl {
-    type O = BlockAssignable<DataComputeResourcePolicyGroupPlacementPolicyEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicyGroupPlacementPolicyEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicyGroupPlacementPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -359,12 +408,15 @@ impl BuildDataComputeResourcePolicyGroupPlacementPolicyEl {
 }
 
 pub struct DataComputeResourcePolicyGroupPlacementPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicyGroupPlacementPolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataComputeResourcePolicyGroupPlacementPolicyElRef {
+impl terrars::Ref for DataComputeResourcePolicyGroupPlacementPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeResourcePolicyGroupPlacementPolicyElRef {
         DataComputeResourcePolicyGroupPlacementPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -373,45 +425,45 @@ impl Ref for DataComputeResourcePolicyGroupPlacementPolicyElRef {
 }
 
 impl DataComputeResourcePolicyGroupPlacementPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `availability_domain_count` after provisioning.\n"]
-    pub fn availability_domain_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.availability_domain_count", self.base))
+    #[doc = "Get a reference to the value of field `availability_domain_count` after provisioning.\n"]
+    pub fn availability_domain_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_domain_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `collocation` after provisioning.\n"]
-    pub fn collocation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.collocation", self.base))
+    #[doc = "Get a reference to the value of field `collocation` after provisioning.\n"]
+    pub fn collocation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.collocation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vm_count` after provisioning.\n"]
-    pub fn vm_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vm_count", self.base))
+    #[doc = "Get a reference to the value of field `vm_count` after provisioning.\n"]
+    pub fn vm_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vm_count", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    schedule: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schedule: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
-    #[doc= "Set the field `schedule`.\n"]
-    pub fn set_schedule(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.schedule = Some(v.into());
+    #[doc = "Set the field `schedule`.\n"]
+    pub fn set_schedule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.schedule = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
-    type O = BlockAssignable<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -430,14 +482,14 @@ impl BuildDataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
 }
 
 pub struct DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
+impl terrars::Ref for DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
         DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
             shared: shared,
@@ -447,35 +499,35 @@ impl Ref for DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElR
 }
 
 impl DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.base))
+    #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
+    pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    schedule: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schedule: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
-    #[doc= "Set the field `schedule`.\n"]
-    pub fn set_schedule(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.schedule = Some(v.into());
+    #[doc = "Set the field `schedule`.\n"]
+    pub fn set_schedule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.schedule = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
-    type O = BlockAssignable<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -494,14 +546,14 @@ impl BuildDataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
 }
 
 pub struct DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
+impl terrars::Ref for DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
         DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
             shared: shared,
@@ -511,73 +563,87 @@ impl Ref for DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRe
 }
 
 impl DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.base))
+    #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
+    pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicyInstanceSchedulePolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expiration_time: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start_time: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    time_zone: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vm_start_schedule: Option<ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vm_stop_schedule: Option<ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expiration_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vm_start_schedule: std
+    ::option
+    ::Option<terrars::ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vm_stop_schedule: std
+    ::option
+    ::Option<terrars::ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>>,
 }
 
 impl DataComputeResourcePolicyInstanceSchedulePolicyEl {
-    #[doc= "Set the field `expiration_time`.\n"]
-    pub fn set_expiration_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.expiration_time = Some(v.into());
+    #[doc = "Set the field `expiration_time`.\n"]
+    pub fn set_expiration_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expiration_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start_time`.\n"]
-    pub fn set_start_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start_time = Some(v.into());
+    #[doc = "Set the field `start_time`.\n"]
+    pub fn set_start_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `time_zone`.\n"]
-    pub fn set_time_zone(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.time_zone = Some(v.into());
+    #[doc = "Set the field `time_zone`.\n"]
+    pub fn set_time_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.time_zone = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vm_start_schedule`.\n"]
+    #[doc = "Set the field `vm_start_schedule`.\n"]
     pub fn set_vm_start_schedule(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>>,
     ) -> Self {
-        self.vm_start_schedule = Some(v.into());
+        self.vm_start_schedule = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vm_stop_schedule`.\n"]
+    #[doc = "Set the field `vm_stop_schedule`.\n"]
     pub fn set_vm_stop_schedule(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>>,
     ) -> Self {
-        self.vm_stop_schedule = Some(v.into());
+        self.vm_stop_schedule = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicyInstanceSchedulePolicyEl {
-    type O = BlockAssignable<DataComputeResourcePolicyInstanceSchedulePolicyEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicyInstanceSchedulePolicyEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicyInstanceSchedulePolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -600,12 +666,15 @@ impl BuildDataComputeResourcePolicyInstanceSchedulePolicyEl {
 }
 
 pub struct DataComputeResourcePolicyInstanceSchedulePolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicyInstanceSchedulePolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataComputeResourcePolicyInstanceSchedulePolicyElRef {
+impl terrars::Ref for DataComputeResourcePolicyInstanceSchedulePolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeResourcePolicyInstanceSchedulePolicyElRef {
         DataComputeResourcePolicyInstanceSchedulePolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -614,63 +683,70 @@ impl Ref for DataComputeResourcePolicyInstanceSchedulePolicyElRef {
 }
 
 impl DataComputeResourcePolicyInstanceSchedulePolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `expiration_time` after provisioning.\n"]
-    pub fn expiration_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expiration_time", self.base))
+    #[doc = "Get a reference to the value of field `expiration_time` after provisioning.\n"]
+    pub fn expiration_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expiration_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `time_zone` after provisioning.\n"]
-    pub fn time_zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.time_zone", self.base))
+    #[doc = "Get a reference to the value of field `time_zone` after provisioning.\n"]
+    pub fn time_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.time_zone", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vm_start_schedule` after provisioning.\n"]
-    pub fn vm_start_schedule(&self) -> ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vm_start_schedule", self.base))
+    #[doc = "Get a reference to the value of field `vm_start_schedule` after provisioning.\n"]
+    pub fn vm_start_schedule(
+        &self,
+    ) -> terrars::ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vm_start_schedule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vm_stop_schedule` after provisioning.\n"]
-    pub fn vm_stop_schedule(&self) -> ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vm_stop_schedule", self.base))
+    #[doc = "Get a reference to the value of field `vm_stop_schedule` after provisioning.\n"]
+    pub fn vm_stop_schedule(
+        &self,
+    ) -> terrars::ListRef<DataComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vm_stop_schedule", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_retention_days: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    on_source_disk_delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_retention_days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_source_disk_delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
-    #[doc= "Set the field `max_retention_days`.\n"]
-    pub fn set_max_retention_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_retention_days = Some(v.into());
+    #[doc = "Set the field `max_retention_days`.\n"]
+    pub fn set_max_retention_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_retention_days = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `on_source_disk_delete`.\n"]
-    pub fn set_on_source_disk_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.on_source_disk_delete = Some(v.into());
+    #[doc = "Set the field `on_source_disk_delete`.\n"]
+    pub fn set_on_source_disk_delete(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.on_source_disk_delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
-    type O = BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -690,14 +766,14 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
             shared: shared,
@@ -707,48 +783,48 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElR
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_retention_days` after provisioning.\n"]
-    pub fn max_retention_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_retention_days", self.base))
+    #[doc = "Get a reference to the value of field `max_retention_days` after provisioning.\n"]
+    pub fn max_retention_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_retention_days", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `on_source_disk_delete` after provisioning.\n"]
-    pub fn on_source_disk_delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.on_source_disk_delete", self.base))
+    #[doc = "Get a reference to the value of field `on_source_disk_delete` after provisioning.\n"]
+    pub fn on_source_disk_delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.on_source_disk_delete", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    days_in_cycle: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start_time: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    days_in_cycle: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
-    #[doc= "Set the field `days_in_cycle`.\n"]
-    pub fn set_days_in_cycle(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.days_in_cycle = Some(v.into());
+    #[doc = "Set the field `days_in_cycle`.\n"]
+    pub fn set_days_in_cycle(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.days_in_cycle = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start_time`.\n"]
-    pub fn set_start_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start_time = Some(v.into());
+    #[doc = "Set the field `start_time`.\n"]
+    pub fn set_start_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
-    type O = BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -768,14 +844,14 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailySchedu
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
             shared: shared,
@@ -785,48 +861,48 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailySch
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `days_in_cycle` after provisioning.\n"]
-    pub fn days_in_cycle(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.days_in_cycle", self.base))
+    #[doc = "Get a reference to the value of field `days_in_cycle` after provisioning.\n"]
+    pub fn days_in_cycle(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.days_in_cycle", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hours_in_cycle: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start_time: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hours_in_cycle: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
-    #[doc= "Set the field `hours_in_cycle`.\n"]
-    pub fn set_hours_in_cycle(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.hours_in_cycle = Some(v.into());
+    #[doc = "Set the field `hours_in_cycle`.\n"]
+    pub fn set_hours_in_cycle(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.hours_in_cycle = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start_time`.\n"]
-    pub fn set_start_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start_time = Some(v.into());
+    #[doc = "Set the field `start_time`.\n"]
+    pub fn set_start_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
-    type O = BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -846,14 +922,14 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlySched
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
             shared: shared,
@@ -863,49 +939,51 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlySc
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `hours_in_cycle` after provisioning.\n"]
-    pub fn hours_in_cycle(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hours_in_cycle", self.base))
+    #[doc = "Get a reference to the value of field `hours_in_cycle` after provisioning.\n"]
+    pub fn hours_in_cycle(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hours_in_cycle", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    day: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start_time: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    day: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
-    #[doc= "Set the field `day`.\n"]
-    pub fn set_day(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.day = Some(v.into());
+    #[doc = "Set the field `day`.\n"]
+    pub fn set_day(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.day = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start_time`.\n"]
-    pub fn set_start_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start_time = Some(v.into());
+    #[doc = "Set the field `start_time`.\n"]
+    pub fn set_start_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
+impl terrars
+::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
     type O =
-        BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl>;
+        terrars
+        ::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -925,14 +1003,14 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklySched
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
             shared: shared,
@@ -942,52 +1020,57 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklySc
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `day` after provisioning.\n"]
-    pub fn day(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.day", self.base))
+    #[doc = "Get a reference to the value of field `day` after provisioning.\n"]
+    pub fn day(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.day", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    day_of_weeks: Option<
-        SetField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    day_of_weeks: std
+    ::option
+    ::Option<
+        terrars::SetField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl>,
     >,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
-    #[doc= "Set the field `day_of_weeks`.\n"]
+    #[doc = "Set the field `day_of_weeks`.\n"]
     pub fn set_day_of_weeks(
         mut self,
         v:
             impl
 
-                    Into<
-                        SetField<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::SetField<
                             DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl,
                         >,
                     >,
     ) -> Self {
-        self.day_of_weeks = Some(v.into());
+        self.day_of_weeks = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
-    type O = BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1006,14 +1089,14 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklySched
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
             shared: shared,
@@ -1023,62 +1106,91 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklySc
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `day_of_weeks` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `day_of_weeks` after provisioning.\n"]
     pub fn day_of_weeks(
         &self,
-    ) -> SetRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.day_of_weeks", self.base))
+    ) -> terrars::SetRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.day_of_weeks", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    daily_schedule: Option<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hourly_schedule: Option<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    weekly_schedule: Option<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    daily_schedule: std
+    ::option
+    ::Option<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hourly_schedule: std
+    ::option
+    ::Option<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    weekly_schedule: std
+    ::option
+    ::Option<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>>,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
-    #[doc= "Set the field `daily_schedule`.\n"]
+    #[doc = "Set the field `daily_schedule`.\n"]
     pub fn set_daily_schedule(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>,
+                    >,
     ) -> Self {
-        self.daily_schedule = Some(v.into());
+        self.daily_schedule = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `hourly_schedule`.\n"]
+    #[doc = "Set the field `hourly_schedule`.\n"]
     pub fn set_hourly_schedule(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>,
+                    >,
     ) -> Self {
-        self.hourly_schedule = Some(v.into());
+        self.hourly_schedule = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `weekly_schedule`.\n"]
+    #[doc = "Set the field `weekly_schedule`.\n"]
     pub fn set_weekly_schedule(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>,
+                    >,
     ) -> Self {
-        self.weekly_schedule = Some(v.into());
+        self.weekly_schedule = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
-    type O = BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1099,12 +1211,15 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
-    fn new(shared: StackShared, base: String) -> DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1113,75 +1228,81 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `daily_schedule` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `daily_schedule` after provisioning.\n"]
     pub fn daily_schedule(
         &self,
-    ) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.daily_schedule", self.base))
+    ) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.daily_schedule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `hourly_schedule` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `hourly_schedule` after provisioning.\n"]
     pub fn hourly_schedule(
         &self,
-    ) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.hourly_schedule", self.base))
+    ) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hourly_schedule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `weekly_schedule` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `weekly_schedule` after provisioning.\n"]
     pub fn weekly_schedule(
         &self,
-    ) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.weekly_schedule", self.base))
+    ) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.weekly_schedule", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    chain_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    guest_flush: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    storage_locations: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    chain_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    guest_flush: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_locations: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
-    #[doc= "Set the field `chain_name`.\n"]
-    pub fn set_chain_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.chain_name = Some(v.into());
+    #[doc = "Set the field `chain_name`.\n"]
+    pub fn set_chain_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.chain_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `guest_flush`.\n"]
-    pub fn set_guest_flush(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.guest_flush = Some(v.into());
+    #[doc = "Set the field `guest_flush`.\n"]
+    pub fn set_guest_flush(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.guest_flush = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `labels`.\n"]
-    pub fn set_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.labels = Some(v.into());
+    #[doc = "Set the field `labels`.\n"]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `storage_locations`.\n"]
-    pub fn set_storage_locations(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.storage_locations = Some(v.into());
+    #[doc = "Set the field `storage_locations`.\n"]
+    pub fn set_storage_locations(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.storage_locations = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
-    type O = BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1203,14 +1324,14 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl 
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
             shared: shared,
@@ -1220,75 +1341,89 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotProperties
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `chain_name` after provisioning.\n"]
-    pub fn chain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.chain_name", self.base))
+    #[doc = "Get a reference to the value of field `chain_name` after provisioning.\n"]
+    pub fn chain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.chain_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `guest_flush` after provisioning.\n"]
-    pub fn guest_flush(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.guest_flush", self.base))
+    #[doc = "Get a reference to the value of field `guest_flush` after provisioning.\n"]
+    pub fn guest_flush(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.guest_flush", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\n"]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    #[doc = "Get a reference to the value of field `labels` after provisioning.\n"]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `storage_locations` after provisioning.\n"]
-    pub fn storage_locations(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.storage_locations", self.base))
+    #[doc = "Get a reference to the value of field `storage_locations` after provisioning.\n"]
+    pub fn storage_locations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.storage_locations", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retention_policy: Option<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    schedule: Option<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    snapshot_properties: Option<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_policy: std
+    ::option
+    ::Option<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schedule: std::option::Option<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snapshot_properties: std
+    ::option
+    ::Option<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>>,
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyEl {
-    #[doc= "Set the field `retention_policy`.\n"]
+    #[doc = "Set the field `retention_policy`.\n"]
     pub fn set_retention_policy(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>>,
     ) -> Self {
-        self.retention_policy = Some(v.into());
+        self.retention_policy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `schedule`.\n"]
+    #[doc = "Set the field `schedule`.\n"]
     pub fn set_schedule(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>>,
     ) -> Self {
-        self.schedule = Some(v.into());
+        self.schedule = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `snapshot_properties`.\n"]
+    #[doc = "Set the field `snapshot_properties`.\n"]
     pub fn set_snapshot_properties(
         mut self,
-        v: impl Into<ListField<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>>,
     ) -> Self {
-        self.snapshot_properties = Some(v.into());
+        self.snapshot_properties = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyEl {
-    type O = BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyEl>;
+impl terrars::ToListMappable for DataComputeResourcePolicySnapshotSchedulePolicyEl {
+    type O = terrars::BlockAssignable<DataComputeResourcePolicySnapshotSchedulePolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1309,12 +1444,15 @@ impl BuildDataComputeResourcePolicySnapshotSchedulePolicyEl {
 }
 
 pub struct DataComputeResourcePolicySnapshotSchedulePolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataComputeResourcePolicySnapshotSchedulePolicyElRef {
+impl terrars::Ref for DataComputeResourcePolicySnapshotSchedulePolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeResourcePolicySnapshotSchedulePolicyElRef {
         DataComputeResourcePolicySnapshotSchedulePolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -1323,24 +1461,26 @@ impl Ref for DataComputeResourcePolicySnapshotSchedulePolicyElRef {
 }
 
 impl DataComputeResourcePolicySnapshotSchedulePolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `retention_policy` after provisioning.\n"]
-    pub fn retention_policy(&self) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.base))
+    #[doc = "Get a reference to the value of field `retention_policy` after provisioning.\n"]
+    pub fn retention_policy(
+        &self,
+    ) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.schedule", self.base))
+    #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
+    pub fn schedule(&self) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `snapshot_properties` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `snapshot_properties` after provisioning.\n"]
     pub fn snapshot_properties(
         &self,
-    ) -> ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.snapshot_properties", self.base))
+    ) -> terrars::ListRef<DataComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_properties", self.base))
     }
 }

@@ -1,67 +1,71 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct ComputeRegionNetworkEndpointGroupData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_endpoint_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    psc_target_service: Option<PrimField<String>>,
-    region: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subnetwork: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    app_engine: Option<Vec<ComputeRegionNetworkEndpointGroupAppEngineEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloud_function: Option<Vec<ComputeRegionNetworkEndpointGroupCloudFunctionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloud_run: Option<Vec<ComputeRegionNetworkEndpointGroupCloudRunEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ComputeRegionNetworkEndpointGroupTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_endpoint_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_target_service: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    app_engine: std::option::Option<std::vec::Vec<ComputeRegionNetworkEndpointGroupAppEngineEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_function: std::option::Option<std::vec::Vec<ComputeRegionNetworkEndpointGroupCloudFunctionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_run: std::option::Option<std::vec::Vec<ComputeRegionNetworkEndpointGroupCloudRunEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeRegionNetworkEndpointGroupTimeoutsEl>,
     dynamic: ComputeRegionNetworkEndpointGroupDynamic,
 }
 
 struct ComputeRegionNetworkEndpointGroup_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ComputeRegionNetworkEndpointGroupData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ComputeRegionNetworkEndpointGroupData>,
 }
 
 #[derive(Clone)]
-pub struct ComputeRegionNetworkEndpointGroup(Rc<ComputeRegionNetworkEndpointGroup_>);
+pub struct ComputeRegionNetworkEndpointGroup(std::rc::Rc<ComputeRegionNetworkEndpointGroup_>);
 
 impl ComputeRegionNetworkEndpointGroup {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -76,197 +80,248 @@ impl ComputeRegionNetworkEndpointGroup {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `network`.\nThis field is only used for PSC.\nThe URL of the network to which all network endpoints in the NEG belong. Uses\n\"default\" project network if unspecified."]
-    pub fn set_network(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().network = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `network_endpoint_type`.\nType of network endpoints in this network endpoint group. Defaults to SERVERLESS Default value: \"SERVERLESS\" Possible values: [\"SERVERLESS\", \"PRIVATE_SERVICE_CONNECT\"]"]
-    pub fn set_network_endpoint_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().network_endpoint_type = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `psc_target_service`.\nThe target service url used to set up private service connection to\na Google API or a PSC Producer Service Attachment."]
-    pub fn set_psc_target_service(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().psc_target_service = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `subnetwork`.\nThis field is only used for PSC.\nOptional URL of the subnetwork to which all network endpoints in the NEG belong."]
-    pub fn set_subnetwork(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().subnetwork = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `app_engine`.\n"]
-    pub fn set_app_engine(self, v: impl Into<BlockAssignable<ComputeRegionNetworkEndpointGroupAppEngineEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().app_engine = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.app_engine = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `cloud_function`.\n"]
-    pub fn set_cloud_function(
+    pub fn add_lifecycle_precondition(
         self,
-        v: impl Into<BlockAssignable<ComputeRegionNetworkEndpointGroupCloudFunctionEl>>,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc =
+        "Set the field `description`.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `network`.\nThis field is only used for PSC.\nThe URL of the network to which all network endpoints in the NEG belong. Uses\n\"default\" project network if unspecified."]
+    pub fn set_network(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `network_endpoint_type`.\nType of network endpoints in this network endpoint group. Defaults to SERVERLESS Default value: \"SERVERLESS\" Possible values: [\"SERVERLESS\", \"PRIVATE_SERVICE_CONNECT\"]"]
+    pub fn set_network_endpoint_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network_endpoint_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `psc_target_service`.\nThe target service url used to set up private service connection to\na Google API or a PSC Producer Service Attachment."]
+    pub fn set_psc_target_service(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().psc_target_service = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `subnetwork`.\nThis field is only used for PSC.\nOptional URL of the subnetwork to which all network endpoints in the NEG belong."]
+    pub fn set_subnetwork(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().subnetwork = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `app_engine`.\n"]
+    pub fn set_app_engine(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionNetworkEndpointGroupAppEngineEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cloud_function = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().app_engine = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cloud_function = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.app_engine = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cloud_run`.\n"]
-    pub fn set_cloud_run(self, v: impl Into<BlockAssignable<ComputeRegionNetworkEndpointGroupCloudRunEl>>) -> Self {
+    #[doc = "Set the field `cloud_function`.\n"]
+    pub fn set_cloud_function(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionNetworkEndpointGroupCloudFunctionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cloud_run = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cloud_function = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cloud_run = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cloud_function = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ComputeRegionNetworkEndpointGroupTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `cloud_run`.\n"]
+    pub fn set_cloud_run(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionNetworkEndpointGroupCloudRunEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cloud_run = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cloud_run = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRegionNetworkEndpointGroupTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the resource; provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network` after provisioning.\nThis field is only used for PSC.\nThe URL of the network to which all network endpoints in the NEG belong. Uses\n\"default\" project network if unspecified."]
-    pub fn network(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the resource; provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network_endpoint_type` after provisioning.\nType of network endpoints in this network endpoint group. Defaults to SERVERLESS Default value: \"SERVERLESS\" Possible values: [\"SERVERLESS\", \"PRIVATE_SERVICE_CONNECT\"]"]
-    pub fn network_endpoint_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_endpoint_type", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `network` after provisioning.\nThis field is only used for PSC.\nThe URL of the network to which all network endpoints in the NEG belong. Uses\n\"default\" project network if unspecified."]
+    pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `network_endpoint_type` after provisioning.\nType of network endpoints in this network endpoint group. Defaults to SERVERLESS Default value: \"SERVERLESS\" Possible values: [\"SERVERLESS\", \"PRIVATE_SERVICE_CONNECT\"]"]
+    pub fn network_endpoint_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_endpoint_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `psc_target_service` after provisioning.\nThe target service url used to set up private service connection to\na Google API or a PSC Producer Service Attachment."]
-    pub fn psc_target_service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.psc_target_service", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nA reference to the region where the Serverless NEGs Reside."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `psc_target_service` after provisioning.\nThe target service url used to set up private service connection to\na Google API or a PSC Producer Service Attachment."]
+    pub fn psc_target_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.psc_target_service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\n"]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nA reference to the region where the Serverless NEGs Reside."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnetwork` after provisioning.\nThis field is only used for PSC.\nOptional URL of the subnetwork to which all network endpoints in the NEG belong."]
-    pub fn subnetwork(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `app_engine` after provisioning.\n"]
-    pub fn app_engine(&self) -> ListRef<ComputeRegionNetworkEndpointGroupAppEngineElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.app_engine", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `subnetwork` after provisioning.\nThis field is only used for PSC.\nOptional URL of the subnetwork to which all network endpoints in the NEG belong."]
+    pub fn subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloud_function` after provisioning.\n"]
-    pub fn cloud_function(&self) -> ListRef<ComputeRegionNetworkEndpointGroupCloudFunctionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_function", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `app_engine` after provisioning.\n"]
+    pub fn app_engine(&self) -> terrars::ListRef<ComputeRegionNetworkEndpointGroupAppEngineElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.app_engine", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloud_run` after provisioning.\n"]
-    pub fn cloud_run(&self) -> ListRef<ComputeRegionNetworkEndpointGroupCloudRunElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_run", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cloud_function` after provisioning.\n"]
+    pub fn cloud_function(&self) -> terrars::ListRef<ComputeRegionNetworkEndpointGroupCloudFunctionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_function", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `cloud_run` after provisioning.\n"]
+    pub fn cloud_run(&self) -> terrars::ListRef<ComputeRegionNetworkEndpointGroupCloudRunElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_run", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComputeRegionNetworkEndpointGroupTimeoutsElRef {
         ComputeRegionNetworkEndpointGroupTimeoutsElRef::new(
             self.shared().clone(),
@@ -275,29 +330,29 @@ impl ComputeRegionNetworkEndpointGroup {
     }
 }
 
-impl Referable for ComputeRegionNetworkEndpointGroup {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ComputeRegionNetworkEndpointGroup {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ComputeRegionNetworkEndpointGroup { }
+impl terrars::Resource for ComputeRegionNetworkEndpointGroup { }
 
-impl ToListMappable for ComputeRegionNetworkEndpointGroup {
-    type O = ListRef<ComputeRegionNetworkEndpointGroupRef>;
+impl terrars::ToListMappable for ComputeRegionNetworkEndpointGroup {
+    type O = terrars::ListRef<ComputeRegionNetworkEndpointGroupRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ComputeRegionNetworkEndpointGroup_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ComputeRegionNetworkEndpointGroup_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_compute_region_network_endpoint_group".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -307,23 +362,25 @@ impl Resource_ for ComputeRegionNetworkEndpointGroup_ {
 }
 
 pub struct BuildComputeRegionNetworkEndpointGroup {
-    pub tf_id: String,
-    #[doc= "Name of the resource; provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
-    pub name: PrimField<String>,
-    #[doc= "A reference to the region where the Serverless NEGs Reside."]
-    pub region: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc =
+        "Name of the resource; provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = "A reference to the region where the Serverless NEGs Reside."]
+    pub region: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeRegionNetworkEndpointGroup {
-    pub fn build(self, stack: &mut Stack) -> ComputeRegionNetworkEndpointGroup {
-        let out = ComputeRegionNetworkEndpointGroup(Rc::new(ComputeRegionNetworkEndpointGroup_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ComputeRegionNetworkEndpointGroup {
+        let out = ComputeRegionNetworkEndpointGroup(std::rc::Rc::new(ComputeRegionNetworkEndpointGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ComputeRegionNetworkEndpointGroupData {
+            data: std::cell::RefCell::new(ComputeRegionNetworkEndpointGroupData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -337,7 +394,7 @@ impl BuildComputeRegionNetworkEndpointGroup {
                 cloud_function: core::default::Default::default(),
                 cloud_run: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -346,12 +403,12 @@ impl BuildComputeRegionNetworkEndpointGroup {
 }
 
 pub struct ComputeRegionNetworkEndpointGroupRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeRegionNetworkEndpointGroupRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ComputeRegionNetworkEndpointGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -360,80 +417,87 @@ impl Ref for ComputeRegionNetworkEndpointGroupRef {
 }
 
 impl ComputeRegionNetworkEndpointGroupRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nName of the resource; provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nName of the resource; provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network` after provisioning.\nThis field is only used for PSC.\nThe URL of the network to which all network endpoints in the NEG belong. Uses\n\"default\" project network if unspecified."]
-    pub fn network(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `network` after provisioning.\nThis field is only used for PSC.\nThe URL of the network to which all network endpoints in the NEG belong. Uses\n\"default\" project network if unspecified."]
+    pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `network_endpoint_type` after provisioning.\nType of network endpoints in this network endpoint group. Defaults to SERVERLESS Default value: \"SERVERLESS\" Possible values: [\"SERVERLESS\", \"PRIVATE_SERVICE_CONNECT\"]"]
-    pub fn network_endpoint_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_endpoint_type", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `network_endpoint_type` after provisioning.\nType of network endpoints in this network endpoint group. Defaults to SERVERLESS Default value: \"SERVERLESS\" Possible values: [\"SERVERLESS\", \"PRIVATE_SERVICE_CONNECT\"]"]
+    pub fn network_endpoint_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_endpoint_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `psc_target_service` after provisioning.\nThe target service url used to set up private service connection to\na Google API or a PSC Producer Service Attachment."]
-    pub fn psc_target_service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.psc_target_service", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `psc_target_service` after provisioning.\nThe target service url used to set up private service connection to\na Google API or a PSC Producer Service Attachment."]
+    pub fn psc_target_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.psc_target_service", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\nA reference to the region where the Serverless NEGs Reside."]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nA reference to the region where the Serverless NEGs Reside."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `self_link` after provisioning.\n"]
-    pub fn self_link(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
+    pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnetwork` after provisioning.\nThis field is only used for PSC.\nOptional URL of the subnetwork to which all network endpoints in the NEG belong."]
-    pub fn subnetwork(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `subnetwork` after provisioning.\nThis field is only used for PSC.\nOptional URL of the subnetwork to which all network endpoints in the NEG belong."]
+    pub fn subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `app_engine` after provisioning.\n"]
-    pub fn app_engine(&self) -> ListRef<ComputeRegionNetworkEndpointGroupAppEngineElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.app_engine", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `app_engine` after provisioning.\n"]
+    pub fn app_engine(&self) -> terrars::ListRef<ComputeRegionNetworkEndpointGroupAppEngineElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.app_engine", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloud_function` after provisioning.\n"]
-    pub fn cloud_function(&self) -> ListRef<ComputeRegionNetworkEndpointGroupCloudFunctionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_function", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cloud_function` after provisioning.\n"]
+    pub fn cloud_function(&self) -> terrars::ListRef<ComputeRegionNetworkEndpointGroupCloudFunctionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_function", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloud_run` after provisioning.\n"]
-    pub fn cloud_run(&self) -> ListRef<ComputeRegionNetworkEndpointGroupCloudRunElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloud_run", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cloud_run` after provisioning.\n"]
+    pub fn cloud_run(&self) -> terrars::ListRef<ComputeRegionNetworkEndpointGroupCloudRunElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_run", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComputeRegionNetworkEndpointGroupTimeoutsElRef {
         ComputeRegionNetworkEndpointGroupTimeoutsElRef::new(
             self.shared().clone(),
@@ -444,39 +508,42 @@ impl ComputeRegionNetworkEndpointGroupRef {
 
 #[derive(Serialize)]
 pub struct ComputeRegionNetworkEndpointGroupAppEngineEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url_mask: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_mask: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputeRegionNetworkEndpointGroupAppEngineEl {
-    #[doc= "Set the field `service`.\nOptional serving service.\nThe service name must be 1-63 characters long, and comply with RFC1035.\nExample value: \"default\", \"my-service\"."]
-    pub fn set_service(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service = Some(v.into());
+    #[doc =
+        "Set the field `service`.\nOptional serving service.\nThe service name must be 1-63 characters long, and comply with RFC1035.\nExample value: \"default\", \"my-service\"."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url_mask`.\nA template to parse service and version fields from a request URL.\nURL mask allows for routing to multiple App Engine services without\nhaving to create multiple Network Endpoint Groups and backend services.\n\nFor example, the request URLs \"foo1-dot-appname.appspot.com/v1\" and\n\"foo1-dot-appname.appspot.com/v2\" can be backed by the same Serverless NEG with\nURL mask \"-dot-appname.appspot.com/\". The URL mask will parse\nthem to { service = \"foo1\", version = \"v1\" } and { service = \"foo1\", version = \"v2\" } respectively."]
-    pub fn set_url_mask(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.url_mask = Some(v.into());
+    #[doc =
+        "Set the field `url_mask`.\nA template to parse service and version fields from a request URL.\nURL mask allows for routing to multiple App Engine services without\nhaving to create multiple Network Endpoint Groups and backend services.\n\nFor example, the request URLs \"foo1-dot-appname.appspot.com/v1\" and\n\"foo1-dot-appname.appspot.com/v2\" can be backed by the same Serverless NEG with\nURL mask \"-dot-appname.appspot.com/\". The URL mask will parse\nthem to { service = \"foo1\", version = \"v1\" } and { service = \"foo1\", version = \"v2\" } respectively."]
+    pub fn set_url_mask(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url_mask = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `version`.\nOptional serving version.\nThe version must be 1-63 characters long, and comply with RFC1035.\nExample value: \"v1\", \"v2\"."]
-    pub fn set_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.version = Some(v.into());
+    #[doc =
+        "Set the field `version`.\nOptional serving version.\nThe version must be 1-63 characters long, and comply with RFC1035.\nExample value: \"v1\", \"v2\"."]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeRegionNetworkEndpointGroupAppEngineEl {
-    type O = BlockAssignable<ComputeRegionNetworkEndpointGroupAppEngineEl>;
+impl terrars::ToListMappable for ComputeRegionNetworkEndpointGroupAppEngineEl {
+    type O = terrars::BlockAssignable<ComputeRegionNetworkEndpointGroupAppEngineEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -497,12 +564,15 @@ impl BuildComputeRegionNetworkEndpointGroupAppEngineEl {
 }
 
 pub struct ComputeRegionNetworkEndpointGroupAppEngineElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeRegionNetworkEndpointGroupAppEngineElRef {
-    fn new(shared: StackShared, base: String) -> ComputeRegionNetworkEndpointGroupAppEngineElRef {
+impl terrars::Ref for ComputeRegionNetworkEndpointGroupAppEngineElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeRegionNetworkEndpointGroupAppEngineElRef {
         ComputeRegionNetworkEndpointGroupAppEngineElRef {
             shared: shared,
             base: base.to_string(),
@@ -511,53 +581,58 @@ impl Ref for ComputeRegionNetworkEndpointGroupAppEngineElRef {
 }
 
 impl ComputeRegionNetworkEndpointGroupAppEngineElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `service` after provisioning.\nOptional serving service.\nThe service name must be 1-63 characters long, and comply with RFC1035.\nExample value: \"default\", \"my-service\"."]
-    pub fn service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nOptional serving service.\nThe service name must be 1-63 characters long, and comply with RFC1035.\nExample value: \"default\", \"my-service\"."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url_mask` after provisioning.\nA template to parse service and version fields from a request URL.\nURL mask allows for routing to multiple App Engine services without\nhaving to create multiple Network Endpoint Groups and backend services.\n\nFor example, the request URLs \"foo1-dot-appname.appspot.com/v1\" and\n\"foo1-dot-appname.appspot.com/v2\" can be backed by the same Serverless NEG with\nURL mask \"-dot-appname.appspot.com/\". The URL mask will parse\nthem to { service = \"foo1\", version = \"v1\" } and { service = \"foo1\", version = \"v2\" } respectively."]
-    pub fn url_mask(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url_mask", self.base))
+    #[doc =
+        "Get a reference to the value of field `url_mask` after provisioning.\nA template to parse service and version fields from a request URL.\nURL mask allows for routing to multiple App Engine services without\nhaving to create multiple Network Endpoint Groups and backend services.\n\nFor example, the request URLs \"foo1-dot-appname.appspot.com/v1\" and\n\"foo1-dot-appname.appspot.com/v2\" can be backed by the same Serverless NEG with\nURL mask \"-dot-appname.appspot.com/\". The URL mask will parse\nthem to { service = \"foo1\", version = \"v1\" } and { service = \"foo1\", version = \"v2\" } respectively."]
+    pub fn url_mask(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url_mask", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\nOptional serving version.\nThe version must be 1-63 characters long, and comply with RFC1035.\nExample value: \"v1\", \"v2\"."]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nOptional serving version.\nThe version must be 1-63 characters long, and comply with RFC1035.\nExample value: \"v1\", \"v2\"."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeRegionNetworkEndpointGroupCloudFunctionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    function: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url_mask: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    function: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_mask: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputeRegionNetworkEndpointGroupCloudFunctionEl {
-    #[doc= "Set the field `function`.\nA user-defined name of the Cloud Function.\nThe function name is case-sensitive and must be 1-63 characters long.\nExample value: \"func1\"."]
-    pub fn set_function(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.function = Some(v.into());
+    #[doc =
+        "Set the field `function`.\nA user-defined name of the Cloud Function.\nThe function name is case-sensitive and must be 1-63 characters long.\nExample value: \"func1\"."]
+    pub fn set_function(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.function = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url_mask`.\nA template to parse function field from a request URL. URL mask allows\nfor routing to multiple Cloud Functions without having to create\nmultiple Network Endpoint Groups and backend services.\n\nFor example, request URLs \"mydomain.com/function1\" and \"mydomain.com/function2\"\ncan be backed by the same Serverless NEG with URL mask \"/\". The URL mask\nwill parse them to { function = \"function1\" } and { function = \"function2\" } respectively."]
-    pub fn set_url_mask(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.url_mask = Some(v.into());
+    #[doc =
+        "Set the field `url_mask`.\nA template to parse function field from a request URL. URL mask allows\nfor routing to multiple Cloud Functions without having to create\nmultiple Network Endpoint Groups and backend services.\n\nFor example, request URLs \"mydomain.com/function1\" and \"mydomain.com/function2\"\ncan be backed by the same Serverless NEG with URL mask \"/\". The URL mask\nwill parse them to { function = \"function1\" } and { function = \"function2\" } respectively."]
+    pub fn set_url_mask(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url_mask = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeRegionNetworkEndpointGroupCloudFunctionEl {
-    type O = BlockAssignable<ComputeRegionNetworkEndpointGroupCloudFunctionEl>;
+impl terrars::ToListMappable for ComputeRegionNetworkEndpointGroupCloudFunctionEl {
+    type O = terrars::BlockAssignable<ComputeRegionNetworkEndpointGroupCloudFunctionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -577,12 +652,15 @@ impl BuildComputeRegionNetworkEndpointGroupCloudFunctionEl {
 }
 
 pub struct ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
-    fn new(shared: StackShared, base: String) -> ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
+impl terrars::Ref for ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
         ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
             shared: shared,
             base: base.to_string(),
@@ -591,56 +669,61 @@ impl Ref for ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
 }
 
 impl ComputeRegionNetworkEndpointGroupCloudFunctionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `function` after provisioning.\nA user-defined name of the Cloud Function.\nThe function name is case-sensitive and must be 1-63 characters long.\nExample value: \"func1\"."]
-    pub fn function(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function", self.base))
+    #[doc =
+        "Get a reference to the value of field `function` after provisioning.\nA user-defined name of the Cloud Function.\nThe function name is case-sensitive and must be 1-63 characters long.\nExample value: \"func1\"."]
+    pub fn function(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url_mask` after provisioning.\nA template to parse function field from a request URL. URL mask allows\nfor routing to multiple Cloud Functions without having to create\nmultiple Network Endpoint Groups and backend services.\n\nFor example, request URLs \"mydomain.com/function1\" and \"mydomain.com/function2\"\ncan be backed by the same Serverless NEG with URL mask \"/\". The URL mask\nwill parse them to { function = \"function1\" } and { function = \"function2\" } respectively."]
-    pub fn url_mask(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url_mask", self.base))
+    #[doc =
+        "Get a reference to the value of field `url_mask` after provisioning.\nA template to parse function field from a request URL. URL mask allows\nfor routing to multiple Cloud Functions without having to create\nmultiple Network Endpoint Groups and backend services.\n\nFor example, request URLs \"mydomain.com/function1\" and \"mydomain.com/function2\"\ncan be backed by the same Serverless NEG with URL mask \"/\". The URL mask\nwill parse them to { function = \"function1\" } and { function = \"function2\" } respectively."]
+    pub fn url_mask(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url_mask", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeRegionNetworkEndpointGroupCloudRunEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url_mask: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_mask: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputeRegionNetworkEndpointGroupCloudRunEl {
-    #[doc= "Set the field `service`.\nCloud Run service is the main resource of Cloud Run.\nThe service must be 1-63 characters long, and comply with RFC1035.\nExample value: \"run-service\"."]
-    pub fn set_service(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service = Some(v.into());
+    #[doc =
+        "Set the field `service`.\nCloud Run service is the main resource of Cloud Run.\nThe service must be 1-63 characters long, and comply with RFC1035.\nExample value: \"run-service\"."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tag`.\nCloud Run tag represents the \"named-revision\" to provide\nadditional fine-grained traffic routing information.\nThe tag must be 1-63 characters long, and comply with RFC1035.\nExample value: \"revision-0010\"."]
-    pub fn set_tag(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tag = Some(v.into());
+    #[doc =
+        "Set the field `tag`.\nCloud Run tag represents the \"named-revision\" to provide\nadditional fine-grained traffic routing information.\nThe tag must be 1-63 characters long, and comply with RFC1035.\nExample value: \"revision-0010\"."]
+    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url_mask`.\nA template to parse service and tag fields from a request URL.\nURL mask allows for routing to multiple Run services without having\nto create multiple network endpoint groups and backend services.\n\nFor example, request URLs \"foo1.domain.com/bar1\" and \"foo1.domain.com/bar2\"\nan be backed by the same Serverless Network Endpoint Group (NEG) with\nURL mask \".domain.com/\". The URL mask will parse them to { service=\"bar1\", tag=\"foo1\" }\nand { service=\"bar2\", tag=\"foo2\" } respectively."]
-    pub fn set_url_mask(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.url_mask = Some(v.into());
+    #[doc =
+        "Set the field `url_mask`.\nA template to parse service and tag fields from a request URL.\nURL mask allows for routing to multiple Run services without having\nto create multiple network endpoint groups and backend services.\n\nFor example, request URLs \"foo1.domain.com/bar1\" and \"foo1.domain.com/bar2\"\nan be backed by the same Serverless Network Endpoint Group (NEG) with\nURL mask \".domain.com/\". The URL mask will parse them to { service=\"bar1\", tag=\"foo1\" }\nand { service=\"bar2\", tag=\"foo2\" } respectively."]
+    pub fn set_url_mask(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url_mask = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeRegionNetworkEndpointGroupCloudRunEl {
-    type O = BlockAssignable<ComputeRegionNetworkEndpointGroupCloudRunEl>;
+impl terrars::ToListMappable for ComputeRegionNetworkEndpointGroupCloudRunEl {
+    type O = terrars::BlockAssignable<ComputeRegionNetworkEndpointGroupCloudRunEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -661,12 +744,15 @@ impl BuildComputeRegionNetworkEndpointGroupCloudRunEl {
 }
 
 pub struct ComputeRegionNetworkEndpointGroupCloudRunElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeRegionNetworkEndpointGroupCloudRunElRef {
-    fn new(shared: StackShared, base: String) -> ComputeRegionNetworkEndpointGroupCloudRunElRef {
+impl terrars::Ref for ComputeRegionNetworkEndpointGroupCloudRunElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeRegionNetworkEndpointGroupCloudRunElRef {
         ComputeRegionNetworkEndpointGroupCloudRunElRef {
             shared: shared,
             base: base.to_string(),
@@ -675,53 +761,56 @@ impl Ref for ComputeRegionNetworkEndpointGroupCloudRunElRef {
 }
 
 impl ComputeRegionNetworkEndpointGroupCloudRunElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `service` after provisioning.\nCloud Run service is the main resource of Cloud Run.\nThe service must be 1-63 characters long, and comply with RFC1035.\nExample value: \"run-service\"."]
-    pub fn service(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nCloud Run service is the main resource of Cloud Run.\nThe service must be 1-63 characters long, and comply with RFC1035.\nExample value: \"run-service\"."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag` after provisioning.\nCloud Run tag represents the \"named-revision\" to provide\nadditional fine-grained traffic routing information.\nThe tag must be 1-63 characters long, and comply with RFC1035.\nExample value: \"revision-0010\"."]
-    pub fn tag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
+    #[doc =
+        "Get a reference to the value of field `tag` after provisioning.\nCloud Run tag represents the \"named-revision\" to provide\nadditional fine-grained traffic routing information.\nThe tag must be 1-63 characters long, and comply with RFC1035.\nExample value: \"revision-0010\"."]
+    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url_mask` after provisioning.\nA template to parse service and tag fields from a request URL.\nURL mask allows for routing to multiple Run services without having\nto create multiple network endpoint groups and backend services.\n\nFor example, request URLs \"foo1.domain.com/bar1\" and \"foo1.domain.com/bar2\"\nan be backed by the same Serverless Network Endpoint Group (NEG) with\nURL mask \".domain.com/\". The URL mask will parse them to { service=\"bar1\", tag=\"foo1\" }\nand { service=\"bar2\", tag=\"foo2\" } respectively."]
-    pub fn url_mask(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url_mask", self.base))
+    #[doc =
+        "Get a reference to the value of field `url_mask` after provisioning.\nA template to parse service and tag fields from a request URL.\nURL mask allows for routing to multiple Run services without having\nto create multiple network endpoint groups and backend services.\n\nFor example, request URLs \"foo1.domain.com/bar1\" and \"foo1.domain.com/bar2\"\nan be backed by the same Serverless Network Endpoint Group (NEG) with\nURL mask \".domain.com/\". The URL mask will parse them to { service=\"bar1\", tag=\"foo1\" }\nand { service=\"bar2\", tag=\"foo2\" } respectively."]
+    pub fn url_mask(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url_mask", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComputeRegionNetworkEndpointGroupTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComputeRegionNetworkEndpointGroupTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComputeRegionNetworkEndpointGroupTimeoutsEl {
-    type O = BlockAssignable<ComputeRegionNetworkEndpointGroupTimeoutsEl>;
+impl terrars::ToListMappable for ComputeRegionNetworkEndpointGroupTimeoutsEl {
+    type O = terrars::BlockAssignable<ComputeRegionNetworkEndpointGroupTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -741,12 +830,15 @@ impl BuildComputeRegionNetworkEndpointGroupTimeoutsEl {
 }
 
 pub struct ComputeRegionNetworkEndpointGroupTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComputeRegionNetworkEndpointGroupTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ComputeRegionNetworkEndpointGroupTimeoutsElRef {
+impl terrars::Ref for ComputeRegionNetworkEndpointGroupTimeoutsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeRegionNetworkEndpointGroupTimeoutsElRef {
         ComputeRegionNetworkEndpointGroupTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -755,24 +847,24 @@ impl Ref for ComputeRegionNetworkEndpointGroupTimeoutsElRef {
 }
 
 impl ComputeRegionNetworkEndpointGroupTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComputeRegionNetworkEndpointGroupDynamic {
-    app_engine: Option<DynamicBlock<ComputeRegionNetworkEndpointGroupAppEngineEl>>,
-    cloud_function: Option<DynamicBlock<ComputeRegionNetworkEndpointGroupCloudFunctionEl>>,
-    cloud_run: Option<DynamicBlock<ComputeRegionNetworkEndpointGroupCloudRunEl>>,
+    app_engine: std::option::Option<terrars::DynamicBlock<ComputeRegionNetworkEndpointGroupAppEngineEl>>,
+    cloud_function: std::option::Option<terrars::DynamicBlock<ComputeRegionNetworkEndpointGroupCloudFunctionEl>>,
+    cloud_run: std::option::Option<terrars::DynamicBlock<ComputeRegionNetworkEndpointGroupCloudRunEl>>,
 }

@@ -1,60 +1,64 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
 struct GkeonpremVmwareNodePoolData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    annotations: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    display_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    location: PrimField<String>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project: Option<PrimField<String>>,
-    vmware_cluster: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    config: Option<Vec<GkeonpremVmwareNodePoolConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_pool_autoscaling: Option<Vec<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<GkeonpremVmwareNodePoolTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    location: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    vmware_cluster: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    config: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePoolConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_pool_autoscaling: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<GkeonpremVmwareNodePoolTimeoutsEl>,
     dynamic: GkeonpremVmwareNodePoolDynamic,
 }
 
 struct GkeonpremVmwareNodePool_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<GkeonpremVmwareNodePoolData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<GkeonpremVmwareNodePoolData>,
 }
 
 #[derive(Clone)]
-pub struct GkeonpremVmwareNodePool(Rc<GkeonpremVmwareNodePool_>);
+pub struct GkeonpremVmwareNodePool(std::rc::Rc<GkeonpremVmwareNodePool_>);
 
 impl GkeonpremVmwareNodePool {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderGoogle) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -69,224 +73,275 @@ impl GkeonpremVmwareNodePool {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `annotations`.\nAnnotations on the node Pool.\nThis field has the same restrictions as Kubernetes annotations.\nThe total size of all keys and values combined is limited to 256k.\nKey can have 2 segments: prefix (optional) and name (required),\nseparated by a slash (/).\nPrefix must be a DNS subdomain.\nName must be 63 characters or less, begin and end with alphanumerics,\nwith dashes (-), underscores (_), dots (.), and alphanumerics between.\n\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
-    pub fn set_annotations(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().annotations = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `display_name`.\nThe display name for the node pool."]
-    pub fn set_display_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().display_name = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `config`.\n"]
-    pub fn set_config(self, v: impl Into<BlockAssignable<GkeonpremVmwareNodePoolConfigEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().config = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.config = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `node_pool_autoscaling`.\n"]
-    pub fn set_node_pool_autoscaling(
+    pub fn add_lifecycle_precondition(
         self,
-        v: impl Into<BlockAssignable<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc =
+        "Set the field `annotations`.\nAnnotations on the node Pool.\nThis field has the same restrictions as Kubernetes annotations.\nThe total size of all keys and values combined is limited to 256k.\nKey can have 2 segments: prefix (optional) and name (required),\nseparated by a slash (/).\nPrefix must be a DNS subdomain.\nName must be 63 characters or less, begin and end with alphanumerics,\nwith dashes (-), underscores (_), dots (.), and alphanumerics between.\n\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
+    pub fn set_annotations(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().annotations = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `display_name`.\nThe display name for the node pool."]
+    pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `config`.\n"]
+    pub fn set_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().node_pool_autoscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.node_pool_autoscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<GkeonpremVmwareNodePoolTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `node_pool_autoscaling`.\n"]
+    pub fn set_node_pool_autoscaling(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().node_pool_autoscaling = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.node_pool_autoscaling = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
-    #[doc= "Get a reference to the value of field `annotations` after provisioning.\nAnnotations on the node Pool.\nThis field has the same restrictions as Kubernetes annotations.\nThe total size of all keys and values combined is limited to 256k.\nKey can have 2 segments: prefix (optional) and name (required),\nseparated by a slash (/).\nPrefix must be a DNS subdomain.\nName must be 63 characters or less, begin and end with alphanumerics,\nwith dashes (-), underscores (_), dots (.), and alphanumerics between.\n\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
-    pub fn annotations(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.annotations", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremVmwareNodePoolTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nThe time the cluster was created, in RFC3339 text format."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `annotations` after provisioning.\nAnnotations on the node Pool.\nThis field has the same restrictions as Kubernetes annotations.\nThe total size of all keys and values combined is limited to 256k.\nKey can have 2 segments: prefix (optional) and name (required),\nseparated by a slash (/).\nPrefix must be a DNS subdomain.\nName must be 63 characters or less, begin and end with alphanumerics,\nwith dashes (-), underscores (_), dots (.), and alphanumerics between.\n\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
+    pub fn annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.annotations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `delete_time` after provisioning.\nThe time the cluster was deleted, in RFC3339 text format."]
-    pub fn delete_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nThe time the cluster was created, in RFC3339 text format."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nThe display name for the node pool."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `delete_time` after provisioning.\nThe time the cluster was deleted, in RFC3339 text format."]
+    pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
-    pub fn effective_annotations(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `display_name` after provisioning.\nThe display name for the node pool."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\nThis checksum is computed by the server based on the value of other\nfields, and may be sent on update and delete requests to ensure the\nclient has an up-to-date value before proceeding.\nAllows clients to perform consistent read-modify-writes\nthrough optimistic concurrency control."]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
+    pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\nThis checksum is computed by the server based on the value of other\nfields, and may be sent on update and delete requests to ensure the\nclient has an up-to-date value before proceeding.\nAllows clients to perform consistent read-modify-writes\nthrough optimistic concurrency control."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of the resource."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe vmware node pool name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location of the resource."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `on_prem_version` after provisioning.\nAnthos version for the node pool. Defaults to the user cluster version."]
-    pub fn on_prem_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.on_prem_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe vmware node pool name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `on_prem_version` after provisioning.\nAnthos version for the node pool. Defaults to the user cluster version."]
+    pub fn on_prem_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.on_prem_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `reconciling` after provisioning.\nIf set, there are currently changes in flight to the node pool."]
-    pub fn reconciling(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reconciling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe current state of this cluster."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `reconciling` after provisioning.\nIf set, there are currently changes in flight to the node pool."]
+    pub fn reconciling(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reconciling", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
-    pub fn status(&self) -> ListRef<GkeonpremVmwareNodePoolStatusElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe current state of this cluster."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `uid` after provisioning.\nThe unique identifier of the node pool."]
-    pub fn uid(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
+    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolStatusElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nThe time the cluster was last updated, in RFC3339 text format."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `uid` after provisioning.\nThe unique identifier of the node pool."]
+    pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vmware_cluster` after provisioning.\nThe cluster this node pool belongs to."]
-    pub fn vmware_cluster(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vmware_cluster", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nThe time the cluster was last updated, in RFC3339 text format."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> ListRef<GkeonpremVmwareNodePoolConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `vmware_cluster` after provisioning.\nThe cluster this node pool belongs to."]
+    pub fn vmware_cluster(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vmware_cluster", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_autoscaling` after provisioning.\n"]
-    pub fn node_pool_autoscaling(&self) -> ListRef<GkeonpremVmwareNodePoolNodePoolAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool_autoscaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
+    pub fn config(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `node_pool_autoscaling` after provisioning.\n"]
+    pub fn node_pool_autoscaling(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolNodePoolAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_autoscaling", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> GkeonpremVmwareNodePoolTimeoutsElRef {
         GkeonpremVmwareNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for GkeonpremVmwareNodePool {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for GkeonpremVmwareNodePool {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for GkeonpremVmwareNodePool { }
+impl terrars::Resource for GkeonpremVmwareNodePool { }
 
-impl ToListMappable for GkeonpremVmwareNodePool {
-    type O = ListRef<GkeonpremVmwareNodePoolRef>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePool {
+    type O = terrars::ListRef<GkeonpremVmwareNodePoolRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for GkeonpremVmwareNodePool_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for GkeonpremVmwareNodePool_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "google_gkeonprem_vmware_node_pool".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -296,25 +351,26 @@ impl Resource_ for GkeonpremVmwareNodePool_ {
 }
 
 pub struct BuildGkeonpremVmwareNodePool {
-    pub tf_id: String,
-    #[doc= "The location of the resource."]
-    pub location: PrimField<String>,
-    #[doc= "The vmware node pool name."]
-    pub name: PrimField<String>,
-    #[doc= "The cluster this node pool belongs to."]
-    pub vmware_cluster: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "The location of the resource."]
+    pub location: terrars::PrimField<std::string::String>,
+    #[doc = "The vmware node pool name."]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = "The cluster this node pool belongs to."]
+    pub vmware_cluster: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeonpremVmwareNodePool {
-    pub fn build(self, stack: &mut Stack) -> GkeonpremVmwareNodePool {
-        let out = GkeonpremVmwareNodePool(Rc::new(GkeonpremVmwareNodePool_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> GkeonpremVmwareNodePool {
+        let out = GkeonpremVmwareNodePool(std::rc::Rc::new(GkeonpremVmwareNodePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(GkeonpremVmwareNodePoolData {
+            data: std::cell::RefCell::new(GkeonpremVmwareNodePoolData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -325,7 +381,7 @@ impl BuildGkeonpremVmwareNodePool {
                 config: core::default::Default::default(),
                 node_pool_autoscaling: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -334,12 +390,12 @@ impl BuildGkeonpremVmwareNodePool {
 }
 
 pub struct GkeonpremVmwareNodePoolRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for GkeonpremVmwareNodePoolRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -348,110 +404,121 @@ impl Ref for GkeonpremVmwareNodePoolRef {
 }
 
 impl GkeonpremVmwareNodePoolRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `annotations` after provisioning.\nAnnotations on the node Pool.\nThis field has the same restrictions as Kubernetes annotations.\nThe total size of all keys and values combined is limited to 256k.\nKey can have 2 segments: prefix (optional) and name (required),\nseparated by a slash (/).\nPrefix must be a DNS subdomain.\nName must be 63 characters or less, begin and end with alphanumerics,\nwith dashes (-), underscores (_), dots (.), and alphanumerics between.\n\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
-    pub fn annotations(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.annotations", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `annotations` after provisioning.\nAnnotations on the node Pool.\nThis field has the same restrictions as Kubernetes annotations.\nThe total size of all keys and values combined is limited to 256k.\nKey can have 2 segments: prefix (optional) and name (required),\nseparated by a slash (/).\nPrefix must be a DNS subdomain.\nName must be 63 characters or less, begin and end with alphanumerics,\nwith dashes (-), underscores (_), dots (.), and alphanumerics between.\n\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
+    pub fn annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.annotations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\nThe time the cluster was created, in RFC3339 text format."]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nThe time the cluster was created, in RFC3339 text format."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `delete_time` after provisioning.\nThe time the cluster was deleted, in RFC3339 text format."]
-    pub fn delete_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `delete_time` after provisioning.\nThe time the cluster was deleted, in RFC3339 text format."]
+    pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\nThe display name for the node pool."]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `display_name` after provisioning.\nThe display name for the node pool."]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
-    pub fn effective_annotations(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
+    pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\nThis checksum is computed by the server based on the value of other\nfields, and may be sent on update and delete requests to ensure the\nclient has an up-to-date value before proceeding.\nAllows clients to perform consistent read-modify-writes\nthrough optimistic concurrency control."]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\nThis checksum is computed by the server based on the value of other\nfields, and may be sent on update and delete requests to ensure the\nclient has an up-to-date value before proceeding.\nAllows clients to perform consistent read-modify-writes\nthrough optimistic concurrency control."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\nThe location of the resource."]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location of the resource."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\nThe vmware node pool name."]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe vmware node pool name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `on_prem_version` after provisioning.\nAnthos version for the node pool. Defaults to the user cluster version."]
-    pub fn on_prem_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.on_prem_version", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `on_prem_version` after provisioning.\nAnthos version for the node pool. Defaults to the user cluster version."]
+    pub fn on_prem_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.on_prem_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `reconciling` after provisioning.\nIf set, there are currently changes in flight to the node pool."]
-    pub fn reconciling(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reconciling", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `reconciling` after provisioning.\nIf set, there are currently changes in flight to the node pool."]
+    pub fn reconciling(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reconciling", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\nThe current state of this cluster."]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe current state of this cluster."]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
-    pub fn status(&self) -> ListRef<GkeonpremVmwareNodePoolStatusElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
+    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolStatusElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `uid` after provisioning.\nThe unique identifier of the node pool."]
-    pub fn uid(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `uid` after provisioning.\nThe unique identifier of the node pool."]
+    pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_time` after provisioning.\nThe time the cluster was last updated, in RFC3339 text format."]
-    pub fn update_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nThe time the cluster was last updated, in RFC3339 text format."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vmware_cluster` after provisioning.\nThe cluster this node pool belongs to."]
-    pub fn vmware_cluster(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vmware_cluster", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `vmware_cluster` after provisioning.\nThe cluster this node pool belongs to."]
+    pub fn vmware_cluster(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vmware_cluster", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> ListRef<GkeonpremVmwareNodePoolConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
+    pub fn config(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_pool_autoscaling` after provisioning.\n"]
-    pub fn node_pool_autoscaling(&self) -> ListRef<GkeonpremVmwareNodePoolNodePoolAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_pool_autoscaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_pool_autoscaling` after provisioning.\n"]
+    pub fn node_pool_autoscaling(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolNodePoolAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_autoscaling", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> GkeonpremVmwareNodePoolTimeoutsElRef {
         GkeonpremVmwareNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -459,55 +526,58 @@ impl GkeonpremVmwareNodePoolRef {
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolStatusElConditionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    last_transition_time: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    reason: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    state: Option<PrimField<String>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    last_transition_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reason: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GkeonpremVmwareNodePoolStatusElConditionsEl {
-    #[doc= "Set the field `last_transition_time`.\n"]
-    pub fn set_last_transition_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.last_transition_time = Some(v.into());
+    #[doc = "Set the field `last_transition_time`.\n"]
+    pub fn set_last_transition_time(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.last_transition_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `message`.\n"]
-    pub fn set_message(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message = Some(v.into());
+    #[doc = "Set the field `message`.\n"]
+    pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `reason`.\n"]
-    pub fn set_reason(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.reason = Some(v.into());
+    #[doc = "Set the field `reason`.\n"]
+    pub fn set_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.reason = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `state`.\n"]
-    pub fn set_state(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.state = Some(v.into());
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeonpremVmwareNodePoolStatusElConditionsEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolStatusElConditionsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolStatusElConditionsEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolStatusElConditionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -530,12 +600,15 @@ impl BuildGkeonpremVmwareNodePoolStatusElConditionsEl {
 }
 
 pub struct GkeonpremVmwareNodePoolStatusElConditionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolStatusElConditionsElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolStatusElConditionsElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolStatusElConditionsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremVmwareNodePoolStatusElConditionsElRef {
         GkeonpremVmwareNodePoolStatusElConditionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -544,63 +617,66 @@ impl Ref for GkeonpremVmwareNodePoolStatusElConditionsElRef {
 }
 
 impl GkeonpremVmwareNodePoolStatusElConditionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `last_transition_time` after provisioning.\n"]
-    pub fn last_transition_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_transition_time", self.base))
+    #[doc = "Get a reference to the value of field `last_transition_time` after provisioning.\n"]
+    pub fn last_transition_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_transition_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message` after provisioning.\n"]
-    pub fn message(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message", self.base))
+    #[doc = "Get a reference to the value of field `message` after provisioning.\n"]
+    pub fn message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `reason` after provisioning.\n"]
-    pub fn reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reason", self.base))
+    #[doc = "Get a reference to the value of field `reason` after provisioning.\n"]
+    pub fn reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reason", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolStatusEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    conditions: Option<ListField<GkeonpremVmwareNodePoolStatusElConditionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    error_message: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    conditions: std::option::Option<terrars::ListField<GkeonpremVmwareNodePoolStatusElConditionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    error_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GkeonpremVmwareNodePoolStatusEl {
-    #[doc= "Set the field `conditions`.\n"]
-    pub fn set_conditions(mut self, v: impl Into<ListField<GkeonpremVmwareNodePoolStatusElConditionsEl>>) -> Self {
-        self.conditions = Some(v.into());
+    #[doc = "Set the field `conditions`.\n"]
+    pub fn set_conditions(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareNodePoolStatusElConditionsEl>>,
+    ) -> Self {
+        self.conditions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `error_message`.\n"]
-    pub fn set_error_message(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.error_message = Some(v.into());
+    #[doc = "Set the field `error_message`.\n"]
+    pub fn set_error_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.error_message = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeonpremVmwareNodePoolStatusEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolStatusEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolStatusEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolStatusEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -620,12 +696,12 @@ impl BuildGkeonpremVmwareNodePoolStatusEl {
 }
 
 pub struct GkeonpremVmwareNodePoolStatusElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolStatusElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolStatusElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolStatusElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolStatusElRef {
         GkeonpremVmwareNodePoolStatusElRef {
             shared: shared,
             base: base.to_string(),
@@ -634,48 +710,48 @@ impl Ref for GkeonpremVmwareNodePoolStatusElRef {
 }
 
 impl GkeonpremVmwareNodePoolStatusElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> ListRef<GkeonpremVmwareNodePoolStatusElConditionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
+    #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
+    pub fn conditions(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolStatusElConditionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `error_message` after provisioning.\n"]
-    pub fn error_message(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.error_message", self.base))
+    #[doc = "Get a reference to the value of field `error_message` after provisioning.\n"]
+    pub fn error_message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_message", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    category: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    category: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-    #[doc= "Set the field `category`.\n"]
-    pub fn set_category(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.category = Some(v.into());
+    #[doc = "Set the field `category`.\n"]
+    pub fn set_category(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.category = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tag`.\n"]
-    pub fn set_tag(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tag = Some(v.into());
+    #[doc = "Set the field `tag`.\n"]
+    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -695,12 +771,15 @@ impl BuildGkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
 }
 
 pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
         GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -709,48 +788,51 @@ impl Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
 }
 
 impl GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `category` after provisioning.\n"]
-    pub fn category(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.category", self.base))
+    #[doc = "Get a reference to the value of field `category` after provisioning.\n"]
+    pub fn category(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.category", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
+    #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
+    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    datastore: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<ListField<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    datastore: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::ListField<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>>,
 }
 
 impl GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-    #[doc= "Set the field `datastore`.\n"]
-    pub fn set_datastore(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.datastore = Some(v.into());
+    #[doc = "Set the field `datastore`.\n"]
+    pub fn set_datastore(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.datastore = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(mut self, v: impl Into<ListField<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>>) -> Self {
-        self.tags = Some(v.into());
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>>,
+    ) -> Self {
+        self.tags = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolConfigElVsphereConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElVsphereConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -770,12 +852,15 @@ impl BuildGkeonpremVmwareNodePoolConfigElVsphereConfigEl {
 }
 
 pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
         GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -784,42 +869,43 @@ impl Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
 }
 
 impl GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `datastore` after provisioning.\n"]
-    pub fn datastore(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.datastore", self.base))
+    #[doc = "Get a reference to the value of field `datastore` after provisioning.\n"]
+    pub fn datastore(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.datastore", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> ListRef<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolConfigElTaintsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    effect: Option<PrimField<String>>,
-    key: PrimField<String>,
-    value: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    effect: std::option::Option<terrars::PrimField<std::string::String>>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl GkeonpremVmwareNodePoolConfigElTaintsEl {
-    #[doc= "Set the field `effect`.\nAvailable taint effects. Possible values: [\"EFFECT_UNSPECIFIED\", \"NO_SCHEDULE\", \"PREFER_NO_SCHEDULE\", \"NO_EXECUTE\"]"]
-    pub fn set_effect(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.effect = Some(v.into());
+    #[doc =
+        "Set the field `effect`.\nAvailable taint effects. Possible values: [\"EFFECT_UNSPECIFIED\", \"NO_SCHEDULE\", \"PREFER_NO_SCHEDULE\", \"NO_EXECUTE\"]"]
+    pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.effect = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeonpremVmwareNodePoolConfigElTaintsEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolConfigElTaintsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigElTaintsEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElTaintsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -828,10 +914,10 @@ impl ToListMappable for GkeonpremVmwareNodePoolConfigElTaintsEl {
 }
 
 pub struct BuildGkeonpremVmwareNodePoolConfigElTaintsEl {
-    #[doc= "Key associated with the effect."]
-    pub key: PrimField<String>,
-    #[doc= "Value associated with the effect."]
-    pub value: PrimField<String>,
+    #[doc = "Key associated with the effect."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = "Value associated with the effect."]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeonpremVmwareNodePoolConfigElTaintsEl {
@@ -845,12 +931,12 @@ impl BuildGkeonpremVmwareNodePoolConfigElTaintsEl {
 }
 
 pub struct GkeonpremVmwareNodePoolConfigElTaintsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolConfigElTaintsElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolConfigElTaintsElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolConfigElTaintsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolConfigElTaintsElRef {
         GkeonpremVmwareNodePoolConfigElTaintsElRef {
             shared: shared,
             base: base.to_string(),
@@ -859,115 +945,124 @@ impl Ref for GkeonpremVmwareNodePoolConfigElTaintsElRef {
 }
 
 impl GkeonpremVmwareNodePoolConfigElTaintsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `effect` after provisioning.\nAvailable taint effects. Possible values: [\"EFFECT_UNSPECIFIED\", \"NO_SCHEDULE\", \"PREFER_NO_SCHEDULE\", \"NO_EXECUTE\"]"]
-    pub fn effect(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
+    #[doc =
+        "Get a reference to the value of field `effect` after provisioning.\nAvailable taint effects. Possible values: [\"EFFECT_UNSPECIFIED\", \"NO_SCHEDULE\", \"PREFER_NO_SCHEDULE\", \"NO_EXECUTE\"]"]
+    pub fn effect(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\nKey associated with the effect."]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nKey associated with the effect."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\nValue associated with the effect."]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nValue associated with the effect."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GkeonpremVmwareNodePoolConfigElDynamic {
-    taints: Option<DynamicBlock<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
+    taints: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    boot_disk_size_gb: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpus: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_load_balancer: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image: Option<PrimField<String>>,
-    image_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    labels: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    memory_mb: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    replicas: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    taints: Option<Vec<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpus: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_load_balancer: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image: std::option::Option<terrars::PrimField<std::string::String>>,
+    image_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory_mb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replicas: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    taints: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
     dynamic: GkeonpremVmwareNodePoolConfigElDynamic,
 }
 
 impl GkeonpremVmwareNodePoolConfigEl {
-    #[doc= "Set the field `boot_disk_size_gb`.\nVMware disk size to be used during creation."]
-    pub fn set_boot_disk_size_gb(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.boot_disk_size_gb = Some(v.into());
+    #[doc = "Set the field `boot_disk_size_gb`.\nVMware disk size to be used during creation."]
+    pub fn set_boot_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.boot_disk_size_gb = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cpus`.\nThe number of CPUs for each node in the node pool."]
-    pub fn set_cpus(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.cpus = Some(v.into());
+    #[doc = "Set the field `cpus`.\nThe number of CPUs for each node in the node pool."]
+    pub fn set_cpus(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.cpus = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_load_balancer`.\nAllow node pool traffic to be load balanced. Only works for clusters with\nMetalLB load balancers."]
-    pub fn set_enable_load_balancer(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_load_balancer = Some(v.into());
+    #[doc =
+        "Set the field `enable_load_balancer`.\nAllow node pool traffic to be load balanced. Only works for clusters with\nMetalLB load balancers."]
+    pub fn set_enable_load_balancer(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_load_balancer = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `image`.\nThe OS image name in vCenter, only valid when using Windows."]
-    pub fn set_image(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.image = Some(v.into());
+    #[doc = "Set the field `image`.\nThe OS image name in vCenter, only valid when using Windows."]
+    pub fn set_image(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.image = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node.\nThese will added in addition to any default label(s) that\nKubernetes may apply to the node.\nIn case of conflict in label keys, the applied set may differ depending on\nthe Kubernetes version -- it's best to assume the behavior is undefined\nand conflicts should be avoided."]
-    pub fn set_labels(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.labels = Some(v.into());
+    #[doc =
+        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node.\nThese will added in addition to any default label(s) that\nKubernetes may apply to the node.\nIn case of conflict in label keys, the applied set may differ depending on\nthe Kubernetes version -- it's best to assume the behavior is undefined\nand conflicts should be avoided."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `memory_mb`.\nThe megabytes of memory for each node in the node pool."]
-    pub fn set_memory_mb(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.memory_mb = Some(v.into());
+    #[doc = "Set the field `memory_mb`.\nThe megabytes of memory for each node in the node pool."]
+    pub fn set_memory_mb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.memory_mb = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `replicas`.\nThe number of nodes in the node pool."]
-    pub fn set_replicas(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.replicas = Some(v.into());
+    #[doc = "Set the field `replicas`.\nThe number of nodes in the node pool."]
+    pub fn set_replicas(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.replicas = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `taints`.\n"]
-    pub fn set_taints(mut self, v: impl Into<BlockAssignable<GkeonpremVmwareNodePoolConfigElTaintsEl>>) -> Self {
+    #[doc = "Set the field `taints`.\n"]
+    pub fn set_taints(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.taints = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.taints = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.taints = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.taints = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for GkeonpremVmwareNodePoolConfigEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -976,8 +1071,9 @@ impl ToListMappable for GkeonpremVmwareNodePoolConfigEl {
 }
 
 pub struct BuildGkeonpremVmwareNodePoolConfigEl {
-    #[doc= "The OS image to be used for each node in a node pool.\nCurrently 'cos', 'ubuntu', 'ubuntu_containerd' and 'windows' are supported."]
-    pub image_type: PrimField<String>,
+    #[doc =
+        "The OS image to be used for each node in a node pool.\nCurrently 'cos', 'ubuntu', 'ubuntu_containerd' and 'windows' are supported."]
+    pub image_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGkeonpremVmwareNodePoolConfigEl {
@@ -992,18 +1088,18 @@ impl BuildGkeonpremVmwareNodePoolConfigEl {
             memory_mb: core::default::Default::default(),
             replicas: core::default::Default::default(),
             taints: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct GkeonpremVmwareNodePoolConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolConfigElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolConfigElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolConfigElRef {
         GkeonpremVmwareNodePoolConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1012,74 +1108,83 @@ impl Ref for GkeonpremVmwareNodePoolConfigElRef {
 }
 
 impl GkeonpremVmwareNodePoolConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `boot_disk_size_gb` after provisioning.\nVMware disk size to be used during creation."]
-    pub fn boot_disk_size_gb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_size_gb", self.base))
+    #[doc =
+        "Get a reference to the value of field `boot_disk_size_gb` after provisioning.\nVMware disk size to be used during creation."]
+    pub fn boot_disk_size_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_size_gb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cpus` after provisioning.\nThe number of CPUs for each node in the node pool."]
-    pub fn cpus(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpus", self.base))
+    #[doc =
+        "Get a reference to the value of field `cpus` after provisioning.\nThe number of CPUs for each node in the node pool."]
+    pub fn cpus(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpus", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_load_balancer` after provisioning.\nAllow node pool traffic to be load balanced. Only works for clusters with\nMetalLB load balancers."]
-    pub fn enable_load_balancer(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_load_balancer", self.base))
+    #[doc =
+        "Get a reference to the value of field `enable_load_balancer` after provisioning.\nAllow node pool traffic to be load balanced. Only works for clusters with\nMetalLB load balancers."]
+    pub fn enable_load_balancer(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_load_balancer", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image` after provisioning.\nThe OS image name in vCenter, only valid when using Windows."]
-    pub fn image(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
+    #[doc =
+        "Get a reference to the value of field `image` after provisioning.\nThe OS image name in vCenter, only valid when using Windows."]
+    pub fn image(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_type` after provisioning.\nThe OS image to be used for each node in a node pool.\nCurrently 'cos', 'ubuntu', 'ubuntu_containerd' and 'windows' are supported."]
-    pub fn image_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
+    #[doc =
+        "Get a reference to the value of field `image_type` after provisioning.\nThe OS image to be used for each node in a node pool.\nCurrently 'cos', 'ubuntu', 'ubuntu_containerd' and 'windows' are supported."]
+    pub fn image_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node.\nThese will added in addition to any default label(s) that\nKubernetes may apply to the node.\nIn case of conflict in label keys, the applied set may differ depending on\nthe Kubernetes version -- it's best to assume the behavior is undefined\nand conflicts should be avoided."]
-    pub fn labels(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to each node.\nThese will added in addition to any default label(s) that\nKubernetes may apply to the node.\nIn case of conflict in label keys, the applied set may differ depending on\nthe Kubernetes version -- it's best to assume the behavior is undefined\nand conflicts should be avoided."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `memory_mb` after provisioning.\nThe megabytes of memory for each node in the node pool."]
-    pub fn memory_mb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.memory_mb", self.base))
+    #[doc =
+        "Get a reference to the value of field `memory_mb` after provisioning.\nThe megabytes of memory for each node in the node pool."]
+    pub fn memory_mb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_mb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `replicas` after provisioning.\nThe number of nodes in the node pool."]
-    pub fn replicas(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.replicas", self.base))
+    #[doc =
+        "Get a reference to the value of field `replicas` after provisioning.\nThe number of nodes in the node pool."]
+    pub fn replicas(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replicas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vsphere_config` after provisioning.\nSpecifies the vSphere config for node pool."]
-    pub fn vsphere_config(&self) -> ListRef<GkeonpremVmwareNodePoolConfigElVsphereConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vsphere_config", self.base))
+    #[doc =
+        "Get a reference to the value of field `vsphere_config` after provisioning.\nSpecifies the vSphere config for node pool."]
+    pub fn vsphere_config(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElVsphereConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vsphere_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `taints` after provisioning.\n"]
-    pub fn taints(&self) -> ListRef<GkeonpremVmwareNodePoolConfigElTaintsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
+    #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
+    pub fn taints(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElTaintsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
-    max_replicas: PrimField<f64>,
-    min_replicas: PrimField<f64>,
+    max_replicas: terrars::PrimField<f64>,
+    min_replicas: terrars::PrimField<f64>,
 }
 
 impl GkeonpremVmwareNodePoolNodePoolAutoscalingEl { }
 
-impl ToListMappable for GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1088,10 +1193,10 @@ impl ToListMappable for GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
 }
 
 pub struct BuildGkeonpremVmwareNodePoolNodePoolAutoscalingEl {
-    #[doc= "Maximum number of replicas in the NodePool."]
-    pub max_replicas: PrimField<f64>,
-    #[doc= "Minimum number of replicas in the NodePool."]
-    pub min_replicas: PrimField<f64>,
+    #[doc = "Maximum number of replicas in the NodePool."]
+    pub max_replicas: terrars::PrimField<f64>,
+    #[doc = "Minimum number of replicas in the NodePool."]
+    pub min_replicas: terrars::PrimField<f64>,
 }
 
 impl BuildGkeonpremVmwareNodePoolNodePoolAutoscalingEl {
@@ -1104,12 +1209,15 @@ impl BuildGkeonpremVmwareNodePoolNodePoolAutoscalingEl {
 }
 
 pub struct GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
         GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -1118,56 +1226,58 @@ impl Ref for GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
 }
 
 impl GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_replicas` after provisioning.\nMaximum number of replicas in the NodePool."]
-    pub fn max_replicas(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_replicas", self.base))
+    #[doc =
+        "Get a reference to the value of field `max_replicas` after provisioning.\nMaximum number of replicas in the NodePool."]
+    pub fn max_replicas(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_replicas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_replicas` after provisioning.\nMinimum number of replicas in the NodePool."]
-    pub fn min_replicas(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_replicas", self.base))
+    #[doc =
+        "Get a reference to the value of field `min_replicas` after provisioning.\nMinimum number of replicas in the NodePool."]
+    pub fn min_replicas(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_replicas", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GkeonpremVmwareNodePoolTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GkeonpremVmwareNodePoolTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GkeonpremVmwareNodePoolTimeoutsEl {
-    type O = BlockAssignable<GkeonpremVmwareNodePoolTimeoutsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePoolTimeoutsEl {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1188,12 +1298,12 @@ impl BuildGkeonpremVmwareNodePoolTimeoutsEl {
 }
 
 pub struct GkeonpremVmwareNodePoolTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GkeonpremVmwareNodePoolTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> GkeonpremVmwareNodePoolTimeoutsElRef {
+impl terrars::Ref for GkeonpremVmwareNodePoolTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolTimeoutsElRef {
         GkeonpremVmwareNodePoolTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1202,28 +1312,28 @@ impl Ref for GkeonpremVmwareNodePoolTimeoutsElRef {
 }
 
 impl GkeonpremVmwareNodePoolTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GkeonpremVmwareNodePoolDynamic {
-    config: Option<DynamicBlock<GkeonpremVmwareNodePoolConfigEl>>,
-    node_pool_autoscaling: Option<DynamicBlock<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
+    config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePoolConfigEl>>,
+    node_pool_autoscaling: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
 }
